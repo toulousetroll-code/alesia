@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
 <style>
-/* ========== RESET & ROOT ========== */
 *{box-sizing:border-box;margin:0;padding:0;}
 :root{
   --gold:#C9A84C;--gold-l:#E8C97A;--gold-d:#8B6914;--gold-pale:rgba(201,168,76,0.12);
@@ -20,133 +19,92 @@
   --teal:#1D6B5A;--teal-pale:rgba(29,107,90,0.1);
   --blue:#1a4a7a;--blue-pale:rgba(26,74,122,0.08);
   --shadow:0 2px 12px rgba(44,36,22,0.1);
-  --shadow-lg:0 4px 24px rgba(44,36,22,0.15);
-  --radius:10px;
-  --sidebar:220px;
+  --radius:10px;--sidebar:210px;
 }
-
 html,body{height:100%;background:var(--parch);}
 body{font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;flex-direction:column;}
+::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--parch2);}::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px;}
 
-/* ========== SCROLLBAR ========== */
-::-webkit-scrollbar{width:6px;}
-::-webkit-scrollbar-track{background:var(--parch2);}
-::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px;}
-
-/* ========== AUTH OVERLAY ========== */
-#auth-overlay{
-  position:fixed;inset:0;background:var(--ink);
-  display:flex;align-items:center;justify-content:center;
-  z-index:1000;flex-direction:column;gap:20px;
-}
+/* AUTH */
+#auth-overlay{position:fixed;inset:0;background:var(--ink);display:flex;align-items:center;justify-content:center;z-index:1000;flex-direction:column;gap:20px;}
 #auth-overlay.hidden{display:none;}
 .auth-logo{font-family:'Cinzel',serif;font-size:36px;color:var(--gold);letter-spacing:.1em;}
 .auth-sub{font-size:16px;color:var(--ink-l);font-style:italic;}
-.btn-google{
-  display:flex;align-items:center;gap:10px;
-  background:white;color:#333;border:none;border-radius:8px;
-  padding:12px 24px;font-size:15px;cursor:pointer;font-family:'Crimson Pro',serif;
-  box-shadow:0 2px 8px rgba(0,0,0,0.2);transition:transform .15s,box-shadow .15s;
-}
-.btn-google:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.25);}
-.btn-google img{width:20px;height:20px;}
+.btn-google{display:flex;align-items:center;gap:10px;background:white;color:#333;border:none;border-radius:8px;padding:12px 24px;font-size:15px;cursor:pointer;font-family:'Crimson Pro',serif;box-shadow:0 2px 8px rgba(0,0,0,0.2);transition:transform .15s;}
+.btn-google:hover{transform:translateY(-1px);}
 
-/* ========== LAYOUT ========== */
+/* LAYOUT */
 #app{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 #app.hidden{display:none;}
-
-header{
-  background:var(--ink);border-bottom:2px solid var(--gold);
-  padding:12px 20px;display:flex;align-items:center;justify-content:space-between;
-  flex-shrink:0;
-}
-.hdr-left{display:flex;align-items:center;gap:14px;}
+header{background:var(--ink);border-bottom:2px solid var(--gold);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .hdr-title{font-family:'Cinzel',serif;font-size:20px;color:var(--gold);letter-spacing:.08em;}
 .hdr-sub{font-size:12px;color:#A89060;font-style:italic;}
 .hdr-right{display:flex;align-items:center;gap:10px;}
 .user-badge{display:flex;align-items:center;gap:7px;background:rgba(201,168,76,.12);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:5px 12px 5px 5px;}
-.user-avatar{width:26px;height:26px;border-radius:50%;border:1px solid var(--gold);}
+.user-avatar{width:26px;height:26px;border-radius:50%;}
 .user-name{font-size:12px;color:var(--gold-l);}
-.btn-signout{background:none;border:1px solid rgba(201,168,76,.3);color:var(--ink-l);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Crimson Pro',serif;}
-.btn-signout:hover{border-color:var(--gold);color:var(--gold);}
-
+.btn-so{background:none;border:1px solid rgba(201,168,76,.3);color:var(--ink-l);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Crimson Pro',serif;}
+.btn-so:hover{border-color:var(--gold);color:var(--gold);}
 .body{display:flex;flex:1;overflow:hidden;}
 
-/* ========== SIDEBAR ========== */
-nav{
-  width:var(--sidebar);background:var(--surf);border-right:1px solid var(--bord-s);
-  padding:16px 0;overflow-y:auto;flex-shrink:0;
-}
-.nav-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-d);padding:0 16px 5px;text-transform:uppercase;}
-.nav-item{
-  display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;
-  font-size:13px;color:var(--ink-m);border-left:2px solid transparent;transition:all .15s;
-}
-.nav-item:hover{background:var(--gold-pale);color:var(--ink);border-left-color:rgba(201,168,76,.4);}
-.nav-item.active{background:var(--gold-pale);color:var(--ink);border-left-color:var(--gold);font-weight:600;}
-.nav-item i{font-size:15px;color:var(--gold-d);}
-.nav-item.active i{color:var(--gold);}
-.nav-divider{height:1px;background:var(--bord);margin:10px 16px;}
+/* SIDEBAR */
+nav{width:var(--sidebar);background:var(--surf);border-right:1px solid var(--bord-s);padding:16px 0;overflow-y:auto;flex-shrink:0;}
+.nl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-d);padding:0 16px 5px;text-transform:uppercase;}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;font-size:13px;color:var(--ink-m);border-left:2px solid transparent;transition:all .15s;}
+.ni:hover{background:var(--gold-pale);color:var(--ink);border-left-color:rgba(201,168,76,.4);}
+.ni.active{background:var(--gold-pale);color:var(--ink);border-left-color:var(--gold);font-weight:600;}
+.ni i{font-size:15px;color:var(--gold-d);}
+.ni.active i{color:var(--gold);}
+.ndiv{height:1px;background:var(--bord);margin:10px 16px;}
 
-/* ========== MAIN ========== */
+/* MAIN */
 main{flex:1;overflow-y:auto;padding:22px 26px;}
 .section{display:none;}.section.active{display:block;}
-.page-title{
-  font-family:'Cinzel',serif;font-size:17px;color:var(--gold-d);
-  margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--bord);
-  display:flex;align-items:center;gap:8px;
-}
+.page-title{font-family:'Cinzel',serif;font-size:17px;color:var(--gold-d);margin-bottom:18px;padding-bottom:10px;border-bottom:1px solid var(--bord);display:flex;align-items:center;gap:8px;}
 .page-title i{color:var(--gold);}
 
-/* ========== CARDS ========== */
+/* CARDS */
 .card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);}
 .card-title{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--gold-d);margin-bottom:10px;text-transform:uppercase;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
 .full{grid-column:1/-1;}
 
-/* ========== EDITABLE FIELDS ========== */
-.editable{
-  cursor:pointer;border-radius:5px;padding:2px 5px;margin:-2px -5px;
-  transition:background .15s;position:relative;
+/* EDITABLE INLINE */
+.ef{
+  cursor:pointer;border-radius:4px;padding:1px 4px;margin:-1px -4px;
+  transition:background .15s;display:inline-block;min-width:20px;
+  border-bottom:1px dashed transparent;
 }
-.editable:hover{background:rgba(201,168,76,.15);}
-.editable:hover::after{
-  content:'✏';font-size:10px;color:var(--gold);
-  position:absolute;top:-6px;right:-2px;
+.ef:hover{background:rgba(201,168,76,.18);border-bottom-color:var(--gold-d);}
+.ef-input{
+  font-family:inherit;font-size:inherit;color:inherit;
+  background:var(--surf2);border:1px solid var(--gold);
+  border-radius:4px;padding:1px 5px;outline:none;
+  width:auto;min-width:40px;
 }
-.edit-input{
-  font-family:inherit;font-size:inherit;color:inherit;background:var(--surf2);
-  border:1px solid var(--gold);border-radius:5px;padding:2px 6px;
-  width:100%;outline:none;
+.ef-area{
+  font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink-m);
+  background:var(--surf2);border:1px solid var(--gold);border-radius:7px;
+  padding:8px;width:100%;outline:none;resize:vertical;line-height:1.65;
+  display:block;
 }
-.edit-textarea{
-  font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);
-  background:var(--surf2);border:1px solid var(--gold);border-radius:8px;
-  padding:10px;width:100%;outline:none;resize:vertical;line-height:1.7;
-}
-.save-hint{font-size:11px;color:var(--ink-l);font-style:italic;margin-top:5px;}
 
-/* ========== PERSO TABS ========== */
-.char-tabs{display:flex;gap:0;border-bottom:1px solid var(--bord-s);margin-bottom:18px;overflow-x:auto;}
-.char-tab{
-  padding:9px 16px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;
-  letter-spacing:.04em;color:var(--ink-m);border-bottom:2px solid transparent;
-  white-space:nowrap;transition:all .15s;
-}
+/* CHAR TABS */
+.char-tabs{display:flex;border-bottom:1px solid var(--bord-s);margin-bottom:18px;overflow-x:auto;}
+.char-tab{padding:9px 16px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.04em;color:var(--ink-m);border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;}
 .char-tab:hover{color:var(--ink);}
 .char-tab.active{color:var(--gold-d);border-bottom-color:var(--gold);}
 .char-sec{display:none;}.char-sec.active{display:block;}
 
-/* ========== STAT BARS ========== */
+/* STAT BARS */
 .stat-row{margin-bottom:10px;}
 .stat-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
 .stat-name{color:var(--ink-m);}
 .stat-val{font-family:'Cinzel',serif;font-weight:600;color:var(--gold-d);}
 .bar{height:7px;background:var(--bord);border-radius:4px;overflow:hidden;}
-.bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold-d),var(--gold));transition:width .4s ease;}
+.bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold-d),var(--gold));transition:width .4s;}
 
-/* ========== PV / MANA ========== */
+/* PV MANA */
 .pv-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
 .pv-box{background:var(--parch2);border:1px solid var(--bord);border-radius:8px;padding:10px;text-align:center;}
 .pv-big{font-family:'Cinzel',serif;font-size:28px;font-weight:700;line-height:1;}
@@ -154,147 +112,105 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 .pv-big.mana{color:var(--blue);}
 .pv-lbl{font-size:11px;color:var(--ink-l);margin-top:3px;}
 .pv-controls{display:flex;gap:5px;justify-content:center;margin-top:6px;}
-.pv-btn{
-  background:none;border:1px solid var(--bord-s);color:var(--ink-m);
-  border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:600;
-  transition:all .15s;
-}
+.pv-btn{background:none;border:1px solid var(--bord-s);color:var(--ink-m);border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:600;transition:all .15s;}
 .pv-btn:hover{border-color:var(--gold);color:var(--gold-d);background:var(--gold-pale);}
 
-/* ========== BADGES ========== */
+/* BADGES */
 .badge{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:var(--gold-pale);border:1px solid rgba(201,168,76,.3);color:var(--gold-d);}
 .badge.elem{background:var(--teal-pale);border-color:rgba(29,107,90,.25);color:var(--teal);}
 .badge.hostile{background:var(--red-pale);border-color:rgba(139,32,32,.25);color:var(--red);}
 .badge.ally{background:var(--teal-pale);border-color:rgba(29,107,90,.25);color:var(--teal);}
 .badge.dead{background:#f0f0f0;border-color:#ccc;color:#888;}
+.lang{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:var(--blue-pale);border:1px solid rgba(26,74,122,.2);color:var(--blue);}
 
-/* ========== HERO HEADER ========== */
+/* HERO HEAD */
 .hero-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
-.avatar{
-  width:54px;height:54px;border-radius:50%;border:2px solid var(--gold);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cinzel',serif;font-size:18px;font-weight:700;color:var(--gold);flex-shrink:0;
-}
-.hero-name{font-family:'Cinzel',serif;font-size:18px;color:var(--ink);}
+.avatar{width:54px;height:54px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);flex-shrink:0;}
+.hero-name{font-family:'Cinzel',serif;font-size:18px;}
 .hero-sub{font-size:13px;color:var(--ink-m);font-style:italic;margin-top:2px;}
 .hero-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
 
-/* ========== COMPÉTENCES DOTS ========== */
+/* DOTS */
 .comp-list{display:flex;flex-direction:column;gap:6px;}
 .comp-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid var(--bord);}
 .comp-row:last-child{border:none;}
 .comp-name{color:var(--ink-m);}
 .dots{display:flex;gap:3px;}
-.dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--bord-s);}
+.dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--bord-s);cursor:pointer;transition:background .1s;}
 .dot.on{background:var(--gold);border-color:var(--gold-d);}
 
-/* ========== JOURNAL ========== */
-.journal-list{display:flex;flex-direction:column;gap:12px;}
-.j-card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;}
+/* ITEMS */
+.item-list{display:flex;flex-direction:column;gap:5px;}
+.item-row{display:flex;justify-content:space-between;padding:5px 8px;background:var(--parch2);border-radius:6px;border:1px solid var(--bord);font-size:12px;}
+
+/* EQUIP */
+.equip-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
+.equip-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--bord);}
+.equip-row:last-child{border:none;}
+.equip-qty{font-family:'Cinzel',serif;color:var(--gold-d);}
+
+/* SECTION DIVIDER */
+.sdiv{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--gold-d);margin:12px 0 7px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--bord);}
+
+/* BUTTONS */
+.btn-add{display:inline-flex;align-items:center;gap:6px;background:var(--gold-pale);border:1px solid var(--bord-s);color:var(--gold-d);border-radius:7px;padding:7px 14px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.04em;cursor:pointer;transition:all .15s;margin-bottom:14px;}
+.btn-add:hover{background:rgba(201,168,76,.2);border-color:var(--gold);}
+.btn-save{display:inline-flex;align-items:center;gap:6px;background:var(--gold);border:none;color:var(--ink);border-radius:7px;padding:7px 16px;font-family:'Cinzel',serif;font-size:11px;cursor:pointer;}
+.btn-save:hover{background:var(--gold-l);}
+.btn-cancel{display:inline-flex;align-items:center;gap:5px;background:none;border:1px solid var(--bord-s);color:var(--ink-m);border-radius:7px;padding:7px 14px;font-family:'Cinzel',serif;font-size:11px;cursor:pointer;}
+.edit-input{font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);background:var(--surf2);border:1px solid var(--gold);border-radius:7px;padding:6px 10px;width:100%;outline:none;display:block;margin-bottom:8px;}
+
+/* JOURNAL */
+.j-card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;margin-bottom:10px;}
 .j-meta{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
 .j-num{font-family:'Cinzel',serif;font-size:10px;color:var(--gold);background:var(--gold-pale);border:1px solid rgba(201,168,76,.3);border-radius:20px;padding:2px 10px;}
 .j-date{font-size:11px;color:var(--ink-l);}
 .j-title{font-family:'Cinzel',serif;font-size:14px;color:var(--ink);margin-bottom:5px;}
 .j-text{font-size:13px;color:var(--ink-m);line-height:1.65;font-style:italic;}
-.btn-add{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--gold-pale);border:1px solid var(--bord-s);color:var(--gold-d);
-  border-radius:7px;padding:7px 14px;font-family:'Cinzel',serif;font-size:11px;
-  letter-spacing:.04em;cursor:pointer;transition:all .15s;margin-bottom:14px;
-}
-.btn-add:hover{background:rgba(201,168,76,.2);border-color:var(--gold);}
-.btn-save{
-  display:inline-flex;align-items:center;gap:6px;
-  background:var(--gold);border:none;color:var(--ink);
-  border-radius:7px;padding:7px 16px;font-family:'Cinzel',serif;font-size:11px;
-  letter-spacing:.04em;cursor:pointer;transition:all .15s;
-}
-.btn-save:hover{background:var(--gold-l);}
-.btn-cancel{
-  display:inline-flex;align-items:center;gap:6px;
-  background:none;border:1px solid var(--bord-s);color:var(--ink-m);
-  border-radius:7px;padding:7px 14px;font-family:'Cinzel',serif;font-size:11px;
-  cursor:pointer;
-}
 
-/* ========== PNJ ========== */
-.pnj-list{display:flex;flex-direction:column;gap:10px;}
-.pnj-card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:12px 14px;display:flex;gap:12px;align-items:flex-start;}
-.pnj-avatar{width:44px;height:44px;border-radius:50%;border:1px solid var(--bord-s);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:14px;color:var(--gold-d);flex-shrink:0;}
+/* PNJ */
+.pnj-card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:12px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;}
+.pnj-av{width:44px;height:44px;border-radius:50%;border:1px solid var(--bord-s);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:14px;color:var(--gold-d);flex-shrink:0;}
 .pnj-name{font-family:'Cinzel',serif;font-size:13px;color:var(--ink);}
 .pnj-role{font-size:11px;color:var(--ink-m);font-style:italic;margin-top:1px;}
 .pnj-desc{font-size:12px;color:var(--ink-m);margin-top:5px;line-height:1.55;}
 
-/* ========== ROYAUMES ========== */
-.royaumes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;}
+/* ROYAUMES */
+.r-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;}
 .r-card{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:12px;}
 .r-name{font-family:'Cinzel',serif;font-size:12px;color:var(--ink);margin-bottom:4px;}
 .r-desc{font-size:12px;color:var(--ink-m);line-height:1.5;}
 
-/* ========== DÉS ========== */
-.dice-result{
-  background:var(--surf);border:2px solid var(--gold);border-radius:var(--radius);
-  padding:24px;text-align:center;margin-bottom:16px;
-}
+/* DÉS */
+.dice-result{background:var(--surf);border:2px solid var(--gold);border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:16px;}
 .dice-num{font-family:'Cinzel',serif;font-size:56px;font-weight:700;color:var(--gold-d);line-height:1;}
 .dice-lbl{font-size:13px;color:var(--ink-l);margin-top:5px;font-style:italic;}
-.dice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(76px,1fr));gap:9px;margin-bottom:16px;}
-.die-btn{
-  background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);
-  padding:11px 8px;cursor:pointer;font-family:'Cinzel',serif;font-size:13px;
-  color:var(--ink-m);text-align:center;transition:all .15s;
-}
+.dice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(74px,1fr));gap:9px;margin-bottom:16px;}
+.die-btn{background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:11px 8px;cursor:pointer;font-family:'Cinzel',serif;font-size:13px;color:var(--ink-m);text-align:center;transition:all .15s;}
 .die-btn:hover{border-color:var(--gold);color:var(--ink);background:var(--gold-pale);}
 .die-btn i{font-size:22px;display:block;margin-bottom:3px;color:var(--gold-d);}
-.dice-hist{display:flex;flex-direction:column;gap:5px;}
-.dice-hist-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 10px;background:var(--surf);border:1px solid var(--bord);border-radius:6px;color:var(--ink-m);}
-.dice-hist-row span:last-child{font-family:'Cinzel',serif;color:var(--gold-d);font-weight:600;}
+.dh-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 10px;background:var(--surf);border:1px solid var(--bord);border-radius:6px;color:var(--ink-m);margin-bottom:5px;}
+.dh-row span:last-child{font-family:'Cinzel',serif;color:var(--gold-d);font-weight:600;}
 
-/* ========== NOTES ========== */
-.notes-wrap textarea{
-  width:100%;background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);
-  padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);
-  resize:vertical;min-height:200px;line-height:1.7;outline:none;
-}
-.notes-wrap textarea:focus{border-color:var(--gold);}
-.notes-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;}
+/* NOTES */
+#notes-area{width:100%;background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:220px;line-height:1.7;outline:none;}
+#notes-area:focus{border-color:var(--gold);}
+.ntags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;}
 .ntag{font-size:11px;padding:3px 10px;border-radius:20px;background:var(--gold-pale);border:1px solid rgba(201,168,76,.25);color:var(--gold-d);cursor:pointer;}
 
-/* ========== ÉQUIPEMENT ========== */
-.equip-grid{display:grid;grid-template-columns:1fr 1fr;gap:5px;}
-.equip-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 0;border-bottom:1px solid var(--bord);}
-.equip-row:last-child{border:none;}
-.equip-qty{font-family:'Cinzel',serif;color:var(--gold-d);}
+/* MJ PANEL */
+.mj-banner{background:rgba(139,32,32,.08);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--red);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
 
-/* ========== ITEMS ========== */
-.item-list{display:flex;flex-direction:column;gap:6px;}
-.item-row{display:flex;justify-content:space-between;padding:6px 9px;background:var(--parch2);border-radius:7px;border:1px solid var(--bord);font-size:12px;}
-.item-name{color:var(--ink);}
-.item-stat{font-family:'Cinzel',serif;color:var(--gold-d);}
-
-/* ========== TOAST ========== */
-#toast{
-  position:fixed;bottom:20px;right:20px;
-  background:var(--ink);color:var(--gold);border:1px solid var(--gold-d);
-  border-radius:8px;padding:10px 18px;font-family:'Cinzel',serif;font-size:12px;
-  letter-spacing:.04em;opacity:0;transform:translateY(10px);
-  transition:all .3s;z-index:999;pointer-events:none;
-}
+/* TOAST */
+#toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:var(--gold);border:1px solid var(--gold-d);border-radius:8px;padding:10px 18px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.04em;opacity:0;transform:translateY(10px);transition:all .3s;z-index:999;pointer-events:none;}
 #toast.show{opacity:1;transform:translateY(0);}
 
-/* ========== LOADING ========== */
-.loading{
-  display:flex;align-items:center;justify-content:center;
-  height:200px;font-style:italic;color:var(--ink-l);font-size:14px;
-}
-
-@keyframes rollAnim{0%{transform:scale(.5) rotate(-10deg);opacity:0}60%{transform:scale(1.15) rotate(2deg)}100%{transform:scale(1) rotate(0);opacity:1}}
-.roll-anim{animation:rollAnim .4s ease-out;}
+@keyframes rollA{0%{transform:scale(.5) rotate(-10deg);opacity:0}60%{transform:scale(1.15) rotate(2deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+.roll-anim{animation:rollA .4s ease-out;}
 </style>
 </head>
 <body>
 
-<!-- AUTH OVERLAY -->
 <div id="auth-overlay">
   <div class="auth-logo">⚔ Alésia</div>
   <div class="auth-sub">Portail de campagne — Réservé aux Téméraires</div>
@@ -304,48 +220,40 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
   </button>
 </div>
 
-<!-- APP -->
 <div id="app" class="hidden">
   <header>
-    <div class="hdr-left">
-      <div>
-        <div class="hdr-title">⚔ Alésia</div>
-        <div class="hdr-sub">Portail de campagne</div>
-      </div>
-    </div>
+    <div><div class="hdr-title">⚔ Alésia</div><div class="hdr-sub">Portail de campagne</div></div>
     <div class="hdr-right">
-      <div class="user-badge">
-        <img id="user-avatar" class="user-avatar" src="" alt="">
-        <span id="user-name" class="user-name"></span>
-      </div>
-      <button class="btn-signout" onclick="signOut()">Déconnexion</button>
+      <div class="user-badge"><img id="uav" class="user-avatar" src="" alt=""><span id="uname" class="user-name"></span></div>
+      <button class="btn-so" onclick="doSignOut()">Déconnexion</button>
     </div>
   </header>
-
   <div class="body">
     <nav>
-      <div class="nav-label">Joueurs</div>
-      <div class="nav-item active" onclick="showSection('personnages',this)"><i class="ti ti-users"></i> Personnages</div>
-      <div class="nav-item" onclick="showSection('notes',this)"><i class="ti ti-notes"></i> Notes</div>
-      <div class="nav-divider"></div>
-      <div class="nav-label">Campagne</div>
-      <div class="nav-item" onclick="showSection('journal',this)"><i class="ti ti-book"></i> Journal</div>
-      <div class="nav-item" onclick="showSection('pnj',this)"><i class="ti ti-masks-theater"></i> PNJ & Factions</div>
-      <div class="nav-divider"></div>
-      <div class="nav-label">Univers</div>
-      <div class="nav-item" onclick="showSection('royaumes',this)"><i class="ti ti-world"></i> 12 Royaumes</div>
-      <div class="nav-item" onclick="showSection('races',this)"><i class="ti ti-dna"></i> Races</div>
-      <div class="nav-item" onclick="showSection('classes',this)"><i class="ti ti-sword"></i> Classes</div>
-      <div class="nav-divider"></div>
-      <div class="nav-label">Outils</div>
-      <div class="nav-item" onclick="showSection('des',this)"><i class="ti ti-dice"></i> Lanceur de dés</div>
+      <div class="nl">Joueurs</div>
+      <div class="ni active" onclick="showSec('personnages',this)"><i class="ti ti-users"></i> Personnages</div>
+      <div class="ni" onclick="showSec('notes',this)"><i class="ti ti-notes"></i> Notes</div>
+      <div class="ndiv"></div>
+      <div class="nl">Campagne</div>
+      <div class="ni" onclick="showSec('journal',this)"><i class="ti ti-book"></i> Journal</div>
+      <div class="ni" onclick="showSec('pnj',this)"><i class="ti ti-masks-theater"></i> PNJ & Factions</div>
+      <div class="ndiv"></div>
+      <div class="nl">Univers</div>
+      <div class="ni" onclick="showSec('royaumes',this)"><i class="ti ti-world"></i> 12 Royaumes</div>
+      <div class="ni" onclick="showSec('races',this)"><i class="ti ti-dna"></i> Races</div>
+      <div class="ni" onclick="showSec('classes',this)"><i class="ti ti-sword"></i> Classes</div>
+      <div class="ndiv"></div>
+      <div class="nl">Outils</div>
+      <div class="ni" onclick="showSec('des',this)"><i class="ti ti-dice"></i> Lanceur de dés</div>
     </nav>
-
     <main>
 
-      <!-- ===== PERSONNAGES ===== -->
+      <!-- PERSONNAGES -->
       <div id="s-personnages" class="section active">
-        <div class="page-title"><i class="ti ti-users"></i> Fiches de personnage</div>
+        <div class="page-title"><i class="ti ti-users"></i> Fiches de personnage
+          <span style="font-size:11px;color:var(--ink-l);font-family:'Crimson Pro',serif;font-weight:400;margin-left:8px;font-style:italic;">— Cliquez sur n'importe quel texte pour le modifier</span>
+        </div>
+        <div id="mj-banner" class="mj-banner" style="display:none"><i class="ti ti-crown"></i> Mode MJ — Toutes les fiches sont éditables</div>
         <div class="char-tabs">
           <div class="char-tab active" onclick="showChar('azarius',this)">Azarius</div>
           <div class="char-tab" onclick="showChar('dy',this)">Dy</div>
@@ -353,377 +261,40 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
           <div class="char-tab" onclick="showChar('mwassa',this)">Mwassa</div>
           <div class="char-tab" onclick="showChar('nindey',this)">Nindey</div>
         </div>
-
-        <!-- AZARIUS -->
-        <div id="char-azarius" class="char-sec active">
-          <div class="grid2">
-            <div class="card">
-              <div class="hero-head">
-                <div class="avatar" style="background:rgba(201,168,76,.15)">A</div>
-                <div>
-                  <div class="hero-name">Azarius</div>
-                  <div class="hero-sub">Kitsune · Mâle · Arcaniste</div>
-                  <div class="hero-badges"><span class="badge elem">🔥 Feu</span><span class="badge">Niv. 1</span></div>
-                </div>
-              </div>
-              <div class="pv-grid">
-                <div class="pv-box">
-                  <div class="pv-big pv" id="azarius-pv">—</div>
-                  <div class="pv-lbl">PV actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('azarius','pv',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('azarius','pv',1)">+</button>
-                  </div>
-                </div>
-                <div class="pv-box">
-                  <div class="pv-big mana" id="azarius-mana">—</div>
-                  <div class="pv-lbl">Mana actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('azarius','mana',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('azarius','mana',1)">+</button>
-                  </div>
-                </div>
-              </div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val">70 %</span></div><div class="bar"><div class="bar-fill" style="width:70%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Social</span><span class="stat-val">40 %</span></div><div class="bar"><div class="bar-fill" style="width:40%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val">60 %</span></div><div class="bar"><div class="bar-fill" style="width:60%"></div></div></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Valeurs RP</div>
-              <div style="margin-bottom:12px">
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Indépendant</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Cupide</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);font-size:13px;">Adaptabilité</div>
-              </div>
-              <div class="card-title">Langues</div>
-              <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;">
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Commun</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Kitsune</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Démoniaque</span>
-              </div>
-              <div class="card-title">Compétences</div>
-              <div class="comp-list">
-                <div class="comp-row"><span class="comp-name">Puissance</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div></div></div>
-                <div class="comp-row"><span class="comp-name">Finesse</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div></div>
-                <div class="comp-row"><span class="comp-name">Aura</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot"></div><div class="dot"></div></div></div>
-                <div class="comp-row"><span class="comp-name">Relation</span><div class="dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
-                <div class="comp-row"><span class="comp-name">Instinct</span><div class="dots"><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div><div class="dot on"></div></div></div>
-                <div class="comp-row"><span class="comp-name">Savoir (Érudit)</span><div class="dots"><div class="dot on"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div></div></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">Notes perso <span class="editable" onclick="editCharNote('azarius')" id="azarius-note-display" style="font-weight:400;font-style:italic;color:var(--ink-m);font-size:12px;">Cliquer pour ajouter...</span></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Équipement clé</div>
-              <div class="equip-grid">
-                <div><div class="equip-row"><span>Rations</span><span class="equip-qty">19</span></div><div class="equip-row"><span>Sac enchanté</span><span class="equip-qty">1</span></div><div class="equip-row"><span>Kit médical</span><span class="equip-qty">4</span></div><div class="equip-row"><span>Boussole magique</span><span class="equip-qty">1</span></div></div>
-                <div><div class="equip-row"><span>Parchemin démon</span><span class="equip-qty">20</span></div><div class="equip-row"><span>Corde 11m</span><span class="equip-qty">1</span></div><div class="equip-row"><span>Livre Orc</span><span class="equip-qty">1</span></div></div>
-              </div>
-              <div style="margin-top:10px;font-size:11px;color:var(--ink-l);line-height:1.6;">🟢 Ruse +20% · Vivacité +10%<br>🔴 Force −20% · Social (confiance) −25%</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- DY -->
-        <div id="char-dy" class="char-sec">
-          <div class="grid2">
-            <div class="card">
-              <div class="hero-head">
-                <div class="avatar" style="background:rgba(29,107,90,.1)">D</div>
-                <div>
-                  <div class="hero-name">Dy Son</div>
-                  <div class="hero-sub">Elfe · Femme · 225 ans · Arcaniste</div>
-                  <div class="hero-badges"><span class="badge elem">💨 Air</span><span class="badge">Niv. 1</span></div>
-                </div>
-              </div>
-              <div class="pv-grid">
-                <div class="pv-box">
-                  <div class="pv-big pv" id="dy-pv">7</div>
-                  <div class="pv-lbl">PV actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('dy','pv',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('dy','pv',1)">+</button>
-                  </div>
-                </div>
-                <div class="pv-box">
-                  <div class="pv-big mana" id="dy-mana">11</div>
-                  <div class="pv-lbl">Mana actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('dy','mana',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('dy','mana',1)">+</button>
-                  </div>
-                </div>
-              </div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val">35 %</span></div><div class="bar"><div class="bar-fill" style="width:35%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Social</span><span class="stat-val">45 %</span></div><div class="bar"><div class="bar-fill" style="width:45%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val">90 %</span></div><div class="bar"><div class="bar-fill" style="width:90%"></div></div></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Valeurs RP</div>
-              <div style="margin-bottom:12px">
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Liberté</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Savoir</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);font-size:13px;">Agnostique</div>
-              </div>
-              <div class="card-title">Langues</div>
-              <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;">
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Punk</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Elfique</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Démoniaque</span>
-              </div>
-              <div class="card-title">Dons (Air)</div>
-              <div class="item-list">
-                <div class="item-row"><span class="item-name">🌬 Déplacement d'Air</span><span class="item-stat">Mana 1</span></div>
-                <div class="item-row"><span class="item-name">🌬 Mur d'Air</span><span class="item-stat">Mana 6</span></div>
-                <div class="item-row"><span class="item-name">🌬 Lame d'Air</span><span class="item-stat">D8+2 · M3</span></div>
-                <div class="item-row"><span class="item-name">🌬 Téléportation 15m</span><span class="item-stat">Mana 2+</span></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">Armement & Armures</div>
-              <div class="item-list" style="margin-bottom:10px">
-                <div class="item-row"><span class="item-name">Baguette</span><span class="item-stat">D4 / −3</span></div>
-                <div class="item-row"><span class="item-name">Dague</span><span class="item-stat">D6 / +1</span></div>
-                <div class="item-row"><span class="item-name">Robe Arcaniste enchantée</span><span class="item-stat">RD 2</span></div>
-                <div class="item-row"><span class="item-name">Anneau Dieu du Vent</span><span class="item-stat">RD 2 proj.</span></div>
-              </div>
-              <div class="card-title">Notes perso</div>
-              <div class="editable" onclick="editCharNote('dy')" id="dy-note-display" style="font-style:italic;color:var(--ink-m);font-size:12px;min-height:24px;">Préjugé Kitsune : −20% social, +10% combat vs Kitsune. Cliquer pour modifier...</div>
-            </div>
-            <div class="card">
-              <div class="card-title">Équipement</div>
-              <div class="equip-grid">
-                <div><div class="equip-row"><span>Rations</span><span class="equip-qty">5</span></div><div class="equip-row"><span>Kit médical</span><span class="equip-qty">4</span></div><div class="equip-row"><span>Potion vie D6</span><span class="equip-qty">3</span></div><div class="equip-row"><span>Livre de Magie</span><span class="equip-qty">1</span></div></div>
-                <div><div class="equip-row"><span>Livre Ursien</span><span class="equip-qty">3/12</span></div><div class="equip-row"><span>Corde 10m</span><span class="equip-qty">1</span></div><div class="equip-row"><span>Dague rituel</span><span class="equip-qty">1</span></div></div>
-              </div>
-              <div style="margin-top:10px;font-size:11px;color:var(--ink-l);line-height:1.6;">🟢 Perception +20% · Savoir +10%<br>🔴 Fragilité −10% · Social grossiers −20%</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- FIRM -->
-        <div id="char-firm" class="char-sec">
-          <div class="grid2">
-            <div class="card">
-              <div class="hero-head">
-                <div class="avatar" style="background:rgba(83,74,183,.1)">F</div>
-                <div>
-                  <div class="hero-name">Firm</div>
-                  <div class="hero-sub">Swamninyx · Homme · Gardien</div>
-                  <div class="hero-badges"><span class="badge elem">🌿 Nature</span><span class="badge">Niv. 1</span></div>
-                </div>
-              </div>
-              <div class="pv-grid">
-                <div class="pv-box">
-                  <div class="pv-big pv" id="firm-pv">—</div>
-                  <div class="pv-lbl">PV actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('firm','pv',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('firm','pv',1)">+</button>
-                  </div>
-                </div>
-                <div class="pv-box">
-                  <div class="pv-big mana" id="firm-mana">—</div>
-                  <div class="pv-lbl">Mana actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('firm','mana',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('firm','mana',1)">+</button>
-                  </div>
-                </div>
-              </div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val">65 %</span></div><div class="bar"><div class="bar-fill" style="width:65%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Social</span><span class="stat-val">50 %</span></div><div class="bar"><div class="bar-fill" style="width:50%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val">55 %</span></div><div class="bar"><div class="bar-fill" style="width:55%"></div></div></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Valeurs RP</div>
-              <div style="margin-bottom:12px">
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Hypocrite</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Respectueux</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);font-size:13px;">Loyal</div>
-              </div>
-              <div class="card-title">Langues</div>
-              <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;">
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Commun</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Swamninyx</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Léonide</span>
-              </div>
-              <div class="card-title">Classe — Gardien</div>
-              <div style="font-size:12px;color:var(--ink-m);line-height:1.65;">PV +2 · Armure +1 · Social fixé 50%<br><br>⚔ Châtiment Sacré : +10% vs créatures maléfiques<br>🛡 Provoc' Sauvage : attire les ennemis</div>
-            </div>
-            <div class="card full">
-              <div class="card-title">Notes perso</div>
-              <div class="editable" onclick="editCharNote('firm')" id="firm-note-display" style="font-style:italic;color:var(--ink-m);font-size:12px;min-height:24px;">Herboriste · Druide · Livre Skaven en cours. Cliquer pour modifier...</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- MWASSA -->
-        <div id="char-mwassa" class="char-sec">
-          <div class="grid2">
-            <div class="card">
-              <div class="hero-head">
-                <div class="avatar" style="background:rgba(29,107,90,.12)">M</div>
-                <div>
-                  <div class="hero-name">Mwassa</div>
-                  <div class="hero-sub">Kitsune · Femme · Oracle</div>
-                  <div class="hero-badges"><span class="badge elem">💧 Eaux</span><span class="badge">Niv. 1</span></div>
-                </div>
-              </div>
-              <div class="pv-grid">
-                <div class="pv-box">
-                  <div class="pv-big pv" id="mwassa-pv">—</div>
-                  <div class="pv-lbl">PV actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('mwassa','pv',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('mwassa','pv',1)">+</button>
-                  </div>
-                </div>
-                <div class="pv-box">
-                  <div class="pv-big mana" id="mwassa-mana">—</div>
-                  <div class="pv-lbl">Mana actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('mwassa','mana',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('mwassa','mana',1)">+</button>
-                  </div>
-                </div>
-              </div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val">35 %</span></div><div class="bar"><div class="bar-fill" style="width:35%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Social</span><span class="stat-val">65 %</span></div><div class="bar"><div class="bar-fill" style="width:65%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val">70 %</span></div><div class="bar"><div class="bar-fill" style="width:70%"></div></div></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Valeurs RP</div>
-              <div style="margin-bottom:12px">
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Altruiste</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Opportuniste</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);font-size:13px;">Pieuse</div>
-              </div>
-              <div class="card-title">Langues</div>
-              <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;">
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Commun</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Kitsune</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Nain</span>
-              </div>
-              <div class="card-title">Classe — Oracle</div>
-              <div style="font-size:12px;color:var(--ink-m);line-height:1.65;">PV +1 · Mana +1 · Armure impossible<br><br>✨ Soin Divin : relance soin raté 1×/combat<br>🤝 Pacte des 12 : offrande → Mana full 1×/jour</div>
-            </div>
-            <div class="card">
-              <div class="card-title">Équipement notable</div>
-              <div class="equip-grid">
-                <div><div class="equip-row"><span>Rations</span><span class="equip-qty">2</span></div><div class="equip-row"><span>Balles</span><span class="equip-qty">19</span></div><div class="equip-row"><span>Kit médical</span><span class="equip-qty">1</span></div><div class="equip-row"><span>Kit crochetage</span><span class="equip-qty">3</span></div></div>
-                <div><div class="equip-row"><span>Anneau de Mana</span><span class="equip-qty">1</span></div><div class="equip-row"><span>Livre Skaven</span><span class="equip-qty">1</span></div><div class="equip-row"><span>Crucifix argent</span><span class="equip-qty">1</span></div></div>
-              </div>
-            </div>
-            <div class="card">
-              <div class="card-title">Notes perso</div>
-              <div class="editable" onclick="editCharNote('mwassa')" id="mwassa-note-display" style="font-style:italic;color:var(--ink-m);font-size:12px;min-height:24px;">Charmeuse · Alchimie. Cliquer pour modifier...</div>
-            </div>
-          </div>
-        </div>
-
-        <!-- NINDEY -->
-        <div id="char-nindey" class="char-sec">
-          <div class="grid2">
-            <div class="card">
-              <div class="hero-head">
-                <div class="avatar" style="background:rgba(139,32,32,.1)">N</div>
-                <div>
-                  <div class="hero-name">Nindey</div>
-                  <div class="hero-sub">Nain · Homme · Cogneur</div>
-                  <div class="hero-badges"><span class="badge elem">⚡ Foudre</span><span class="badge">Niv. 1</span></div>
-                </div>
-              </div>
-              <div class="pv-grid">
-                <div class="pv-box">
-                  <div class="pv-big pv" id="nindey-pv">—</div>
-                  <div class="pv-lbl">PV actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('nindey','pv',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('nindey','pv',1)">+</button>
-                  </div>
-                </div>
-                <div class="pv-box">
-                  <div class="pv-big mana" id="nindey-mana">—</div>
-                  <div class="pv-lbl">Mana actuels</div>
-                  <div class="pv-controls">
-                    <button class="pv-btn" onclick="adjustStat('nindey','mana',-1)">−</button>
-                    <button class="pv-btn" onclick="adjustStat('nindey','mana',1)">+</button>
-                  </div>
-                </div>
-              </div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val">80 %</span></div><div class="bar"><div class="bar-fill" style="width:80%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Social</span><span class="stat-val">20 %</span></div><div class="bar"><div class="bar-fill" style="width:20%"></div></div></div>
-              <div class="stat-row"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val">50 %</span></div><div class="bar"><div class="bar-fill" style="width:50%"></div></div></div>
-            </div>
-            <div class="card">
-              <div class="card-title">Valeurs RP</div>
-              <div style="margin-bottom:12px">
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Tête brûlée</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">Alcoolique</div>
-                <div style="padding-left:8px;border-left:2px solid var(--gold);font-size:13px;">Chasseur de trésor</div>
-              </div>
-              <div class="card-title">Langues</div>
-              <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;">
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Commun</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Nain</span>
-                <span class="badge" style="background:var(--blue-pale);border-color:rgba(26,74,122,.2);color:var(--blue);">Draconique</span>
-              </div>
-              <div class="card-title">Classe — Cogneur</div>
-              <div style="font-size:12px;color:var(--ink-m);line-height:1.65;">PV +0 · Mana −1 · Dégâts +2<br><br>⚔ Maîtrise des Armes : relance attaque 1×/combat<br>💥 Baroud d'Honneur : &lt;30% PV → +2 dégâts</div>
-            </div>
-            <div class="card">
-              <div class="card-title">Équipement & Reliques</div>
-              <div class="equip-grid">
-                <div><div class="equip-row"><span>Rations</span><span class="equip-qty">18</span></div><div class="equip-row"><span>Kit médical</span><span class="equip-qty">2</span></div><div class="equip-row"><span>Livre Orc</span><span class="equip-qty">1</span></div></div>
-                <div><div class="equip-row"><span>Rune Majeur Feu</span><span class="equip-qty">50k PO</span></div><div class="equip-row"><span>Dégâts Feu</span><span class="equip-qty">D4/6/8</span></div><div class="equip-row"><span>Corde 10m</span><span class="equip-qty">1</span></div></div>
-              </div>
-              <div style="margin-top:10px;font-size:11px;color:var(--ink-l);line-height:1.6;">🟢 Forgeron +20% · Vision souterraine +10%<br>🔴 Vitesse −10% · Social hors nains −10%</div>
-            </div>
-            <div class="card">
-              <div class="card-title">Notes perso</div>
-              <div class="editable" onclick="editCharNote('nindey')" id="nindey-note-display" style="font-style:italic;color:var(--ink-m);font-size:12px;min-height:24px;">Expert Runique · Forgeron. Skarlath (dragon). Cliquer pour modifier...</div>
-            </div>
-          </div>
-        </div>
+        <div id="chars-container"></div>
       </div>
 
-      <!-- ===== JOURNAL ===== -->
+      <!-- JOURNAL -->
       <div id="s-journal" class="section">
         <div class="page-title"><i class="ti ti-book"></i> Journal de campagne</div>
         <button class="btn-add" onclick="showAddSession()"><i class="ti ti-plus"></i> Nouvelle session</button>
-        <div id="add-session-form" style="display:none;margin-bottom:16px;" class="card">
-          <div class="card-title">Ajouter une session</div>
-          <input id="session-title" class="edit-input" placeholder="Titre de la session..." style="margin-bottom:8px;display:block;width:100%;">
-          <textarea id="session-text" class="edit-textarea" placeholder="Résumé de la session..." rows="4"></textarea>
+        <div id="add-form" style="display:none" class="card" style="margin-bottom:14px;">
+          <div class="card-title">Nouvelle session</div>
+          <input id="s-title" class="edit-input" placeholder="Titre de la session...">
+          <textarea id="s-text" class="ef-area" placeholder="Résumé..." rows="4"></textarea>
           <div style="display:flex;gap:8px;margin-top:10px;">
             <button class="btn-save" onclick="saveSession()"><i class="ti ti-check"></i> Enregistrer</button>
             <button class="btn-cancel" onclick="hideAddSession()">Annuler</button>
           </div>
         </div>
-        <div id="journal-list" class="journal-list">
-          <div class="loading">Chargement du journal...</div>
-        </div>
+        <div id="journal-list"></div>
       </div>
 
-      <!-- ===== PNJ ===== -->
+      <!-- PNJ -->
       <div id="s-pnj" class="section">
         <div class="page-title"><i class="ti ti-masks-theater"></i> PNJ & Factions</div>
-        <div class="pnj-list">
-          <div class="pnj-card"><div class="pnj-avatar" style="background:var(--red-pale)">K</div><div><div class="pnj-name">Koben</div><div class="pnj-role">Assassin Kitsune — cache-œil</div><div class="pnj-desc">Originaire du même village détruit qu'Azarius. Motivations inconnues — ennemi ou allié caché ?</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div></div>
-          <div class="pnj-card"><div class="pnj-avatar" style="background:var(--red-pale)">RN</div><div><div class="pnj-name">La Rose Noire</div><div class="pnj-role">Secte criminelle — née en Auregia</div><div class="pnj-desc">Traque artefacts et reliques prophétiques. Veut utiliser Skarlath comme ancre rituelle. Emploie mercenaires et mages renégats.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div></div>
-          <div class="pnj-card"><div class="pnj-avatar" style="background:rgba(90,90,90,.08)">OS</div><div><div class="pnj-name">L'Ordre du Savoir</div><div class="pnj-role">Institution érudite ancestrale</div><div class="pnj-desc">Protège les connaissances interdites et prophéties sacrées. Intervient quand les équilibres sont menacés.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre / Ambigu</span></div></div>
-          <div class="pnj-card"><div class="pnj-avatar" style="background:var(--teal-pale)">S</div><div><div class="pnj-name">Skarlath</div><div class="pnj-role">Dragon de Nindey — Bête Rare</div><div class="pnj-desc">Cible de la Rose Noire. Lié à Nindey. Conscience propre — risque de basculer en Effroyable si actes atroces.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Allié (lié)</span></div></div>
-          <div class="pnj-card"><div class="pnj-avatar" style="background:rgba(90,90,90,.06)">MS</div><div><div class="pnj-name">Mira Solène</div><div class="pnj-role">Témoin clé — décédée</div><div class="pnj-desc">Témoin dans l'affaire de Sir de Vellune. Sa mort complique la situation du groupe.</div><span class="badge dead" style="margin-top:6px;display:inline-block;">Décédée</span></div></div>
-        </div>
+        <div class="pnj-card"><div class="pnj-av" style="background:var(--red-pale)">K</div><div><div class="pnj-name">Koben</div><div class="pnj-role">Assassin Kitsune — cache-œil</div><div class="pnj-desc">Originaire du même village détruit qu'Azarius. Motivations inconnues — ennemi ou allié caché ?</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div></div>
+        <div class="pnj-card"><div class="pnj-av" style="background:var(--red-pale)">RN</div><div><div class="pnj-name">La Rose Noire</div><div class="pnj-role">Secte criminelle — née en Auregia</div><div class="pnj-desc">Traque artefacts et reliques prophétiques. Veut utiliser Skarlath comme ancre rituelle.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div></div>
+        <div class="pnj-card"><div class="pnj-av" style="background:rgba(90,90,90,.08)">OS</div><div><div class="pnj-name">L'Ordre du Savoir</div><div class="pnj-role">Institution érudite ancestrale</div><div class="pnj-desc">Protège les connaissances interdites et prophéties sacrées. Intervient quand les équilibres sont menacés.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre / Ambigu</span></div></div>
+        <div class="pnj-card"><div class="pnj-av" style="background:var(--teal-pale)">S</div><div><div class="pnj-name">Skarlath</div><div class="pnj-role">Dragon de Nindey — Bête Rare</div><div class="pnj-desc">Cible de la Rose Noire. Lié à Nindey. Conscience propre — risque de basculer en Effroyable si actes atroces.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Allié (lié)</span></div></div>
+        <div class="pnj-card"><div class="pnj-av" style="background:rgba(90,90,90,.06)">MS</div><div><div class="pnj-name">Mira Solène</div><div class="pnj-role">Témoin clé — décédée</div><div class="pnj-desc">Témoin dans l'affaire de Sir de Vellune. Sa mort complique la situation du groupe.</div><span class="badge dead" style="margin-top:6px;display:inline-block;">Décédée</span></div></div>
       </div>
 
-      <!-- ===== ROYAUMES ===== -->
+      <!-- ROYAUMES -->
       <div id="s-royaumes" class="section">
         <div class="page-title"><i class="ti ti-world"></i> Les 12 Royaumes</div>
         <p style="font-size:13px;color:var(--ink-m);font-style:italic;margin-bottom:16px;">Autour du Lac sacré et de l'Île du Cœur, douze nations regardent vers la Prophétie des Douze Voies.</p>
-        <div class="royaumes-grid">
+        <div class="r-grid">
           <div class="r-card"><div class="r-name">République de Franxx</div><div class="r-desc">Berceau des Téméraires. Démocratie, diversité, esprit progressiste.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
           <div class="r-card"><div class="r-name">Royaume Auregia</div><div class="r-desc">Riche et fertile. Berceau de la Rose Noire.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
           <div class="r-card"><div class="r-name">Royaume Brumelonde</div><div class="r-desc">Royaume sylvestre, druides, protecteurs des forêts anciennes.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
@@ -739,25 +310,22 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         </div>
       </div>
 
-      <!-- ===== RACES ===== -->
+      <!-- RACES -->
       <div id="s-races" class="section">
         <div class="page-title"><i class="ti ti-dna"></i> Races jouables</div>
         <div id="races-container"></div>
       </div>
 
-      <!-- ===== CLASSES ===== -->
+      <!-- CLASSES -->
       <div id="s-classes" class="section">
         <div class="page-title"><i class="ti ti-sword"></i> Classes jouables</div>
-        <div class="grid3" id="classes-container"></div>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;" id="classes-container"></div>
       </div>
 
-      <!-- ===== DÉS ===== -->
+      <!-- DÉS -->
       <div id="s-des" class="section">
         <div class="page-title"><i class="ti ti-dice"></i> Lanceur de dés</div>
-        <div class="dice-result">
-          <div class="dice-num" id="dice-num">—</div>
-          <div class="dice-lbl" id="dice-lbl">Choisis un dé ci-dessous</div>
-        </div>
+        <div class="dice-result"><div class="dice-num" id="dice-num">—</div><div class="dice-lbl" id="dice-lbl">Choisis un dé</div></div>
         <div class="dice-grid">
           <div class="die-btn" onclick="roll(4)"><i class="ti ti-triangle"></i>D4</div>
           <div class="die-btn" onclick="roll(6)"><i class="ti ti-square"></i>D6</div>
@@ -768,59 +336,146 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
           <div class="die-btn" onclick="roll(100)"><i class="ti ti-circle"></i>D100</div>
         </div>
         <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--gold-d);margin-bottom:8px;">HISTORIQUE</div>
-        <div class="dice-hist" id="dice-hist"><div style="font-size:13px;color:var(--ink-l);font-style:italic;padding:8px;">Aucun lancer pour le moment...</div></div>
+        <div id="dice-hist"></div>
       </div>
 
-      <!-- ===== NOTES ===== -->
+      <!-- NOTES -->
       <div id="s-notes" class="section">
         <div class="page-title"><i class="ti ti-notes"></i> Notes partagées</div>
-        <div class="notes-wrap">
-          <textarea id="notes-area" onblur="saveNotes()" placeholder="Notes de session — indices, théories, rappels...">Chargement...</textarea>
-          <div class="notes-tags">
-            <div class="ntag" onclick="insertTag('#indices')">#indices</div>
-            <div class="ntag" onclick="insertTag('#suspects')">#suspects</div>
-            <div class="ntag" onclick="insertTag('#lieux')">#lieux</div>
-            <div class="ntag" onclick="insertTag('#théories')">#théories</div>
-            <div class="ntag" onclick="insertTag('#prophétie')">#prophétie</div>
-            <div class="ntag" onclick="insertTag('#objectifs')">#objectifs</div>
-          </div>
-          <div class="save-hint"><i class="ti ti-lock" style="vertical-align:-2px"></i> Les notes sont sauvegardées automatiquement et partagées avec tout le groupe.</div>
+        <textarea id="notes-area" onblur="saveNotes()" placeholder="Notes de session...">Chargement...</textarea>
+        <div class="ntags">
+          <div class="ntag" onclick="insertTag('#indices')">#indices</div>
+          <div class="ntag" onclick="insertTag('#suspects')">#suspects</div>
+          <div class="ntag" onclick="insertTag('#lieux')">#lieux</div>
+          <div class="ntag" onclick="insertTag('#théories')">#théories</div>
+          <div class="ntag" onclick="insertTag('#prophétie')">#prophétie</div>
+          <div class="ntag" onclick="insertTag('#objectifs')">#objectifs</div>
         </div>
+        <div style="font-size:11px;color:var(--ink-l);font-style:italic;margin-top:8px;"><i class="ti ti-lock" style="vertical-align:-2px"></i> Notes synchronisées en temps réel entre tous les joueurs.</div>
       </div>
 
     </main>
   </div>
 </div>
-
 <div id="toast"></div>
 
-<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, orderBy, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBVoehIzEZmS1oGAAoY9TEQbiN_27zM-8I",
-  authDomain: "alesia-campagne.firebaseapp.com",
-  projectId: "alesia-campagne",
-  storageBucket: "alesia-campagne.firebasestorage.app",
-  messagingSenderId: "212329289599",
-  appId: "1:212329289599:web:4b01da9de5b770fe46ec4a",
-  measurementId: "G-X3ZZNCCHTZ"
-};
-
-const app = initializeApp(firebaseConfig);
+const app = initializeApp({
+  apiKey:"AIzaSyBVoehIzEZmS1oGAAoY9TEQbiN_27zM-8I",
+  authDomain:"alesia-campagne.firebaseapp.com",
+  projectId:"alesia-campagne",
+  storageBucket:"alesia-campagne.firebasestorage.app",
+  messagingSenderId:"212329289599",
+  appId:"1:212329289599:web:4b01da9de5b770fe46ec4a"
+});
 const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// ---- AUTH ----
-window.signIn = async () => {
-  try { await signInWithPopup(auth, provider); }
-  catch(e){ console.error(e); }
+// Données par défaut des personnages
+const defaultChars = {
+  azarius:{
+    name:'Azarius',race:'Kitsune',genre:'Mâle',classe:'Arcaniste',element:'🔥 Feu',niveau:'1',
+    pv:'—',mana:'—',pv_max:'—',mana_max:'—',
+    phys:'70',social:'40',mental:'60',
+    valeurs:'Indépendant\nCupide\nAdaptabilité',
+    langues:'Commun, Kitsune, Démoniaque',
+    competences:[
+      {n:'Puissance',v:4},{n:'Finesse',v:3},{n:'Aura',v:3},
+      {n:'Relation',v:1},{n:'Instinct',v:5},{n:'Savoir (Érudit)',v:1}
+    ],
+    armes:'—',armures:'—',
+    dons:'—',
+    equip:'Rations ×19, Sac enchanté ×1, Kit médical ×4, Boussole magique ×1, Parchemin démon ×20, Corde 11m ×1, Livre Orc ×1',
+    race_bonus:'🟢 Ruse +20% · Vivacité +10%\n🔴 Force −20% · Social (confiance) −25%',
+    notes:'',
+    color:'rgba(201,168,76,.15)',init:'A'
+  },
+  dy:{
+    name:'Dy Son',race:'Elfe',genre:'Femme',classe:'Arcaniste',element:'💨 Air',niveau:'1',
+    pv:'7',mana:'11',pv_max:'7',mana_max:'11',
+    phys:'35',social:'45',mental:'90',
+    valeurs:'Liberté\nSavoir\nAgnostique',
+    langues:'Commun, Elfique, Démoniaque',
+    competences:[
+      {n:'Puissance',v:2},{n:'Finesse',v:2},{n:'Aura',v:4},
+      {n:'Beauté naturelle',v:1},{n:'Relation',v:1},{n:'Instinct',v:3},
+      {n:'Savoir (Expert sorts)',v:6},{n:'Savoir interdit',v:1},{n:'Rat de bibliothèque',v:1}
+    ],
+    armes:'Baguette (D4/−3), Dague (D6/+1)',
+    armures:'Robe Arcaniste enchantée (RD2), Anneau Dieu du Vent (RD2 proj.)',
+    dons:'🌬 Déplacement d\'Air (Mana 1)\n🌬 Mur d\'Air (Mana 6)\n🌬 Lame d\'Air D8+2 (Mana 3)\n🌬 Téléportation 15m (Mana 2+)',
+    equip:'Rations ×5, Kit médical ×4, Potion vie D6 ×3, Livre de Magie ×1, Livre Ursien 3/12, Corde 10m ×1, Dague rituel ×1',
+    race_bonus:'🟢 Perception +20% · Savoir +10%\n🔴 Fragilité −10% · Social grossiers −20%',
+    notes:'Préjugé Kitsune : −20% social, +10% combat vs Kitsune',
+    color:'rgba(29,107,90,.1)',init:'D'
+  },
+  firm:{
+    name:'Firm',race:'Swamninyx',genre:'Homme',classe:'Gardien',element:'🌿 Nature',niveau:'1',
+    pv:'—',mana:'—',pv_max:'—',mana_max:'—',
+    phys:'65',social:'50',mental:'55',
+    valeurs:'Hypocrite\nRespecteux\nLoyal',
+    langues:'Commun, Swamninyx, Léonide',
+    competences:[
+      {n:'Puissance',v:4},{n:'Finesse',v:3},{n:'Aura',v:2},
+      {n:'Relation',v:3},{n:'Instinct',v:3},{n:'Savoir (Herboriste)',v:3},{n:'Druide',v:1}
+    ],
+    armes:'—',armures:'—',
+    dons:'⚔ Châtiment Sacré : +10% vs créatures maléfiques\n🛡 Provoc\' Sauvage : attire les ennemis',
+    equip:'Rations ×6, Bandages ×3, Potion PV D10 ×1, Allumettes ×11, Planches ×12, Clous ×12, Lanterne ×1',
+    race_bonus:'🟢 Agilité +20% · Discrétion +10%\n🔴 Social −10% autres races · Force −10%',
+    notes:'',
+    color:'rgba(83,74,183,.1)',init:'F'
+  },
+  mwassa:{
+    name:'Mwassa',race:'Kitsune',genre:'Femme',classe:'Oracle',element:'💧 Eaux',niveau:'1',
+    pv:'—',mana:'—',pv_max:'—',mana_max:'—',
+    phys:'35',social:'65',mental:'70',
+    valeurs:'Altruiste\nOpportuniste\nPieuse',
+    langues:'Commun, Kitsune, Nain',
+    competences:[
+      {n:'Puissance',v:1},{n:'Finesse',v:3},{n:'Aura',v:3},
+      {n:'Relation',v:4},{n:'Experte en sorts',v:1},{n:'Instinct',v:4},
+      {n:'Savoir (Charmeuse)',v:3},{n:'Alchimie',v:1}
+    ],
+    armes:'—',armures:'—',
+    dons:'✨ Soin Divin : relance soin raté 1×/combat\n🤝 Pacte des 12 : Mana full 1×/jour',
+    equip:'Rations ×2, Balles ×19, Kit médical ×1, Kit crochetage ×3, Anneau de Mana ×1, Livre Skaven ×1, Crucifix argent ×1',
+    race_bonus:'🟢 Ruse +20% · Vivacité +10%\n🔴 Force −20% · Social (confiance) −25%',
+    notes:'',
+    color:'rgba(29,107,90,.12)',init:'M'
+  },
+  nindey:{
+    name:'Nindey',race:'Nain',genre:'Homme',classe:'Cogneur',element:'⚡ Foudre',niveau:'1',
+    pv:'—',mana:'—',pv_max:'—',mana_max:'—',
+    phys:'80',social:'20',mental:'50',
+    valeurs:'Tête brûlée\nAlcoolique\nChasseur de trésor',
+    langues:'Commun, Nain, Draconique',
+    competences:[
+      {n:'Puissance',v:5},{n:'Finesse',v:3},{n:'Aura',v:2},
+      {n:'Relation',v:2},{n:'Maniement d\'arme',v:1},{n:'Instinct',v:4},
+      {n:'Savoir (Expert Runique)',v:1},{n:'Forgeron',v:1}
+    ],
+    armes:'—',armures:'—',
+    dons:'⚔ Maîtrise des Armes : relance attaque 1×/combat\n💥 Baroud d\'Honneur : <30% PV → +2 dégâts',
+    equip:'Rations ×18, Kit médical ×2, Livre Orc ×1, Rune Majeur Feu (50k PO), Corde 10m ×1, Casserole ×1',
+    race_bonus:'🟢 Forgeron +20% · Vision souterraine +10%\n🔴 Vitesse −10% · Social hors nains −10%',
+    notes:'',
+    color:'rgba(139,32,32,.1)',init:'N'
+  }
 };
-window.signOut = async () => {
+
+// Cache local
+let charData = JSON.parse(JSON.stringify(defaultChars));
+let currentUser = null;
+
+// AUTH
+window.signIn = async () => { try { await signInWithPopup(auth, provider); } catch(e){ console.error(e); } };
+window.doSignOut = async () => {
   await signOut(auth);
   document.getElementById('auth-overlay').classList.remove('hidden');
   document.getElementById('app').classList.add('hidden');
@@ -828,204 +483,325 @@ window.signOut = async () => {
 
 onAuthStateChanged(auth, user => {
   if(user){
+    currentUser = user;
     document.getElementById('auth-overlay').classList.add('hidden');
     document.getElementById('app').classList.remove('hidden');
-    document.getElementById('user-name').textContent = user.displayName?.split(' ')[0] || 'Aventurier';
-    document.getElementById('user-avatar').src = user.photoURL || '';
+    document.getElementById('uname').textContent = user.displayName?.split(' ')[0] || 'Aventurier';
+    document.getElementById('uav').src = user.photoURL || '';
+    // Bannière MJ si c'est Tanguy
+    if(user.email === 'toulousetroll@gmail.com' || user.displayName?.toLowerCase().includes('tanguy') || user.displayName?.toUpperCase().includes('LALIGUE')){
+      document.getElementById('mj-banner').style.display = 'flex';
+    }
     loadAll();
-  } else {
-    document.getElementById('auth-overlay').classList.remove('hidden');
-    document.getElementById('app').classList.add('hidden');
   }
 });
 
-// ---- LOAD ALL ----
 async function loadAll(){
-  loadCharStats();
+  await loadAllChars();
+  renderCurrentChar();
   loadNotes();
   listenJournal();
-  loadCharNotes();
 }
 
-// ---- PV / MANA (temps réel) ----
-const chars = ['azarius','dy','firm','mwassa','nindey'];
-async function loadCharStats(){
-  chars.forEach(async name => {
-    const ref = doc(db, 'characters', name);
-    onSnapshot(ref, snap => {
-      const data = snap.exists() ? snap.data() : {};
-      const pv = data.pv ?? '—';
-      const mana = data.mana ?? '—';
-      const pvEl = document.getElementById(`${name}-pv`);
-      const manaEl = document.getElementById(`${name}-mana`);
-      if(pvEl) pvEl.textContent = pv;
-      if(manaEl) manaEl.textContent = mana;
-    });
-  });
+// CHARGER TOUS LES PERSOS DEPUIS FIREBASE
+async function loadAllChars(){
+  const names = ['azarius','dy','firm','mwassa','nindey'];
+  for(const name of names){
+    const snap = await getDoc(doc(db,'characters',name));
+    if(snap.exists()){
+      charData[name] = {...defaultChars[name], ...snap.data()};
+    }
+  }
 }
 
-window.adjustStat = async (name, stat, delta) => {
-  const ref = doc(db, 'characters', name);
-  const snap = await getDoc(ref);
-  const data = snap.exists() ? snap.data() : {};
-  const current = typeof data[stat] === 'number' ? data[stat] : 0;
-  const newVal = Math.max(0, current + delta);
-  await setDoc(ref, { [stat]: newVal }, { merge: true });
-  toast(`${name} — ${stat.toUpperCase()} : ${newVal}`);
+// SAUVEGARDER UN PERSO
+async function saveChar(name){
+  await setDoc(doc(db,'characters',name), charData[name], {merge:true});
+  toast('Sauvegardé ✓');
+}
+
+// RENDU DYNAMIQUE DU PERSO COURANT
+let currentChar = 'azarius';
+window.showChar = (name, el) => {
+  document.querySelectorAll('.char-sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.char-tab').forEach(t=>t.classList.remove('active'));
+  currentChar = name;
+  renderChar(name);
+  document.getElementById('char-'+name)?.classList.add('active');
+  el.classList.add('active');
 };
 
-// ---- NOTES PERSO ----
-async function loadCharNotes(){
-  chars.forEach(async name => {
-    const ref = doc(db, 'characters', name);
-    const snap = await getDoc(ref);
-    if(snap.exists() && snap.data().note){
-      const el = document.getElementById(`${name}-note-display`);
-      if(el) el.textContent = snap.data().note;
-    }
-  });
+function renderCurrentChar(){ renderChar(currentChar); }
+
+function renderChar(name){
+  const c = charData[name];
+  const container = document.getElementById('chars-container');
+
+  // Créer ou récupérer la section
+  let sec = document.getElementById('char-'+name);
+  if(!sec){ sec = document.createElement('div'); sec.id='char-'+name; sec.className='char-sec'; container.appendChild(sec); }
+  if(name === currentChar) sec.classList.add('active');
+
+  const compsHtml = (c.competences||[]).map((comp,i)=>{
+    const dots = Array.from({length:6},(_,d)=>`<div class="dot${d<comp.v?' on':''}" onclick="toggleDot('${name}',${i},${d})"></div>`).join('');
+    return `<div class="comp-row"><span class="comp-name ef" onclick="editField('${name}','competences_name_${i}')">${comp.n}</span><div class="dots">${dots}</div></div>`;
+  }).join('');
+
+  sec.innerHTML = `
+  <div class="grid2">
+    <div class="card">
+      <div class="hero-head">
+        <div class="avatar" style="background:${c.color}">${c.init}</div>
+        <div>
+          <div class="hero-name"><span class="ef" onclick="editField('${name}','name')">${c.name}</span></div>
+          <div class="hero-sub">
+            <span class="ef" onclick="editField('${name}','race')">${c.race}</span> ·
+            <span class="ef" onclick="editField('${name}','genre')">${c.genre}</span> ·
+            <span class="ef" onclick="editField('${name}','classe')">${c.classe}</span>
+          </div>
+          <div class="hero-badges">
+            <span class="badge elem"><span class="ef" onclick="editField('${name}','element')">${c.element}</span></span>
+            <span class="badge">Niv. <span class="ef" onclick="editField('${name}','niveau')">${c.niveau}</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="pv-grid">
+        <div class="pv-box">
+          <div class="pv-big pv" id="${name}-pv">${c.pv}</div>
+          <div class="pv-lbl">PV / <span class="ef" onclick="editField('${name}','pv_max')">${c.pv_max}</span></div>
+          <div class="pv-controls">
+            <button class="pv-btn" onclick="adj('${name}','pv',-1)">−</button>
+            <button class="pv-btn" onclick="adj('${name}','pv',1)">+</button>
+          </div>
+        </div>
+        <div class="pv-box">
+          <div class="pv-big mana" id="${name}-mana">${c.mana}</div>
+          <div class="pv-lbl">Mana / <span class="ef" onclick="editField('${name}','mana_max')">${c.mana_max}</span></div>
+          <div class="pv-controls">
+            <button class="pv-btn" onclick="adj('${name}','mana',-1)">−</button>
+            <button class="pv-btn" onclick="adj('${name}','mana',1)">+</button>
+          </div>
+        </div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-head">
+          <span class="stat-name">Physique</span>
+          <span class="stat-val"><span class="ef" onclick="editField('${name}','phys')">${c.phys}</span> %</span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:${c.phys}%"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-head">
+          <span class="stat-name">Social</span>
+          <span class="stat-val"><span class="ef" onclick="editField('${name}','social')">${c.social}</span> %</span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:${c.social}%"></div></div>
+      </div>
+      <div class="stat-row">
+        <div class="stat-head">
+          <span class="stat-name">Mental</span>
+          <span class="stat-val"><span class="ef" onclick="editField('${name}','mental')">${c.mental}</span> %</span>
+        </div>
+        <div class="bar"><div class="bar-fill" style="width:${c.mental}%"></div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="sdiv">Valeurs RP</div>
+      <div style="margin-bottom:12px">
+        ${(c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>`<div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">${v}</div>`).join('')}
+        <span class="ef" style="font-size:11px;color:var(--ink-l);" onclick="editFieldArea('${name}','valeurs')">✏ Modifier les valeurs</span>
+      </div>
+      <div class="sdiv">Langues</div>
+      <div style="margin-bottom:12px;font-size:13px;">
+        <span class="ef" onclick="editField('${name}','langues')">${c.langues}</span>
+      </div>
+      <div class="sdiv">Compétences</div>
+      <div class="comp-list">${compsHtml}</div>
+    </div>
+    <div class="card">
+      <div class="sdiv">Armement</div>
+      <div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armes')">${(c.armes||'—').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Armures</div>
+      <div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armures')">${(c.armures||'—').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Dons & Capacités</div>
+      <div style="font-size:13px;"><span class="ef" onclick="editFieldArea('${name}','dons')">${(c.dons||'—').replace(/\n/g,'<br>')}</span></div>
+    </div>
+    <div class="card">
+      <div class="sdiv">Équipement</div>
+      <div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','equip')">${(c.equip||'—').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Bonus de race</div>
+      <div style="font-size:11px;color:var(--ink-l);line-height:1.6;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','race_bonus')">${(c.race_bonus||'').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Notes personnelles</div>
+      <div style="font-size:13px;color:var(--ink-m);font-style:italic;min-height:24px;">
+        <span class="ef" onclick="editFieldArea('${name}','notes')">${c.notes||'Cliquer pour ajouter des notes...'}</span>
+      </div>
+    </div>
+  </div>`;
 }
 
-window.editCharNote = async (name) => {
-  const el = document.getElementById(`${name}-note-display`);
-  const old = el.textContent;
-  const input = document.createElement('textarea');
-  input.className = 'edit-textarea';
-  input.value = old;
-  input.rows = 3;
-  el.replaceWith(input);
+// EDITION D'UN CHAMP SIMPLE
+window.editField = (charName, field) => {
+  const c = charData[charName];
+  // Trouver l'élément ef qui a été cliqué
+  const allEf = document.querySelectorAll(`#char-${charName} .ef`);
+  let targetEl = null;
+  allEf.forEach(el => {
+    if(el.onclick && el.onclick.toString().includes(`'${field}'`)) targetEl = el;
+  });
+  if(!targetEl) return;
+  const oldVal = c[field] ?? '';
+  const input = document.createElement('input');
+  input.className = 'ef-input';
+  input.value = oldVal;
+  input.style.width = Math.max(60, oldVal.toString().length * 9) + 'px';
+  targetEl.replaceWith(input);
   input.focus();
-  input.onblur = async () => {
-    const val = input.value.trim() || 'Cliquer pour ajouter...';
-    const ref = doc(db, 'characters', name);
-    await setDoc(ref, { note: val }, { merge: true });
-    const span = document.createElement('div');
-    span.className = 'editable';
-    span.id = `${name}-note-display`;
-    span.style.cssText = 'font-style:italic;color:var(--ink-m);font-size:12px;min-height:24px;';
-    span.textContent = val;
-    span.onclick = () => editCharNote(name);
-    input.replaceWith(span);
-    toast('Note sauvegardée !');
+  input.select();
+  const save = async () => {
+    const newVal = input.value.trim();
+    charData[charName][field] = newVal;
+    await saveChar(charName);
+    renderChar(charName);
+  };
+  input.onblur = save;
+  input.onkeydown = e => { if(e.key==='Enter') save(); if(e.key==='Escape') renderChar(charName); };
+};
+
+// EDITION D'UN CHAMP TEXTAREA
+window.editFieldArea = (charName, field) => {
+  const c = charData[charName];
+  const allEf = document.querySelectorAll(`#char-${charName} .ef`);
+  let targetEl = null;
+  allEf.forEach(el => {
+    if(el.onclick && el.onclick.toString().includes(`editFieldArea('${charName}','${field}')`)) targetEl = el;
+  });
+  if(!targetEl) return;
+  const oldVal = c[field] ?? '';
+  const ta = document.createElement('textarea');
+  ta.className = 'ef-area';
+  ta.value = oldVal;
+  ta.rows = 4;
+  targetEl.replaceWith(ta);
+  ta.focus();
+  ta.onblur = async () => {
+    charData[charName][field] = ta.value.trim();
+    await saveChar(charName);
+    renderChar(charName);
   };
 };
 
-// ---- NOTES PARTAGÉES ----
+// TOGGLE DOT (compétences)
+window.toggleDot = async (charName, compIdx, dotIdx) => {
+  const comp = charData[charName].competences[compIdx];
+  comp.v = comp.v === dotIdx + 1 ? dotIdx : dotIdx + 1;
+  renderChar(charName);
+  await saveChar(charName);
+};
+
+// PV/MANA +/-
+window.adj = async (name, stat, delta) => {
+  const c = charData[name];
+  const cur = isNaN(parseInt(c[stat])) ? 0 : parseInt(c[stat]);
+  const newVal = Math.max(0, cur + delta);
+  charData[name][stat] = String(newVal);
+  document.getElementById(`${name}-${stat}`).textContent = newVal;
+  await setDoc(doc(db,'characters',name), {[stat]: String(newVal)}, {merge:true});
+  toast(`${name} ${stat.toUpperCase()} : ${newVal}`);
+};
+
+// NOTES
 async function loadNotes(){
-  const ref = doc(db, 'shared', 'notes');
+  const ref = doc(db,'shared','notes');
   onSnapshot(ref, snap => {
     const area = document.getElementById('notes-area');
-    if(snap.exists()) area.value = snap.data().content || '';
-    else area.value = `• Tolosa — groupe banni, accusés du meurtre de Sir de Vellune
+    if(snap.exists()) area.value = snap.data().content||'';
+    else area.value=`• Tolosa — groupe banni, accusés du meurtre de Sir de Vellune
 • La Lanterne — navire clé pour l'infiltration
 • Koben (Kitsune borgne) — même village qu'Azarius
 • Rose Noire — née en Auregia, veut Skarlath pour un rituel
 • Mira Solène — témoin décédée
-• Prophétie des Douze Voies — lien avec l'Île du Cœur
-• Skarlath — Dragon de Nindey, Bête Rare`;
+• Prophétie des Douze Voies — lien avec l'Île du Cœur`;
   });
 }
-
 window.saveNotes = async () => {
-  const content = document.getElementById('notes-area').value;
-  await setDoc(doc(db, 'shared', 'notes'), { content, updated: serverTimestamp() });
+  await setDoc(doc(db,'shared','notes'),{content:document.getElementById('notes-area').value,updated:serverTimestamp()});
   toast('Notes sauvegardées ✓');
 };
+window.insertTag = tag => { const a=document.getElementById('notes-area'); a.value+='\n'+tag+' '; a.focus(); };
 
-window.insertTag = (tag) => {
-  const area = document.getElementById('notes-area');
-  area.value += '\n' + tag + ' ';
-  area.focus();
-};
-
-// ---- JOURNAL ----
+// JOURNAL
 function listenJournal(){
-  const q = query(collection(db, 'journal'), orderBy('createdAt', 'asc'));
+  const q = query(collection(db,'journal'),orderBy('createdAt','asc'));
   onSnapshot(q, snap => {
     const list = document.getElementById('journal-list');
     if(snap.empty){
-      list.innerHTML = `
-        <div class="j-card">
-          <div class="j-meta"><span class="j-num">Session 1</span><span class="j-date">Première session</span></div>
-          <div class="j-title">Les débuts à Tolosa</div>
-          <div class="j-text">Le groupe se retrouve à Tolosa. Leur premier contrat les place dans le collimateur de la Rose Noire...</div>
-        </div>
-        <div class="j-card">
-          <div class="j-meta"><span class="j-num">Dernière session</span><span class="j-date">Session récente</span></div>
-          <div class="j-title">Accusés du meurtre de Sir de Vellune</div>
-          <div class="j-text">Bannis de Tolosa. Leur seule chance : le navire <em>La Lanterne</em>. Koben rôde dans l'ombre. Mira Solène, témoin clé, est décédée.</div>
-        </div>`;
+      list.innerHTML=`
+        <div class="j-card"><div class="j-meta"><span class="j-num">Session 1</span><span class="j-date">Première session</span></div><div class="j-title">Les débuts à Tolosa</div><div class="j-text">Le groupe se retrouve à Tolosa. Leur premier contrat les place dans le collimateur de la Rose Noire...</div></div>
+        <div class="j-card"><div class="j-meta"><span class="j-num">Session récente</span></div><div class="j-title">Accusés du meurtre de Sir de Vellune</div><div class="j-text">Bannis de Tolosa. Seule chance : <em>La Lanterne</em>. Koben rôde. Mira Solène décédée.</div></div>`;
       return;
     }
-    list.innerHTML = '';
-    snap.docs.forEach((d, i) => {
-      const data = d.data();
-      const date = data.createdAt?.toDate?.()?.toLocaleDateString('fr-FR') || '—';
-      list.innerHTML += `<div class="j-card">
-        <div class="j-meta"><span class="j-num">Session ${i+1}</span><span class="j-date">${date}</span></div>
-        <div class="j-title">${data.title}</div>
-        <div class="j-text">${data.text}</div>
-      </div>`;
+    list.innerHTML='';
+    snap.docs.forEach((d,i)=>{
+      const data=d.data();
+      const date=data.createdAt?.toDate?.()?.toLocaleDateString('fr-FR')||'—';
+      list.innerHTML+=`<div class="j-card"><div class="j-meta"><span class="j-num">Session ${i+1}</span><span class="j-date">${date}</span></div><div class="j-title">${data.title}</div><div class="j-text">${data.text}</div></div>`;
     });
   });
 }
-
-window.showAddSession = () => { document.getElementById('add-session-form').style.display = 'block'; };
-window.hideAddSession = () => { document.getElementById('add-session-form').style.display = 'none'; };
+window.showAddSession = ()=>{ document.getElementById('add-form').style.display='block'; };
+window.hideAddSession = ()=>{ document.getElementById('add-form').style.display='none'; };
 window.saveSession = async () => {
-  const title = document.getElementById('session-title').value.trim();
-  const text = document.getElementById('session-text').value.trim();
-  if(!title || !text){ toast('Titre et résumé requis'); return; }
-  await addDoc(collection(db, 'journal'), { title, text, createdAt: serverTimestamp() });
-  document.getElementById('session-title').value = '';
-  document.getElementById('session-text').value = '';
+  const t=document.getElementById('s-title').value.trim();
+  const x=document.getElementById('s-text').value.trim();
+  if(!t||!x){toast('Titre et résumé requis');return;}
+  await addDoc(collection(db,'journal'),{title:t,text:x,createdAt:serverTimestamp()});
+  document.getElementById('s-title').value='';
+  document.getElementById('s-text').value='';
   hideAddSession();
   toast('Session ajoutée !');
 };
+
+// Écoute temps réel des PV/Mana des autres joueurs
+['azarius','dy','firm','mwassa','nindey'].forEach(name=>{
+  onSnapshot(doc(db,'characters',name), snap=>{
+    if(!snap.exists()) return;
+    const data=snap.data();
+    if(data.pv!==undefined){ charData[name].pv=data.pv; const el=document.getElementById(`${name}-pv`); if(el) el.textContent=data.pv; }
+    if(data.mana!==undefined){ charData[name].mana=data.mana; const el=document.getElementById(`${name}-mana`); if(el) el.textContent=data.mana; }
+  });
+});
 </script>
 
 <script>
-// ---- NAV ----
-function showSection(id, el){
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+function showSec(id,el){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   document.getElementById('s-'+id).classList.add('active');
   el.classList.add('active');
 }
-function showChar(id, el){
-  document.querySelectorAll('.char-sec').forEach(s => s.classList.remove('active'));
-  document.querySelectorAll('.char-tab').forEach(t => t.classList.remove('active'));
-  document.getElementById('char-'+id).classList.add('active');
-  el.classList.add('active');
-}
 
-// ---- DÉS ----
-let diceHist = [];
+// DÉS
+let dh=[];
 function roll(f){
-  const r = Math.floor(Math.random()*f)+1;
-  const el = document.getElementById('dice-num');
-  el.classList.remove('roll-anim');
-  void el.offsetWidth;
-  el.textContent = r;
-  el.classList.add('roll-anim');
-  document.getElementById('dice-lbl').textContent = `Résultat sur D${f}`;
-  diceHist.unshift({f,r});
-  if(diceHist.length>6) diceHist.pop();
-  document.getElementById('dice-hist').innerHTML = diceHist.map(h =>
-    `<div class="dice-hist-row"><span>D${h.f}</span><span>${h.r}</span></div>`).join('');
+  const r=Math.floor(Math.random()*f)+1;
+  const el=document.getElementById('dice-num');
+  el.classList.remove('roll-anim');void el.offsetWidth;
+  el.textContent=r;el.classList.add('roll-anim');
+  document.getElementById('dice-lbl').textContent=`Résultat sur D${f}`;
+  dh.unshift({f,r});if(dh.length>6)dh.pop();
+  document.getElementById('dice-hist').innerHTML=dh.map(h=>`<div class="dh-row"><span>D${h.f}</span><span>${h.r}</span></div>`).join('');
 }
 
-// ---- TOAST ----
+// TOAST
 function toast(msg){
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2500);
 }
-window.toast = toast;
+window.toast=toast;
 
-// ---- RACES ----
-const races = [
+// RACES & CLASSES
+const races=[
   {n:'Swamninyx',sub:'Homme-chat',bon:['Agilité +20%','Discrétion +10%'],mal:['Social −10% autres races','Force & CAC −10%']},
   {n:'Léonide',sub:'Homme-lion',bon:['Force & CAC +20%','Intimidation +10%'],mal:['Agilité −10%','Espaces confinés −10%']},
   {n:'Humain',sub:'',bon:['Apprentissage +10%','Volonté +10%'],mal:['Aucun bonus racial >+10%','Magie ancienne −10%']},
@@ -1033,62 +809,34 @@ const races = [
   {n:'Elfe',sub:'',bon:['Perception +20%','Savoir historique/magique +10%'],mal:['Résistance physique −10%','Social grossiers −20%']},
   {n:'Ent',sub:'Arbre vivant',bon:['Résistance physique +30%','Immunité poisons naturels'],mal:['Vitesse/esquive −30%','Précision/discrétion −20%']},
   {n:'Draconien',sub:'Homme-lézard',bon:['Sang-froid mental +20%','Survie milieux hostiles +20%'],mal:['Jets froid −20%','Magie rituelle −30%']},
-  {n:'Hin',sub:'Semi-homme',bon:['Discrétion +20%','Chance Hin +20% (+1 relance)'],mal:['Force & armes −30%','CAC vs grandes créatures −30%']},
+  {n:'Hin',sub:'Semi-homme',bon:['Discrétion +20%','Chance Hin +20%'],mal:['Force & armes −30%','CAC vs grandes créatures −30%']},
   {n:'Kitsune',sub:'Homme-renard',bon:['Ruse/tromperie +20%','Rapidité/esquive +10%'],mal:['Force −20%','Social (confiance) −25%']},
   {n:'Bauvidé',sub:'Minotaure',bon:['Force & CAC +30%','Intimidation +20%'],mal:['Esquive/discrétion −30%','Sang-froid vs provocation −30%']},
   {n:'Ursien',sub:'Homme-ours',bon:['Endurance/récupération +30%','Survie naturelle +20%'],mal:['Vitesse/esquive −20%','Précision/discrétion −20%']},
-  {n:'Skaven',sub:'Homme-rat',bon:['Rapidité/esquive/fuite +30%','Survie urbaine/souterraine +20%'],mal:['Sang-froid vs peur −20%','Social (confiance) −40%']}
+  {n:'Skaven',sub:'Homme-rat',bon:['Rapidité/fuite +30%','Survie urbaine +20%'],mal:['Sang-froid −20%','Social (confiance) −40%']}
 ];
-const classes = [
-  {n:'Rôdeur',sub:'Archer',pv:'+0',mana:'+0',arm:'+0',caps:['Maîtrise Nature : +10% Survie, Pistage','Tir de Précision : +20% distance 1×/combat','Esquive Instinctive : relance esquive 1×/combat']},
-  {n:'Gardien',sub:'Paladin',pv:'+2',mana:'+0',arm:'+1',caps:['Châtiment Sacré : +10% vs maléfiques','Provoc\' Sauvage : attire les ennemis']},
-  {n:'Lames Noires',sub:'Assassin / Voleur',pv:'+0',mana:'+0',arm:'Impossible',caps:['Frappe Sournoise : ×2 dégâts surprise','Maître des Ombres : relance discrétion']},
+const classes=[
+  {n:'Rôdeur',sub:'Archer',pv:'+0',mana:'+0',arm:'+0',caps:['Maîtrise Nature : +10% Survie/Pistage','Tir Précision : +20% distance 1×/combat','Esquive Instinctive : relance 1×/combat']},
+  {n:'Gardien',sub:'Paladin',pv:'+2',mana:'+0',arm:'+1',caps:['Châtiment Sacré : +10% vs maléfiques','Provoc\' Sauvage : attire ennemis']},
+  {n:'Lames Noires',sub:'Assassin',pv:'+0',mana:'+0',arm:'Impossible',caps:['Frappe Sournoise : ×2 dégâts surprise','Maître des Ombres : relance discrétion']},
   {n:'Arcaniste',sub:'Mage',pv:'+0',mana:'+2',arm:'+0',caps:['Maîtrise des Arcanes : relance sort 1×/combat','Connaissance Interdite : relance Savoir']},
   {n:'Oracle',sub:'Prêtre',pv:'+1',mana:'+1',arm:'Impossible',caps:['Soin Divin : relance soin 1×/combat','Pacte des 12 : Mana full 1×/jour']},
-  {n:'Cogneur',sub:'Guerrier',pv:'+0',mana:'−1',arm:'+2 dégâts',caps:['Maîtrise des Armes : relance attaque 1×/combat','Baroud d\'honneur : <30% PV → +2 dégâts']},
-  {n:'Troubadour',sub:'Barde',pv:'+0',mana:'+0',arm:'+0',caps:['Ruse Scénique : relance social 1×/combat','Improvisation : +30% jets sociaux avec instrument']}
+  {n:'Cogneur',sub:'Guerrier',pv:'+0',mana:'−1',arm:'+2 dégâts',caps:['Maîtrise des Armes : relance 1×/combat','Baroud d\'honneur : <30% PV → +2 dégâts']},
+  {n:'Troubadour',sub:'Barde',pv:'+0',mana:'+0',arm:'+0',caps:['Ruse Scénique : relance social 1×/combat','Improvisation : +30% social avec instrument']}
 ];
 
-document.getElementById('races-container').innerHTML = `<div style="display:flex;flex-direction:column;gap:10px;">` +
-  races.map((r,i) => `
-  <div class="card">
-    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRace(${i})">
-      <div><strong style="font-family:'Cinzel',serif;font-size:13px;">${r.n}</strong>${r.sub?' <span style="font-style:italic;color:var(--ink-m);font-size:12px;">— '+r.sub+'</span>':''}</div>
-      <i class="ti ti-chevron-down" id="race-ic-${i}" style="color:var(--gold-d);transition:transform .2s;"></i>
-    </div>
-    <div id="race-body-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);">
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-        <div style="background:var(--teal-pale);border:1px solid rgba(29,107,90,.2);border-radius:8px;padding:8px;">
-          <div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:4px;">BONUS</div>
-          ${r.bon.map(b=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">+ ${b}</div>`).join('')}
-        </div>
-        <div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px;">
-          <div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:4px;">MALUS</div>
-          ${r.mal.map(m=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">− ${m}</div>`).join('')}
-        </div>
-      </div>
-    </div>
-  </div>`).join('') + `</div>`;
+document.getElementById('races-container').innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+
+  races.map((r,i)=>`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRace(${i})"><div><strong style="font-family:'Cinzel',serif;font-size:13px;">${r.n}</strong>${r.sub?' <span style="font-style:italic;color:var(--ink-m);font-size:12px;">— '+r.sub+'</span>':''}</div><i class="ti ti-chevron-down" id="ric-${i}" style="color:var(--gold-d);transition:transform .2s;"></i></div><div id="rb-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--teal-pale);border:1px solid rgba(29,107,90,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:4px;">BONUS</div>${r.bon.map(b=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">+ ${b}</div>`).join('')}</div><div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:4px;">MALUS</div>${r.mal.map(m=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">− ${m}</div>`).join('')}</div></div></div></div>`).join('')+'</div>';
 
-document.getElementById('classes-container').innerHTML = classes.map(c => `
-  <div class="card">
-    <div style="font-family:'Cinzel',serif;font-size:13px;color:var(--ink);margin-bottom:2px;">${c.n}</div>
-    <div style="font-size:11px;color:var(--ink-m);font-style:italic;margin-bottom:8px;">${c.sub}</div>
-    <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;">
-      <span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span>
-    </div>
-    <div>${c.caps.map(cap=>`<div style="font-size:12px;color:var(--ink-m);padding-left:8px;border-left:2px solid var(--gold);margin-bottom:4px;">${cap}</div>`).join('')}</div>
-  </div>`).join('');
+document.getElementById('classes-container').innerHTML=classes.map(c=>`<div class="card"><div style="font-family:'Cinzel',serif;font-size:13px;color:var(--ink);margin-bottom:2px;">${c.n}</div><div style="font-size:11px;color:var(--ink-m);font-style:italic;margin-bottom:8px;">${c.sub}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>${c.caps.map(cap=>`<div style="font-size:12px;color:var(--ink-m);padding-left:8px;border-left:2px solid var(--gold);margin-bottom:4px;">${cap}</div>`).join('')}</div>`).join('');
 
 function toggleRace(i){
-  const b = document.getElementById(`race-body-${i}`);
-  const ic = document.getElementById(`race-ic-${i}`);
-  const open = b.style.display === 'block';
-  b.style.display = open ? 'none' : 'block';
-  ic.style.transform = open ? '' : 'rotate(180deg)';
+  const b=document.getElementById('rb-'+i);
+  const ic=document.getElementById('ric-'+i);
+  const open=b.style.display==='block';
+  b.style.display=open?'none':'block';
+  ic.style.transform=open?'':'rotate(180deg)';
 }
 </script>
-
 </body>
 </html>
-HTMLEOF
