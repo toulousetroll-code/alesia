@@ -20,9 +20,17 @@
   --blue:#1a4a7a;--blue-pale:rgba(26,74,122,0.08);
   --shadow:0 2px 12px rgba(44,36,22,0.1);
   --radius:10px;--sidebar:210px;
+  /* Design custom (overridable) */
+  --bg-image:none;
+  --bg-overlay:rgba(245,239,224,0.0);
+  --header-bg:var(--ink);
+  --nav-bg:var(--surf);
+  --accent:var(--gold);
 }
 html,body{height:100%;background:var(--parch);}
 body{font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;flex-direction:column;}
+body::before{content:'';position:fixed;inset:0;background:var(--bg-image) center/cover no-repeat;opacity:1;z-index:-2;pointer-events:none;}
+body::after{content:'';position:fixed;inset:0;background:var(--bg-overlay);z-index:-1;pointer-events:none;}
 ::-webkit-scrollbar{width:6px;}::-webkit-scrollbar-track{background:var(--parch2);}::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px;}
 
 /* AUTH */
@@ -36,7 +44,7 @@ body{font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;flex-
 /* LAYOUT */
 #app{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 #app.hidden{display:none;}
-header{background:var(--ink);border-bottom:2px solid var(--gold);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+header{background:var(--header-bg);border-bottom:2px solid var(--gold);padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;transition:background .3s;}
 .hdr-title{font-family:'Cinzel',serif;font-size:20px;color:var(--gold);letter-spacing:.08em;}
 .hdr-sub{font-size:12px;color:#A89060;font-style:italic;}
 .hdr-right{display:flex;align-items:center;gap:10px;}
@@ -48,7 +56,7 @@ header{background:var(--ink);border-bottom:2px solid var(--gold);padding:12px 20
 .body{display:flex;flex:1;overflow:hidden;}
 
 /* SIDEBAR */
-nav{width:var(--sidebar);background:var(--surf);border-right:1px solid var(--bord-s);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+nav{width:var(--sidebar);background:var(--nav-bg);border-right:1px solid var(--bord-s);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;transition:background .3s;}
 .nav-scroll{flex:1;overflow-y:auto;padding:16px 0;}
 .nl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-d);padding:0 16px 5px;text-transform:uppercase;}
 .ni{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;font-size:13px;color:var(--ink-m);border-left:2px solid transparent;transition:all .15s;}
@@ -56,15 +64,17 @@ nav{width:var(--sidebar);background:var(--surf);border-right:1px solid var(--bor
 .ni.active{background:var(--gold-pale);color:var(--ink);border-left-color:var(--gold);font-weight:600;}
 .ni i{font-size:15px;color:var(--gold-d);}
 .ni.active i{color:var(--gold);}
-.ni.hidden-item{opacity:.4;}
 .ndiv{height:1px;background:var(--bord);margin:10px 16px;}
 
-/* SIDEBAR FOOTER (MJ config button) */
-.nav-footer{border-top:1px solid var(--bord);padding:10px 12px;display:none;}
-.nav-footer.mj-visible{display:block;}
+/* SIDEBAR FOOTER */
+.nav-footer{border-top:1px solid var(--bord);padding:10px 12px;display:none;flex-direction:column;gap:6px;}
+.nav-footer.mj-visible{display:flex;}
 .btn-config-nav{display:flex;align-items:center;gap:7px;width:100%;background:none;border:1px dashed var(--bord-s);color:var(--ink-l);border-radius:7px;padding:7px 10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.06em;cursor:pointer;transition:all .15s;}
 .btn-config-nav:hover{border-color:var(--gold);color:var(--gold-d);background:var(--gold-pale);}
 .btn-config-nav i{font-size:13px;}
+.btn-config-design{display:flex;align-items:center;gap:7px;width:100%;background:none;border:1px dashed rgba(29,107,90,.4);color:var(--teal);border-radius:7px;padding:7px 10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.06em;cursor:pointer;transition:all .15s;}
+.btn-config-design:hover{border-color:var(--teal);background:var(--teal-pale);}
+.btn-config-design i{font-size:13px;}
 
 /* MAIN */
 main{flex:1;overflow-y:auto;padding:22px 26px;}
@@ -116,7 +126,6 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 .badge.hostile{background:var(--red-pale);border-color:rgba(139,32,32,.25);color:var(--red);}
 .badge.ally{background:var(--teal-pale);border-color:rgba(29,107,90,.25);color:var(--teal);}
 .badge.dead{background:#f0f0f0;border-color:#ccc;color:#888;}
-.lang{display:inline-block;font-size:10px;padding:2px 8px;border-radius:20px;background:var(--blue-pale);border:1px solid rgba(26,74,122,.2);color:var(--blue);}
 
 /* HERO HEAD */
 .hero-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
@@ -133,12 +142,6 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 .dots{display:flex;gap:3px;}
 .dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--bord-s);cursor:pointer;transition:background .1s;}
 .dot.on{background:var(--gold);border-color:var(--gold-d);}
-
-/* EQUIP */
-.equip-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
-.equip-row{display:flex;justify-content:space-between;font-size:12px;padding:4px 0;border-bottom:1px solid var(--bord);}
-.equip-row:last-child{border:none;}
-.equip-qty{font-family:'Cinzel',serif;color:var(--gold-d);}
 
 /* SECTION DIVIDER */
 .sdiv{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--gold-d);margin:12px 0 7px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid var(--bord);}
@@ -201,10 +204,11 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 .btn-edit-page{display:inline-flex;align-items:center;gap:5px;background:var(--gold-pale);border:1px solid var(--bord-s);color:var(--gold-d);border-radius:6px;padding:5px 12px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.05em;cursor:pointer;transition:all .15s;}
 .btn-edit-page:hover{background:rgba(201,168,76,.22);border-color:var(--gold);}
 
-/* ===== SIDEBAR EDITOR MODAL ===== */
+/* ===== MODALS SHARED ===== */
 .modal-overlay{position:fixed;inset:0;background:rgba(44,36,22,.7);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
 .modal-overlay.open{opacity:1;pointer-events:all;}
 .modal-box{background:var(--parch);border:1px solid var(--bord-s);border-radius:14px;width:520px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(44,36,22,.25);}
+.modal-box.wide{width:680px;}
 .modal-head{padding:18px 20px 14px;border-bottom:1px solid var(--bord);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
 .modal-title{font-family:'Cinzel',serif;font-size:14px;color:var(--gold-d);letter-spacing:.06em;}
 .modal-close{background:none;border:none;font-size:18px;color:var(--ink-l);cursor:pointer;padding:2px 6px;border-radius:4px;line-height:1;}
@@ -212,38 +216,60 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 .modal-body{flex:1;overflow-y:auto;padding:16px 20px;}
 .modal-foot{padding:14px 20px;border-top:1px solid var(--bord);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0;}
 
-/* NAV ITEM EDITOR ROWS */
-.nav-edit-section{margin-bottom:16px;}
-.nav-edit-section-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-d);margin-bottom:8px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;}
-.nav-edit-rows{display:flex;flex-direction:column;gap:5px;}
+/* NAV EDITOR */
 .nav-edit-row{display:flex;align-items:center;gap:8px;background:var(--surf);border:1px solid var(--bord);border-radius:8px;padding:7px 10px;cursor:grab;transition:box-shadow .15s;}
-.nav-edit-row:active{cursor:grabbing;}
 .nav-edit-row.dragging{box-shadow:0 4px 20px rgba(44,36,22,.18);opacity:.85;border-color:var(--gold);}
 .nav-edit-row.drag-over{border-color:var(--gold);background:var(--gold-pale);}
-.drag-handle{color:var(--ink-l);font-size:14px;cursor:grab;flex-shrink:0;}
-.nav-row-icon{font-size:16px;color:var(--gold-d);flex-shrink:0;width:22px;text-align:center;}
-.nav-row-name{flex:1;font-size:13px;color:var(--ink);}
 .nav-row-name-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:var(--surf2);border:1px solid var(--gold);border-radius:5px;padding:2px 7px;outline:none;}
-.nav-row-icon-input{width:60px;font-family:'Crimson Pro',serif;font-size:12px;color:var(--ink);background:var(--surf2);border:1px solid var(--gold);border-radius:5px;padding:2px 7px;outline:none;}
 .nav-row-actions{display:flex;gap:4px;flex-shrink:0;}
 .nav-row-btn{background:none;border:1px solid var(--bord);color:var(--ink-l);border-radius:5px;padding:2px 6px;cursor:pointer;font-size:12px;transition:all .1s;line-height:1.4;}
 .nav-row-btn:hover{border-color:var(--gold);color:var(--gold-d);}
 .nav-row-btn.del:hover{border-color:var(--red);color:var(--red);background:var(--red-pale);}
 .nav-row-btn.vis-off{opacity:.5;}
-.nav-add-section{display:flex;gap:8px;margin-top:10px;}
 .nav-add-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:var(--surf2);border:1px solid var(--bord-s);border-radius:7px;padding:6px 10px;outline:none;}
 .nav-add-input:focus{border-color:var(--gold);}
-.nav-separator-row{display:flex;align-items:center;gap:8px;padding:4px 10px;background:rgba(139,105,20,.06);border:1px dashed var(--bord);border-radius:8px;}
-.nav-sep-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--gold-d);flex:1;text-transform:uppercase;}
 
-/* ICON PICKER */
-.icon-grid{display:flex;flex-wrap:wrap;gap:6px;padding:10px 0;max-height:160px;overflow-y:auto;}
-.icon-opt{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bord);border-radius:6px;cursor:pointer;font-size:16px;transition:all .1s;}
-.icon-opt:hover{border-color:var(--gold);background:var(--gold-pale);color:var(--gold-d);}
-.icon-opt.selected{border-color:var(--gold);background:var(--gold-pale);color:var(--gold-d);}
-.icon-picker-wrap{background:var(--surf);border:1px solid var(--bord-s);border-radius:8px;padding:8px 12px;margin-top:4px;}
+/* ===== DESIGN EDITOR ===== */
+.design-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+.design-section{margin-bottom:18px;}
+.design-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-d);margin-bottom:8px;text-transform:uppercase;display:flex;align-items:center;gap:6px;}
+.design-label i{font-size:12px;}
+.color-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding:6px 10px;background:var(--surf);border:1px solid var(--bord);border-radius:8px;}
+.color-label{font-size:12px;color:var(--ink-m);flex:1;}
+.color-swatch{width:28px;height:28px;border-radius:6px;border:2px solid var(--bord-s);cursor:pointer;flex-shrink:0;position:relative;overflow:hidden;}
+.color-swatch input[type=color]{position:absolute;inset:-4px;width:calc(100%+8px);height:calc(100%+8px);opacity:0;cursor:pointer;border:none;padding:0;}
+.color-preview{width:100%;height:100%;border-radius:4px;}
 
-/* TOAST */
+/* Image upload area */
+.img-upload-zone{border:2px dashed var(--bord-s);border-radius:10px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--surf);position:relative;overflow:hidden;}
+.img-upload-zone:hover{border-color:var(--gold);background:var(--gold-pale);}
+.img-upload-zone input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
+.img-upload-zone .upload-icon{font-size:28px;color:var(--gold-d);margin-bottom:6px;}
+.img-upload-zone .upload-text{font-size:12px;color:var(--ink-l);font-style:italic;}
+.img-preview{width:100%;max-height:120px;object-fit:cover;border-radius:8px;margin-top:8px;display:none;}
+.img-preview.visible{display:block;}
+
+/* Theme presets */
+.preset-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:4px;}
+.preset-btn{border:2px solid var(--bord);border-radius:8px;padding:8px 4px;cursor:pointer;text-align:center;transition:all .15s;background:var(--surf);}
+.preset-btn:hover{border-color:var(--gold);transform:translateY(-1px);}
+.preset-btn.active{border-color:var(--gold);box-shadow:0 0 0 2px rgba(201,168,76,.3);}
+.preset-swatch{width:100%;height:28px;border-radius:5px;margin-bottom:4px;}
+.preset-name{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.06em;color:var(--ink-m);}
+
+/* Opacity slider */
+.range-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.range-row label{font-size:12px;color:var(--ink-m);width:100px;flex-shrink:0;}
+.range-row input[type=range]{flex:1;accent-color:var(--gold-d);}
+.range-row span{font-family:'Cinzel',serif;font-size:11px;color:var(--gold-d);width:36px;text-align:right;}
+
+/* Live preview strip */
+.design-preview-strip{background:var(--surf);border:1px solid var(--bord);border-radius:10px;padding:12px;margin-bottom:14px;display:flex;gap:10px;align-items:center;}
+.dps-header{height:26px;border-radius:6px;flex:1;display:flex;align-items:center;padding:0 10px;font-family:'Cinzel',serif;font-size:11px;color:var(--gold);}
+.dps-nav{width:60px;height:80px;border-radius:6px;display:flex;flex-direction:column;padding:6px;gap:3px;}
+.dps-ni{height:8px;border-radius:3px;background:rgba(201,168,76,.3);}
+
+/* ===== TOAST ===== */
 #toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:var(--gold);border:1px solid var(--gold-d);border-radius:8px;padding:10px 18px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.04em;opacity:0;transform:translateY(10px);transition:all .3s;z-index:999;pointer-events:none;}
 #toast.show{opacity:1;transform:translateY(0);}
 
@@ -264,7 +290,7 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 
 <div id="app" class="hidden">
   <header>
-    <div><div class="hdr-title">⚔ Alésia</div><div class="hdr-sub">Portail de campagne</div></div>
+    <div><div class="hdr-title" id="site-title">⚔ Alésia</div><div class="hdr-sub" id="site-subtitle">Portail de campagne</div></div>
     <div class="hdr-right">
       <div class="user-badge"><img id="uav" class="user-avatar" src="" alt=""><span id="uname" class="user-name"></span></div>
       <button class="btn-so" onclick="doSignOut()">Déconnexion</button>
@@ -277,11 +303,13 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <button class="btn-config-nav" onclick="openNavEditor()">
           <i class="ti ti-settings"></i> Configurer le menu
         </button>
+        <button class="btn-config-design" onclick="openDesignEditor()">
+          <i class="ti ti-palette"></i> Personnaliser le design
+        </button>
       </div>
     </nav>
     <main id="main-content">
 
-      <!-- PERSONNAGES (builtin) -->
       <div id="s-personnages" class="section active">
         <div class="page-title"><i class="ti ti-users"></i> Fiches de personnage
           <span style="font-size:11px;color:var(--ink-l);font-family:'Crimson Pro',serif;font-weight:400;margin-left:8px;font-style:italic;">— Cliquez sur n'importe quel texte pour le modifier</span>
@@ -297,11 +325,10 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div id="chars-container"></div>
       </div>
 
-      <!-- JOURNAL (builtin) -->
       <div id="s-journal" class="section">
         <div class="page-title"><i class="ti ti-book"></i> Journal de campagne</div>
         <button class="btn-add" onclick="showAddSession()"><i class="ti ti-plus"></i> Nouvelle session</button>
-        <div id="add-form" style="display:none" class="card" style="margin-bottom:14px;">
+        <div id="add-form" style="display:none" class="card">
           <div class="card-title">Nouvelle session</div>
           <input id="s-title" class="edit-input" placeholder="Titre de la session...">
           <textarea id="s-text" class="ef-area" placeholder="Résumé..." rows="4"></textarea>
@@ -313,49 +340,44 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div id="journal-list"></div>
       </div>
 
-      <!-- PNJ (builtin) -->
       <div id="s-pnj" class="section">
         <div class="page-title"><i class="ti ti-masks-theater"></i> PNJ & Factions</div>
         <div class="pnj-card"><div class="pnj-av" style="background:var(--red-pale)">K</div><div><div class="pnj-name">Koben</div><div class="pnj-role">Assassin Kitsune — cache-œil</div><div class="pnj-desc">Originaire du même village détruit qu'Azarius. Motivations inconnues — ennemi ou allié caché ?</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div></div>
         <div class="pnj-card"><div class="pnj-av" style="background:var(--red-pale)">RN</div><div><div class="pnj-name">La Rose Noire</div><div class="pnj-role">Secte criminelle — née en Auregia</div><div class="pnj-desc">Traque artefacts et reliques prophétiques. Veut utiliser Skarlath comme ancre rituelle.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div></div>
-        <div class="pnj-card"><div class="pnj-av" style="background:rgba(90,90,90,.08)">OS</div><div><div class="pnj-name">L'Ordre du Savoir</div><div class="pnj-role">Institution érudite ancestrale</div><div class="pnj-desc">Protège les connaissances interdites et prophéties sacrées. Intervient quand les équilibres sont menacés.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre / Ambigu</span></div></div>
-        <div class="pnj-card"><div class="pnj-av" style="background:var(--teal-pale)">S</div><div><div class="pnj-name">Skarlath</div><div class="pnj-role">Dragon de Nindey — Bête Rare</div><div class="pnj-desc">Cible de la Rose Noire. Lié à Nindey. Conscience propre — risque de basculer en Effroyable si actes atroces.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Allié (lié)</span></div></div>
+        <div class="pnj-card"><div class="pnj-av" style="background:rgba(90,90,90,.08)">OS</div><div><div class="pnj-name">L'Ordre du Savoir</div><div class="pnj-role">Institution érudite ancestrale</div><div class="pnj-desc">Protège les connaissances interdites et prophéties sacrées.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre / Ambigu</span></div></div>
+        <div class="pnj-card"><div class="pnj-av" style="background:var(--teal-pale)">S</div><div><div class="pnj-name">Skarlath</div><div class="pnj-role">Dragon de Nindey — Bête Rare</div><div class="pnj-desc">Cible de la Rose Noire. Lié à Nindey. Risque de basculer en Effroyable.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Allié (lié)</span></div></div>
         <div class="pnj-card"><div class="pnj-av" style="background:rgba(90,90,90,.06)">MS</div><div><div class="pnj-name">Mira Solène</div><div class="pnj-role">Témoin clé — décédée</div><div class="pnj-desc">Témoin dans l'affaire de Sir de Vellune. Sa mort complique la situation du groupe.</div><span class="badge dead" style="margin-top:6px;display:inline-block;">Décédée</span></div></div>
       </div>
 
-      <!-- ROYAUMES (builtin) -->
       <div id="s-royaumes" class="section">
         <div class="page-title"><i class="ti ti-world"></i> Les 12 Royaumes</div>
         <p style="font-size:13px;color:var(--ink-m);font-style:italic;margin-bottom:16px;">Autour du Lac sacré et de l'Île du Cœur, douze nations regardent vers la Prophétie des Douze Voies.</p>
         <div class="r-grid">
-          <div class="r-card"><div class="r-name">République de Franxx</div><div class="r-desc">Berceau des Téméraires. Démocratie, diversité, esprit progressiste.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
+          <div class="r-card"><div class="r-name">République de Franxx</div><div class="r-desc">Berceau des Téméraires.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
           <div class="r-card"><div class="r-name">Royaume Auregia</div><div class="r-desc">Riche et fertile. Berceau de la Rose Noire.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
-          <div class="r-card"><div class="r-name">Royaume Brumelonde</div><div class="r-desc">Royaume sylvestre, druides, protecteurs des forêts anciennes.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
+          <div class="r-card"><div class="r-name">Royaume Brumelonde</div><div class="r-desc">Royaume sylvestre, druides.</div><span class="badge ally" style="margin-top:6px;display:inline-block;">Favorable</span></div>
           <div class="r-card"><div class="r-name">République d'Ozélis</div><div class="r-desc">Maritime. Soutient secrètement les Téméraires.</div><span class="badge" style="margin-top:6px;display:inline-block;">Allié secret</span></div>
-          <div class="r-card"><div class="r-name">Royaume d'Akassya</div><div class="r-desc">Elfes et Ents. Royaume forestier magique. Berceau de Dy.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
-          <div class="r-card"><div class="r-name">Royaume saint de Zarûn</div><div class="r-desc">Gardien des eaux sacrées du lac. Neutre et vigilant.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
-          <div class="r-card"><div class="r-name">Empire Lucèmien</div><div class="r-desc">Cosmopolite, commerce et diplomatie. Préfère l'équilibre.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
-          <div class="r-card"><div class="r-name">Terre du cdt. Suba</div><div class="r-desc">Autoritaire, esclavagiste, régime militaire.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
-          <div class="r-card"><div class="r-name">Rme Démonique de Vermeil</div><div class="r-desc">Aristocratie infernale, magie noire et cruauté.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div>
-          <div class="r-card"><div class="r-name">Autocratie Vyrrag</div><div class="r-desc">Montagnes glaciales, guerriers endurcis.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div>
-          <div class="r-card"><div class="r-name">Empire de Lutèce</div><div class="r-desc">Vaste empire, rigueur militaire et expansionnisme.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div>
-          <div class="r-card"><div class="r-name">Cité-État Mont RokDur</div><div class="r-desc">Enclave draconienne et naine. Mauvaises expériences.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Défavorable</span></div>
+          <div class="r-card"><div class="r-name">Royaume d'Akassya</div><div class="r-desc">Elfes et Ents. Berceau de Dy.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
+          <div class="r-card"><div class="r-name">Royaume saint de Zarûn</div><div class="r-desc">Gardien des eaux sacrées.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
+          <div class="r-card"><div class="r-name">Empire Lucèmien</div><div class="r-desc">Commerce et diplomatie.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
+          <div class="r-card"><div class="r-name">Terre du cdt. Suba</div><div class="r-desc">Autoritaire, régime militaire.</div><span class="badge" style="margin-top:6px;display:inline-block;">Neutre</span></div>
+          <div class="r-card"><div class="r-name">Rme Démonique de Vermeil</div><div class="r-desc">Aristocratie infernale.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div>
+          <div class="r-card"><div class="r-name">Autocratie Vyrrag</div><div class="r-desc">Montagnes glaciales, guerriers.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div>
+          <div class="r-card"><div class="r-name">Empire de Lutèce</div><div class="r-desc">Expansionnisme militaire.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div>
+          <div class="r-card"><div class="r-name">Cité-État Mont RokDur</div><div class="r-desc">Enclave draconienne et naine.</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Défavorable</span></div>
         </div>
       </div>
 
-      <!-- RACES (builtin) -->
       <div id="s-races" class="section">
         <div class="page-title"><i class="ti ti-dna"></i> Races jouables</div>
         <div id="races-container"></div>
       </div>
 
-      <!-- CLASSES (builtin) -->
       <div id="s-classes" class="section">
         <div class="page-title"><i class="ti ti-sword"></i> Classes jouables</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;" id="classes-container"></div>
       </div>
 
-      <!-- DÉS (builtin) -->
       <div id="s-des" class="section">
         <div class="page-title"><i class="ti ti-dice"></i> Lanceur de dés</div>
         <div class="dice-result"><div class="dice-num" id="dice-num">—</div><div class="dice-lbl" id="dice-lbl">Choisis un dé</div></div>
@@ -372,7 +394,6 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div id="dice-hist"></div>
       </div>
 
-      <!-- NOTES (builtin) -->
       <div id="s-notes" class="section">
         <div class="page-title"><i class="ti ti-notes"></i> Notes partagées</div>
         <textarea id="notes-area" onblur="saveNotes()" placeholder="Notes de session...">Chargement...</textarea>
@@ -384,29 +405,130 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
           <div class="ntag" onclick="insertTag('#prophétie')">#prophétie</div>
           <div class="ntag" onclick="insertTag('#objectifs')">#objectifs</div>
         </div>
-        <div style="font-size:11px;color:var(--ink-l);font-style:italic;margin-top:8px;"><i class="ti ti-lock" style="vertical-align:-2px"></i> Notes synchronisées en temps réel entre tous les joueurs.</div>
+        <div style="font-size:11px;color:var(--ink-l);font-style:italic;margin-top:8px;"><i class="ti ti-lock" style="vertical-align:-2px"></i> Notes synchronisées en temps réel.</div>
       </div>
 
-      <!-- CUSTOM PAGES (generated dynamically) -->
       <div id="custom-sections-container"></div>
-
     </main>
   </div>
 </div>
 
-<!-- ===== SIDEBAR EDITOR MODAL ===== -->
+<!-- SIDEBAR EDITOR MODAL -->
 <div class="modal-overlay" id="nav-editor-modal" onclick="closeNavEditorOnBg(event)">
   <div class="modal-box">
     <div class="modal-head">
       <div class="modal-title"><i class="ti ti-layout-sidebar" style="margin-right:7px;color:var(--gold)"></i>Configurer le menu</div>
       <button class="modal-close" onclick="closeNavEditor()">✕</button>
     </div>
-    <div class="modal-body" id="nav-editor-body">
-      <!-- Contenu généré dynamiquement -->
-    </div>
+    <div class="modal-body" id="nav-editor-body"></div>
     <div class="modal-foot">
       <button class="btn-cancel" onclick="closeNavEditor()">Annuler</button>
       <button class="btn-save" onclick="saveNavConfig()"><i class="ti ti-check"></i> Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- DESIGN EDITOR MODAL -->
+<div class="modal-overlay" id="design-editor-modal" onclick="closeDesignEditorOnBg(event)">
+  <div class="modal-box wide">
+    <div class="modal-head">
+      <div class="modal-title"><i class="ti ti-palette" style="margin-right:7px;color:var(--gold)"></i>Personnaliser le design</div>
+      <button class="modal-close" onclick="closeDesignEditor()">✕</button>
+    </div>
+    <div class="modal-body" id="design-editor-body">
+
+      <!-- THÈMES PRÉDÉFINIS -->
+      <div class="design-section">
+        <div class="design-label"><i class="ti ti-wand"></i> Thèmes prédéfinis</div>
+        <div class="preset-grid" id="preset-grid"></div>
+      </div>
+
+      <!-- TITRE DU SITE -->
+      <div class="design-section">
+        <div class="design-label"><i class="ti ti-typography"></i> Titre & sous-titre</div>
+        <div style="display:flex;flex-direction:column;gap:8px;">
+          <div style="display:flex;align-items:center;gap:10px;">
+            <label style="font-size:12px;color:var(--ink-m);width:90px;flex-shrink:0;">Titre</label>
+            <input id="de-title" class="nav-add-input" style="flex:1" value="⚔ Alésia" oninput="previewDesign()">
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <label style="font-size:12px;color:var(--ink-m);width:90px;flex-shrink:0;">Sous-titre</label>
+            <input id="de-subtitle" class="nav-add-input" style="flex:1" value="Portail de campagne" oninput="previewDesign()">
+          </div>
+        </div>
+      </div>
+
+      <!-- COULEURS -->
+      <div class="design-section">
+        <div class="design-label"><i class="ti ti-color-swatch"></i> Couleurs</div>
+        <div class="design-grid">
+          <div>
+            <div class="color-row">
+              <span class="color-label">Couleur principale (or)</span>
+              <div class="color-swatch" id="sw-gold"><div class="color-preview" id="cp-gold" style="background:#C9A84C"></div><input type="color" id="de-gold" value="#C9A84C" oninput="updateSwatch('gold',this.value);previewDesign()"></div>
+            </div>
+            <div class="color-row">
+              <span class="color-label">Fond de page</span>
+              <div class="color-swatch" id="sw-parch"><div class="color-preview" id="cp-parch" style="background:#F5EFE0"></div><input type="color" id="de-parch" value="#F5EFE0" oninput="updateSwatch('parch',this.value);previewDesign()"></div>
+            </div>
+            <div class="color-row">
+              <span class="color-label">Fond des cartes</span>
+              <div class="color-swatch" id="sw-surf"><div class="color-preview" id="cp-surf" style="background:#FAF6EC"></div><input type="color" id="de-surf" value="#FAF6EC" oninput="updateSwatch('surf',this.value);previewDesign()"></div>
+            </div>
+          </div>
+          <div>
+            <div class="color-row">
+              <span class="color-label">En-tête (header)</span>
+              <div class="color-swatch" id="sw-header"><div class="color-preview" id="cp-header" style="background:#2C2416"></div><input type="color" id="de-header" value="#2C2416" oninput="updateSwatch('header',this.value);previewDesign()"></div>
+            </div>
+            <div class="color-row">
+              <span class="color-label">Barre latérale</span>
+              <div class="color-swatch" id="sw-nav"><div class="color-preview" id="cp-nav" style="background:#FAF6EC"></div><input type="color" id="de-nav" value="#FAF6EC" oninput="updateSwatch('nav',this.value);previewDesign()"></div>
+            </div>
+            <div class="color-row">
+              <span class="color-label">Texte principal</span>
+              <div class="color-swatch" id="sw-ink"><div class="color-preview" id="cp-ink" style="background:#2C2416"></div><input type="color" id="de-ink" value="#2C2416" oninput="updateSwatch('ink',this.value);previewDesign()"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- IMAGE DE FOND -->
+      <div class="design-section">
+        <div class="design-label"><i class="ti ti-photo"></i> Image de fond</div>
+        <div class="img-upload-zone" id="upload-zone">
+          <input type="file" accept="image/*" onchange="handleImageUpload(event)">
+          <div class="upload-icon"><i class="ti ti-cloud-upload"></i></div>
+          <div class="upload-text">Glissez une image ou cliquez pour choisir<br><span style="font-size:11px;opacity:.7;">JPG, PNG, WebP — recommandé: 1920×1080</span></div>
+          <img id="bg-preview" class="img-preview" alt="Aperçu fond">
+        </div>
+        <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+          <button class="btn-cancel" style="font-size:10px;padding:5px 10px;" onclick="clearBgImage()"><i class="ti ti-x"></i> Retirer l'image</button>
+          <div style="font-size:11px;color:var(--ink-l);font-style:italic;line-height:1.4;padding:5px 0;">L'image est stockée localement dans votre navigateur (non partagée).</div>
+        </div>
+        <div class="range-row" style="margin-top:10px;">
+          <label>Opacité fond</label>
+          <input type="range" id="de-bg-opacity" min="0" max="95" value="0" oninput="previewDesign();document.getElementById('de-bg-opacity-val').textContent=this.value+'%'">
+          <span id="de-bg-opacity-val">0%</span>
+        </div>
+        <div style="font-size:11px;color:var(--ink-l);font-style:italic;">↑ Opacité du voile blanc sur l'image (0% = image pure, 80% = très atténuée)</div>
+      </div>
+
+      <!-- BORDURE RADIUS -->
+      <div class="design-section">
+        <div class="design-label"><i class="ti ti-border-radius"></i> Style des cartes</div>
+        <div class="range-row">
+          <label>Arrondi des coins</label>
+          <input type="range" id="de-radius" min="0" max="20" value="10" oninput="previewDesign();document.getElementById('de-radius-val').textContent=this.value+'px'">
+          <span id="de-radius-val">10px</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="resetDesign()"><i class="ti ti-refresh"></i> Réinitialiser</button>
+      <button class="btn-cancel" onclick="closeDesignEditor()">Annuler</button>
+      <button class="btn-save" onclick="saveDesign()"><i class="ti ti-check"></i> Appliquer à tous</button>
     </div>
   </div>
 </div>
@@ -416,7 +538,7 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc, collection, addDoc, getDocs, orderBy, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+import { getFirestore, doc, getDoc, setDoc, collection, addDoc, orderBy, query, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
 const app = initializeApp({
   apiKey:"AIzaSyBVoehIzEZmS1oGAAoY9TEQbiN_27zM-8I",
@@ -430,143 +552,64 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// ===== ICÔNES DISPONIBLES =====
+// ===== THÈMES =====
+const THEMES = [
+  { name:'Alésia', gold:'#C9A84C', parch:'#F5EFE0', surf:'#FAF6EC', header:'#2C2416', nav:'#FAF6EC', ink:'#2C2416', radius:10 },
+  { name:'Sombre', gold:'#C9A84C', parch:'#1A1612', surf:'#231E17', header:'#0F0C09', nav:'#1A1612', ink:'#E8D9BC', radius:10 },
+  { name:'Océan', gold:'#4A90C4', parch:'#EAF2F8', surf:'#F0F7FC', header:'#0D2B3E', nav:'#EAF2F8', ink:'#0D2B3E', radius:12 },
+  { name:'Forêt', gold:'#5A8A3C', parch:'#EDF2E8', surf:'#F3F7EF', header:'#1A3010', nav:'#EDF2E8', ink:'#1A3010', radius:8 },
+  { name:'Sang', gold:'#B84040', parch:'#F5E8E8', surf:'#FAF0F0', header:'#2A0A0A', nav:'#F5E8E8', ink:'#2A0A0A', radius:6 },
+  { name:'Nuit', gold:'#9B7FD4', parch:'#12101E', surf:'#1C1830', header:'#080614', nav:'#12101E', ink:'#D4C8F0', radius:14 },
+  { name:'Parchemin', gold:'#8B6914', parch:'#F0E6C8', surf:'#F7F0DC', header:'#3D2B0A', nav:'#EDE0BE', ink:'#3D2B0A', radius:4 },
+  { name:'Acier', gold:'#8AA4B8', parch:'#EAEEF2', surf:'#F2F5F8', header:'#1C2732', nav:'#EAEEF2', ink:'#1C2732', radius:6 },
+];
+
+// ===== NAV PAR DÉFAUT =====
+const DEFAULT_NAV = [
+  {type:'group',label:'Joueurs'},
+  {type:'item',id:'personnages',label:'Personnages',icon:'ti-users',builtin:true,visible:true},
+  {type:'item',id:'notes',label:'Notes',icon:'ti-notes',builtin:true,visible:true},
+  {type:'sep'},
+  {type:'group',label:'Campagne'},
+  {type:'item',id:'journal',label:'Journal',icon:'ti-book',builtin:true,visible:true},
+  {type:'item',id:'pnj',label:'PNJ & Factions',icon:'ti-masks-theater',builtin:true,visible:true},
+  {type:'sep'},
+  {type:'group',label:'Univers'},
+  {type:'item',id:'royaumes',label:'12 Royaumes',icon:'ti-world',builtin:true,visible:true},
+  {type:'item',id:'races',label:'Races',icon:'ti-dna',builtin:true,visible:true},
+  {type:'item',id:'classes',label:'Classes',icon:'ti-sword',builtin:true,visible:true},
+  {type:'sep'},
+  {type:'group',label:'Outils'},
+  {type:'item',id:'des',label:'Lanceur de dés',icon:'ti-dice',builtin:true,visible:true}
+];
+
 const AVAILABLE_ICONS = [
   'ti-users','ti-notes','ti-book','ti-masks-theater','ti-world','ti-dna',
   'ti-sword','ti-dice','ti-map','ti-crown','ti-shield','ti-flame',
   'ti-droplet','ti-bolt','ti-leaf','ti-star','ti-compass','ti-scroll',
   'ti-lock','ti-key','ti-skull','ti-heart','ti-moon','ti-sun',
-  'ti-mountain','ti-castle','ti-ship','ti-potion','ti-wand','ti-ghost',
-  'ti-dragon','ti-axe','ti-bow','ti-coins','ti-hourglass','ti-eye'
+  'ti-mountain','ti-castle','ti-ship','ti-wand','ti-ghost','ti-axe',
+  'ti-bow','ti-coins','ti-hourglass','ti-eye','ti-dragon','ti-feather'
 ];
-
-// ===== STRUCTURE PAR DÉFAUT DU MENU =====
-const DEFAULT_NAV = [
-  {type:'group', label:'Joueurs'},
-  {type:'item', id:'personnages', label:'Personnages', icon:'ti-users', builtin:true, visible:true},
-  {type:'item', id:'notes', label:'Notes', icon:'ti-notes', builtin:true, visible:true},
-  {type:'sep'},
-  {type:'group', label:'Campagne'},
-  {type:'item', id:'journal', label:'Journal', icon:'ti-book', builtin:true, visible:true},
-  {type:'item', id:'pnj', label:'PNJ & Factions', icon:'ti-masks-theater', builtin:true, visible:true},
-  {type:'sep'},
-  {type:'group', label:'Univers'},
-  {type:'item', id:'royaumes', label:'12 Royaumes', icon:'ti-world', builtin:true, visible:true},
-  {type:'item', id:'races', label:'Races', icon:'ti-dna', builtin:true, visible:true},
-  {type:'item', id:'classes', label:'Classes', icon:'ti-sword', builtin:true, visible:true},
-  {type:'sep'},
-  {type:'group', label:'Outils'},
-  {type:'item', id:'des', label:'Lanceur de dés', icon:'ti-dice', builtin:true, visible:true}
-];
-
-// ===== DONNÉES PAR DÉFAUT =====
-const defaultChars = {
-  azarius:{
-    name:'Azarius Desbois',race:'Kitsune',genre:'Homme',classe:'Cogneur',element:'🔥 Feu',niveau:'1',
-    pv:'14',mana:'9',pv_max:'14',mana_max:'9',
-    phys:'85',social:'45',mental:'40',
-    valeurs:'Liberté\nSavoir\nAgnostique',
-    langues:'Commun, Kitsune, Démoniaque',
-    competences:[
-      {n:'Puissance',v:6},{n:'Finesse',v:3},{n:'Aura',v:3},
-      {n:'Relation',v:2},{n:'Instinct',v:2},{n:'Savoir (Érudit)',v:2},
-      {n:'Persuasion',v:0},{n:'Survie',v:0}
-    ],
-    armes:'Vieille épée (D4/−1)\nRobe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Feu (RD2 vs proj. magiques)',
-    armures:'Robe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Feu (vs proj. magiques)',
-    dons:'🔥 Turbo Fist — 2 mana / 1D10+2 : frappe de bras mécanique réacteur\n🔥 Armagédon sans Bâton — 5 mana / 1D12+4 : torrent de flammes du bras\n🔥 Fire Shield — 3 mana / 1D6+1 : bouclier ardent en spirale\n🔥 Say My Name — 8 mana / 1D6+1D8+1 : compression extrême du réacteur\n⚔ Maîtrise des Armes : relance attaque 1×/combat\n💥 Baroud d\'Honneur : <30% PV → +2 dégâts',
-    equip:'Rations ×19, Sac enchanté ×1, Kit médical ×4, Boussole magique ×1, Parchemin démon ×20, Corde 11m ×1, Livre Orc ×1',
-    race_bonus:'🟢 Ruse naturelle +20% (mensonge, tromperie, social)\n🟢 Vivacité renarde +10% (rapidité, esquive, célérité)\n🟢 Pas léger +10% (discrétion)\n🔴 Force faible −20% (force brute et armes)\n🔴 Défiance générale −25% (jets sociaux confiance/loyauté)',
-    notes:'Né dans une tribu au pied d\'un volcan. Un incendie magique détruisit sa tribu. Jure de retrouver le responsable.',
-    color:'rgba(201,168,76,.15)',init:'A'
-  },
-  dy:{
-    name:'Dy Son',race:'Elfe',genre:'Femme',classe:'Arcaniste',element:'💨 Air',niveau:'1',
-    pv:'7',mana:'11',pv_max:'7',mana_max:'11',
-    phys:'35',social:'45',mental:'90',
-    valeurs:'Liberté\nSavoir\nAgnostique',
-    langues:'Commun, Elfique, Démoniaque',
-    competences:[
-      {n:'Puissance',v:2},{n:'Finesse',v:2},{n:'Aura',v:4},
-      {n:'Beauté naturelle',v:1},{n:'Relation',v:1},{n:'Instinct',v:3},
-      {n:'Savoir (Expert sorts)',v:6},{n:'Savoir interdit',v:1},{n:'Rat de bibliothèque',v:1}
-    ],
-    armes:'Baguette (D4/−3)\nDague (D6/+1)',
-    armures:'Robe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Vent (RD2 vs proj. physiques)',
-    dons:'🌬 Déplacement d\'Air — 2 mana : couloir tourbillonnant, déplace cibles (1 mana/personne, +1 dégâts objets)\n🌬 Mur d\'Air — 6 mana : mur invisible, −30 jets traversée/attaque (mana variable)\n🌬 Lame d\'Air — 3 mana / D8+2 : lame tranchante et invisible\n🌬 Largage Aérien (Téléportation) — 2+(1/5m) mana : téléporte soi ou un allié (15m max)\n🔮 Invocations démoniques : Le Gardien (1PV, 90% parade), Le Chien Démon (1PV, 85% physique, D12+4)\n🌑 La Boule Magique — tout le mana restant / 1D100 : sphère noire destruction pure\n✨ Maîtrise des Arcanes : relance sort raté 1×/combat\n📚 Connaissance Interdite : relance jet de Savoir raté',
-    equip:'Rations ×5, Kit médical ×4, Potion vie D6 ×3, Livre de Magie ×1, Livre Ursien 3/12, Corde 10m ×1, Dague rituel ×1',
-    race_bonus:'🟢 Sens affûtés +20% (perception vue/ouïe)\n🟢 Mémoire ancienne +10% (savoir historique, ancien, magique)\n🔴 Détachement social −20% (races grossières ou primitives)\n🔴 Fragilité physique −10% (résistance aux dégâts physiques)',
-    notes:'Née à Akassya. Préjugé Kitsune : −20% social, +10% combat vs Kitsune. Éveillée par un élémentaire du vent.',
-    color:'rgba(29,107,90,.1)',init:'D'
-  },
-  firm:{
-    name:'Firm Bintaggle',race:'Swamninyx',genre:'Homme',classe:'Gardien',element:'🌿 Nature',niveau:'1',
-    pv:'7',mana:'0',pv_max:'7',mana_max:'0',
-    phys:'65',social:'50',mental:'55',
-    valeurs:'Hypocrite\nRespecteux\nLoyal',
-    langues:'Commun, Swamninyx, Léonide',
-    competences:[
-      {n:'Puissance',v:4},{n:'Finesse',v:3},{n:'Aura',v:2},
-      {n:'Relation',v:3},{n:'Instinct',v:3},{n:'Savoir (Herboriste)',v:3},
-      {n:'Bagarre',v:0},{n:'Survie',v:0},{n:'Druide',v:1}
-    ],
-    armes:'Bâton Long druidique (D6/+1)\nWok (D4/0)',
-    armures:'Armure enchantée druidique (RD6)\nBouclier de cuivre (RD2)',
-    dons:'🌿 Transmutation — 1-2 mana : double PV max, mana → 0\n💪 Gonflette — 2 mana/palier : +1 armure naturelle +1 attaque par 2 mana\n🌸 Tarte aux prunes — coût=soin / D4−1 : gifle soignante, 1 mana/PV soigné\n👁 Extension du territoire — 1 mana : contrôle un œil+oreille d\'un animal\n⚔ Châtiment Sacré : +10% vs créatures maléfiques/corrompues\n🛡 Provoc\' Sauvage : attire l\'attention des ennemis sur le Gardien',
-    equip:'Rations ×6, Bandages ×3, Potion PV D10 ×1, Allumettes ×11, Planches ×12, Clous ×12, Lanterne ×1',
-    race_bonus:'🟢 Agilité +20% (esquive, déplacements rapides, sauts)\n🟢 Discrétion naturelle +10% (furtivité)\n🔴 Aversion sociale −10% (jets sociaux avec autres races)\n🔴 Force limitée −10% (force et CAC)',
-    notes:'Né à Zarûn, vendu à 5 ans, s\'échappa. Formé par le druide Stonks. 10 ans dans la forêt de Doulogne. 32 ans.',
-    color:'rgba(83,74,183,.1)',init:'F'
-  },
-  mwassa:{
-    name:'Mwassa Mekhsitt',race:'Kitsune',genre:'Femme',classe:'Oracle',element:'💧 Eaux',niveau:'1',
-    pv:'10',mana:'17',pv_max:'10',mana_max:'17',
-    phys:'35',social:'65',mental:'70',
-    valeurs:'Altruiste\nOpportuniste\nPieuse',
-    langues:'Commun, Kitsune, Nain',
-    competences:[
-      {n:'Puissance',v:1},{n:'Finesse',v:3},{n:'Aura',v:3},
-      {n:'Relation',v:4},{n:'Instinct',v:4},{n:'Savoir (Charmeuse)',v:3},
-      {n:'Chance',v:0},{n:'Experte en sorts',v:1},{n:'Alchimie',v:1}
-    ],
-    armes:'Tambourins et Castagnettes (D4/−2)\nPistolet à silex (D6/0)\nDague (D4/0)',
-    armures:'(Armure impossible — Oracle)',
-    dons:'🥁 Bénédiction du goupil — 3 mana : +10% tous jets alliés 5m/2 tours (+20% mono-cible)\n⚔ Aux armes ! — 1+D4-12 mana : 25% mana consommé, reste transféré à la cible\n🎭 Marionette — 6 mana : soumet ennemi intelligent à volonté 1 heure\n💧 Rosée de la vitalité — 1+D4-12 mana : soin eau, 25% dé consommé en mana\n✨ Soin Divin : relance soin raté 1×/combat\n🤝 Pacte des 12 : Mana full 1×/jour (offrande créature légendaire)',
-    equip:'Rations ×2, Balles ×19, Kit médical ×1, Kit crochetage ×3, Anneau de Mana ×1, Livre Skaven ×1, Crucifix argent ×1',
-    race_bonus:'🟢 Ruse naturelle +20% (mensonge, tromperie, manipulation sociale)\n🟢 Vivacité renarde +10% (rapidité, esquive, célérité)\n🔴 Force faible −20% (force brute et armes)\n🔴 Défiance générale −25% (jets sociaux confiance/loyauté)',
-    notes:'Née dans les bas-quartiers d\'Auregia. Ancienne novice de Zarûn enlevée enfant. 50 ans.',
-    color:'rgba(29,107,90,.12)',init:'M'
-  },
-  nindey:{
-    name:'Nindey Traqué',race:'Nain',genre:'Homme',classe:'Cogneur',element:'⚡ Foudre',niveau:'1',
-    pv:'11',mana:'9',pv_max:'11',mana_max:'9',
-    phys:'80',social:'20',mental:'50',
-    valeurs:'Tête brûlée\nAlcoolique\nChasseur de trésor',
-    langues:'Commun, Nain, Draconique',
-    competences:[
-      {n:'Puissance',v:5},{n:'Finesse',v:3},{n:'Aura',v:1},
-      {n:'Relation',v:1},{n:'Instinct',v:4},{n:'Savoir (Expert Runique)',v:1},
-      {n:'Artisan',v:0},{n:'Maniement d\'arme',v:1},{n:'Forgeron',v:1}
-    ],
-    armes:'Deux haches à une main (D10/+4)\nHache à deux mains double tranchant (D12/+4)\nPioche + Marteau (D4/+3)',
-    armures:'Armure runique (RD4)\nAnneau anti-magie RD1 (impacte TOUTES les magies proches, amis ou ennemis)',
-    dons:'⚡ Armes Foudroyante — 3 mana / +2 : runes draconiques, arcs électriques 5 tours\n🔨 Marteau de Thor — 2 mana : lance hache foudroyante, revient automatiquement\n💥 Blitzer — 4 mana / D6+1 : sphère électricité, frappe tout à portée (3m)\n⚡ Lance de Foudre — 6 mana / D10+2 : lance d\'énergie condensée projetée\n⚔ Maîtrise des Armes : relance attaque 1×/combat\n💥 Baroud d\'Honneur : <30% PV → +2 dégâts',
-    equip:'Rations ×18, Kit médical ×2, Livre Orc ×1, Rune Majeur Feu (50k PO), Corde 10m ×1, Casserole ×1',
-    race_bonus:'🟢 Savoir des forges +20% (forgeron, artisanat métal/pierre)\n🟢 Vision des profondeurs +10% (perception souterraine/sombre)\n🔴 Vitesse réduite −10% (déplacement rapide, poursuite, esquive longue)\n🔴 Adaptation sociale limitée −10% (jets sociaux hors communautés naines)',
-    notes:'Né au Mont RockDur. Lié d\'amitié avec Skarlath. Formé aux runes draconiques par le dragon. 185 ans.',
-    color:'rgba(139,32,32,.1)',init:'N'
-  }
-};
 
 // État global
+const defaultChars = {
+  azarius:{name:'Azarius Desbois',race:'Kitsune',genre:'Homme',classe:'Cogneur',element:'🔥 Feu',niveau:'1',pv:'14',mana:'9',pv_max:'14',mana_max:'9',phys:'85',social:'45',mental:'40',valeurs:'Liberté\nSavoir\nAgnostique',langues:'Commun, Kitsune, Démoniaque',competences:[{n:'Puissance',v:6},{n:'Finesse',v:3},{n:'Aura',v:3},{n:'Relation',v:2},{n:'Instinct',v:2},{n:'Savoir (Érudit)',v:2},{n:'Persuasion',v:0},{n:'Survie',v:0}],armes:'Vieille épée (D4/−1)\nRobe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Feu (RD2 vs proj. magiques)',armures:'Robe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Feu (vs proj. magiques)',dons:'🔥 Turbo Fist — 2 mana / 1D10+2\n🔥 Armagédon sans Bâton — 5 mana / 1D12+4\n🔥 Fire Shield — 3 mana / 1D6+1\n🔥 Say My Name — 8 mana / 1D6+1D8+1\n⚔ Maîtrise des Armes : relance 1×/combat\n💥 Baroud d\'Honneur : <30% PV → +2 dégâts',equip:'Rations ×19, Sac enchanté ×1, Kit médical ×4, Boussole magique ×1, Parchemin démon ×20, Corde 11m ×1, Livre Orc ×1',race_bonus:'🟢 Ruse naturelle +20%\n🟢 Vivacité renarde +10%\n🟢 Pas léger +10%\n🔴 Force faible −20%\n🔴 Défiance générale −25%',notes:'Né dans une tribu au pied d\'un volcan. Un incendie magique détruisit sa tribu.',color:'rgba(201,168,76,.15)',init:'A'},
+  dy:{name:'Dy Son',race:'Elfe',genre:'Femme',classe:'Arcaniste',element:'💨 Air',niveau:'1',pv:'7',mana:'11',pv_max:'7',mana_max:'11',phys:'35',social:'45',mental:'90',valeurs:'Liberté\nSavoir\nAgnostique',langues:'Commun, Elfique, Démoniaque',competences:[{n:'Puissance',v:2},{n:'Finesse',v:2},{n:'Aura',v:4},{n:'Beauté naturelle',v:1},{n:'Relation',v:1},{n:'Instinct',v:3},{n:'Savoir (Expert sorts)',v:6},{n:'Savoir interdit',v:1},{n:'Rat de bibliothèque',v:1}],armes:'Baguette (D4/−3)\nDague (D6/+1)',armures:'Robe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Vent',dons:'🌬 Déplacement d\'Air — 2 mana\n🌬 Mur d\'Air — 6 mana\n🌬 Lame d\'Air — 3 mana / D8+2\n🌬 Largage Aérien — 2+(1/5m) mana\n🔮 Invocations démoniques\n🌑 La Boule Magique — tout le mana\n✨ Maîtrise des Arcanes\n📚 Connaissance Interdite',equip:'Rations ×5, Kit médical ×4, Potion vie D6 ×3, Livre de Magie ×1, Corde 10m ×1',race_bonus:'🟢 Sens affûtés +20%\n🟢 Mémoire ancienne +10%\n🔴 Détachement social −20%\n🔴 Fragilité physique −10%',notes:'Née à Akassya. Préjugé Kitsune. Éveillée par un élémentaire du vent.',color:'rgba(29,107,90,.1)',init:'D'},
+  firm:{name:'Firm Bintaggle',race:'Swamninyx',genre:'Homme',classe:'Gardien',element:'🌿 Nature',niveau:'1',pv:'7',mana:'0',pv_max:'7',mana_max:'0',phys:'65',social:'50',mental:'55',valeurs:'Hypocrite\nRespecteux\nLoyal',langues:'Commun, Swamninyx, Léonide',competences:[{n:'Puissance',v:4},{n:'Finesse',v:3},{n:'Aura',v:2},{n:'Relation',v:3},{n:'Instinct',v:3},{n:'Savoir (Herboriste)',v:3},{n:'Bagarre',v:0},{n:'Survie',v:0},{n:'Druide',v:1}],armes:'Bâton Long druidique (D6/+1)\nWok (D4/0)',armures:'Armure enchantée druidique (RD6)\nBouclier de cuivre (RD2)',dons:'🌿 Transmutation — 1-2 mana\n💪 Gonflette — 2 mana/palier\n🌸 Tarte aux prunes\n👁 Extension du territoire\n⚔ Châtiment Sacré\n🛡 Provoc\' Sauvage',equip:'Rations ×6, Bandages ×3, Potion PV D10 ×1, Lanterne ×1',race_bonus:'🟢 Agilité +20%\n🟢 Discrétion naturelle +10%\n🔴 Aversion sociale −10%\n🔴 Force limitée −10%',notes:'Né à Zarûn, vendu à 5 ans. 32 ans.',color:'rgba(83,74,183,.1)',init:'F'},
+  mwassa:{name:'Mwassa Mekhsitt',race:'Kitsune',genre:'Femme',classe:'Oracle',element:'💧 Eaux',niveau:'1',pv:'10',mana:'17',pv_max:'10',mana_max:'17',phys:'35',social:'65',mental:'70',valeurs:'Altruiste\nOpportuniste\nPieuse',langues:'Commun, Kitsune, Nain',competences:[{n:'Puissance',v:1},{n:'Finesse',v:3},{n:'Aura',v:3},{n:'Relation',v:4},{n:'Instinct',v:4},{n:'Savoir (Charmeuse)',v:3},{n:'Chance',v:0},{n:'Experte en sorts',v:1},{n:'Alchimie',v:1}],armes:'Tambourins et Castagnettes (D4/−2)\nPistolet à silex (D6/0)\nDague (D4/0)',armures:'(Armure impossible — Oracle)',dons:'🥁 Bénédiction du goupil — 3 mana\n⚔ Aux armes ! — 1+D4-12 mana\n🎭 Marionette — 6 mana\n💧 Rosée de la vitalité\n✨ Soin Divin\n🤝 Pacte des 12',equip:'Rations ×2, Balles ×19, Kit médical ×1, Kit crochetage ×3, Anneau de Mana ×1',race_bonus:'🟢 Ruse naturelle +20%\n🟢 Vivacité renarde +10%\n🔴 Force faible −20%\n🔴 Défiance générale −25%',notes:'Née dans les bas-quartiers d\'Auregia. 50 ans.',color:'rgba(29,107,90,.12)',init:'M'},
+  nindey:{name:'Nindey Traqué',race:'Nain',genre:'Homme',classe:'Cogneur',element:'⚡ Foudre',niveau:'1',pv:'11',mana:'9',pv_max:'11',mana_max:'9',phys:'80',social:'20',mental:'50',valeurs:'Tête brûlée\nAlcoolique\nChasseur de trésor',langues:'Commun, Nain, Draconique',competences:[{n:'Puissance',v:5},{n:'Finesse',v:3},{n:'Aura',v:1},{n:'Relation',v:1},{n:'Instinct',v:4},{n:'Savoir (Expert Runique)',v:1},{n:'Artisan',v:0},{n:'Maniement d\'arme',v:1},{n:'Forgeron',v:1}],armes:'Deux haches à une main (D10/+4)\nHache à deux mains (D12/+4)\nPioche + Marteau (D4/+3)',armures:'Armure runique (RD4)\nAnneau anti-magie RD1',dons:'⚡ Armes Foudroyante — 3 mana\n🔨 Marteau de Thor — 2 mana\n💥 Blitzer — 4 mana / D6+1\n⚡ Lance de Foudre — 6 mana\n⚔ Maîtrise des Armes\n💥 Baroud d\'Honneur',equip:'Rations ×18, Kit médical ×2, Rune Majeur Feu (50k PO), Corde 10m ×1',race_bonus:'🟢 Savoir des forges +20%\n🟢 Vision des profondeurs +10%\n🔴 Vitesse réduite −10%\n🔴 Adaptation sociale −10%',notes:'Né au Mont RockDur. Lié à Skarlath. 185 ans.',color:'rgba(139,32,32,.1)',init:'N'}
+};
+
 let charData = JSON.parse(JSON.stringify(defaultChars));
 let currentUser = null;
 let isMJ = false;
 let navConfig = JSON.parse(JSON.stringify(DEFAULT_NAV));
-let customPagesData = {}; // {id: {title, content}}
-// État éditeur modal
+let customPagesData = {};
 let editingNav = [];
 let dragSrcIdx = null;
+let currentDesign = {};
+let bgImageDataUrl = null;
 
 // ===== AUTH =====
 window.signIn = async () => { try { await signInWithPopup(auth, provider); } catch(e){ console.error(e); } };
@@ -596,6 +639,7 @@ onAuthStateChanged(auth, user => {
 
 async function loadAll(){
   await loadNavConfig();
+  await loadDesignConfig();
   renderNav();
   await loadAllChars();
   renderCurrentChar();
@@ -604,14 +648,195 @@ async function loadAll(){
   await loadCustomPages();
 }
 
+// ===== DESIGN =====
+async function loadDesignConfig(){
+  // D'abord charger depuis Firebase (partagé avec tous)
+  const snap = await getDoc(doc(db,'shared','design-config'));
+  if(snap.exists()){
+    currentDesign = snap.data();
+  } else {
+    currentDesign = { ...THEMES[0], title:'⚔ Alésia', subtitle:'Portail de campagne', bgOpacity:0 };
+  }
+  // Image de fond : stockée localement dans localStorage (trop grande pour Firestore)
+  const savedBg = localStorage.getItem('alesia_bg_image');
+  if(savedBg) bgImageDataUrl = savedBg;
+  applyDesign(currentDesign);
+}
+
+function applyDesign(d){
+  const r = document.documentElement.style;
+  if(d.gold) r.setProperty('--gold', d.gold);
+  if(d.gold){
+    // Dériver les variantes
+    r.setProperty('--gold-d', shadeColor(d.gold, -20));
+    r.setProperty('--gold-l', shadeColor(d.gold, 20));
+    r.setProperty('--gold-pale', hexToRgba(d.gold, 0.12));
+  }
+  if(d.parch){ r.setProperty('--parch', d.parch); r.setProperty('--parch2', shadeColor(d.parch, -5)); }
+  if(d.surf){ r.setProperty('--surf', d.surf); r.setProperty('--surf2', shadeColor(d.surf, -4)); }
+  if(d.header) r.setProperty('--header-bg', d.header);
+  if(d.nav) r.setProperty('--nav-bg', d.nav);
+  if(d.ink){
+    r.setProperty('--ink', d.ink);
+    r.setProperty('--ink-m', hexToRgba(d.ink, 0.7));
+    r.setProperty('--ink-l', hexToRgba(d.ink, 0.5));
+  }
+  if(d.radius !== undefined) r.setProperty('--radius', d.radius + 'px');
+  // Image de fond
+  const bgOpacity = d.bgOpacity ?? 0;
+  if(bgImageDataUrl){
+    document.body.style.setProperty('--bg-image', `url('${bgImageDataUrl}')`);
+    document.body.style.setProperty('--bg-overlay', `rgba(${hexToRgbTriple(d.parch||'#F5EFE0')},${bgOpacity/100})`);
+  } else {
+    document.body.style.setProperty('--bg-image', 'none');
+    document.body.style.setProperty('--bg-overlay', 'transparent');
+  }
+  // Titre
+  if(d.title) document.getElementById('site-title').textContent = d.title;
+  if(d.subtitle) document.getElementById('site-subtitle').textContent = d.subtitle;
+}
+
+// ===== DESIGN EDITOR =====
+window.openDesignEditor = () => {
+  // Remplir les presets
+  const pg = document.getElementById('preset-grid');
+  pg.innerHTML = '';
+  THEMES.forEach((t,i) => {
+    const btn = document.createElement('div');
+    btn.className = 'preset-btn';
+    btn.innerHTML = `<div class="preset-swatch" style="background:linear-gradient(135deg,${t.header} 0%,${t.header} 40%,${t.parch} 40%,${t.parch} 100%)"></div><div class="preset-name">${t.name}</div>`;
+    btn.onclick = () => { applyThemePreset(t); document.querySelectorAll('.preset-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); };
+    pg.appendChild(btn);
+  });
+  // Remplir les inputs avec les valeurs actuelles
+  document.getElementById('de-gold').value = currentDesign.gold || '#C9A84C';
+  document.getElementById('de-parch').value = currentDesign.parch || '#F5EFE0';
+  document.getElementById('de-surf').value = currentDesign.surf || '#FAF6EC';
+  document.getElementById('de-header').value = currentDesign.header || '#2C2416';
+  document.getElementById('de-nav').value = currentDesign.nav || '#FAF6EC';
+  document.getElementById('de-ink').value = currentDesign.ink || '#2C2416';
+  document.getElementById('de-title').value = currentDesign.title || '⚔ Alésia';
+  document.getElementById('de-subtitle').value = currentDesign.subtitle || 'Portail de campagne';
+  document.getElementById('de-radius').value = currentDesign.radius ?? 10;
+  document.getElementById('de-radius-val').textContent = (currentDesign.radius ?? 10) + 'px';
+  document.getElementById('de-bg-opacity').value = currentDesign.bgOpacity ?? 0;
+  document.getElementById('de-bg-opacity-val').textContent = (currentDesign.bgOpacity ?? 0) + '%';
+  // Swatches
+  ['gold','parch','surf','header','nav','ink'].forEach(k => updateSwatch(k, document.getElementById('de-'+k).value));
+  // Preview image
+  if(bgImageDataUrl){
+    const prev = document.getElementById('bg-preview');
+    prev.src = bgImageDataUrl; prev.classList.add('visible');
+  }
+  document.getElementById('design-editor-modal').classList.add('open');
+};
+
+window.closeDesignEditor = () => document.getElementById('design-editor-modal').classList.remove('open');
+window.closeDesignEditorOnBg = (e) => { if(e.target === document.getElementById('design-editor-modal')) closeDesignEditor(); };
+
+function applyThemePreset(t){
+  document.getElementById('de-gold').value = t.gold;
+  document.getElementById('de-parch').value = t.parch;
+  document.getElementById('de-surf').value = t.surf;
+  document.getElementById('de-header').value = t.header;
+  document.getElementById('de-nav').value = t.nav;
+  document.getElementById('de-ink').value = t.ink;
+  document.getElementById('de-radius').value = t.radius;
+  document.getElementById('de-radius-val').textContent = t.radius + 'px';
+  ['gold','parch','surf','header','nav','ink'].forEach(k => updateSwatch(k, document.getElementById('de-'+k).value));
+  previewDesign();
+}
+
+window.updateSwatch = (key, val) => {
+  const preview = document.getElementById('cp-' + key);
+  if(preview) preview.style.background = val;
+};
+
+window.previewDesign = () => {
+  const d = getDesignFromForm();
+  applyDesign(d);
+};
+
+function getDesignFromForm(){
+  return {
+    gold: document.getElementById('de-gold').value,
+    parch: document.getElementById('de-parch').value,
+    surf: document.getElementById('de-surf').value,
+    header: document.getElementById('de-header').value,
+    nav: document.getElementById('de-nav').value,
+    ink: document.getElementById('de-ink').value,
+    title: document.getElementById('de-title').value,
+    subtitle: document.getElementById('de-subtitle').value,
+    radius: parseInt(document.getElementById('de-radius').value),
+    bgOpacity: parseInt(document.getElementById('de-bg-opacity').value),
+  };
+}
+
+window.saveDesign = async () => {
+  currentDesign = getDesignFromForm();
+  await setDoc(doc(db,'shared','design-config'), currentDesign);
+  applyDesign(currentDesign);
+  closeDesignEditor();
+  toast('Design sauvegardé ✓ — visible par tous les joueurs');
+};
+
+window.resetDesign = async () => {
+  const def = { ...THEMES[0], title:'⚔ Alésia', subtitle:'Portail de campagne', bgOpacity:0 };
+  currentDesign = def;
+  await setDoc(doc(db,'shared','design-config'), def);
+  bgImageDataUrl = null;
+  localStorage.removeItem('alesia_bg_image');
+  applyDesign(def);
+  closeDesignEditor();
+  toast('Design réinitialisé ✓');
+};
+
+window.handleImageUpload = (e) => {
+  const file = e.target.files[0];
+  if(!file) return;
+  if(file.size > 5 * 1024 * 1024){ toast('Image trop grande (max 5 Mo)'); return; }
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    bgImageDataUrl = ev.target.result;
+    localStorage.setItem('alesia_bg_image', bgImageDataUrl);
+    const prev = document.getElementById('bg-preview');
+    prev.src = bgImageDataUrl; prev.classList.add('visible');
+    previewDesign();
+    toast('Image chargée ✓');
+  };
+  reader.readAsDataURL(file);
+};
+
+window.clearBgImage = () => {
+  bgImageDataUrl = null;
+  localStorage.removeItem('alesia_bg_image');
+  document.getElementById('bg-preview').classList.remove('visible');
+  document.body.style.setProperty('--bg-image', 'none');
+  document.body.style.setProperty('--bg-overlay', 'transparent');
+  toast('Image retirée ✓');
+};
+
+// Helpers couleur
+function shadeColor(hex, percent){
+  const num = parseInt(hex.replace('#',''), 16);
+  const r = Math.min(255, Math.max(0, (num >> 16) + Math.round(2.55 * percent)));
+  const g = Math.min(255, Math.max(0, ((num >> 8) & 0xff) + Math.round(2.55 * percent)));
+  const b = Math.min(255, Math.max(0, (num & 0xff) + Math.round(2.55 * percent)));
+  return '#' + ((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
+}
+function hexToRgba(hex, alpha){
+  const [r,g,b] = hexToRgbTriple(hex);
+  return `rgba(${r},${g},${b},${alpha})`;
+}
+function hexToRgbTriple(hex){
+  const num = parseInt((hex||'#000000').replace('#',''), 16);
+  return [(num >> 16) & 255, (num >> 8) & 255, num & 255];
+}
+
 // ===== NAV CONFIG =====
 async function loadNavConfig(){
   const snap = await getDoc(doc(db,'shared','nav-config'));
-  if(snap.exists() && snap.data().items){
-    navConfig = snap.data().items;
-  } else {
-    navConfig = JSON.parse(JSON.stringify(DEFAULT_NAV));
-  }
+  navConfig = (snap.exists() && snap.data().items) ? snap.data().items : JSON.parse(JSON.stringify(DEFAULT_NAV));
 }
 
 function renderNav(){
@@ -621,14 +846,9 @@ function renderNav(){
   navConfig.forEach(entry => {
     if(!entry) return;
     if(entry.type === 'group'){
-      const div = document.createElement('div');
-      div.className = 'nl';
-      div.textContent = entry.label || '';
-      scroll.appendChild(div);
+      const div = document.createElement('div'); div.className = 'nl'; div.textContent = entry.label || ''; scroll.appendChild(div);
     } else if(entry.type === 'sep'){
-      const div = document.createElement('div');
-      div.className = 'ndiv';
-      scroll.appendChild(div);
+      const div = document.createElement('div'); div.className = 'ndiv'; scroll.appendChild(div);
     } else if(entry.type === 'item'){
       if(entry.visible === false) return;
       const div = document.createElement('div');
@@ -637,11 +857,7 @@ function renderNav(){
       div.innerHTML = `<i class="ti ${entry.icon || 'ti-file'}"></i> ${entry.label}`;
       div.onclick = () => showSec(entry.id, div);
       scroll.appendChild(div);
-      if(firstItem){
-        firstItem = false;
-        // Activer la première section
-        setTimeout(() => showSec(entry.id, div), 0);
-      }
+      if(firstItem){ firstItem = false; setTimeout(() => showSec(entry.id, div), 0); }
     }
   });
 }
@@ -649,16 +865,9 @@ function renderNav(){
 function showSec(id, el){
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
   document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
-  // Section builtin ou custom
   const builtin = document.getElementById('s-' + id);
-  if(builtin){
-    builtin.classList.add('active');
-  } else {
-    // Section custom — créer si besoin
-    ensureCustomSection(id);
-    const cs = document.getElementById('cs-' + id);
-    if(cs) cs.classList.add('active');
-  }
+  if(builtin){ builtin.classList.add('active'); }
+  else { ensureCustomSection(id); const cs = document.getElementById('cs-' + id); if(cs) cs.classList.add('active'); }
   if(el) el.classList.add('active');
 }
 window.showSec = showSec;
@@ -667,132 +876,74 @@ window.showSec = showSec;
 async function loadCustomPages(){
   const snap = await getDoc(doc(db,'shared','custom-pages'));
   if(snap.exists()) customPagesData = snap.data() || {};
-  // Créer les divs pour toutes les pages custom existantes
-  navConfig.filter(e => e.type === 'item' && !e.builtin).forEach(e => {
-    ensureCustomSection(e.id);
-  });
+  navConfig.filter(e => e.type === 'item' && !e.builtin).forEach(e => ensureCustomSection(e.id));
 }
-
 function ensureCustomSection(id){
   if(document.getElementById('cs-'+id)) return;
   const container = document.getElementById('custom-sections-container');
   const entry = navConfig.find(e => e.id === id);
   if(!entry) return;
-
   const div = document.createElement('div');
-  div.id = 'cs-' + id;
-  div.className = 'section';
-
+  div.id = 'cs-' + id; div.className = 'section';
   const data = customPagesData[id] || {title: entry.label, content: ''};
   div.innerHTML = buildCustomPage(id, data);
   container.appendChild(div);
 }
-
 function buildCustomPage(id, data){
   const entry = navConfig.find(e => e.id === id) || {};
-  return `
-    <div class="page-title">
-      <i class="ti ${entry.icon || 'ti-file'}"></i>
-      ${data.title || entry.label || 'Page'}
-    </div>
-    ${isMJ ? `<div class="custom-toolbar">
-      <button class="btn-edit-page" onclick="toggleCustomEdit('${id}')">
-        <i class="ti ti-pencil"></i> Modifier le contenu
-      </button>
-    </div>` : ''}
-    <div id="cp-view-${id}" class="custom-page-content">
-      ${data.content
-        ? `<div class="custom-rendered">${escapeHtml(data.content)}</div>`
-        : `<div style="color:var(--ink-l);font-style:italic;font-size:13px;padding:20px 0;">
-            ${isMJ ? 'Page vide — cliquez sur « Modifier le contenu » pour l\'éditer.' : 'Aucun contenu pour l\'instant.'}
-           </div>`}
-    </div>
-    <div id="cp-edit-${id}" style="display:none">
-      <textarea class="custom-edit-area" id="cp-area-${id}" rows="16">${escapeHtml(data.content || '')}</textarea>
-      <div style="display:flex;gap:8px;margin-top:10px;">
-        <button class="btn-save" onclick="saveCustomPage('${id}')"><i class="ti ti-check"></i> Enregistrer</button>
-        <button class="btn-cancel" onclick="toggleCustomEdit('${id}')">Annuler</button>
-      </div>
-    </div>`;
+  return `<div class="page-title"><i class="ti ${entry.icon||'ti-file'}"></i> ${data.title||entry.label||'Page'}</div>
+    ${isMJ?`<div class="custom-toolbar"><button class="btn-edit-page" onclick="toggleCustomEdit('${id}')"><i class="ti ti-pencil"></i> Modifier le contenu</button></div>`:''}
+    <div id="cp-view-${id}">${data.content?`<div class="custom-rendered">${escapeHtml(data.content)}</div>`:`<div style="color:var(--ink-l);font-style:italic;font-size:13px;padding:20px 0;">${isMJ?'Page vide — cliquez sur « Modifier le contenu ».':'Aucun contenu.'}</div>`}</div>
+    <div id="cp-edit-${id}" style="display:none"><textarea class="custom-edit-area" id="cp-area-${id}" rows="16">${escapeHtml(data.content||'')}</textarea>
+    <div style="display:flex;gap:8px;margin-top:10px;"><button class="btn-save" onclick="saveCustomPage('${id}')"><i class="ti ti-check"></i> Enregistrer</button><button class="btn-cancel" onclick="toggleCustomEdit('${id}')">Annuler</button></div></div>`;
 }
-
 window.toggleCustomEdit = (id) => {
-  const view = document.getElementById('cp-view-'+id);
-  const edit = document.getElementById('cp-edit-'+id);
-  if(!view || !edit) return;
-  const isEditing = edit.style.display === 'block';
-  view.style.display = isEditing ? 'block' : 'none';
-  edit.style.display = isEditing ? 'none' : 'block';
+  const v=document.getElementById('cp-view-'+id), e=document.getElementById('cp-edit-'+id);
+  if(!v||!e) return;
+  const open=e.style.display==='block';
+  v.style.display=open?'block':'none'; e.style.display=open?'none':'block';
 };
-
 window.saveCustomPage = async (id) => {
-  const area = document.getElementById('cp-area-'+id);
-  if(!area) return;
-  const content = area.value;
-  customPagesData[id] = customPagesData[id] || {};
-  customPagesData[id].content = content;
-  await setDoc(doc(db,'shared','custom-pages'), customPagesData, {merge:true});
-  // Reconstruire la page
-  const sec = document.getElementById('cs-'+id);
-  if(sec){
-    const entry = navConfig.find(e => e.id === id) || {};
-    sec.innerHTML = buildCustomPage(id, customPagesData[id]);
-  }
+  const area=document.getElementById('cp-area-'+id); if(!area) return;
+  customPagesData[id]={...(customPagesData[id]||{}),content:area.value};
+  await setDoc(doc(db,'shared','custom-pages'),customPagesData,{merge:true});
+  const sec=document.getElementById('cs-'+id);
+  if(sec) sec.innerHTML=buildCustomPage(id,customPagesData[id]);
   toast('Page sauvegardée ✓');
 };
-
 function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 
-// ===== NAV EDITOR MODAL =====
+// ===== NAV EDITOR =====
 window.openNavEditor = () => {
   editingNav = JSON.parse(JSON.stringify(navConfig));
   renderNavEditorBody();
   document.getElementById('nav-editor-modal').classList.add('open');
 };
-
-window.closeNavEditor = () => {
-  document.getElementById('nav-editor-modal').classList.remove('open');
-};
-
-window.closeNavEditorOnBg = (e) => {
-  if(e.target === document.getElementById('nav-editor-modal')) closeNavEditor();
-};
+window.closeNavEditor = () => document.getElementById('nav-editor-modal').classList.remove('open');
+window.closeNavEditorOnBg = (e) => { if(e.target===document.getElementById('nav-editor-modal')) closeNavEditor(); };
 
 function renderNavEditorBody(){
   const body = document.getElementById('nav-editor-body');
   body.innerHTML = '';
-
-  // Info
   const info = document.createElement('div');
-  info.style.cssText = 'font-size:12px;color:var(--ink-l);font-style:italic;margin-bottom:14px;padding:8px 12px;background:var(--surf);border:1px solid var(--bord);border-radius:7px;';
-  info.innerHTML = '<i class="ti ti-info-circle" style="vertical-align:-2px;margin-right:4px;"></i>Glissez pour réordonner · Cliquez sur le nom pour le modifier · L\'œil pour masquer/afficher';
+  info.style.cssText='font-size:12px;color:var(--ink-l);font-style:italic;margin-bottom:14px;padding:8px 12px;background:var(--surf);border:1px solid var(--bord);border-radius:7px;';
+  info.innerHTML='<i class="ti ti-info-circle" style="vertical-align:-2px;margin-right:4px;"></i>Glissez pour réordonner · Cliquez le nom pour le modifier · Œil pour masquer/afficher';
   body.appendChild(info);
-
-  // Liste des items
   const list = document.createElement('div');
-  list.id = 'nav-edit-list';
-  list.style.cssText = 'display:flex;flex-direction:column;gap:5px;margin-bottom:16px;';
+  list.id='nav-edit-list'; list.style.cssText='display:flex;flex-direction:column;gap:5px;margin-bottom:16px;';
   body.appendChild(list);
-
-  editingNav.forEach((entry, i) => {
-    list.appendChild(buildEditRow(entry, i));
-  });
-
-  // Section : ajouter un groupe / séparateur / item
+  editingNav.forEach((entry,i) => list.appendChild(buildEditRow(entry,i)));
   const addSection = document.createElement('div');
-  addSection.style.cssText = 'border-top:1px solid var(--bord);padding-top:14px;';
-  addSection.innerHTML = `
-    <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--gold-d);margin-bottom:10px;text-transform:uppercase;">Ajouter</div>
+  addSection.style.cssText='border-top:1px solid var(--bord);padding-top:14px;';
+  addSection.innerHTML=`<div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--gold-d);margin-bottom:10px;text-transform:uppercase;">Ajouter</div>
     <div style="display:flex;flex-direction:column;gap:8px;">
       <div style="display:flex;gap:8px;">
         <input class="nav-add-input" id="new-item-label" placeholder="Nom du nouvel onglet..." style="flex:1">
-        <select id="new-item-icon" style="font-family:'Crimson Pro',serif;font-size:13px;background:var(--surf2);border:1px solid var(--bord-s);border-radius:7px;padding:5px 8px;color:var(--ink);outline:none;">
-          ${AVAILABLE_ICONS.map(ic => `<option value="${ic}">${ic.replace('ti-','')}</option>`).join('')}
-        </select>
+        <select id="new-item-icon" style="font-family:'Crimson Pro',serif;font-size:13px;background:var(--surf2);border:1px solid var(--bord-s);border-radius:7px;padding:5px 8px;color:var(--ink);outline:none;">${AVAILABLE_ICONS.map(ic=>`<option value="${ic}">${ic.replace('ti-','')}</option>`).join('')}</select>
         <button class="btn-save" style="white-space:nowrap;" onclick="addNavItem()"><i class="ti ti-plus"></i> Onglet</button>
       </div>
       <div style="display:flex;gap:8px;">
-        <input class="nav-add-input" id="new-group-label" placeholder="Nom du groupe (titre de section)...">
+        <input class="nav-add-input" id="new-group-label" placeholder="Nom du groupe...">
         <button class="btn-add" style="margin-bottom:0;white-space:nowrap;" onclick="addNavGroup()"><i class="ti ti-plus"></i> Groupe</button>
         <button class="btn-cancel" style="white-space:nowrap;" onclick="addNavSep()"><i class="ti ti-minus"></i> Séparateur</button>
       </div>
@@ -800,361 +951,204 @@ function renderNavEditorBody(){
   body.appendChild(addSection);
 }
 
-function buildEditRow(entry, i){
+function buildEditRow(entry,i){
   const row = document.createElement('div');
   row.dataset.idx = i;
-
-  if(entry.type === 'sep'){
-    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:5px 10px;background:rgba(139,105,20,.05);border:1px dashed var(--bord);border-radius:8px;';
-    row.draggable = true;
-    row.innerHTML = `
-      <i class="ti ti-grip-vertical drag-handle" style="color:var(--ink-l);font-size:14px;cursor:grab;"></i>
-      <span style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--ink-l);flex:1;text-transform:uppercase;">— Séparateur —</span>
-      <button class="nav-row-btn del" onclick="removeNavEntry(${i})" title="Supprimer"><i class="ti ti-trash"></i></button>`;
-    addDragListeners(row, i);
-    return row;
+  if(entry.type==='sep'){
+    row.style.cssText='display:flex;align-items:center;gap:8px;padding:5px 10px;background:rgba(139,105,20,.05);border:1px dashed var(--bord);border-radius:8px;';
+    row.draggable=true;
+    row.innerHTML=`<i class="ti ti-grip-vertical" style="color:var(--ink-l);font-size:14px;cursor:grab;"></i><span style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--ink-l);flex:1;text-transform:uppercase;">— Séparateur —</span><button class="nav-row-btn del" onclick="removeNavEntry(${i})"><i class="ti ti-trash"></i></button>`;
+    addDragListeners(row,i); return row;
   }
-
-  if(entry.type === 'group'){
-    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--gold-pale);border:1px solid rgba(201,168,76,.25);border-radius:8px;';
-    row.draggable = true;
-    row.innerHTML = `
-      <i class="ti ti-grip-vertical drag-handle" style="color:var(--gold-d);font-size:14px;cursor:grab;"></i>
-      <i class="ti ti-folder" style="color:var(--gold-d);font-size:14px;"></i>
-      <input class="nav-row-name-input" style="flex:1;background:transparent;border-color:transparent;" value="${escapeHtml(entry.label||'')}" 
-        onchange="editNavEntry(${i},'label',this.value)" 
-        onfocus="this.style.borderColor='var(--gold)';this.style.background='var(--surf2)'"
-        onblur="this.style.borderColor='transparent';this.style.background='transparent'">
-      <button class="nav-row-btn del" onclick="removeNavEntry(${i})" title="Supprimer"><i class="ti ti-trash"></i></button>`;
-    addDragListeners(row, i);
-    return row;
+  if(entry.type==='group'){
+    row.style.cssText='display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--gold-pale);border:1px solid rgba(201,168,76,.25);border-radius:8px;';
+    row.draggable=true;
+    row.innerHTML=`<i class="ti ti-grip-vertical" style="color:var(--gold-d);font-size:14px;cursor:grab;"></i><i class="ti ti-folder" style="color:var(--gold-d);font-size:14px;"></i><input class="nav-row-name-input" style="flex:1;background:transparent;border-color:transparent;" value="${escapeHtml(entry.label||'')}" onchange="editNavEntry(${i},'label',this.value)" onfocus="this.style.borderColor='var(--gold)';this.style.background='var(--surf2)'" onblur="this.style.borderColor='transparent';this.style.background='transparent'"><button class="nav-row-btn del" onclick="removeNavEntry(${i})"><i class="ti ti-trash"></i></button>`;
+    addDragListeners(row,i); return row;
   }
-
-  // type === 'item'
-  row.className = 'nav-edit-row';
-  row.draggable = true;
-  const visIcon = entry.visible === false ? 'ti-eye-off' : 'ti-eye';
-  const visStyle = entry.visible === false ? 'opacity:.5' : '';
-  const isBuiltin = entry.builtin ? '<span title="Section intégrée" style="font-size:10px;background:var(--blue-pale);color:var(--blue);border:1px solid rgba(26,74,122,.2);border-radius:10px;padding:1px 6px;">intégré</span>' : '';
-  row.innerHTML = `
-    <i class="ti ti-grip-vertical drag-handle"></i>
-    <i class="ti ${entry.icon||'ti-file'} nav-row-icon" style="cursor:pointer;" onclick="cycleIcon(${i},this)" title="Changer l'icône"></i>
-    <input class="nav-row-name-input" value="${escapeHtml(entry.label||'')}" 
-      onchange="editNavEntry(${i},'label',this.value)"
-      onfocus="this.style.borderColor='var(--gold)'"
-      onblur="this.style.borderColor='transparent'">
-    ${isBuiltin}
-    <div class="nav-row-actions">
-      <button class="nav-row-btn ${entry.visible===false?'vis-off':''}" onclick="toggleNavVis(${i},this)" title="${entry.visible===false?'Afficher':'Masquer'}">
-        <i class="ti ${visIcon}"></i>
-      </button>
-      ${!entry.builtin ? `<button class="nav-row-btn del" onclick="removeNavEntry(${i})" title="Supprimer"><i class="ti ti-trash"></i></button>` : ''}
-    </div>`;
-  addDragListeners(row, i);
-  return row;
+  row.className='nav-edit-row'; row.draggable=true;
+  const visIcon=entry.visible===false?'ti-eye-off':'ti-eye';
+  const isBuiltin=entry.builtin?'<span style="font-size:10px;background:var(--blue-pale);color:var(--blue);border:1px solid rgba(26,74,122,.2);border-radius:10px;padding:1px 6px;">intégré</span>':'';
+  row.innerHTML=`<i class="ti ti-grip-vertical" style="color:var(--ink-l);font-size:14px;cursor:grab;"></i><i class="ti ${entry.icon||'ti-file'}" style="font-size:16px;color:var(--gold-d);cursor:pointer;width:22px;text-align:center;" onclick="cycleIcon(${i},this)" title="Changer l'icône"></i><input class="nav-row-name-input" value="${escapeHtml(entry.label||'')}" onchange="editNavEntry(${i},'label',this.value)" onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='transparent'">${isBuiltin}<div class="nav-row-actions"><button class="nav-row-btn ${entry.visible===false?'vis-off':''}" onclick="toggleNavVis(${i},this)"><i class="ti ${visIcon}"></i></button>${!entry.builtin?`<button class="nav-row-btn del" onclick="removeNavEntry(${i})"><i class="ti ti-trash"></i></button>`:''}</div>`;
+  addDragListeners(row,i); return row;
 }
 
-function addDragListeners(row, i){
-  row.addEventListener('dragstart', e => {
-    dragSrcIdx = i;
-    row.classList.add('dragging');
-    e.dataTransfer.effectAllowed = 'move';
-  });
-  row.addEventListener('dragend', () => row.classList.remove('dragging'));
-  row.addEventListener('dragover', e => { e.preventDefault(); row.classList.add('drag-over'); });
-  row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
-  row.addEventListener('drop', e => {
-    e.preventDefault();
-    row.classList.remove('drag-over');
-    if(dragSrcIdx === null || dragSrcIdx === i) return;
-    const moved = editingNav.splice(dragSrcIdx, 1)[0];
-    const target = i > dragSrcIdx ? i - 1 : i;
-    editingNav.splice(target, 0, moved);
-    dragSrcIdx = null;
-    renderNavEditorBody();
+function addDragListeners(row,i){
+  row.addEventListener('dragstart',e=>{dragSrcIdx=i;row.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+  row.addEventListener('dragend',()=>row.classList.remove('dragging'));
+  row.addEventListener('dragover',e=>{e.preventDefault();row.classList.add('drag-over');});
+  row.addEventListener('dragleave',()=>row.classList.remove('drag-over'));
+  row.addEventListener('drop',e=>{
+    e.preventDefault();row.classList.remove('drag-over');
+    if(dragSrcIdx===null||dragSrcIdx===i) return;
+    const moved=editingNav.splice(dragSrcIdx,1)[0];
+    editingNav.splice(i>dragSrcIdx?i-1:i,0,moved);
+    dragSrcIdx=null;renderNavEditorBody();
   });
 }
-
-window.editNavEntry = (i, field, val) => { if(editingNav[i]) editingNav[i][field] = val; };
-window.removeNavEntry = (i) => { editingNav.splice(i, 1); renderNavEditorBody(); };
-window.toggleNavVis = (i, btn) => {
-  if(!editingNav[i]) return;
-  editingNav[i].visible = editingNav[i].visible === false ? true : false;
-  renderNavEditorBody();
+window.editNavEntry=(i,field,val)=>{if(editingNav[i])editingNav[i][field]=val;};
+window.removeNavEntry=(i)=>{editingNav.splice(i,1);renderNavEditorBody();};
+window.toggleNavVis=(i)=>{if(editingNav[i])editingNav[i].visible=editingNav[i].visible===false;renderNavEditorBody();};
+window.cycleIcon=(i,el)=>{
+  const cur=editingNav[i].icon||'ti-file';
+  const idx=AVAILABLE_ICONS.indexOf(cur);
+  const next=AVAILABLE_ICONS[(idx+1)%AVAILABLE_ICONS.length];
+  editingNav[i].icon=next; el.className='ti '+next; el.style.cssText='font-size:16px;color:var(--gold-d);cursor:pointer;width:22px;text-align:center;';
 };
-
-window.cycleIcon = (i, el) => {
-  const cur = editingNav[i].icon || 'ti-file';
-  const idx = AVAILABLE_ICONS.indexOf(cur);
-  const next = AVAILABLE_ICONS[(idx + 1) % AVAILABLE_ICONS.length];
-  editingNav[i].icon = next;
-  el.className = 'ti ' + next + ' nav-row-icon';
-  el.style.cursor = 'pointer';
+window.addNavItem=()=>{
+  const label=document.getElementById('new-item-label').value.trim();
+  const icon=document.getElementById('new-item-icon').value;
+  if(!label){toast('Entrez un nom');return;}
+  editingNav.push({type:'item',id:'custom_'+Date.now(),label,icon,builtin:false,visible:true});
+  document.getElementById('new-item-label').value='';renderNavEditorBody();
 };
-
-window.addNavItem = () => {
-  const label = document.getElementById('new-item-label').value.trim();
-  const icon = document.getElementById('new-item-icon').value;
-  if(!label){ toast('Entrez un nom pour l\'onglet'); return; }
-  const id = 'custom_' + Date.now();
-  editingNav.push({type:'item', id, label, icon, builtin:false, visible:true});
-  document.getElementById('new-item-label').value = '';
-  renderNavEditorBody();
+window.addNavGroup=()=>{
+  const label=document.getElementById('new-group-label').value.trim();
+  if(!label){toast('Entrez un nom de groupe');return;}
+  editingNav.push({type:'group',label});document.getElementById('new-group-label').value='';renderNavEditorBody();
 };
-
-window.addNavGroup = () => {
-  const label = document.getElementById('new-group-label').value.trim();
-  if(!label){ toast('Entrez un nom pour le groupe'); return; }
-  editingNav.push({type:'group', label});
-  document.getElementById('new-group-label').value = '';
-  renderNavEditorBody();
-};
-
-window.addNavSep = () => {
-  editingNav.push({type:'sep'});
-  renderNavEditorBody();
-};
-
-window.saveNavConfig = async () => {
-  navConfig = JSON.parse(JSON.stringify(editingNav));
-  await setDoc(doc(db,'shared','nav-config'), {items: navConfig});
-  // Créer les sections custom manquantes
-  navConfig.filter(e => e.type==='item' && !e.builtin).forEach(e => ensureCustomSection(e.id));
-  renderNav();
-  closeNavEditor();
-  toast('Menu mis à jour ✓');
+window.addNavSep=()=>{editingNav.push({type:'sep'});renderNavEditorBody();};
+window.saveNavConfig=async()=>{
+  navConfig=JSON.parse(JSON.stringify(editingNav));
+  await setDoc(doc(db,'shared','nav-config'),{items:navConfig});
+  navConfig.filter(e=>e.type==='item'&&!e.builtin).forEach(e=>ensureCustomSection(e.id));
+  renderNav();closeNavEditor();toast('Menu mis à jour ✓');
 };
 
 // ===== CHARS =====
 async function loadAllChars(){
-  const names = ['azarius','dy','firm','mwassa','nindey'];
-  for(const name of names){
-    const snap = await getDoc(doc(db,'characters',name));
-    if(snap.exists()) charData[name] = {...defaultChars[name], ...snap.data()};
+  for(const name of ['azarius','dy','firm','mwassa','nindey']){
+    const snap=await getDoc(doc(db,'characters',name));
+    if(snap.exists()) charData[name]={...defaultChars[name],...snap.data()};
   }
 }
 async function saveChar(name){
-  await setDoc(doc(db,'characters',name), charData[name], {merge:true});
-  toast('Sauvegardé ✓');
+  await setDoc(doc(db,'characters',name),charData[name],{merge:true});toast('Sauvegardé ✓');
 }
-
-let currentChar = 'azarius';
-window.showChar = (name, el) => {
+let currentChar='azarius';
+window.showChar=(name,el)=>{
   document.querySelectorAll('.char-sec').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.char-tab').forEach(t=>t.classList.remove('active'));
-  currentChar = name;
-  renderChar(name);
-  document.getElementById('char-'+name)?.classList.add('active');
-  el.classList.add('active');
+  currentChar=name;renderChar(name);
+  document.getElementById('char-'+name)?.classList.add('active');el.classList.add('active');
 };
-
-function renderCurrentChar(){ renderChar(currentChar); }
-
+function renderCurrentChar(){renderChar(currentChar);}
 function renderChar(name){
-  const c = charData[name];
-  const container = document.getElementById('chars-container');
-  let sec = document.getElementById('char-'+name);
-  if(!sec){ sec = document.createElement('div'); sec.id='char-'+name; sec.className='char-sec'; container.appendChild(sec); }
-  if(name === currentChar) sec.classList.add('active');
-
-  const compsHtml = (c.competences||[]).map((comp,i)=>{
-    const dots = Array.from({length:6},(_,d)=>`<div class="dot${d<comp.v?' on':''}" onclick="toggleDot('${name}',${i},${d})"></div>`).join('');
+  const c=charData[name];
+  const container=document.getElementById('chars-container');
+  let sec=document.getElementById('char-'+name);
+  if(!sec){sec=document.createElement('div');sec.id='char-'+name;sec.className='char-sec';container.appendChild(sec);}
+  if(name===currentChar) sec.classList.add('active');
+  const compsHtml=(c.competences||[]).map((comp,i)=>{
+    const dots=Array.from({length:6},(_,d)=>`<div class="dot${d<comp.v?' on':''}" onclick="toggleDot('${name}',${i},${d})"></div>`).join('');
     return `<div class="comp-row"><span class="comp-name ef" onclick="editField('${name}','competences_name_${i}')">${comp.n}</span><div class="dots">${dots}</div></div>`;
   }).join('');
-
-  sec.innerHTML = `
-  <div class="grid2">
-    <div class="card">
-      <div class="hero-head">
-        <div class="avatar" style="background:${c.color}">${c.init}</div>
-        <div>
-          <div class="hero-name"><span class="ef" onclick="editField('${name}','name')">${c.name}</span></div>
-          <div class="hero-sub">
-            <span class="ef" onclick="editField('${name}','race')">${c.race}</span> ·
-            <span class="ef" onclick="editField('${name}','genre')">${c.genre}</span> ·
-            <span class="ef" onclick="editField('${name}','classe')">${c.classe}</span>
-          </div>
-          <div class="hero-badges">
-            <span class="badge elem"><span class="ef" onclick="editField('${name}','element')">${c.element}</span></span>
-            <span class="badge">Niv. <span class="ef" onclick="editField('${name}','niveau')">${c.niveau}</span></span>
-          </div>
-        </div>
-      </div>
-      <div class="pv-grid">
-        <div class="pv-box">
-          <div class="pv-big pv" id="${name}-pv">${c.pv}</div>
-          <div class="pv-lbl">PV / <span class="ef" onclick="editField('${name}','pv_max')">${c.pv_max}</span></div>
-          <div class="pv-controls">
-            <button class="pv-btn" onclick="adj('${name}','pv',-1)">−</button>
-            <button class="pv-btn" onclick="adj('${name}','pv',1)">+</button>
-          </div>
-        </div>
-        <div class="pv-box">
-          <div class="pv-big mana" id="${name}-mana">${c.mana}</div>
-          <div class="pv-lbl">Mana / <span class="ef" onclick="editField('${name}','mana_max')">${c.mana_max}</span></div>
-          <div class="pv-controls">
-            <button class="pv-btn" onclick="adj('${name}','mana',-1)">−</button>
-            <button class="pv-btn" onclick="adj('${name}','mana',1)">+</button>
-          </div>
-        </div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val"><span class="ef" onclick="editField('${name}','phys')">${c.phys}</span> %</span></div>
-        <div class="bar"><div class="bar-fill" style="width:${c.phys}%"></div></div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-head"><span class="stat-name">Social</span><span class="stat-val"><span class="ef" onclick="editField('${name}','social')">${c.social}</span> %</span></div>
-        <div class="bar"><div class="bar-fill" style="width:${c.social}%"></div></div>
-      </div>
-      <div class="stat-row">
-        <div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val"><span class="ef" onclick="editField('${name}','mental')">${c.mental}</span> %</span></div>
-        <div class="bar"><div class="bar-fill" style="width:${c.mental}%"></div></div>
-      </div>
+  sec.innerHTML=`<div class="grid2">
+    <div class="card"><div class="hero-head"><div class="avatar" style="background:${c.color}">${c.init}</div><div>
+      <div class="hero-name"><span class="ef" onclick="editField('${name}','name')">${c.name}</span></div>
+      <div class="hero-sub"><span class="ef" onclick="editField('${name}','race')">${c.race}</span> · <span class="ef" onclick="editField('${name}','genre')">${c.genre}</span> · <span class="ef" onclick="editField('${name}','classe')">${c.classe}</span></div>
+      <div class="hero-badges"><span class="badge elem"><span class="ef" onclick="editField('${name}','element')">${c.element}</span></span><span class="badge">Niv. <span class="ef" onclick="editField('${name}','niveau')">${c.niveau}</span></span></div>
+    </div></div>
+    <div class="pv-grid">
+      <div class="pv-box"><div class="pv-big pv" id="${name}-pv">${c.pv}</div><div class="pv-lbl">PV / <span class="ef" onclick="editField('${name}','pv_max')">${c.pv_max}</span></div><div class="pv-controls"><button class="pv-btn" onclick="adj('${name}','pv',-1)">−</button><button class="pv-btn" onclick="adj('${name}','pv',1)">+</button></div></div>
+      <div class="pv-box"><div class="pv-big mana" id="${name}-mana">${c.mana}</div><div class="pv-lbl">Mana / <span class="ef" onclick="editField('${name}','mana_max')">${c.mana_max}</span></div><div class="pv-controls"><button class="pv-btn" onclick="adj('${name}','mana',-1)">−</button><button class="pv-btn" onclick="adj('${name}','mana',1)">+</button></div></div>
+    </div>
+    <div class="stat-row"><div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val"><span class="ef" onclick="editField('${name}','phys')">${c.phys}</span> %</span></div><div class="bar"><div class="bar-fill" style="width:${c.phys}%"></div></div></div>
+    <div class="stat-row"><div class="stat-head"><span class="stat-name">Social</span><span class="stat-val"><span class="ef" onclick="editField('${name}','social')">${c.social}</span> %</span></div><div class="bar"><div class="bar-fill" style="width:${c.social}%"></div></div></div>
+    <div class="stat-row"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val"><span class="ef" onclick="editField('${name}','mental')">${c.mental}</span> %</span></div><div class="bar"><div class="bar-fill" style="width:${c.mental}%"></div></div></div>
     </div>
     <div class="card">
-      <div class="sdiv">Valeurs RP</div>
-      <div style="margin-bottom:12px">
-        ${(c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>`<div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">${v}</div>`).join('')}
-        <span class="ef" style="font-size:11px;color:var(--ink-l);" onclick="editFieldArea('${name}','valeurs')">✏ Modifier les valeurs</span>
-      </div>
-      <div class="sdiv">Langues</div>
-      <div style="margin-bottom:12px;font-size:13px;"><span class="ef" onclick="editField('${name}','langues')">${c.langues}</span></div>
-      <div class="sdiv">Compétences</div>
-      <div class="comp-list">${compsHtml}</div>
+      <div class="sdiv">Valeurs RP</div><div style="margin-bottom:12px">${(c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>`<div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">${v}</div>`).join('')}<span class="ef" style="font-size:11px;color:var(--ink-l);" onclick="editFieldArea('${name}','valeurs')">✏ Modifier</span></div>
+      <div class="sdiv">Langues</div><div style="margin-bottom:12px;font-size:13px;"><span class="ef" onclick="editField('${name}','langues')">${c.langues}</span></div>
+      <div class="sdiv">Compétences</div><div class="comp-list">${compsHtml}</div>
     </div>
     <div class="card">
-      <div class="sdiv">Armement</div>
-      <div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armes')">${(c.armes||'—').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Armures</div>
-      <div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armures')">${(c.armures||'—').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Dons & Capacités</div>
-      <div style="font-size:13px;"><span class="ef" onclick="editFieldArea('${name}','dons')">${(c.dons||'—').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Armement</div><div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armes')">${(c.armes||'—').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Armures</div><div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armures')">${(c.armures||'—').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Dons & Capacités</div><div style="font-size:13px;"><span class="ef" onclick="editFieldArea('${name}','dons')">${(c.dons||'—').replace(/\n/g,'<br>')}</span></div>
     </div>
     <div class="card">
-      <div class="sdiv">Équipement</div>
-      <div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','equip')">${(c.equip||'—').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Bonus de race</div>
-      <div style="font-size:11px;color:var(--ink-l);line-height:1.6;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','race_bonus')">${(c.race_bonus||'').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Notes personnelles</div>
-      <div style="font-size:13px;color:var(--ink-m);font-style:italic;min-height:24px;">
-        <span class="ef" onclick="editFieldArea('${name}','notes')">${c.notes||'Cliquer pour ajouter des notes...'}</span>
-      </div>
+      <div class="sdiv">Équipement</div><div style="font-size:13px;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','equip')">${(c.equip||'—').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Bonus de race</div><div style="font-size:11px;color:var(--ink-l);line-height:1.6;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','race_bonus')">${(c.race_bonus||'').replace(/\n/g,'<br>')}</span></div>
+      <div class="sdiv">Notes personnelles</div><div style="font-size:13px;color:var(--ink-m);font-style:italic;min-height:24px;"><span class="ef" onclick="editFieldArea('${name}','notes')">${c.notes||'Cliquer pour ajouter...'}</span></div>
     </div>
   </div>`;
 }
-
-window.editField = (charName, field) => {
-  const c = charData[charName];
-  const allEf = document.querySelectorAll(`#char-${charName} .ef`);
-  let targetEl = null;
-  allEf.forEach(el => { if(el.onclick && el.onclick.toString().includes(`'${field}'`)) targetEl = el; });
-  if(!targetEl) return;
-  const oldVal = c[field] ?? '';
-  const input = document.createElement('input');
-  input.className = 'ef-input';
-  input.value = oldVal;
-  input.style.width = Math.max(60, oldVal.toString().length * 9) + 'px';
-  targetEl.replaceWith(input);
-  input.focus(); input.select();
-  const save = async () => {
-    charData[charName][field] = input.value.trim();
-    await saveChar(charName);
-    renderChar(charName);
-  };
-  input.onblur = save;
-  input.onkeydown = e => { if(e.key==='Enter') save(); if(e.key==='Escape') renderChar(charName); };
+window.editField=(charName,field)=>{
+  const allEf=document.querySelectorAll(`#char-${charName} .ef`);
+  let targetEl=null;
+  allEf.forEach(el=>{if(el.onclick&&el.onclick.toString().includes(`'${field}'`))targetEl=el;});
+  if(!targetEl)return;
+  const oldVal=charData[charName][field]??'';
+  const input=document.createElement('input');input.className='ef-input';input.value=oldVal;
+  input.style.width=Math.max(60,oldVal.toString().length*9)+'px';
+  targetEl.replaceWith(input);input.focus();input.select();
+  const save=async()=>{charData[charName][field]=input.value.trim();await saveChar(charName);renderChar(charName);};
+  input.onblur=save;input.onkeydown=e=>{if(e.key==='Enter')save();if(e.key==='Escape')renderChar(charName);};
 };
-
-window.editFieldArea = (charName, field) => {
-  const allEf = document.querySelectorAll(`#char-${charName} .ef`);
-  let targetEl = null;
-  allEf.forEach(el => { if(el.onclick && el.onclick.toString().includes(`editFieldArea('${charName}','${field}')`)) targetEl = el; });
-  if(!targetEl) return;
-  const oldVal = charData[charName][field] ?? '';
-  const ta = document.createElement('textarea');
-  ta.className = 'ef-area';
-  ta.value = oldVal;
-  ta.rows = 4;
-  targetEl.replaceWith(ta);
-  ta.focus();
-  ta.onblur = async () => {
-    charData[charName][field] = ta.value.trim();
-    await saveChar(charName);
-    renderChar(charName);
-  };
+window.editFieldArea=(charName,field)=>{
+  const allEf=document.querySelectorAll(`#char-${charName} .ef`);
+  let targetEl=null;
+  allEf.forEach(el=>{if(el.onclick&&el.onclick.toString().includes(`editFieldArea('${charName}','${field}')`))targetEl=el;});
+  if(!targetEl)return;
+  const ta=document.createElement('textarea');ta.className='ef-area';ta.value=charData[charName][field]??'';ta.rows=4;
+  targetEl.replaceWith(ta);ta.focus();
+  ta.onblur=async()=>{charData[charName][field]=ta.value.trim();await saveChar(charName);renderChar(charName);};
 };
-
-window.toggleDot = async (charName, compIdx, dotIdx) => {
-  const comp = charData[charName].competences[compIdx];
-  comp.v = comp.v === dotIdx + 1 ? dotIdx : dotIdx + 1;
-  renderChar(charName);
-  await saveChar(charName);
+window.toggleDot=async(charName,compIdx,dotIdx)=>{
+  const comp=charData[charName].competences[compIdx];
+  comp.v=comp.v===dotIdx+1?dotIdx:dotIdx+1;
+  renderChar(charName);await saveChar(charName);
 };
-
-window.adj = async (name, stat, delta) => {
-  const c = charData[name];
-  const cur = isNaN(parseInt(c[stat])) ? 0 : parseInt(c[stat]);
-  const newVal = Math.max(0, cur + delta);
-  charData[name][stat] = String(newVal);
-  document.getElementById(`${name}-${stat}`).textContent = newVal;
-  await setDoc(doc(db,'characters',name), {[stat]: String(newVal)}, {merge:true});
+window.adj=async(name,stat,delta)=>{
+  const cur=isNaN(parseInt(charData[name][stat]))?0:parseInt(charData[name][stat]);
+  const newVal=Math.max(0,cur+delta);
+  charData[name][stat]=String(newVal);
+  document.getElementById(`${name}-${stat}`).textContent=newVal;
+  await setDoc(doc(db,'characters',name),{[stat]:String(newVal)},{merge:true});
   toast(`${name} ${stat.toUpperCase()} : ${newVal}`);
 };
 
 // ===== NOTES =====
 async function loadNotes(){
-  const ref = doc(db,'shared','notes');
-  onSnapshot(ref, snap => {
-    const area = document.getElementById('notes-area');
-    if(snap.exists()) area.value = snap.data().content||'';
-    else area.value=`• Tolosa — groupe banni, accusés du meurtre de Sir de Vellune\n• La Lanterne — navire clé pour l'infiltration\n• Koben (Kitsune borgne) — même village qu'Azarius\n• Rose Noire — née en Auregia, veut Skarlath pour un rituel\n• Mira Solène — témoin décédée\n• Prophétie des Douze Voies — lien avec l'Île du Cœur`;
+  onSnapshot(doc(db,'shared','notes'),snap=>{
+    const area=document.getElementById('notes-area');
+    if(snap.exists())area.value=snap.data().content||'';
+    else area.value='• Tolosa — groupe banni\n• La Lanterne — navire clé\n• Koben — Kitsune borgne\n• Rose Noire — veut Skarlath\n• Mira Solène — décédée';
   });
 }
-window.saveNotes = async () => {
-  await setDoc(doc(db,'shared','notes'),{content:document.getElementById('notes-area').value,updated:serverTimestamp()});
-  toast('Notes sauvegardées ✓');
-};
-window.insertTag = tag => { const a=document.getElementById('notes-area'); a.value+='\n'+tag+' '; a.focus(); };
+window.saveNotes=async()=>{await setDoc(doc(db,'shared','notes'),{content:document.getElementById('notes-area').value,updated:serverTimestamp()});toast('Notes sauvegardées ✓');};
+window.insertTag=tag=>{const a=document.getElementById('notes-area');a.value+='\n'+tag+' ';a.focus();};
 
 // ===== JOURNAL =====
 function listenJournal(){
-  const q = query(collection(db,'journal'),orderBy('createdAt','asc'));
-  onSnapshot(q, snap => {
-    const list = document.getElementById('journal-list');
-    if(snap.empty){
-      list.innerHTML=`
-        <div class="j-card"><div class="j-meta"><span class="j-num">Session 1</span><span class="j-date">Première session</span></div><div class="j-title">Les débuts à Tolosa</div><div class="j-text">Le groupe se retrouve à Tolosa. Leur premier contrat les place dans le collimateur de la Rose Noire...</div></div>
-        <div class="j-card"><div class="j-meta"><span class="j-num">Session récente</span></div><div class="j-title">Accusés du meurtre de Sir de Vellune</div><div class="j-text">Bannis de Tolosa. Seule chance : <em>La Lanterne</em>. Koben rôde. Mira Solène décédée.</div></div>`;
-      return;
-    }
+  onSnapshot(query(collection(db,'journal'),orderBy('createdAt','asc')),snap=>{
+    const list=document.getElementById('journal-list');
+    if(snap.empty){list.innerHTML='<div class="j-card"><div class="j-meta"><span class="j-num">Session 1</span></div><div class="j-title">Les débuts à Tolosa</div><div class="j-text">Le groupe se retrouve à Tolosa...</div></div>';return;}
     list.innerHTML='';
     snap.docs.forEach((d,i)=>{
-      const data=d.data();
-      const date=data.createdAt?.toDate?.()?.toLocaleDateString('fr-FR')||'—';
+      const data=d.data();const date=data.createdAt?.toDate?.()?.toLocaleDateString('fr-FR')||'—';
       list.innerHTML+=`<div class="j-card"><div class="j-meta"><span class="j-num">Session ${i+1}</span><span class="j-date">${date}</span></div><div class="j-title">${data.title}</div><div class="j-text">${data.text}</div></div>`;
     });
   });
 }
-window.showAddSession = ()=>{ document.getElementById('add-form').style.display='block'; };
-window.hideAddSession = ()=>{ document.getElementById('add-form').style.display='none'; };
-window.saveSession = async () => {
-  const t=document.getElementById('s-title').value.trim();
-  const x=document.getElementById('s-text').value.trim();
+window.showAddSession=()=>{document.getElementById('add-form').style.display='block';};
+window.hideAddSession=()=>{document.getElementById('add-form').style.display='none';};
+window.saveSession=async()=>{
+  const t=document.getElementById('s-title').value.trim(),x=document.getElementById('s-text').value.trim();
   if(!t||!x){toast('Titre et résumé requis');return;}
   await addDoc(collection(db,'journal'),{title:t,text:x,createdAt:serverTimestamp()});
-  document.getElementById('s-title').value='';
-  document.getElementById('s-text').value='';
-  hideAddSession();
-  toast('Session ajoutée !');
+  document.getElementById('s-title').value='';document.getElementById('s-text').value='';
+  hideAddSession();toast('Session ajoutée !');
 };
 
-// Sync temps réel PV/Mana
+// Sync PV/Mana en temps réel
 ['azarius','dy','firm','mwassa','nindey'].forEach(name=>{
-  onSnapshot(doc(db,'characters',name), snap=>{
-    if(!snap.exists()) return;
+  onSnapshot(doc(db,'characters',name),snap=>{
+    if(!snap.exists())return;
     const data=snap.data();
-    if(data.pv!==undefined){ charData[name].pv=data.pv; const el=document.getElementById(`${name}-pv`); if(el) el.textContent=data.pv; }
-    if(data.mana!==undefined){ charData[name].mana=data.mana; const el=document.getElementById(`${name}-mana`); if(el) el.textContent=data.mana; }
+    if(data.pv!==undefined){charData[name].pv=data.pv;const el=document.getElementById(`${name}-pv`);if(el)el.textContent=data.pv;}
+    if(data.mana!==undefined){charData[name].mana=data.mana;const el=document.getElementById(`${name}-mana`);if(el)el.textContent=data.mana;}
   });
 });
 </script>
@@ -1171,16 +1165,12 @@ function roll(f){
   dh.unshift({f,r});if(dh.length>6)dh.pop();
   document.getElementById('dice-hist').innerHTML=dh.map(h=>`<div class="dh-row"><span>D${h.f}</span><span>${h.r}</span></div>`).join('');
 }
-
-// TOAST
 function toast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2500);
 }
 window.toast=toast;
 
-// RACES & CLASSES
 const races=[
   {n:'Swamninyx',sub:'Homme-chat',bon:['Agilité +20%','Discrétion +10%'],mal:['Social −10% autres races','Force & CAC −10%']},
   {n:'Léonide',sub:'Homme-lion',bon:['Force & CAC +20%','Intimidation +10%'],mal:['Agilité −10%','Espaces confinés −10%']},
@@ -1204,18 +1194,12 @@ const classes=[
   {n:'Cogneur',sub:'Guerrier',pv:'+0',mana:'−1',arm:'+2 dégâts',caps:['Maîtrise des Armes : relance 1×/combat','Baroud d\'honneur : <30% PV → +2 dégâts']},
   {n:'Troubadour',sub:'Barde',pv:'+0',mana:'+0',arm:'+0',caps:['Ruse Scénique : relance social 1×/combat','Improvisation : +30% social avec instrument']}
 ];
-
-document.getElementById('races-container').innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+
-  races.map((r,i)=>`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRace(${i})"><div><strong style="font-family:'Cinzel',serif;font-size:13px;">${r.n}</strong>${r.sub?' <span style="font-style:italic;color:var(--ink-m);font-size:12px;">— '+r.sub+'</span>':''}</div><i class="ti ti-chevron-down" id="ric-${i}" style="color:var(--gold-d);transition:transform .2s;"></i></div><div id="rb-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--teal-pale);border:1px solid rgba(29,107,90,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:4px;">BONUS</div>${r.bon.map(b=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">+ ${b}</div>`).join('')}</div><div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:4px;">MALUS</div>${r.mal.map(m=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">− ${m}</div>`).join('')}</div></div></div></div>`).join('')+'</div>';
-
+document.getElementById('races-container').innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+races.map((r,i)=>`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRace(${i})"><div><strong style="font-family:'Cinzel',serif;font-size:13px;">${r.n}</strong>${r.sub?' <span style="font-style:italic;color:var(--ink-m);font-size:12px;">— '+r.sub+'</span>':''}</div><i class="ti ti-chevron-down" id="ric-${i}" style="color:var(--gold-d);transition:transform .2s;"></i></div><div id="rb-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--teal-pale);border:1px solid rgba(29,107,90,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:4px;">BONUS</div>${r.bon.map(b=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">+ ${b}</div>`).join('')}</div><div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:4px;">MALUS</div>${r.mal.map(m=>`<div style="font-size:12px;color:var(--ink-m);margin-bottom:2px;">− ${m}</div>`).join('')}</div></div></div></div>`).join('')+'</div>';
 document.getElementById('classes-container').innerHTML=classes.map(c=>`<div class="card"><div style="font-family:'Cinzel',serif;font-size:13px;color:var(--ink);margin-bottom:2px;">${c.n}</div><div style="font-size:11px;color:var(--ink-m);font-style:italic;margin-bottom:8px;">${c.sub}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>${c.caps.map(cap=>`<div style="font-size:12px;color:var(--ink-m);padding-left:8px;border-left:2px solid var(--gold);margin-bottom:4px;">${cap}</div>`).join('')}</div>`).join('');
-
 function toggleRace(i){
-  const b=document.getElementById('rb-'+i);
-  const ic=document.getElementById('ric-'+i);
+  const b=document.getElementById('rb-'+i),ic=document.getElementById('ric-'+i);
   const open=b.style.display==='block';
-  b.style.display=open?'none':'block';
-  ic.style.transform=open?'':'rotate(180deg)';
+  b.style.display=open?'none':'block';ic.style.transform=open?'':'rotate(180deg)';
 }
 </script>
 </body>
