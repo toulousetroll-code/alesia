@@ -15,7 +15,7 @@
   --parch:#0E0C0A;--parch2:#1A1410;
   --ink:#E8D9BC;--ink-m:#B8A888;--ink-l:#7A6A50;
   --surf:#181410;--surf2:#201A14;
-  --bord:rgba(212,168,67,0.14);--bord-s:rgba(212,168,67,0.28);
+  --bord:rgba(212,168,67,0.20);--bord-s:rgba(212,168,67,0.38);
   --red:#C0392B;--red-pale:rgba(192,57,43,0.12);
   --teal:#1A8A6A;--teal-pale:rgba(26,138,106,0.10);
   --blue:#2A5FA8;--blue-pale:rgba(42,95,168,0.10);
@@ -24,8 +24,8 @@
   --bg-image:none;--bg-overlay:rgba(14,12,10,0.0);
   --header-bg:#080604;--nav-bg:#100E0C;--accent:var(--gold);
 }
-html,body{height:100%;background:#0E0C0A;}
-body{font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;flex-direction:column;background:#0E0C0A;}
+html,body{height:100%;background:#111008;}
+body{font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;flex-direction:column;background:#111008;}
 body::before{
   content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-color:#0E0C0A;
@@ -53,7 +53,7 @@ body::after{display:none;}
 #app{display:flex;flex-direction:column;height:100vh;overflow:hidden;}
 #app.hidden{display:none;}
 header{
-  background:linear-gradient(180deg,#060402 0%,#0c0a06 100%);
+  background:linear-gradient(180deg,#0c0a06 0%,#100d08 100%);
   border-bottom:1px solid var(--gold-d);
   box-shadow:0 2px 20px rgba(0,0,0,.7),0 1px 0 rgba(212,168,67,.15);
   padding:12px 22px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
@@ -66,25 +66,25 @@ header{
 .user-name{font-size:12px;color:var(--gold-l);}
 .btn-so{background:none;border:1px solid rgba(212,168,67,.2);color:var(--ink-l);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Crimson Pro',serif;transition:all .15s;}
 .btn-so:hover{border-color:var(--gold);color:var(--gold);}
-.body{display:flex;flex:1;overflow:hidden;background:#0E0C0A;}
+.body{display:flex;flex:1;overflow:hidden;background:#111008;}
 
 /* SIDEBAR */
 nav{
   width:var(--sidebar);
-  background:linear-gradient(180deg,#0c0a06 0%,#0a0804 100%);
-  border-right:1px solid rgba(212,168,67,.18);
+  background:linear-gradient(180deg,#16120C 0%,#120E08 100%);
+  border-right:1px solid rgba(212,168,67,.22);
   box-shadow:2px 0 16px rgba(0,0,0,.5);
   display:flex;flex-direction:column;overflow:visible;flex-shrink:0;
 }
 .nav-scroll{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 0;min-height:0;}
 .nl{
   font-family:'Cinzel',serif;font-size:8px;letter-spacing:.18em;
-  color:var(--gold-d);padding:0 16px 5px;text-transform:uppercase;
-  opacity:.7;
+  color:var(--gold);padding:0 16px 5px;text-transform:uppercase;
+  opacity:.6;
 }
-.ni{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;font-size:13px;color:var(--ink-l);border-left:2px solid transparent;transition:all .15s;position:relative;}
-.ni:hover{background:rgba(212,168,67,.07);color:var(--ink);border-left-color:rgba(212,168,67,.3);}
-.ni.active{background:linear-gradient(90deg,rgba(212,168,67,.12),transparent);color:var(--gold-l);border-left-color:var(--gold);font-weight:600;}
+.ni{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;font-size:13px;color:#907860;border-left:2px solid transparent;transition:all .15s;position:relative;}
+.ni:hover{background:rgba(212,168,67,.10);color:#F2E6CC;border-left-color:rgba(212,168,67,.3);}
+.ni.active{background:linear-gradient(90deg,rgba(212,168,67,.15),transparent);color:var(--gold-l);border-left-color:var(--gold);font-weight:600;}
 .ni i{font-size:14px;color:var(--gold-d);opacity:.8;}
 .ni.active i{color:var(--gold);opacity:1;}
 .ni.active::after{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:linear-gradient(180deg,transparent,var(--gold),transparent);border-radius:1px;}
@@ -101,10 +101,10 @@ nav{
 .btn-config-design i{font-size:13px;}
 
 /* MAIN */
-main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
+main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;}
 .section{display:none;}.section.active{display:block;color:var(--ink);}
 .page-title{
-  font-family:'Cinzel',serif;font-size:16px;color:var(--gold);
+  font-family:'Cinzel',serif;font-size:16px;color:var(--gold-l);
   margin-bottom:20px;padding-bottom:12px;
   border-bottom:1px solid var(--bord);
   display:flex;align-items:center;gap:9px;
@@ -115,7 +115,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
 
 /* CARDS */
 .card{
-  background:linear-gradient(160deg,rgba(26,20,14,0.95),rgba(18,14,10,0.98));
+  background:linear-gradient(160deg,rgba(38,30,18,0.97),rgba(28,20,12,0.99));
   border:1px solid var(--bord);
   border-radius:var(--radius);
   padding:16px;
@@ -128,31 +128,31 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
 /* EDITABLE INLINE */
 .ef{cursor:pointer;border-radius:3px;padding:1px 4px;margin:-1px -4px;transition:background .15s;display:inline-block;min-width:20px;border-bottom:1px dashed transparent;}
 .ef:hover{background:rgba(212,168,67,.14);border-bottom-color:var(--gold-d);}
-.ef-input{font-family:inherit;font-size:inherit;color:var(--ink);background:rgba(30,22,12,.9);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;outline:none;width:auto;min-width:40px;}
-.ef-area{font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink-m);background:rgba(30,22,12,.9);border:1px solid var(--gold);border-radius:6px;padding:8px;width:100%;outline:none;resize:vertical;line-height:1.65;display:block;}
+.ef-input{font-family:inherit;font-size:inherit;color:var(--ink);background:rgba(50,36,16,.9);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;outline:none;width:auto;min-width:40px;}
+.ef-area{font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink-m);background:rgba(50,36,16,.9);border:1px solid var(--gold);border-radius:6px;padding:8px;width:100%;outline:none;resize:vertical;line-height:1.65;display:block;}
 
 /* CHAR TABS */
 .char-tabs{display:flex;border-bottom:1px solid var(--bord);margin-bottom:18px;overflow-x:auto;gap:2px;}
-.char-tab{padding:9px 16px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.05em;color:var(--ink-l);border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;}
-.char-tab:hover{color:var(--ink);}
+.char-tab{padding:9px 16px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.05em;color:#A09070;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;}
+.char-tab:hover{color:#F2E6CC;}
 .char-tab.active{color:var(--gold);border-bottom-color:var(--gold);text-shadow:0 0 12px rgba(212,168,67,.3);}
 .char-sec{display:none;}.char-sec.active{display:block;}
 
 /* STAT BARS */
 .stat-row{margin-bottom:10px;}
 .stat-head{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;}
-.stat-name{color:var(--ink-m);}
-.stat-val{font-family:'Cinzel',serif;font-weight:600;color:var(--gold);}
+.stat-name{color:#CFC09A;}
+.stat-val{font-family:'Cinzel',serif;font-weight:600;color:var(--gold-l);}
 .bar{height:6px;background:rgba(255,255,255,.06);border-radius:4px;overflow:hidden;}
 .bar-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--gold-d),var(--gold),var(--gold-l));box-shadow:0 0 8px rgba(212,168,67,.3);transition:width .4s;}
 
 /* PV MANA */
 .pv-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.pv-box{background:rgba(30,22,12,.6);border:1px solid var(--bord);border-radius:8px;padding:10px;text-align:center;}
+.pv-box{background:rgba(50,36,16,.7);border:1px solid var(--bord);border-radius:8px;padding:10px;text-align:center;}
 .pv-big{font-family:'Cinzel',serif;font-size:28px;font-weight:700;line-height:1;}
 .pv-big.pv{color:#E05050;text-shadow:0 0 12px rgba(200,50,50,.3);}
 .pv-big.mana{color:#5090E0;text-shadow:0 0 12px rgba(50,100,220,.3);}
-.pv-lbl{font-size:11px;color:var(--ink-l);margin-top:3px;}
+.pv-lbl{font-size:11px;color:#A09070;margin-top:3px;}
 .pv-controls{display:flex;gap:5px;justify-content:center;margin-top:6px;}
 .pv-btn{background:rgba(255,255,255,.04);border:1px solid var(--bord);color:var(--ink-l);border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:600;transition:all .15s;}
 .pv-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,168,67,.08);}
@@ -167,21 +167,21 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
 /* HERO HEAD */
 .hero-head{display:flex;align-items:center;gap:14px;margin-bottom:14px;}
 .avatar{width:54px;height:54px;border-radius:50%;border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:20px;font-weight:700;color:var(--gold);flex-shrink:0;background:rgba(212,168,67,.08);box-shadow:0 0 16px rgba(212,168,67,.15);}
-.hero-name{font-family:'Cinzel',serif;font-size:18px;color:var(--ink);}
-.hero-sub{font-size:13px;color:var(--ink-m);font-style:italic;margin-top:2px;}
+.hero-name{font-family:'Cinzel',serif;font-size:18px;color:#F2E6CC;}
+.hero-sub{font-size:13px;color:#CFC09A;font-style:italic;margin-top:2px;}
 .hero-badges{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px;}
 
 /* DOTS */
 .comp-list{display:flex;flex-direction:column;gap:6px;}
-.comp-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(212,168,67,.08);}
+.comp-row{display:flex;justify-content:space-between;align-items:center;font-size:12px;padding:4px 0;border-bottom:1px solid rgba(212,168,67,.15);}
 .comp-row:last-child{border:none;}
-.comp-name{color:var(--ink-m);}
+.comp-name{color:#CFC09A;}
 .dots{display:flex;gap:3px;}
 .dot{width:9px;height:9px;border-radius:50%;border:1px solid rgba(212,168,67,.2);cursor:pointer;transition:all .1s;}
 .dot.on{background:var(--gold);border-color:var(--gold);box-shadow:0 0 5px rgba(212,168,67,.4);}
 
 /* SECTION DIVIDER */
-.sdiv{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.14em;color:var(--gold-d);margin:12px 0 7px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid rgba(212,168,67,.15);opacity:.9;}
+.sdiv{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.14em;color:var(--gold);margin:12px 0 7px;text-transform:uppercase;padding-bottom:4px;border-bottom:1px solid rgba(212,168,67,.15);opacity:.9;}
 
 /* BUTTONS */
 .btn-add{display:inline-flex;align-items:center;gap:6px;background:rgba(212,168,67,.07);border:1px solid rgba(212,168,67,.25);color:var(--gold);border-radius:6px;padding:7px 14px;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.05em;cursor:pointer;transition:all .15s;margin-bottom:14px;}
@@ -190,11 +190,11 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
 .btn-save:hover{background:linear-gradient(135deg,var(--gold),var(--gold-l));box-shadow:0 0 16px rgba(212,168,67,.3);}
 .btn-cancel{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:var(--ink-m);border-radius:6px;padding:7px 14px;font-family:'Cinzel',serif;font-size:11px;cursor:pointer;transition:all .15s;}
 .btn-cancel:hover{border-color:rgba(255,255,255,.2);color:var(--ink);}
-.edit-input{font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);background:rgba(30,22,12,.9);border:1px solid var(--gold-d);border-radius:6px;padding:6px 10px;width:100%;outline:none;display:block;margin-bottom:8px;}
+.edit-input{font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);background:rgba(50,36,16,.9);border:1px solid var(--gold-d);border-radius:6px;padding:6px 10px;width:100%;outline:none;display:block;margin-bottom:8px;}
 .edit-input:focus{border-color:var(--gold);}
 
 /* JOURNAL */
-.j-card{background:linear-gradient(160deg,rgba(22,18,12,.95),rgba(14,12,8,.98));border:1px solid var(--bord);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);}
+.j-card{background:linear-gradient(160deg,rgba(40,30,18,.97),rgba(30,22,12,.99));border:1px solid var(--bord);border-radius:var(--radius);padding:14px;margin-bottom:10px;box-shadow:var(--shadow);}
 .j-meta{display:flex;align-items:center;gap:8px;margin-bottom:7px;}
 .j-num{font-family:'Cinzel',serif;font-size:10px;color:var(--gold);background:rgba(212,168,67,.08);border:1px solid rgba(212,168,67,.22);border-radius:20px;padding:2px 10px;}
 .j-date{font-size:11px;color:var(--ink-l);}
@@ -202,7 +202,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
 .j-text{font-size:13px;color:var(--ink-m);line-height:1.65;font-style:italic;}
 
 /* PNJ */
-.pnj-card{background:linear-gradient(160deg,rgba(22,18,12,.95),rgba(14,12,8,.98));border:1px solid var(--bord);border-radius:var(--radius);padding:12px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;box-shadow:var(--shadow);}
+.pnj-card{background:linear-gradient(160deg,rgba(40,30,18,.97),rgba(30,22,12,.99));border:1px solid var(--bord);border-radius:var(--radius);padding:12px 14px;display:flex;gap:12px;align-items:flex-start;margin-bottom:10px;box-shadow:var(--shadow);}
 .pnj-av{width:44px;height:44px;border-radius:50%;border:1px solid var(--bord-s);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:14px;color:var(--gold);flex-shrink:0;background:rgba(212,168,67,.06);}
 .pnj-name{font-family:'Cinzel',serif;font-size:13px;color:var(--ink);}
 .pnj-role{font-size:11px;color:var(--ink-m);font-style:italic;margin-top:1px;}
@@ -216,18 +216,18 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
 .r-desc{font-size:12px;color:var(--ink-m);line-height:1.5;}
 
 /* DÉS */
-.dice-result{background:linear-gradient(160deg,rgba(22,18,12,.95),rgba(14,12,8,.98));border:1px solid var(--gold-d);border-radius:var(--radius);padding:28px;text-align:center;margin-bottom:16px;box-shadow:0 0 30px rgba(212,168,67,.08),var(--shadow);}
+.dice-result{background:linear-gradient(160deg,rgba(40,30,18,.97),rgba(30,22,12,.99));border:1px solid var(--gold-d);border-radius:var(--radius);padding:28px;text-align:center;margin-bottom:16px;box-shadow:0 0 30px rgba(212,168,67,.08),var(--shadow);}
 .dice-num{font-family:'Cinzel',serif;font-size:64px;font-weight:700;color:var(--gold);line-height:1;text-shadow:0 0 30px rgba(212,168,67,.4);}
 .dice-lbl{font-size:13px;color:var(--ink-l);margin-top:6px;font-style:italic;}
 .dice-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(74px,1fr));gap:9px;margin-bottom:16px;}
-.die-btn{background:rgba(20,16,10,.8);border:1px solid var(--bord);border-radius:var(--radius);padding:12px 8px;cursor:pointer;font-family:'Cinzel',serif;font-size:13px;color:var(--ink-m);text-align:center;transition:all .15s;}
+.die-btn{background:rgba(40,30,16,.8);border:1px solid var(--bord);border-radius:var(--radius);padding:12px 8px;cursor:pointer;font-family:'Cinzel',serif;font-size:13px;color:var(--ink-m);text-align:center;transition:all .15s;}
 .die-btn:hover{border-color:var(--gold);color:var(--gold);background:rgba(212,168,67,.08);box-shadow:0 0 12px rgba(212,168,67,.1);}
 .die-btn i{font-size:22px;display:block;margin-bottom:3px;color:var(--gold-d);}
-.dh-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 10px;background:rgba(20,16,10,.6);border:1px solid var(--bord);border-radius:6px;color:var(--ink-m);margin-bottom:5px;}
+.dh-row{display:flex;justify-content:space-between;font-size:12px;padding:5px 10px;background:rgba(45,32,14,.7);border:1px solid var(--bord);border-radius:6px;color:var(--ink-m);margin-bottom:5px;}
 .dh-row span:last-child{font-family:'Cinzel',serif;color:var(--gold);font-weight:600;}
 
 /* NOTES */
-#notes-area{width:100%;background:rgba(20,15,8,.9);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:220px;line-height:1.7;outline:none;}
+#notes-area{width:100%;background:rgba(40,28,12,.85);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:220px;line-height:1.7;outline:none;}
 #notes-area:focus{border-color:var(--gold);box-shadow:0 0 16px rgba(212,168,67,.08);}
 .ntags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;}
 .ntag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.18);color:var(--gold-d);cursor:pointer;transition:all .15s;}
@@ -261,14 +261,14 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
 .nav-edit-row{display:flex;align-items:center;gap:8px;background:rgba(20,16,10,.7);border:1px solid var(--bord);border-radius:7px;padding:7px 10px;cursor:grab;transition:all .15s;}
 .nav-edit-row.dragging{box-shadow:0 4px 20px rgba(0,0,0,.5);opacity:.85;border-color:var(--gold);}
 .nav-edit-row.drag-over{border-color:var(--gold);background:rgba(212,168,67,.06);}
-.nav-row-name-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:rgba(30,22,12,.9);border:1px solid var(--gold-d);border-radius:5px;padding:2px 7px;outline:none;}
+.nav-row-name-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:rgba(50,36,16,.9);border:1px solid var(--gold-d);border-radius:5px;padding:2px 7px;outline:none;}
 .nav-row-name-input:focus{border-color:var(--gold);}
 .nav-row-actions{display:flex;gap:4px;flex-shrink:0;}
 .nav-row-btn{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.1);color:var(--ink-l);border-radius:5px;padding:2px 6px;cursor:pointer;font-size:12px;transition:all .1s;line-height:1.4;}
 .nav-row-btn:hover{border-color:var(--gold-d);color:var(--gold);}
 .nav-row-btn.del:hover{border-color:#E07070;color:#E07070;background:rgba(192,57,43,.1);}
 .nav-row-btn.vis-off{opacity:.4;}
-.nav-add-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:rgba(30,22,12,.9);border:1px solid var(--bord);border-radius:6px;padding:6px 10px;outline:none;}
+.nav-add-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:rgba(50,36,16,.9);border:1px solid var(--bord);border-radius:6px;padding:6px 10px;outline:none;}
 .nav-add-input:focus{border-color:var(--gold);}
 
 /* ===== DESIGN EDITOR ===== */
@@ -495,10 +495,10 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
           <div class="card">
             <div class="sdiv">🌾 Paysans · 🏰 Nobles · 💰 Marchands · 📜 Fonctionnaires · 🙏 Religieux</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:var(--ink-m);">
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Paysans</strong><br>Base du monde. Agriculteurs, pêcheurs, herboristes. Souvent sous domination noble, parfois alliés aux Téméraires.</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Nobles</strong><br>Détenteurs des terres et armées. Divisés entre Traditionalistes (statu quo) et Réformateurs (briser la barrière).</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Marchands</strong><br>Guildes puissantes. Certains financent les Téméraires, d'autres vendent des contrefaçons de reliques.</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Fonctionnaires</strong><br>Scribes, diplomates, archivistes. Certains dissimulent textes anciens et versions interdites de la Prophétie.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Paysans</strong><br>Base du monde. Agriculteurs, pêcheurs, herboristes. Souvent sous domination noble, parfois alliés aux Téméraires.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Nobles</strong><br>Détenteurs des terres et armées. Divisés entre Traditionalistes (statu quo) et Réformateurs (briser la barrière).</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Marchands</strong><br>Guildes puissantes. Certains financent les Téméraires, d'autres vendent des contrefaçons de reliques.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Fonctionnaires</strong><br>Scribes, diplomates, archivistes. Certains dissimulent textes anciens et versions interdites de la Prophétie.</div>
             </div>
           </div>
         </div>
@@ -681,7 +681,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
             <div class="sdiv">Jet de Survie</div>
             <p style="font-size:13px;color:var(--ink-m);line-height:1.7;margin-bottom:10px;">Intervient quand un personnage risque de mourir (blessure mortelle, accident, magie dangereuse). Le MJ fixe un seuil sur D100 selon la dangerosité et les PV perdus.</p>
             <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
-              <div style="padding:7px 10px;background:rgba(28,20,12,.85);border-radius:7px;border-left:3px solid var(--gold-d);"><strong>Essais :</strong> 2 essais par défaut. Les personnages avec la compétence <strong>Chance</strong> ont un 3ème essai.</div>
+              <div style="padding:7px 10px;background:rgba(45,32,14,.85);border-radius:7px;border-left:3px solid var(--gold-d);"><strong>Essais :</strong> 2 essais par défaut. Les personnages avec la compétence <strong>Chance</strong> ont un 3ème essai.</div>
               <div style="padding:7px 10px;background:var(--teal-pale);border-radius:7px;border-left:3px solid var(--teal);"><strong>Réussite :</strong> le personnage survit dans un état critique.</div>
               <div style="padding:7px 10px;background:var(--red-pale);border-radius:7px;border-left:3px solid var(--red);"><strong>Échec (tous les essais) :</strong> le personnage succombe.</div>
             </div>
@@ -696,32 +696,32 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
           <div class="card">
             <div class="sdiv">Dés d'aventure / mésaventure</div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:12px;text-align:center;">
-              <div style="background:rgba(28,20,12,.85);border-radius:7px;padding:8px;"><strong>1–2</strong><br><span style="color:var(--ink-m);">Mouvement</span></div>
-              <div style="background:rgba(28,20,12,.85);border-radius:7px;padding:8px;"><strong>3–4</strong><br><span style="color:var(--ink-m);">Posture</span></div>
-              <div style="background:rgba(28,20,12,.85);border-radius:7px;padding:8px;"><strong>5–6</strong><br><span style="color:var(--ink-m);">Bonus "In extremis" (+5%)</span></div>
+              <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong>1–2</strong><br><span style="color:var(--ink-m);">Mouvement</span></div>
+              <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong>3–4</strong><br><span style="color:var(--ink-m);">Posture</span></div>
+              <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong>5–6</strong><br><span style="color:var(--ink-m);">Bonus "In extremis" (+5%)</span></div>
             </div>
             <p style="font-size:12px;color:var(--ink-l);margin-top:8px;font-style:italic;">Après usage, les dés blancs deviennent noirs, donnant au MJ la possibilité de retourner la situation.</p>
           </div>
           <div class="card">
             <div class="sdiv">Progression de niveau</div>
             <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 2</span><span style="color:var(--ink-m);">+5 PV <em>ou</em> +5% à la caractéristique la plus basse <em>ou</em> +10% répartis sur les compétences.</span></div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 3</span><span style="color:var(--ink-m);">+3 PV/Mana et un nouveau don dans sa branche.</span></div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 4</span><span style="color:var(--ink-m);">+3 PV/Mana et remplacement d'une valeur par une Passion.</span></div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 5</span><span style="color:var(--ink-m);">+3 PV/Mana, +5% à toutes les stats, acquisition d'une <strong>posture élémentaire</strong>.</span></div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 6</span><span style="color:var(--ink-m);">Amélioration d'un Don existant ou obtention d'un nouveau Don.</span></div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 2</span><span style="color:var(--ink-m);">+5 PV <em>ou</em> +5% à la caractéristique la plus basse <em>ou</em> +10% répartis sur les compétences.</span></div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 3</span><span style="color:var(--ink-m);">+3 PV/Mana et un nouveau don dans sa branche.</span></div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 4</span><span style="color:var(--ink-m);">+3 PV/Mana et remplacement d'une valeur par une Passion.</span></div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 5</span><span style="color:var(--ink-m);">+3 PV/Mana, +5% à toutes les stats, acquisition d'une <strong>posture élémentaire</strong>.</span></div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 6</span><span style="color:var(--ink-m);">Amélioration d'un Don existant ou obtention d'un nouveau Don.</span></div>
             </div>
           </div>
           <div class="card">
             <div class="sdiv">Règles spéciales par classe</div>
             <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;">
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Cogneur</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. <strong>150% à répartir</strong> (pas 170%).</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Rôdeur</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure.</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Gardien</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. Social fixé à 50% obligatoirement.</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Lames Noires</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure. <strong>140% à répartir</strong>.</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Oracle</strong> — Mental obligatoirement majeur. Impossible d'avoir des dons infligeant des dégâts physiques. Doit incarner empathie et altruisme.</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Arcaniste</strong> — Mental obligatoirement majeur. Physique max 40%. Mana max doit être au moins le double du PV max.</div>
-              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Troubadour</strong> — Social obligatoirement majeur. Physique max 35%.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Cogneur</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. <strong>150% à répartir</strong> (pas 170%).</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Rôdeur</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Gardien</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. Social fixé à 50% obligatoirement.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Lames Noires</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure. <strong>140% à répartir</strong>.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Oracle</strong> — Mental obligatoirement majeur. Impossible d'avoir des dons infligeant des dégâts physiques. Doit incarner empathie et altruisme.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Arcaniste</strong> — Mental obligatoirement majeur. Physique max 40%. Mana max doit être au moins le double du PV max.</div>
+              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:var(--ink);">Troubadour</strong> — Social obligatoirement majeur. Physique max 35%.</div>
             </div>
           </div>
         </div>
@@ -1325,7 +1325,7 @@ function renderNavEditorBody(){
     <div style="display:flex;flex-direction:column;gap:8px;">
       <div style="display:flex;gap:8px;">
         <input class="nav-add-input" id="new-item-label" placeholder="Nom du nouvel onglet..." style="flex:1">
-        <select id="new-item-icon" style="font-family:'Crimson Pro',serif;font-size:13px;background:rgba(28,20,12,.85);border:1px solid var(--bord-s);border-radius:7px;padding:5px 8px;color:var(--ink);outline:none;">${AVAILABLE_ICONS.map(ic=>`<option value="${ic}">${ic.replace('ti-','')}</option>`).join('')}</select>
+        <select id="new-item-icon" style="font-family:'Crimson Pro',serif;font-size:13px;background:rgba(45,32,14,.85);border:1px solid var(--bord-s);border-radius:7px;padding:5px 8px;color:var(--ink);outline:none;">${AVAILABLE_ICONS.map(ic=>`<option value="${ic}">${ic.replace('ti-','')}</option>`).join('')}</select>
         <button class="btn-save" style="white-space:nowrap;" onclick="addNavItem()"><i class="ti ti-plus"></i> Onglet</button>
       </div>
       <div style="display:flex;gap:8px;">
