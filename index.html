@@ -12,7 +12,7 @@
 :root{
   /* ── Palette sombre épique ── */
   --gold:#D4A843;--gold-l:#F0C96A;--gold-d:#A07820;--gold-pale:rgba(212,168,67,0.10);
-  --parch:#0E0C0A;--parch2:#161310;
+  --parch:#0E0C0A;--parch2:#1A1410;
   --ink:#E8D9BC;--ink-m:#B8A888;--ink-l:#7A6A50;
   --surf:#181410;--surf2:#201A14;
   --bord:rgba(212,168,67,0.14);--bord-s:rgba(212,168,67,0.28);
@@ -24,19 +24,17 @@
   --bg-image:none;--bg-overlay:rgba(14,12,10,0.0);
   --header-bg:#080604;--nav-bg:#100E0C;--accent:var(--gold);
 }
-html,body{height:100%;background:var(--parch);}
-body{font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;flex-direction:column;}
-body::before{content:'';position:fixed;inset:0;background:var(--bg-image) center/cover no-repeat;z-index:-2;pointer-events:none;}
-body::after{content:'';position:fixed;inset:0;background:var(--bg-overlay);z-index:-1;pointer-events:none;}
-
-/* Texture de fond : grain sombre subtil */
+html,body{height:100%;background:#0E0C0A;}
+body{font-family:'Crimson Pro',Georgia,serif;color:var(--ink);display:flex;flex-direction:column;background:#0E0C0A;}
 body::before{
+  content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
   background-color:#0E0C0A;
   background-image:
-    radial-gradient(ellipse at 20% 50%, rgba(80,40,10,0.18) 0%, transparent 60%),
-    radial-gradient(ellipse at 80% 20%, rgba(60,20,5,0.15) 0%, transparent 55%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    radial-gradient(ellipse at 15% 60%, rgba(100,55,10,0.22) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 15%, rgba(80,40,5,0.18) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 100%, rgba(60,30,5,0.12) 0%, transparent 40%);
 }
+body::after{display:none;}
 
 ::-webkit-scrollbar{width:5px;}
 ::-webkit-scrollbar-track{background:#0a0806;}
@@ -68,7 +66,7 @@ header{
 .user-name{font-size:12px;color:var(--gold-l);}
 .btn-so{background:none;border:1px solid rgba(212,168,67,.2);color:var(--ink-l);border-radius:6px;padding:4px 10px;font-size:11px;cursor:pointer;font-family:'Crimson Pro',serif;transition:all .15s;}
 .btn-so:hover{border-color:var(--gold);color:var(--gold);}
-.body{display:flex;flex:1;overflow:hidden;}
+.body{display:flex;flex:1;overflow:hidden;background:#0E0C0A;}
 
 /* SIDEBAR */
 nav{
@@ -103,8 +101,8 @@ nav{
 .btn-config-design i{font-size:13px;}
 
 /* MAIN */
-main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
-.section{display:none;}.section.active{display:block;}
+main{flex:1;overflow-y:auto;padding:24px 28px;background:#0E0C0A;}
+.section{display:none;}.section.active{display:block;color:var(--ink);}
 .page-title{
   font-family:'Cinzel',serif;font-size:16px;color:var(--gold);
   margin-bottom:20px;padding-bottom:12px;
@@ -150,7 +148,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
 
 /* PV MANA */
 .pv-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
-.pv-box{background:rgba(0,0,0,.3);border:1px solid var(--bord);border-radius:8px;padding:10px;text-align:center;}
+.pv-box{background:rgba(30,22,12,.6);border:1px solid var(--bord);border-radius:8px;padding:10px;text-align:center;}
 .pv-big{font-family:'Cinzel',serif;font-size:28px;font-weight:700;line-height:1;}
 .pv-big.pv{color:#E05050;text-shadow:0 0 12px rgba(200,50,50,.3);}
 .pv-big.mana{color:#5090E0;text-shadow:0 0 12px rgba(50,100,220,.3);}
@@ -229,7 +227,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
 .dh-row span:last-child{font-family:'Cinzel',serif;color:var(--gold);font-weight:600;}
 
 /* NOTES */
-#notes-area{width:100%;background:rgba(18,14,8,.8);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:220px;line-height:1.7;outline:none;}
+#notes-area{width:100%;background:rgba(20,15,8,.9);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:220px;line-height:1.7;outline:none;}
 #notes-area:focus{border-color:var(--gold);box-shadow:0 0 16px rgba(212,168,67,.08);}
 .ntags{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px;}
 .ntag{font-size:11px;padding:3px 10px;border-radius:20px;background:rgba(212,168,67,.06);border:1px solid rgba(212,168,67,.18);color:var(--gold-d);cursor:pointer;transition:all .15s;}
@@ -240,7 +238,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
 
 /* CUSTOM PAGE */
 .custom-page-content{min-height:200px;}
-.custom-edit-area{width:100%;background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:300px;line-height:1.7;outline:none;}
+.custom-edit-area{width:100%;background:rgba(22,16,10,.9);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:300px;line-height:1.7;outline:none;}
 .custom-edit-area:focus{border-color:var(--gold);}
 .custom-rendered{font-size:14px;color:var(--ink-m);line-height:1.75;white-space:pre-wrap;}
 .custom-toolbar{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
@@ -428,7 +426,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
 
       <div id="s-notes" class="section">
         <div class="page-title"><i class="ti ti-notes"></i> Notes partagées</div>
-        <textarea id="notes-area" onblur="saveNotes()" placeholder="Notes de session...">Chargement...</textarea>
+        <textarea id="notes-area" onblur="saveNotes()" placeholder="Notes de session..." style="color:var(--ink);">Chargement...</textarea>
         <div class="ntags">
           <div class="ntag" onclick="insertTag('#indices')">#indices</div>
           <div class="ntag" onclick="insertTag('#suspects')">#suspects</div>
@@ -456,7 +454,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
             <div class="sdiv">L'Ère de la Barrière</div>
             <p style="font-size:13px;color:var(--ink-m);line-height:1.75;">Pour éviter la guerre, un conclave rassembla souverains et mages des douze pays. Les huit archimages du Cœur édifièrent une barrière magique autour de l'île, empêchant toute intrusion. Cette barrière apparut comme une aurore tourbillonnante, visible de loin. Depuis, aucune expédition sur l'île n'est jamais revenue. Depuis environ <strong>5000 ans Avant l'Éveil</strong>, l'Île du Cœur est une zone interdite, mystérieuse et redoutée.</p>
           </div>
-          <div class="card" style="border-color:var(--gold);background:rgba(201,168,76,.05);">
+          <div class="card" style="border-color:var(--gold);background:rgba(212,168,67,.05);">
             <div class="sdiv">La Prophétie des Douze Voies</div>
             <p style="font-size:14px;color:var(--ink);font-style:italic;line-height:1.9;text-align:center;padding:10px 0;">« Quand les Douze se répondront en un même souffle,<br>Un trésor au-delà de toute mesure émergera.<br>La Voie s'ouvrira alors,<br>Et tous franchiront le seuil du Royaume du Cœur. »</p>
           </div>
@@ -479,9 +477,9 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
             <div class="sdiv">⚔ Les Téméraires</div>
             <p style="font-size:13px;color:var(--ink-m);line-height:1.7;margin-bottom:8px;">Issus des 12 royaumes ou élus par des forces mystiques, les Téméraires forment un cercle occulte dédié à la réalisation de la Grande Prophétie. Refusant la passivité religieuse ou politique, leur foi s'incarne dans l'action.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
-              <div style="background:var(--gold-pale);border-radius:7px;padding:8px;"><strong style="color:var(--gold-d);">Structure</strong><br><span style="color:var(--ink-m);">12 Maîtres actifs, un par royaume.</span></div>
-              <div style="background:var(--gold-pale);border-radius:7px;padding:8px;"><strong style="color:var(--gold-d);">Objectif</strong><br><span style="color:var(--ink-m);">Lever la barrière, pénétrer dans l'Île du Cœur.</span></div>
-              <div style="background:var(--gold-pale);border-radius:7px;padding:8px;"><strong style="color:var(--gold-d);">Statut</strong><br><span style="color:var(--ink-m);">Ambigu : messies, hérétiques ou terroristes selon les régions.</span></div>
+              <div style="background:rgba(212,168,67,.08);border-radius:7px;padding:8px;"><strong style="color:var(--gold-d);">Structure</strong><br><span style="color:var(--ink-m);">12 Maîtres actifs, un par royaume.</span></div>
+              <div style="background:rgba(212,168,67,.08);border-radius:7px;padding:8px;"><strong style="color:var(--gold-d);">Objectif</strong><br><span style="color:var(--ink-m);">Lever la barrière, pénétrer dans l'Île du Cœur.</span></div>
+              <div style="background:rgba(212,168,67,.08);border-radius:7px;padding:8px;"><strong style="color:var(--gold-d);">Statut</strong><br><span style="color:var(--ink-m);">Ambigu : messies, hérétiques ou terroristes selon les régions.</span></div>
             </div>
           </div>
           <div class="card">
@@ -497,10 +495,10 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
           <div class="card">
             <div class="sdiv">🌾 Paysans · 🏰 Nobles · 💰 Marchands · 📜 Fonctionnaires · 🙏 Religieux</div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:var(--ink-m);">
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Paysans</strong><br>Base du monde. Agriculteurs, pêcheurs, herboristes. Souvent sous domination noble, parfois alliés aux Téméraires.</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Nobles</strong><br>Détenteurs des terres et armées. Divisés entre Traditionalistes (statu quo) et Réformateurs (briser la barrière).</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Marchands</strong><br>Guildes puissantes. Certains financent les Téméraires, d'autres vendent des contrefaçons de reliques.</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Fonctionnaires</strong><br>Scribes, diplomates, archivistes. Certains dissimulent textes anciens et versions interdites de la Prophétie.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Paysans</strong><br>Base du monde. Agriculteurs, pêcheurs, herboristes. Souvent sous domination noble, parfois alliés aux Téméraires.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Nobles</strong><br>Détenteurs des terres et armées. Divisés entre Traditionalistes (statu quo) et Réformateurs (briser la barrière).</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Marchands</strong><br>Guildes puissantes. Certains financent les Téméraires, d'autres vendent des contrefaçons de reliques.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Fonctionnaires</strong><br>Scribes, diplomates, archivistes. Certains dissimulent textes anciens et versions interdites de la Prophétie.</div>
             </div>
           </div>
         </div>
@@ -630,9 +628,9 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
             <div class="sdiv">Étape 4 — Caractéristiques (D100)</div>
             <p style="font-size:13px;color:var(--ink-m);line-height:1.7;margin-bottom:10px;">Le système est basé sur le <strong>D100</strong>. Tu as 3 grands axes :</p>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
-              <div style="background:var(--red-pale);border-radius:7px;padding:8px;text-align:center;font-size:12px;"><strong style="color:var(--red);">Physique</strong><br><span style="color:var(--ink-m);">Force, endurance, agilité</span></div>
-              <div style="background:var(--teal-pale);border-radius:7px;padding:8px;text-align:center;font-size:12px;"><strong style="color:var(--teal);">Social</strong><br><span style="color:var(--ink-m);">Charisme, persuasion, présence</span></div>
-              <div style="background:var(--blue-pale);border-radius:7px;padding:8px;text-align:center;font-size:12px;"><strong style="color:var(--blue);">Mental</strong><br><span style="color:var(--ink-m);">Intelligence, sagesse, volonté</span></div>
+              <div style="background:rgba(192,57,43,.12);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:var(--ink-m);"><strong style="color:var(--red);">Physique</strong><br><span style="color:var(--ink-m);">Force, endurance, agilité</span></div>
+              <div style="background:rgba(26,138,106,.1);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:var(--ink-m);"><strong style="color:var(--teal);">Social</strong><br><span style="color:var(--ink-m);">Charisme, persuasion, présence</span></div>
+              <div style="background:rgba(42,95,168,.1);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:var(--ink-m);"><strong style="color:var(--blue);">Mental</strong><br><span style="color:var(--ink-m);">Intelligence, sagesse, volonté</span></div>
             </div>
             <p style="font-size:13px;color:var(--ink-m);line-height:1.7;">Tu disposes de <strong>170% à répartir</strong> (attention : selon ta classe, cette répartition peut être contrainte). Chaque axe se subdivise en sous-stats : Physique → Puissance/Finesse · Social → Aura/Relation · Mental → Instinct/Savoir.</p>
           </div>
@@ -671,8 +669,8 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
             <div class="sdiv">Mécanique de base — D100</div>
             <p style="font-size:13px;color:var(--ink-m);line-height:1.7;margin-bottom:10px;">Pour tenter une action, lance 1D100. <strong>Succès</strong> si le résultat est ≤ à ta caractéristique + compétence. <strong>Échec</strong> dans le cas contraire.</p>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-              <div style="background:var(--teal-pale);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--teal);">✅ Réussite critique (1–5)</strong><br><span style="color:var(--ink-m);">Effet bonus défini par le MJ ou le joueur.</span></div>
-              <div style="background:var(--red-pale);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--red);">❌ Échec critique (95–100)</strong><br><span style="color:var(--ink-m);">Conséquence négative majeure.</span></div>
+              <div style="background:rgba(26,138,106,.1);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--teal);">✅ Réussite critique (1–5)</strong><br><span style="color:var(--ink-m);">Effet bonus défini par le MJ ou le joueur.</span></div>
+              <div style="background:rgba(192,57,43,.1);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--red);">❌ Échec critique (95–100)</strong><br><span style="color:var(--ink-m);">Conséquence négative majeure.</span></div>
             </div>
           </div>
           <div class="card">
@@ -683,7 +681,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
             <div class="sdiv">Jet de Survie</div>
             <p style="font-size:13px;color:var(--ink-m);line-height:1.7;margin-bottom:10px;">Intervient quand un personnage risque de mourir (blessure mortelle, accident, magie dangereuse). Le MJ fixe un seuil sur D100 selon la dangerosité et les PV perdus.</p>
             <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
-              <div style="padding:7px 10px;background:var(--surf2);border-radius:7px;border-left:3px solid var(--gold-d);"><strong>Essais :</strong> 2 essais par défaut. Les personnages avec la compétence <strong>Chance</strong> ont un 3ème essai.</div>
+              <div style="padding:7px 10px;background:rgba(28,20,12,.85);border-radius:7px;border-left:3px solid var(--gold-d);"><strong>Essais :</strong> 2 essais par défaut. Les personnages avec la compétence <strong>Chance</strong> ont un 3ème essai.</div>
               <div style="padding:7px 10px;background:var(--teal-pale);border-radius:7px;border-left:3px solid var(--teal);"><strong>Réussite :</strong> le personnage survit dans un état critique.</div>
               <div style="padding:7px 10px;background:var(--red-pale);border-radius:7px;border-left:3px solid var(--red);"><strong>Échec (tous les essais) :</strong> le personnage succombe.</div>
             </div>
@@ -698,32 +696,32 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:transparent;}
           <div class="card">
             <div class="sdiv">Dés d'aventure / mésaventure</div>
             <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:12px;text-align:center;">
-              <div style="background:var(--surf2);border-radius:7px;padding:8px;"><strong>1–2</strong><br><span style="color:var(--ink-m);">Mouvement</span></div>
-              <div style="background:var(--surf2);border-radius:7px;padding:8px;"><strong>3–4</strong><br><span style="color:var(--ink-m);">Posture</span></div>
-              <div style="background:var(--surf2);border-radius:7px;padding:8px;"><strong>5–6</strong><br><span style="color:var(--ink-m);">Bonus "In extremis" (+5%)</span></div>
+              <div style="background:rgba(28,20,12,.85);border-radius:7px;padding:8px;"><strong>1–2</strong><br><span style="color:var(--ink-m);">Mouvement</span></div>
+              <div style="background:rgba(28,20,12,.85);border-radius:7px;padding:8px;"><strong>3–4</strong><br><span style="color:var(--ink-m);">Posture</span></div>
+              <div style="background:rgba(28,20,12,.85);border-radius:7px;padding:8px;"><strong>5–6</strong><br><span style="color:var(--ink-m);">Bonus "In extremis" (+5%)</span></div>
             </div>
             <p style="font-size:12px;color:var(--ink-l);margin-top:8px;font-style:italic;">Après usage, les dés blancs deviennent noirs, donnant au MJ la possibilité de retourner la situation.</p>
           </div>
           <div class="card">
             <div class="sdiv">Progression de niveau</div>
             <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;">
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 2</span><span style="color:var(--ink-m);">+5 PV <em>ou</em> +5% à la caractéristique la plus basse <em>ou</em> +10% répartis sur les compétences.</span></div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 3</span><span style="color:var(--ink-m);">+3 PV/Mana et un nouveau don dans sa branche.</span></div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 4</span><span style="color:var(--ink-m);">+3 PV/Mana et remplacement d'une valeur par une Passion.</span></div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 5</span><span style="color:var(--ink-m);">+3 PV/Mana, +5% à toutes les stats, acquisition d'une <strong>posture élémentaire</strong>.</span></div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 6</span><span style="color:var(--ink-m);">Amélioration d'un Don existant ou obtention d'un nouveau Don.</span></div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 2</span><span style="color:var(--ink-m);">+5 PV <em>ou</em> +5% à la caractéristique la plus basse <em>ou</em> +10% répartis sur les compétences.</span></div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 3</span><span style="color:var(--ink-m);">+3 PV/Mana et un nouveau don dans sa branche.</span></div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 4</span><span style="color:var(--ink-m);">+3 PV/Mana et remplacement d'une valeur par une Passion.</span></div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 5</span><span style="color:var(--ink-m);">+3 PV/Mana, +5% à toutes les stats, acquisition d'une <strong>posture élémentaire</strong>.</span></div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:var(--gold-d);font-size:11px;min-width:60px;">Niveau 6</span><span style="color:var(--ink-m);">Amélioration d'un Don existant ou obtention d'un nouveau Don.</span></div>
             </div>
           </div>
           <div class="card">
             <div class="sdiv">Règles spéciales par classe</div>
             <div style="display:flex;flex-direction:column;gap:8px;font-size:12px;">
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Cogneur</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. <strong>150% à répartir</strong> (pas 170%).</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Rôdeur</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure.</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Gardien</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. Social fixé à 50% obligatoirement.</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Lames Noires</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure. <strong>140% à répartir</strong>.</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Oracle</strong> — Mental obligatoirement majeur. Impossible d'avoir des dons infligeant des dégâts physiques. Doit incarner empathie et altruisme.</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Arcaniste</strong> — Mental obligatoirement majeur. Physique max 40%. Mana max doit être au moins le double du PV max.</div>
-              <div style="padding:8px;background:var(--surf2);border-radius:7px;"><strong style="color:var(--ink);">Troubadour</strong> — Social obligatoirement majeur. Physique max 35%.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Cogneur</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. <strong>150% à répartir</strong> (pas 170%).</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Rôdeur</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Gardien</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. Social fixé à 50% obligatoirement.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Lames Noires</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure. <strong>140% à répartir</strong>.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Oracle</strong> — Mental obligatoirement majeur. Impossible d'avoir des dons infligeant des dégâts physiques. Doit incarner empathie et altruisme.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Arcaniste</strong> — Mental obligatoirement majeur. Physique max 40%. Mana max doit être au moins le double du PV max.</div>
+              <div style="padding:8px;background:rgba(28,20,12,.85);border-radius:7px;"><strong style="color:var(--ink);">Troubadour</strong> — Social obligatoirement majeur. Physique max 35%.</div>
             </div>
           </div>
         </div>
@@ -1314,7 +1312,7 @@ function renderNavEditorBody(){
   const body = document.getElementById('nav-editor-body');
   body.innerHTML = '';
   const info = document.createElement('div');
-  info.style.cssText='font-size:12px;color:var(--ink-l);font-style:italic;margin-bottom:14px;padding:8px 12px;background:var(--surf);border:1px solid var(--bord);border-radius:7px;';
+  info.style.cssText='font-size:12px;color:var(--ink-l);font-style:italic;margin-bottom:14px;padding:8px 12px;background:rgba(22,16,10,.9);border:1px solid var(--bord);border-radius:7px;';
   info.innerHTML='<i class="ti ti-info-circle" style="vertical-align:-2px;margin-right:4px;"></i>Glissez pour réordonner · Cliquez le nom pour le modifier · Œil pour masquer/afficher';
   body.appendChild(info);
   const list = document.createElement('div');
@@ -1327,7 +1325,7 @@ function renderNavEditorBody(){
     <div style="display:flex;flex-direction:column;gap:8px;">
       <div style="display:flex;gap:8px;">
         <input class="nav-add-input" id="new-item-label" placeholder="Nom du nouvel onglet..." style="flex:1">
-        <select id="new-item-icon" style="font-family:'Crimson Pro',serif;font-size:13px;background:var(--surf2);border:1px solid var(--bord-s);border-radius:7px;padding:5px 8px;color:var(--ink);outline:none;">${AVAILABLE_ICONS.map(ic=>`<option value="${ic}">${ic.replace('ti-','')}</option>`).join('')}</select>
+        <select id="new-item-icon" style="font-family:'Crimson Pro',serif;font-size:13px;background:rgba(28,20,12,.85);border:1px solid var(--bord-s);border-radius:7px;padding:5px 8px;color:var(--ink);outline:none;">${AVAILABLE_ICONS.map(ic=>`<option value="${ic}">${ic.replace('ti-','')}</option>`).join('')}</select>
         <button class="btn-save" style="white-space:nowrap;" onclick="addNavItem()"><i class="ti ti-plus"></i> Onglet</button>
       </div>
       <div style="display:flex;gap:8px;">
@@ -1446,7 +1444,7 @@ function renderChar(name){
     <div class="stat-row"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val"><span class="ef" onclick="editField('${name}','mental')">${c.mental}</span> %</span></div><div class="bar"><div class="bar-fill" style="width:${c.mental}%"></div></div></div>
     </div>
     <div class="card">
-      <div class="sdiv">Valeurs RP</div><div style="margin-bottom:12px">${(c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>`<div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;">${v}</div>`).join('')}<span class="ef" style="font-size:11px;color:var(--ink-l);" onclick="editFieldArea('${name}','valeurs')">✏ Modifier</span></div>
+      <div class="sdiv">Valeurs RP</div><div style="margin-bottom:12px">${(c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>`<div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;color:var(--ink-m);">${v}</div>`).join('')}<span class="ef" style="font-size:11px;color:var(--ink-l);" onclick="editFieldArea('${name}','valeurs')">✏ Modifier</span></div>
       <div class="sdiv">Langues</div><div style="margin-bottom:12px;font-size:13px;"><span class="ef" onclick="editField('${name}','langues')">${c.langues}</span></div>
       <div class="sdiv">Compétences</div><div class="comp-list">${compsHtml}</div>
     </div>
