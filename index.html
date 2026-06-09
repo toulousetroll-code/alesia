@@ -48,14 +48,23 @@ header{background:var(--ink);border-bottom:2px solid var(--gold);padding:12px 20
 .body{display:flex;flex:1;overflow:hidden;}
 
 /* SIDEBAR */
-nav{width:var(--sidebar);background:var(--surf);border-right:1px solid var(--bord-s);padding:16px 0;overflow-y:auto;flex-shrink:0;}
+nav{width:var(--sidebar);background:var(--surf);border-right:1px solid var(--bord-s);display:flex;flex-direction:column;overflow:hidden;flex-shrink:0;}
+.nav-scroll{flex:1;overflow-y:auto;padding:16px 0;}
 .nl{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-d);padding:0 16px 5px;text-transform:uppercase;}
 .ni{display:flex;align-items:center;gap:9px;padding:8px 16px;cursor:pointer;font-size:13px;color:var(--ink-m);border-left:2px solid transparent;transition:all .15s;}
 .ni:hover{background:var(--gold-pale);color:var(--ink);border-left-color:rgba(201,168,76,.4);}
 .ni.active{background:var(--gold-pale);color:var(--ink);border-left-color:var(--gold);font-weight:600;}
 .ni i{font-size:15px;color:var(--gold-d);}
 .ni.active i{color:var(--gold);}
+.ni.hidden-item{opacity:.4;}
 .ndiv{height:1px;background:var(--bord);margin:10px 16px;}
+
+/* SIDEBAR FOOTER (MJ config button) */
+.nav-footer{border-top:1px solid var(--bord);padding:10px 12px;display:none;}
+.nav-footer.mj-visible{display:block;}
+.btn-config-nav{display:flex;align-items:center;gap:7px;width:100%;background:none;border:1px dashed var(--bord-s);color:var(--ink-l);border-radius:7px;padding:7px 10px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.06em;cursor:pointer;transition:all .15s;}
+.btn-config-nav:hover{border-color:var(--gold);color:var(--gold-d);background:var(--gold-pale);}
+.btn-config-nav i{font-size:13px;}
 
 /* MAIN */
 main{flex:1;overflow-y:auto;padding:22px 26px;}
@@ -70,24 +79,10 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 .full{grid-column:1/-1;}
 
 /* EDITABLE INLINE */
-.ef{
-  cursor:pointer;border-radius:4px;padding:1px 4px;margin:-1px -4px;
-  transition:background .15s;display:inline-block;min-width:20px;
-  border-bottom:1px dashed transparent;
-}
+.ef{cursor:pointer;border-radius:4px;padding:1px 4px;margin:-1px -4px;transition:background .15s;display:inline-block;min-width:20px;border-bottom:1px dashed transparent;}
 .ef:hover{background:rgba(201,168,76,.18);border-bottom-color:var(--gold-d);}
-.ef-input{
-  font-family:inherit;font-size:inherit;color:inherit;
-  background:var(--surf2);border:1px solid var(--gold);
-  border-radius:4px;padding:1px 5px;outline:none;
-  width:auto;min-width:40px;
-}
-.ef-area{
-  font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink-m);
-  background:var(--surf2);border:1px solid var(--gold);border-radius:7px;
-  padding:8px;width:100%;outline:none;resize:vertical;line-height:1.65;
-  display:block;
-}
+.ef-input{font-family:inherit;font-size:inherit;color:inherit;background:var(--surf2);border:1px solid var(--gold);border-radius:4px;padding:1px 5px;outline:none;width:auto;min-width:40px;}
+.ef-area{font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink-m);background:var(--surf2);border:1px solid var(--gold);border-radius:7px;padding:8px;width:100%;outline:none;resize:vertical;line-height:1.65;display:block;}
 
 /* CHAR TABS */
 .char-tabs{display:flex;border-bottom:1px solid var(--bord-s);margin-bottom:18px;overflow-x:auto;}
@@ -138,10 +133,6 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 .dots{display:flex;gap:3px;}
 .dot{width:9px;height:9px;border-radius:50%;border:1px solid var(--bord-s);cursor:pointer;transition:background .1s;}
 .dot.on{background:var(--gold);border-color:var(--gold-d);}
-
-/* ITEMS */
-.item-list{display:flex;flex-direction:column;gap:5px;}
-.item-row{display:flex;justify-content:space-between;padding:5px 8px;background:var(--parch2);border-radius:6px;border:1px solid var(--bord);font-size:12px;}
 
 /* EQUIP */
 .equip-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px;}
@@ -201,6 +192,57 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
 /* MJ PANEL */
 .mj-banner{background:rgba(139,32,32,.08);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px 14px;font-size:12px;color:var(--red);margin-bottom:14px;display:flex;align-items:center;gap:6px;}
 
+/* CUSTOM PAGE */
+.custom-page-content{min-height:200px;}
+.custom-edit-area{width:100%;background:var(--surf);border:1px solid var(--bord);border-radius:var(--radius);padding:14px;font-family:'Crimson Pro',serif;font-size:14px;color:var(--ink);resize:vertical;min-height:300px;line-height:1.7;outline:none;}
+.custom-edit-area:focus{border-color:var(--gold);}
+.custom-rendered{font-size:14px;color:var(--ink-m);line-height:1.75;white-space:pre-wrap;}
+.custom-toolbar{display:flex;gap:8px;margin-bottom:12px;align-items:center;}
+.btn-edit-page{display:inline-flex;align-items:center;gap:5px;background:var(--gold-pale);border:1px solid var(--bord-s);color:var(--gold-d);border-radius:6px;padding:5px 12px;font-family:'Cinzel',serif;font-size:10px;letter-spacing:.05em;cursor:pointer;transition:all .15s;}
+.btn-edit-page:hover{background:rgba(201,168,76,.22);border-color:var(--gold);}
+
+/* ===== SIDEBAR EDITOR MODAL ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(44,36,22,.7);z-index:500;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .2s;}
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-box{background:var(--parch);border:1px solid var(--bord-s);border-radius:14px;width:520px;max-width:95vw;max-height:85vh;display:flex;flex-direction:column;box-shadow:0 8px 40px rgba(44,36,22,.25);}
+.modal-head{padding:18px 20px 14px;border-bottom:1px solid var(--bord);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.modal-title{font-family:'Cinzel',serif;font-size:14px;color:var(--gold-d);letter-spacing:.06em;}
+.modal-close{background:none;border:none;font-size:18px;color:var(--ink-l);cursor:pointer;padding:2px 6px;border-radius:4px;line-height:1;}
+.modal-close:hover{color:var(--red);background:var(--red-pale);}
+.modal-body{flex:1;overflow-y:auto;padding:16px 20px;}
+.modal-foot{padding:14px 20px;border-top:1px solid var(--bord);display:flex;gap:8px;justify-content:flex-end;flex-shrink:0;}
+
+/* NAV ITEM EDITOR ROWS */
+.nav-edit-section{margin-bottom:16px;}
+.nav-edit-section-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:var(--gold-d);margin-bottom:8px;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between;}
+.nav-edit-rows{display:flex;flex-direction:column;gap:5px;}
+.nav-edit-row{display:flex;align-items:center;gap:8px;background:var(--surf);border:1px solid var(--bord);border-radius:8px;padding:7px 10px;cursor:grab;transition:box-shadow .15s;}
+.nav-edit-row:active{cursor:grabbing;}
+.nav-edit-row.dragging{box-shadow:0 4px 20px rgba(44,36,22,.18);opacity:.85;border-color:var(--gold);}
+.nav-edit-row.drag-over{border-color:var(--gold);background:var(--gold-pale);}
+.drag-handle{color:var(--ink-l);font-size:14px;cursor:grab;flex-shrink:0;}
+.nav-row-icon{font-size:16px;color:var(--gold-d);flex-shrink:0;width:22px;text-align:center;}
+.nav-row-name{flex:1;font-size:13px;color:var(--ink);}
+.nav-row-name-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:var(--surf2);border:1px solid var(--gold);border-radius:5px;padding:2px 7px;outline:none;}
+.nav-row-icon-input{width:60px;font-family:'Crimson Pro',serif;font-size:12px;color:var(--ink);background:var(--surf2);border:1px solid var(--gold);border-radius:5px;padding:2px 7px;outline:none;}
+.nav-row-actions{display:flex;gap:4px;flex-shrink:0;}
+.nav-row-btn{background:none;border:1px solid var(--bord);color:var(--ink-l);border-radius:5px;padding:2px 6px;cursor:pointer;font-size:12px;transition:all .1s;line-height:1.4;}
+.nav-row-btn:hover{border-color:var(--gold);color:var(--gold-d);}
+.nav-row-btn.del:hover{border-color:var(--red);color:var(--red);background:var(--red-pale);}
+.nav-row-btn.vis-off{opacity:.5;}
+.nav-add-section{display:flex;gap:8px;margin-top:10px;}
+.nav-add-input{flex:1;font-family:'Crimson Pro',serif;font-size:13px;color:var(--ink);background:var(--surf2);border:1px solid var(--bord-s);border-radius:7px;padding:6px 10px;outline:none;}
+.nav-add-input:focus{border-color:var(--gold);}
+.nav-separator-row{display:flex;align-items:center;gap:8px;padding:4px 10px;background:rgba(139,105,20,.06);border:1px dashed var(--bord);border-radius:8px;}
+.nav-sep-label{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--gold-d);flex:1;text-transform:uppercase;}
+
+/* ICON PICKER */
+.icon-grid{display:flex;flex-wrap:wrap;gap:6px;padding:10px 0;max-height:160px;overflow-y:auto;}
+.icon-opt{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--bord);border-radius:6px;cursor:pointer;font-size:16px;transition:all .1s;}
+.icon-opt:hover{border-color:var(--gold);background:var(--gold-pale);color:var(--gold-d);}
+.icon-opt.selected{border-color:var(--gold);background:var(--gold-pale);color:var(--gold-d);}
+.icon-picker-wrap{background:var(--surf);border:1px solid var(--bord-s);border-radius:8px;padding:8px 12px;margin-top:4px;}
+
 /* TOAST */
 #toast{position:fixed;bottom:20px;right:20px;background:var(--ink);color:var(--gold);border:1px solid var(--gold-d);border-radius:8px;padding:10px 18px;font-family:'Cinzel',serif;font-size:12px;letter-spacing:.04em;opacity:0;transform:translateY(10px);transition:all .3s;z-index:999;pointer-events:none;}
 #toast.show{opacity:1;transform:translateY(0);}
@@ -229,26 +271,17 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
     </div>
   </header>
   <div class="body">
-    <nav>
-      <div class="nl">Joueurs</div>
-      <div class="ni active" onclick="showSec('personnages',this)"><i class="ti ti-users"></i> Personnages</div>
-      <div class="ni" onclick="showSec('notes',this)"><i class="ti ti-notes"></i> Notes</div>
-      <div class="ndiv"></div>
-      <div class="nl">Campagne</div>
-      <div class="ni" onclick="showSec('journal',this)"><i class="ti ti-book"></i> Journal</div>
-      <div class="ni" onclick="showSec('pnj',this)"><i class="ti ti-masks-theater"></i> PNJ & Factions</div>
-      <div class="ndiv"></div>
-      <div class="nl">Univers</div>
-      <div class="ni" onclick="showSec('royaumes',this)"><i class="ti ti-world"></i> 12 Royaumes</div>
-      <div class="ni" onclick="showSec('races',this)"><i class="ti ti-dna"></i> Races</div>
-      <div class="ni" onclick="showSec('classes',this)"><i class="ti ti-sword"></i> Classes</div>
-      <div class="ndiv"></div>
-      <div class="nl">Outils</div>
-      <div class="ni" onclick="showSec('des',this)"><i class="ti ti-dice"></i> Lanceur de dés</div>
+    <nav id="main-nav">
+      <div class="nav-scroll" id="nav-scroll"></div>
+      <div class="nav-footer" id="nav-footer">
+        <button class="btn-config-nav" onclick="openNavEditor()">
+          <i class="ti ti-settings"></i> Configurer le menu
+        </button>
+      </div>
     </nav>
-    <main>
+    <main id="main-content">
 
-      <!-- PERSONNAGES -->
+      <!-- PERSONNAGES (builtin) -->
       <div id="s-personnages" class="section active">
         <div class="page-title"><i class="ti ti-users"></i> Fiches de personnage
           <span style="font-size:11px;color:var(--ink-l);font-family:'Crimson Pro',serif;font-weight:400;margin-left:8px;font-style:italic;">— Cliquez sur n'importe quel texte pour le modifier</span>
@@ -264,7 +297,7 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div id="chars-container"></div>
       </div>
 
-      <!-- JOURNAL -->
+      <!-- JOURNAL (builtin) -->
       <div id="s-journal" class="section">
         <div class="page-title"><i class="ti ti-book"></i> Journal de campagne</div>
         <button class="btn-add" onclick="showAddSession()"><i class="ti ti-plus"></i> Nouvelle session</button>
@@ -280,7 +313,7 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div id="journal-list"></div>
       </div>
 
-      <!-- PNJ -->
+      <!-- PNJ (builtin) -->
       <div id="s-pnj" class="section">
         <div class="page-title"><i class="ti ti-masks-theater"></i> PNJ & Factions</div>
         <div class="pnj-card"><div class="pnj-av" style="background:var(--red-pale)">K</div><div><div class="pnj-name">Koben</div><div class="pnj-role">Assassin Kitsune — cache-œil</div><div class="pnj-desc">Originaire du même village détruit qu'Azarius. Motivations inconnues — ennemi ou allié caché ?</div><span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile</span></div></div>
@@ -290,7 +323,7 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div class="pnj-card"><div class="pnj-av" style="background:rgba(90,90,90,.06)">MS</div><div><div class="pnj-name">Mira Solène</div><div class="pnj-role">Témoin clé — décédée</div><div class="pnj-desc">Témoin dans l'affaire de Sir de Vellune. Sa mort complique la situation du groupe.</div><span class="badge dead" style="margin-top:6px;display:inline-block;">Décédée</span></div></div>
       </div>
 
-      <!-- ROYAUMES -->
+      <!-- ROYAUMES (builtin) -->
       <div id="s-royaumes" class="section">
         <div class="page-title"><i class="ti ti-world"></i> Les 12 Royaumes</div>
         <p style="font-size:13px;color:var(--ink-m);font-style:italic;margin-bottom:16px;">Autour du Lac sacré et de l'Île du Cœur, douze nations regardent vers la Prophétie des Douze Voies.</p>
@@ -310,19 +343,19 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         </div>
       </div>
 
-      <!-- RACES -->
+      <!-- RACES (builtin) -->
       <div id="s-races" class="section">
         <div class="page-title"><i class="ti ti-dna"></i> Races jouables</div>
         <div id="races-container"></div>
       </div>
 
-      <!-- CLASSES -->
+      <!-- CLASSES (builtin) -->
       <div id="s-classes" class="section">
         <div class="page-title"><i class="ti ti-sword"></i> Classes jouables</div>
         <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;" id="classes-container"></div>
       </div>
 
-      <!-- DÉS -->
+      <!-- DÉS (builtin) -->
       <div id="s-des" class="section">
         <div class="page-title"><i class="ti ti-dice"></i> Lanceur de dés</div>
         <div class="dice-result"><div class="dice-num" id="dice-num">—</div><div class="dice-lbl" id="dice-lbl">Choisis un dé</div></div>
@@ -339,7 +372,7 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div id="dice-hist"></div>
       </div>
 
-      <!-- NOTES -->
+      <!-- NOTES (builtin) -->
       <div id="s-notes" class="section">
         <div class="page-title"><i class="ti ti-notes"></i> Notes partagées</div>
         <textarea id="notes-area" onblur="saveNotes()" placeholder="Notes de session...">Chargement...</textarea>
@@ -354,9 +387,30 @@ main{flex:1;overflow-y:auto;padding:22px 26px;}
         <div style="font-size:11px;color:var(--ink-l);font-style:italic;margin-top:8px;"><i class="ti ti-lock" style="vertical-align:-2px"></i> Notes synchronisées en temps réel entre tous les joueurs.</div>
       </div>
 
+      <!-- CUSTOM PAGES (generated dynamically) -->
+      <div id="custom-sections-container"></div>
+
     </main>
   </div>
 </div>
+
+<!-- ===== SIDEBAR EDITOR MODAL ===== -->
+<div class="modal-overlay" id="nav-editor-modal" onclick="closeNavEditorOnBg(event)">
+  <div class="modal-box">
+    <div class="modal-head">
+      <div class="modal-title"><i class="ti ti-layout-sidebar" style="margin-right:7px;color:var(--gold)"></i>Configurer le menu</div>
+      <button class="modal-close" onclick="closeNavEditor()">✕</button>
+    </div>
+    <div class="modal-body" id="nav-editor-body">
+      <!-- Contenu généré dynamiquement -->
+    </div>
+    <div class="modal-foot">
+      <button class="btn-cancel" onclick="closeNavEditor()">Annuler</button>
+      <button class="btn-save" onclick="saveNavConfig()"><i class="ti ti-check"></i> Enregistrer</button>
+    </div>
+  </div>
+</div>
+
 <div id="toast"></div>
 
 <script type="module">
@@ -376,7 +430,36 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 const provider = new GoogleAuthProvider();
 
-// Données par défaut des personnages
+// ===== ICÔNES DISPONIBLES =====
+const AVAILABLE_ICONS = [
+  'ti-users','ti-notes','ti-book','ti-masks-theater','ti-world','ti-dna',
+  'ti-sword','ti-dice','ti-map','ti-crown','ti-shield','ti-flame',
+  'ti-droplet','ti-bolt','ti-leaf','ti-star','ti-compass','ti-scroll',
+  'ti-lock','ti-key','ti-skull','ti-heart','ti-moon','ti-sun',
+  'ti-mountain','ti-castle','ti-ship','ti-potion','ti-wand','ti-ghost',
+  'ti-dragon','ti-axe','ti-bow','ti-coins','ti-hourglass','ti-eye'
+];
+
+// ===== STRUCTURE PAR DÉFAUT DU MENU =====
+const DEFAULT_NAV = [
+  {type:'group', label:'Joueurs'},
+  {type:'item', id:'personnages', label:'Personnages', icon:'ti-users', builtin:true, visible:true},
+  {type:'item', id:'notes', label:'Notes', icon:'ti-notes', builtin:true, visible:true},
+  {type:'sep'},
+  {type:'group', label:'Campagne'},
+  {type:'item', id:'journal', label:'Journal', icon:'ti-book', builtin:true, visible:true},
+  {type:'item', id:'pnj', label:'PNJ & Factions', icon:'ti-masks-theater', builtin:true, visible:true},
+  {type:'sep'},
+  {type:'group', label:'Univers'},
+  {type:'item', id:'royaumes', label:'12 Royaumes', icon:'ti-world', builtin:true, visible:true},
+  {type:'item', id:'races', label:'Races', icon:'ti-dna', builtin:true, visible:true},
+  {type:'item', id:'classes', label:'Classes', icon:'ti-sword', builtin:true, visible:true},
+  {type:'sep'},
+  {type:'group', label:'Outils'},
+  {type:'item', id:'des', label:'Lanceur de dés', icon:'ti-dice', builtin:true, visible:true}
+];
+
+// ===== DONNÉES PAR DÉFAUT =====
 const defaultChars = {
   azarius:{
     name:'Azarius Desbois',race:'Kitsune',genre:'Homme',classe:'Cogneur',element:'🔥 Feu',niveau:'1',
@@ -475,11 +558,17 @@ const defaultChars = {
   }
 };
 
-// Cache local
+// État global
 let charData = JSON.parse(JSON.stringify(defaultChars));
 let currentUser = null;
+let isMJ = false;
+let navConfig = JSON.parse(JSON.stringify(DEFAULT_NAV));
+let customPagesData = {}; // {id: {title, content}}
+// État éditeur modal
+let editingNav = [];
+let dragSrcIdx = null;
 
-// AUTH
+// ===== AUTH =====
 window.signIn = async () => { try { await signInWithPopup(auth, provider); } catch(e){ console.error(e); } };
 window.doSignOut = async () => {
   await signOut(auth);
@@ -494,39 +583,361 @@ onAuthStateChanged(auth, user => {
     document.getElementById('app').classList.remove('hidden');
     document.getElementById('uname').textContent = user.displayName?.split(' ')[0] || 'Aventurier';
     document.getElementById('uav').src = user.photoURL || '';
-    // Bannière MJ si c'est Tanguy
-    if(user.email === 'toulousetroll@gmail.com' || user.displayName?.toLowerCase().includes('tanguy') || user.displayName?.toUpperCase().includes('LALIGUE')){
+    isMJ = user.email === 'toulousetroll@gmail.com'
+         || user.displayName?.toLowerCase().includes('tanguy')
+         || user.displayName?.toUpperCase().includes('LALIGUE');
+    if(isMJ){
       document.getElementById('mj-banner').style.display = 'flex';
+      document.getElementById('nav-footer').classList.add('mj-visible');
     }
     loadAll();
   }
 });
 
 async function loadAll(){
+  await loadNavConfig();
+  renderNav();
   await loadAllChars();
   renderCurrentChar();
   loadNotes();
   listenJournal();
+  await loadCustomPages();
 }
 
-// CHARGER TOUS LES PERSOS DEPUIS FIREBASE
+// ===== NAV CONFIG =====
+async function loadNavConfig(){
+  const snap = await getDoc(doc(db,'shared','nav-config'));
+  if(snap.exists() && snap.data().items){
+    navConfig = snap.data().items;
+  } else {
+    navConfig = JSON.parse(JSON.stringify(DEFAULT_NAV));
+  }
+}
+
+function renderNav(){
+  const scroll = document.getElementById('nav-scroll');
+  scroll.innerHTML = '';
+  let firstItem = true;
+  navConfig.forEach(entry => {
+    if(!entry) return;
+    if(entry.type === 'group'){
+      const div = document.createElement('div');
+      div.className = 'nl';
+      div.textContent = entry.label || '';
+      scroll.appendChild(div);
+    } else if(entry.type === 'sep'){
+      const div = document.createElement('div');
+      div.className = 'ndiv';
+      scroll.appendChild(div);
+    } else if(entry.type === 'item'){
+      if(entry.visible === false) return;
+      const div = document.createElement('div');
+      div.className = 'ni' + (firstItem ? ' active' : '');
+      div.id = 'nav-item-' + entry.id;
+      div.innerHTML = `<i class="ti ${entry.icon || 'ti-file'}"></i> ${entry.label}`;
+      div.onclick = () => showSec(entry.id, div);
+      scroll.appendChild(div);
+      if(firstItem){
+        firstItem = false;
+        // Activer la première section
+        setTimeout(() => showSec(entry.id, div), 0);
+      }
+    }
+  });
+}
+
+function showSec(id, el){
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.ni').forEach(n => n.classList.remove('active'));
+  // Section builtin ou custom
+  const builtin = document.getElementById('s-' + id);
+  if(builtin){
+    builtin.classList.add('active');
+  } else {
+    // Section custom — créer si besoin
+    ensureCustomSection(id);
+    const cs = document.getElementById('cs-' + id);
+    if(cs) cs.classList.add('active');
+  }
+  if(el) el.classList.add('active');
+}
+window.showSec = showSec;
+
+// ===== CUSTOM PAGES =====
+async function loadCustomPages(){
+  const snap = await getDoc(doc(db,'shared','custom-pages'));
+  if(snap.exists()) customPagesData = snap.data() || {};
+  // Créer les divs pour toutes les pages custom existantes
+  navConfig.filter(e => e.type === 'item' && !e.builtin).forEach(e => {
+    ensureCustomSection(e.id);
+  });
+}
+
+function ensureCustomSection(id){
+  if(document.getElementById('cs-'+id)) return;
+  const container = document.getElementById('custom-sections-container');
+  const entry = navConfig.find(e => e.id === id);
+  if(!entry) return;
+
+  const div = document.createElement('div');
+  div.id = 'cs-' + id;
+  div.className = 'section';
+
+  const data = customPagesData[id] || {title: entry.label, content: ''};
+  div.innerHTML = buildCustomPage(id, data);
+  container.appendChild(div);
+}
+
+function buildCustomPage(id, data){
+  const entry = navConfig.find(e => e.id === id) || {};
+  return `
+    <div class="page-title">
+      <i class="ti ${entry.icon || 'ti-file'}"></i>
+      ${data.title || entry.label || 'Page'}
+    </div>
+    ${isMJ ? `<div class="custom-toolbar">
+      <button class="btn-edit-page" onclick="toggleCustomEdit('${id}')">
+        <i class="ti ti-pencil"></i> Modifier le contenu
+      </button>
+    </div>` : ''}
+    <div id="cp-view-${id}" class="custom-page-content">
+      ${data.content
+        ? `<div class="custom-rendered">${escapeHtml(data.content)}</div>`
+        : `<div style="color:var(--ink-l);font-style:italic;font-size:13px;padding:20px 0;">
+            ${isMJ ? 'Page vide — cliquez sur « Modifier le contenu » pour l\'éditer.' : 'Aucun contenu pour l\'instant.'}
+           </div>`}
+    </div>
+    <div id="cp-edit-${id}" style="display:none">
+      <textarea class="custom-edit-area" id="cp-area-${id}" rows="16">${escapeHtml(data.content || '')}</textarea>
+      <div style="display:flex;gap:8px;margin-top:10px;">
+        <button class="btn-save" onclick="saveCustomPage('${id}')"><i class="ti ti-check"></i> Enregistrer</button>
+        <button class="btn-cancel" onclick="toggleCustomEdit('${id}')">Annuler</button>
+      </div>
+    </div>`;
+}
+
+window.toggleCustomEdit = (id) => {
+  const view = document.getElementById('cp-view-'+id);
+  const edit = document.getElementById('cp-edit-'+id);
+  if(!view || !edit) return;
+  const isEditing = edit.style.display === 'block';
+  view.style.display = isEditing ? 'block' : 'none';
+  edit.style.display = isEditing ? 'none' : 'block';
+};
+
+window.saveCustomPage = async (id) => {
+  const area = document.getElementById('cp-area-'+id);
+  if(!area) return;
+  const content = area.value;
+  customPagesData[id] = customPagesData[id] || {};
+  customPagesData[id].content = content;
+  await setDoc(doc(db,'shared','custom-pages'), customPagesData, {merge:true});
+  // Reconstruire la page
+  const sec = document.getElementById('cs-'+id);
+  if(sec){
+    const entry = navConfig.find(e => e.id === id) || {};
+    sec.innerHTML = buildCustomPage(id, customPagesData[id]);
+  }
+  toast('Page sauvegardée ✓');
+};
+
+function escapeHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+// ===== NAV EDITOR MODAL =====
+window.openNavEditor = () => {
+  editingNav = JSON.parse(JSON.stringify(navConfig));
+  renderNavEditorBody();
+  document.getElementById('nav-editor-modal').classList.add('open');
+};
+
+window.closeNavEditor = () => {
+  document.getElementById('nav-editor-modal').classList.remove('open');
+};
+
+window.closeNavEditorOnBg = (e) => {
+  if(e.target === document.getElementById('nav-editor-modal')) closeNavEditor();
+};
+
+function renderNavEditorBody(){
+  const body = document.getElementById('nav-editor-body');
+  body.innerHTML = '';
+
+  // Info
+  const info = document.createElement('div');
+  info.style.cssText = 'font-size:12px;color:var(--ink-l);font-style:italic;margin-bottom:14px;padding:8px 12px;background:var(--surf);border:1px solid var(--bord);border-radius:7px;';
+  info.innerHTML = '<i class="ti ti-info-circle" style="vertical-align:-2px;margin-right:4px;"></i>Glissez pour réordonner · Cliquez sur le nom pour le modifier · L\'œil pour masquer/afficher';
+  body.appendChild(info);
+
+  // Liste des items
+  const list = document.createElement('div');
+  list.id = 'nav-edit-list';
+  list.style.cssText = 'display:flex;flex-direction:column;gap:5px;margin-bottom:16px;';
+  body.appendChild(list);
+
+  editingNav.forEach((entry, i) => {
+    list.appendChild(buildEditRow(entry, i));
+  });
+
+  // Section : ajouter un groupe / séparateur / item
+  const addSection = document.createElement('div');
+  addSection.style.cssText = 'border-top:1px solid var(--bord);padding-top:14px;';
+  addSection.innerHTML = `
+    <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.1em;color:var(--gold-d);margin-bottom:10px;text-transform:uppercase;">Ajouter</div>
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;gap:8px;">
+        <input class="nav-add-input" id="new-item-label" placeholder="Nom du nouvel onglet..." style="flex:1">
+        <select id="new-item-icon" style="font-family:'Crimson Pro',serif;font-size:13px;background:var(--surf2);border:1px solid var(--bord-s);border-radius:7px;padding:5px 8px;color:var(--ink);outline:none;">
+          ${AVAILABLE_ICONS.map(ic => `<option value="${ic}">${ic.replace('ti-','')}</option>`).join('')}
+        </select>
+        <button class="btn-save" style="white-space:nowrap;" onclick="addNavItem()"><i class="ti ti-plus"></i> Onglet</button>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <input class="nav-add-input" id="new-group-label" placeholder="Nom du groupe (titre de section)...">
+        <button class="btn-add" style="margin-bottom:0;white-space:nowrap;" onclick="addNavGroup()"><i class="ti ti-plus"></i> Groupe</button>
+        <button class="btn-cancel" style="white-space:nowrap;" onclick="addNavSep()"><i class="ti ti-minus"></i> Séparateur</button>
+      </div>
+    </div>`;
+  body.appendChild(addSection);
+}
+
+function buildEditRow(entry, i){
+  const row = document.createElement('div');
+  row.dataset.idx = i;
+
+  if(entry.type === 'sep'){
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:5px 10px;background:rgba(139,105,20,.05);border:1px dashed var(--bord);border-radius:8px;';
+    row.draggable = true;
+    row.innerHTML = `
+      <i class="ti ti-grip-vertical drag-handle" style="color:var(--ink-l);font-size:14px;cursor:grab;"></i>
+      <span style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.08em;color:var(--ink-l);flex:1;text-transform:uppercase;">— Séparateur —</span>
+      <button class="nav-row-btn del" onclick="removeNavEntry(${i})" title="Supprimer"><i class="ti ti-trash"></i></button>`;
+    addDragListeners(row, i);
+    return row;
+  }
+
+  if(entry.type === 'group'){
+    row.style.cssText = 'display:flex;align-items:center;gap:8px;padding:6px 10px;background:var(--gold-pale);border:1px solid rgba(201,168,76,.25);border-radius:8px;';
+    row.draggable = true;
+    row.innerHTML = `
+      <i class="ti ti-grip-vertical drag-handle" style="color:var(--gold-d);font-size:14px;cursor:grab;"></i>
+      <i class="ti ti-folder" style="color:var(--gold-d);font-size:14px;"></i>
+      <input class="nav-row-name-input" style="flex:1;background:transparent;border-color:transparent;" value="${escapeHtml(entry.label||'')}" 
+        onchange="editNavEntry(${i},'label',this.value)" 
+        onfocus="this.style.borderColor='var(--gold)';this.style.background='var(--surf2)'"
+        onblur="this.style.borderColor='transparent';this.style.background='transparent'">
+      <button class="nav-row-btn del" onclick="removeNavEntry(${i})" title="Supprimer"><i class="ti ti-trash"></i></button>`;
+    addDragListeners(row, i);
+    return row;
+  }
+
+  // type === 'item'
+  row.className = 'nav-edit-row';
+  row.draggable = true;
+  const visIcon = entry.visible === false ? 'ti-eye-off' : 'ti-eye';
+  const visStyle = entry.visible === false ? 'opacity:.5' : '';
+  const isBuiltin = entry.builtin ? '<span title="Section intégrée" style="font-size:10px;background:var(--blue-pale);color:var(--blue);border:1px solid rgba(26,74,122,.2);border-radius:10px;padding:1px 6px;">intégré</span>' : '';
+  row.innerHTML = `
+    <i class="ti ti-grip-vertical drag-handle"></i>
+    <i class="ti ${entry.icon||'ti-file'} nav-row-icon" style="cursor:pointer;" onclick="cycleIcon(${i},this)" title="Changer l'icône"></i>
+    <input class="nav-row-name-input" value="${escapeHtml(entry.label||'')}" 
+      onchange="editNavEntry(${i},'label',this.value)"
+      onfocus="this.style.borderColor='var(--gold)'"
+      onblur="this.style.borderColor='transparent'">
+    ${isBuiltin}
+    <div class="nav-row-actions">
+      <button class="nav-row-btn ${entry.visible===false?'vis-off':''}" onclick="toggleNavVis(${i},this)" title="${entry.visible===false?'Afficher':'Masquer'}">
+        <i class="ti ${visIcon}"></i>
+      </button>
+      ${!entry.builtin ? `<button class="nav-row-btn del" onclick="removeNavEntry(${i})" title="Supprimer"><i class="ti ti-trash"></i></button>` : ''}
+    </div>`;
+  addDragListeners(row, i);
+  return row;
+}
+
+function addDragListeners(row, i){
+  row.addEventListener('dragstart', e => {
+    dragSrcIdx = i;
+    row.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'move';
+  });
+  row.addEventListener('dragend', () => row.classList.remove('dragging'));
+  row.addEventListener('dragover', e => { e.preventDefault(); row.classList.add('drag-over'); });
+  row.addEventListener('dragleave', () => row.classList.remove('drag-over'));
+  row.addEventListener('drop', e => {
+    e.preventDefault();
+    row.classList.remove('drag-over');
+    if(dragSrcIdx === null || dragSrcIdx === i) return;
+    const moved = editingNav.splice(dragSrcIdx, 1)[0];
+    const target = i > dragSrcIdx ? i - 1 : i;
+    editingNav.splice(target, 0, moved);
+    dragSrcIdx = null;
+    renderNavEditorBody();
+  });
+}
+
+window.editNavEntry = (i, field, val) => { if(editingNav[i]) editingNav[i][field] = val; };
+window.removeNavEntry = (i) => { editingNav.splice(i, 1); renderNavEditorBody(); };
+window.toggleNavVis = (i, btn) => {
+  if(!editingNav[i]) return;
+  editingNav[i].visible = editingNav[i].visible === false ? true : false;
+  renderNavEditorBody();
+};
+
+window.cycleIcon = (i, el) => {
+  const cur = editingNav[i].icon || 'ti-file';
+  const idx = AVAILABLE_ICONS.indexOf(cur);
+  const next = AVAILABLE_ICONS[(idx + 1) % AVAILABLE_ICONS.length];
+  editingNav[i].icon = next;
+  el.className = 'ti ' + next + ' nav-row-icon';
+  el.style.cursor = 'pointer';
+};
+
+window.addNavItem = () => {
+  const label = document.getElementById('new-item-label').value.trim();
+  const icon = document.getElementById('new-item-icon').value;
+  if(!label){ toast('Entrez un nom pour l\'onglet'); return; }
+  const id = 'custom_' + Date.now();
+  editingNav.push({type:'item', id, label, icon, builtin:false, visible:true});
+  document.getElementById('new-item-label').value = '';
+  renderNavEditorBody();
+};
+
+window.addNavGroup = () => {
+  const label = document.getElementById('new-group-label').value.trim();
+  if(!label){ toast('Entrez un nom pour le groupe'); return; }
+  editingNav.push({type:'group', label});
+  document.getElementById('new-group-label').value = '';
+  renderNavEditorBody();
+};
+
+window.addNavSep = () => {
+  editingNav.push({type:'sep'});
+  renderNavEditorBody();
+};
+
+window.saveNavConfig = async () => {
+  navConfig = JSON.parse(JSON.stringify(editingNav));
+  await setDoc(doc(db,'shared','nav-config'), {items: navConfig});
+  // Créer les sections custom manquantes
+  navConfig.filter(e => e.type==='item' && !e.builtin).forEach(e => ensureCustomSection(e.id));
+  renderNav();
+  closeNavEditor();
+  toast('Menu mis à jour ✓');
+};
+
+// ===== CHARS =====
 async function loadAllChars(){
   const names = ['azarius','dy','firm','mwassa','nindey'];
   for(const name of names){
     const snap = await getDoc(doc(db,'characters',name));
-    if(snap.exists()){
-      charData[name] = {...defaultChars[name], ...snap.data()};
-    }
+    if(snap.exists()) charData[name] = {...defaultChars[name], ...snap.data()};
   }
 }
-
-// SAUVEGARDER UN PERSO
 async function saveChar(name){
   await setDoc(doc(db,'characters',name), charData[name], {merge:true});
   toast('Sauvegardé ✓');
 }
 
-// RENDU DYNAMIQUE DU PERSO COURANT
 let currentChar = 'azarius';
 window.showChar = (name, el) => {
   document.querySelectorAll('.char-sec').forEach(s=>s.classList.remove('active'));
@@ -542,8 +953,6 @@ function renderCurrentChar(){ renderChar(currentChar); }
 function renderChar(name){
   const c = charData[name];
   const container = document.getElementById('chars-container');
-
-  // Créer ou récupérer la section
   let sec = document.getElementById('char-'+name);
   if(!sec){ sec = document.createElement('div'); sec.id='char-'+name; sec.className='char-sec'; container.appendChild(sec); }
   if(name === currentChar) sec.classList.add('active');
@@ -590,24 +999,15 @@ function renderChar(name){
         </div>
       </div>
       <div class="stat-row">
-        <div class="stat-head">
-          <span class="stat-name">Physique</span>
-          <span class="stat-val"><span class="ef" onclick="editField('${name}','phys')">${c.phys}</span> %</span>
-        </div>
+        <div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val"><span class="ef" onclick="editField('${name}','phys')">${c.phys}</span> %</span></div>
         <div class="bar"><div class="bar-fill" style="width:${c.phys}%"></div></div>
       </div>
       <div class="stat-row">
-        <div class="stat-head">
-          <span class="stat-name">Social</span>
-          <span class="stat-val"><span class="ef" onclick="editField('${name}','social')">${c.social}</span> %</span>
-        </div>
+        <div class="stat-head"><span class="stat-name">Social</span><span class="stat-val"><span class="ef" onclick="editField('${name}','social')">${c.social}</span> %</span></div>
         <div class="bar"><div class="bar-fill" style="width:${c.social}%"></div></div>
       </div>
       <div class="stat-row">
-        <div class="stat-head">
-          <span class="stat-name">Mental</span>
-          <span class="stat-val"><span class="ef" onclick="editField('${name}','mental')">${c.mental}</span> %</span>
-        </div>
+        <div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val"><span class="ef" onclick="editField('${name}','mental')">${c.mental}</span> %</span></div>
         <div class="bar"><div class="bar-fill" style="width:${c.mental}%"></div></div>
       </div>
     </div>
@@ -618,9 +1018,7 @@ function renderChar(name){
         <span class="ef" style="font-size:11px;color:var(--ink-l);" onclick="editFieldArea('${name}','valeurs')">✏ Modifier les valeurs</span>
       </div>
       <div class="sdiv">Langues</div>
-      <div style="margin-bottom:12px;font-size:13px;">
-        <span class="ef" onclick="editField('${name}','langues')">${c.langues}</span>
-      </div>
+      <div style="margin-bottom:12px;font-size:13px;"><span class="ef" onclick="editField('${name}','langues')">${c.langues}</span></div>
       <div class="sdiv">Compétences</div>
       <div class="comp-list">${compsHtml}</div>
     </div>
@@ -645,14 +1043,11 @@ function renderChar(name){
   </div>`;
 }
 
-// EDITION D'UN CHAMP SIMPLE
 window.editField = (charName, field) => {
   const c = charData[charName];
   const allEf = document.querySelectorAll(`#char-${charName} .ef`);
   let targetEl = null;
-  allEf.forEach(el => {
-    if(el.onclick && el.onclick.toString().includes(`'${field}'`)) targetEl = el;
-  });
+  allEf.forEach(el => { if(el.onclick && el.onclick.toString().includes(`'${field}'`)) targetEl = el; });
   if(!targetEl) return;
   const oldVal = c[field] ?? '';
   const input = document.createElement('input');
@@ -660,11 +1055,9 @@ window.editField = (charName, field) => {
   input.value = oldVal;
   input.style.width = Math.max(60, oldVal.toString().length * 9) + 'px';
   targetEl.replaceWith(input);
-  input.focus();
-  input.select();
+  input.focus(); input.select();
   const save = async () => {
-    const newVal = input.value.trim();
-    charData[charName][field] = newVal;
+    charData[charName][field] = input.value.trim();
     await saveChar(charName);
     renderChar(charName);
   };
@@ -672,16 +1065,12 @@ window.editField = (charName, field) => {
   input.onkeydown = e => { if(e.key==='Enter') save(); if(e.key==='Escape') renderChar(charName); };
 };
 
-// EDITION D'UN CHAMP TEXTAREA
 window.editFieldArea = (charName, field) => {
-  const c = charData[charName];
   const allEf = document.querySelectorAll(`#char-${charName} .ef`);
   let targetEl = null;
-  allEf.forEach(el => {
-    if(el.onclick && el.onclick.toString().includes(`editFieldArea('${charName}','${field}')`)) targetEl = el;
-  });
+  allEf.forEach(el => { if(el.onclick && el.onclick.toString().includes(`editFieldArea('${charName}','${field}')`)) targetEl = el; });
   if(!targetEl) return;
-  const oldVal = c[field] ?? '';
+  const oldVal = charData[charName][field] ?? '';
   const ta = document.createElement('textarea');
   ta.className = 'ef-area';
   ta.value = oldVal;
@@ -695,7 +1084,6 @@ window.editFieldArea = (charName, field) => {
   };
 };
 
-// TOGGLE DOT (compétences)
 window.toggleDot = async (charName, compIdx, dotIdx) => {
   const comp = charData[charName].competences[compIdx];
   comp.v = comp.v === dotIdx + 1 ? dotIdx : dotIdx + 1;
@@ -703,7 +1091,6 @@ window.toggleDot = async (charName, compIdx, dotIdx) => {
   await saveChar(charName);
 };
 
-// PV/MANA +/-
 window.adj = async (name, stat, delta) => {
   const c = charData[name];
   const cur = isNaN(parseInt(c[stat])) ? 0 : parseInt(c[stat]);
@@ -714,18 +1101,13 @@ window.adj = async (name, stat, delta) => {
   toast(`${name} ${stat.toUpperCase()} : ${newVal}`);
 };
 
-// NOTES
+// ===== NOTES =====
 async function loadNotes(){
   const ref = doc(db,'shared','notes');
   onSnapshot(ref, snap => {
     const area = document.getElementById('notes-area');
     if(snap.exists()) area.value = snap.data().content||'';
-    else area.value=`• Tolosa — groupe banni, accusés du meurtre de Sir de Vellune
-• La Lanterne — navire clé pour l'infiltration
-• Koben (Kitsune borgne) — même village qu'Azarius
-• Rose Noire — née en Auregia, veut Skarlath pour un rituel
-• Mira Solène — témoin décédée
-• Prophétie des Douze Voies — lien avec l'Île du Cœur`;
+    else area.value=`• Tolosa — groupe banni, accusés du meurtre de Sir de Vellune\n• La Lanterne — navire clé pour l'infiltration\n• Koben (Kitsune borgne) — même village qu'Azarius\n• Rose Noire — née en Auregia, veut Skarlath pour un rituel\n• Mira Solène — témoin décédée\n• Prophétie des Douze Voies — lien avec l'Île du Cœur`;
   });
 }
 window.saveNotes = async () => {
@@ -734,7 +1116,7 @@ window.saveNotes = async () => {
 };
 window.insertTag = tag => { const a=document.getElementById('notes-area'); a.value+='\n'+tag+' '; a.focus(); };
 
-// JOURNAL
+// ===== JOURNAL =====
 function listenJournal(){
   const q = query(collection(db,'journal'),orderBy('createdAt','asc'));
   onSnapshot(q, snap => {
@@ -766,7 +1148,7 @@ window.saveSession = async () => {
   toast('Session ajoutée !');
 };
 
-// Écoute temps réel des PV/Mana des autres joueurs
+// Sync temps réel PV/Mana
 ['azarius','dy','firm','mwassa','nindey'].forEach(name=>{
   onSnapshot(doc(db,'characters',name), snap=>{
     if(!snap.exists()) return;
@@ -778,13 +1160,6 @@ window.saveSession = async () => {
 </script>
 
 <script>
-function showSec(id,el){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
-  document.getElementById('s-'+id).classList.add('active');
-  el.classList.add('active');
-}
-
 // DÉS
 let dh=[];
 function roll(f){
