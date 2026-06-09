@@ -379,20 +379,22 @@ const provider = new GoogleAuthProvider();
 // Données par défaut des personnages
 const defaultChars = {
   azarius:{
-    name:'Azarius Desbois',race:'Kitsune',genre:'Mâle',classe:'Cogneur',element:'🔥 Feu',niveau:'1',
-    pv:'—',mana:'—',pv_max:'14',mana_max:'9',
+    name:'Azarius Desbois',race:'Kitsune',genre:'Homme',classe:'Cogneur',element:'🔥 Feu',niveau:'1',
+    pv:'14',mana:'9',pv_max:'14',mana_max:'9',
     phys:'85',social:'45',mental:'40',
     valeurs:'Liberté\nSavoir\nAgnostique',
     langues:'Commun, Kitsune, Démoniaque',
     competences:[
       {n:'Puissance',v:6},{n:'Finesse',v:3},{n:'Aura',v:3},
-      {n:'Relation',v:2},{n:'Instinct',v:2},{n:'Savoir (Érudit)',v:2}
+      {n:'Relation',v:2},{n:'Instinct',v:2},{n:'Savoir (Érudit)',v:2},
+      {n:'Persuasion',v:0},{n:'Survie',v:0}
     ],
-    armes:'—',armures:'—',
-    dons:'—',
+    armes:'Vieille épée (D4/−1)\nRobe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Feu (RD2 vs proj. magiques)',
+    armures:'Robe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Feu (vs proj. magiques)',
+    dons:'🔥 Turbo Fist — 2 mana / 1D10+2 : frappe de bras mécanique réacteur\n🔥 Armagédon sans Bâton — 5 mana / 1D12+4 : torrent de flammes du bras\n🔥 Fire Shield — 3 mana / 1D6+1 : bouclier ardent en spirale\n🔥 Say My Name — 8 mana / 1D6+1D8+1 : compression extrême du réacteur\n⚔ Maîtrise des Armes : relance attaque 1×/combat\n💥 Baroud d\'Honneur : <30% PV → +2 dégâts',
     equip:'Rations ×19, Sac enchanté ×1, Kit médical ×4, Boussole magique ×1, Parchemin démon ×20, Corde 11m ×1, Livre Orc ×1',
-    race_bonus:'🟢 Ruse +20% · Vivacité +10%\n🔴 Force −20% · Social (confiance) −25%',
-    notes:'',
+    race_bonus:'🟢 Ruse naturelle +20% (mensonge, tromperie, social)\n🟢 Vivacité renarde +10% (rapidité, esquive, célérité)\n🟢 Pas léger +10% (discrétion)\n🔴 Force faible −20% (force brute et armes)\n🔴 Défiance générale −25% (jets sociaux confiance/loyauté)',
+    notes:'Né dans une tribu au pied d\'un volcan. Un incendie magique détruisit sa tribu. Jure de retrouver le responsable.',
     color:'rgba(201,168,76,.15)',init:'A'
   },
   dy:{
@@ -406,65 +408,69 @@ const defaultChars = {
       {n:'Beauté naturelle',v:1},{n:'Relation',v:1},{n:'Instinct',v:3},
       {n:'Savoir (Expert sorts)',v:6},{n:'Savoir interdit',v:1},{n:'Rat de bibliothèque',v:1}
     ],
-    armes:'Baguette (D4/−3), Dague (D6/+1)',
-    armures:'Robe Arcaniste enchantée (RD2), Anneau Dieu du Vent (RD2 proj.)',
-    dons:'🌬 Déplacement d\'Air (Mana 1)\n🌬 Mur d\'Air (Mana 6)\n🌬 Lame d\'Air D8+2 (Mana 3)\n🌬 Téléportation 15m (Mana 2+)',
+    armes:'Baguette (D4/−3)\nDague (D6/+1)',
+    armures:'Robe d\'Arcaniste enchantée (RD2)\nAnneau du Dieu du Vent (RD2 vs proj. physiques)',
+    dons:'🌬 Déplacement d\'Air — 2 mana : couloir tourbillonnant, déplace cibles (1 mana/personne, +1 dégâts objets)\n🌬 Mur d\'Air — 6 mana : mur invisible, −30 jets traversée/attaque (mana variable)\n🌬 Lame d\'Air — 3 mana / D8+2 : lame tranchante et invisible\n🌬 Largage Aérien (Téléportation) — 2+(1/5m) mana : téléporte soi ou un allié (15m max)\n🔮 Invocations démoniques : Le Gardien (1PV, 90% parade), Le Chien Démon (1PV, 85% physique, D12+4)\n🌑 La Boule Magique — tout le mana restant / 1D100 : sphère noire destruction pure\n✨ Maîtrise des Arcanes : relance sort raté 1×/combat\n📚 Connaissance Interdite : relance jet de Savoir raté',
     equip:'Rations ×5, Kit médical ×4, Potion vie D6 ×3, Livre de Magie ×1, Livre Ursien 3/12, Corde 10m ×1, Dague rituel ×1',
-    race_bonus:'🟢 Perception +20% · Savoir +10%\n🔴 Fragilité −10% · Social grossiers −20%',
-    notes:'Préjugé Kitsune : −20% social, +10% combat vs Kitsune',
+    race_bonus:'🟢 Sens affûtés +20% (perception vue/ouïe)\n🟢 Mémoire ancienne +10% (savoir historique, ancien, magique)\n🔴 Détachement social −20% (races grossières ou primitives)\n🔴 Fragilité physique −10% (résistance aux dégâts physiques)',
+    notes:'Née à Akassya. Préjugé Kitsune : −20% social, +10% combat vs Kitsune. Éveillée par un élémentaire du vent.',
     color:'rgba(29,107,90,.1)',init:'D'
   },
   firm:{
-    name:'Firm',race:'Swamninyx',genre:'Homme',classe:'Gardien',element:'🌿 Nature',niveau:'1',
-    pv:'—',mana:'—',pv_max:'—',mana_max:'—',
+    name:'Firm Bintaggle',race:'Swamninyx',genre:'Homme',classe:'Gardien',element:'🌿 Nature',niveau:'1',
+    pv:'7',mana:'0',pv_max:'7',mana_max:'0',
     phys:'65',social:'50',mental:'55',
     valeurs:'Hypocrite\nRespecteux\nLoyal',
     langues:'Commun, Swamninyx, Léonide',
     competences:[
       {n:'Puissance',v:4},{n:'Finesse',v:3},{n:'Aura',v:2},
-      {n:'Relation',v:3},{n:'Instinct',v:3},{n:'Savoir (Herboriste)',v:3},{n:'Druide',v:1}
+      {n:'Relation',v:3},{n:'Instinct',v:3},{n:'Savoir (Herboriste)',v:3},
+      {n:'Bagarre',v:0},{n:'Survie',v:0},{n:'Druide',v:1}
     ],
-    armes:'—',armures:'—',
-    dons:'⚔ Châtiment Sacré : +10% vs créatures maléfiques\n🛡 Provoc\' Sauvage : attire les ennemis',
+    armes:'Bâton Long druidique (D6/+1)\nWok (D4/0)',
+    armures:'Armure enchantée druidique (RD6)\nBouclier de cuivre (RD2)',
+    dons:'🌿 Transmutation — 1-2 mana : double PV max, mana → 0\n💪 Gonflette — 2 mana/palier : +1 armure naturelle +1 attaque par 2 mana\n🌸 Tarte aux prunes — coût=soin / D4−1 : gifle soignante, 1 mana/PV soigné\n👁 Extension du territoire — 1 mana : contrôle un œil+oreille d\'un animal\n⚔ Châtiment Sacré : +10% vs créatures maléfiques/corrompues\n🛡 Provoc\' Sauvage : attire l\'attention des ennemis sur le Gardien',
     equip:'Rations ×6, Bandages ×3, Potion PV D10 ×1, Allumettes ×11, Planches ×12, Clous ×12, Lanterne ×1',
-    race_bonus:'🟢 Agilité +20% · Discrétion +10%\n🔴 Social −10% autres races · Force −10%',
-    notes:'',
+    race_bonus:'🟢 Agilité +20% (esquive, déplacements rapides, sauts)\n🟢 Discrétion naturelle +10% (furtivité)\n🔴 Aversion sociale −10% (jets sociaux avec autres races)\n🔴 Force limitée −10% (force et CAC)',
+    notes:'Né à Zarûn, vendu à 5 ans, s\'échappa. Formé par le druide Stonks. 10 ans dans la forêt de Doulogne. 32 ans.',
     color:'rgba(83,74,183,.1)',init:'F'
   },
   mwassa:{
-    name:'Mwassa',race:'Kitsune',genre:'Femme',classe:'Oracle',element:'💧 Eaux',niveau:'1',
-    pv:'—',mana:'—',pv_max:'10',mana_max:'17',
+    name:'Mwassa Mekhsitt',race:'Kitsune',genre:'Femme',classe:'Oracle',element:'💧 Eaux',niveau:'1',
+    pv:'10',mana:'17',pv_max:'10',mana_max:'17',
     phys:'35',social:'65',mental:'70',
     valeurs:'Altruiste\nOpportuniste\nPieuse',
     langues:'Commun, Kitsune, Nain',
     competences:[
       {n:'Puissance',v:1},{n:'Finesse',v:3},{n:'Aura',v:3},
-      {n:'Relation',v:4},{n:'Experte en sorts',v:1},{n:'Instinct',v:4},
-      {n:'Savoir (Charmeuse)',v:3},{n:'Alchimie',v:1}
+      {n:'Relation',v:4},{n:'Instinct',v:4},{n:'Savoir (Charmeuse)',v:3},
+      {n:'Chance',v:0},{n:'Experte en sorts',v:1},{n:'Alchimie',v:1}
     ],
-    armes:'—',armures:'—',
-    dons:'✨ Soin Divin : relance soin raté 1×/combat\n🤝 Pacte des 12 : Mana full 1×/jour',
+    armes:'Tambourins et Castagnettes (D4/−2)\nPistolet à silex (D6/0)\nDague (D4/0)',
+    armures:'(Armure impossible — Oracle)',
+    dons:'🥁 Bénédiction du goupil — 3 mana : +10% tous jets alliés 5m/2 tours (+20% mono-cible)\n⚔ Aux armes ! — 1+D4-12 mana : 25% mana consommé, reste transféré à la cible\n🎭 Marionette — 6 mana : soumet ennemi intelligent à volonté 1 heure\n💧 Rosée de la vitalité — 1+D4-12 mana : soin eau, 25% dé consommé en mana\n✨ Soin Divin : relance soin raté 1×/combat\n🤝 Pacte des 12 : Mana full 1×/jour (offrande créature légendaire)',
     equip:'Rations ×2, Balles ×19, Kit médical ×1, Kit crochetage ×3, Anneau de Mana ×1, Livre Skaven ×1, Crucifix argent ×1',
-    race_bonus:'🟢 Ruse +20% · Vivacité +10%\n🔴 Force −20% · Social (confiance) −25%',
-    notes:'',
+    race_bonus:'🟢 Ruse naturelle +20% (mensonge, tromperie, manipulation sociale)\n🟢 Vivacité renarde +10% (rapidité, esquive, célérité)\n🔴 Force faible −20% (force brute et armes)\n🔴 Défiance générale −25% (jets sociaux confiance/loyauté)',
+    notes:'Née dans les bas-quartiers d\'Auregia. Ancienne novice de Zarûn enlevée enfant. 50 ans.',
     color:'rgba(29,107,90,.12)',init:'M'
   },
   nindey:{
-    name:'Nindey',race:'Nain',genre:'Homme',classe:'Cogneur',element:'⚡ Foudre',niveau:'1',
-    pv:'—',mana:'—',pv_max:'—',mana_max:'—',
+    name:'Nindey Traqué',race:'Nain',genre:'Homme',classe:'Cogneur',element:'⚡ Foudre',niveau:'1',
+    pv:'11',mana:'9',pv_max:'11',mana_max:'9',
     phys:'80',social:'20',mental:'50',
     valeurs:'Tête brûlée\nAlcoolique\nChasseur de trésor',
     langues:'Commun, Nain, Draconique',
     competences:[
-      {n:'Puissance',v:5},{n:'Finesse',v:3},{n:'Aura',v:2},
-      {n:'Relation',v:2},{n:'Maniement d\'arme',v:1},{n:'Instinct',v:4},
-      {n:'Savoir (Expert Runique)',v:1},{n:'Forgeron',v:1}
+      {n:'Puissance',v:5},{n:'Finesse',v:3},{n:'Aura',v:1},
+      {n:'Relation',v:1},{n:'Instinct',v:4},{n:'Savoir (Expert Runique)',v:1},
+      {n:'Artisan',v:0},{n:'Maniement d\'arme',v:1},{n:'Forgeron',v:1}
     ],
-    armes:'—',armures:'—',
-    dons:'⚔ Maîtrise des Armes : relance attaque 1×/combat\n💥 Baroud d\'Honneur : <30% PV → +2 dégâts',
+    armes:'Deux haches à une main (D10/+4)\nHache à deux mains double tranchant (D12/+4)\nPioche + Marteau (D4/+3)',
+    armures:'Armure runique (RD4)\nAnneau anti-magie RD1 (impacte TOUTES les magies proches, amis ou ennemis)',
+    dons:'⚡ Armes Foudroyante — 3 mana / +2 : runes draconiques, arcs électriques 5 tours\n🔨 Marteau de Thor — 2 mana : lance hache foudroyante, revient automatiquement\n💥 Blitzer — 4 mana / D6+1 : sphère électricité, frappe tout à portée (3m)\n⚡ Lance de Foudre — 6 mana / D10+2 : lance d\'énergie condensée projetée\n⚔ Maîtrise des Armes : relance attaque 1×/combat\n💥 Baroud d\'Honneur : <30% PV → +2 dégâts',
     equip:'Rations ×18, Kit médical ×2, Livre Orc ×1, Rune Majeur Feu (50k PO), Corde 10m ×1, Casserole ×1',
-    race_bonus:'🟢 Forgeron +20% · Vision souterraine +10%\n🔴 Vitesse −10% · Social hors nains −10%',
-    notes:'',
+    race_bonus:'🟢 Savoir des forges +20% (forgeron, artisanat métal/pierre)\n🟢 Vision des profondeurs +10% (perception souterraine/sombre)\n🔴 Vitesse réduite −10% (déplacement rapide, poursuite, esquive longue)\n🔴 Adaptation sociale limitée −10% (jets sociaux hors communautés naines)',
+    notes:'Né au Mont RockDur. Lié d\'amitié avec Skarlath. Formé aux runes draconiques par le dragon. 185 ans.',
     color:'rgba(139,32,32,.1)',init:'N'
   }
 };
@@ -642,7 +648,6 @@ function renderChar(name){
 // EDITION D'UN CHAMP SIMPLE
 window.editField = (charName, field) => {
   const c = charData[charName];
-  // Trouver l'élément ef qui a été cliqué
   const allEf = document.querySelectorAll(`#char-${charName} .ef`);
   let targetEl = null;
   allEf.forEach(el => {
