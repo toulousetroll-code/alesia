@@ -1651,14 +1651,7 @@ function renderNav(){
       div.className = 'ni' + (firstItem ? ' active' : '');
       div.id = 'nav-item-' + entry.id;
       div.innerHTML = `<i class="ti ${entry.icon || 'ti-file'}"></i> ${entry.label}`;
-      div.onclick = () => {
-        showSec(entry.id, div);
-        if(entry.id === 'royaumes'){
-          setTimeout(() => {
-            if(window.buildRoyaumes && !document.querySelector('.royaume-node')) window.buildRoyaumes();
-          }, 150);
-        }
-      };
+      div.onclick = () => showSec(entry.id, div);
       scroll.appendChild(div);
       if(firstItem){ firstItem = false; setTimeout(() => showSec(entry.id, div), 0); }
     }
@@ -2169,22 +2162,15 @@ function openFiche(idx, tabEl){
 }
 window.openFiche = openFiche;
 
-// Surveille l'activation de la section royaumes
-(function(){
-  const observer = new MutationObserver(() => {
-    const sec = document.getElementById('s-royaumes');
-    if(sec && sec.classList.contains('active')){
-      const container = document.getElementById('cercle-container');
-      if(container && !container.querySelector('.royaume-node') && window.buildRoyaumes){
-        window.buildRoyaumes();
-      }
-    }
-  });
-  // Observer les changements de classe sur toutes les sections
-  document.addEventListener('DOMContentLoaded', () => {
-    const main = document.getElementById('main-content');
-    if(main) observer.observe(main, {subtree:true, attributes:true, attributeFilter:['class']});
-  });
+// Auto-build royaumes dès que la section est visible
+(function checkAndBuild(){
+  const sec = document.getElementById('s-royaumes');
+  const container = document.getElementById('cercle-container');
+  if(sec && sec.classList.contains('active') && container && !container.querySelector('.royaume-node')){
+    buildRoyaumes();
+  }
+  // Repoll toutes les 300ms
+  setTimeout(checkAndBuild, 300);
 })();
   const b=document.getElementById('rb-'+i),ic=document.getElementById('ric-'+i);
   const open=b.style.display==='block';
