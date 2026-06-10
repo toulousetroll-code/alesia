@@ -1959,6 +1959,55 @@ window.saveSession=async()=>{
   hideAddSession();toast('Session ajoutée !');
 };
 
+
+// ===== ROYAUMES =====
+window.ROYAUMES = [
+  {id:0,nom:'République de Franxx',type:'République démocratique',icon:'⚜',statut:'ally',badge:'Favorable',desc:'Berceau des Téméraires. Démocratie, diversité et esprit progressiste. Nation la plus ouverte aux nouvelles idées.',details:'Capitale : Tolosa · Gouvernement : Conseil élu · Armée : Milice citoyenne'},
+  {id:1,nom:'Royaume Auregia',type:'Monarchie fertile',icon:'🌾',statut:'ally',badge:'Favorable',desc:'Terres riches et fertiles, grenier des nations. Berceau de la Rose Noire, née dans ses bas-fonds corrompus.',details:'Capitale : Aurelys · Gouvernement : Monarchie héréditaire · Ressources : Agriculture'},
+  {id:2,nom:'Royaume Brumelonde',type:'Royaume sylvestre',icon:'🌲',statut:'ally',badge:'Favorable',desc:'Royaume des grandes forêts anciennes, gouverné par un conseil de druides. Protecteurs de la nature et des équilibres magiques.',details:'Capitale : Brumeclair · Gouvernement : Conseil druidique · Particularité : Forêts sacrées'},
+  {id:3,nom:"République d'Ozélis",type:'République maritime',icon:'⚓',statut:'secret',badge:'Allié secret',desc:"Nation maritime tournée vers le large. Soutient discrètement les Téméraires via des réseaux de contrebandiers.",details:"Capitale : Port-Ozélis · Gouvernement : Sénat marchand · Flotte : La plus puissante"},
+  {id:4,nom:"Royaume d'Akassya",type:'Royaume elfique',icon:'🧝',statut:'neutre',badge:'Neutre',desc:"Royaume des Elfes et des Ents, couvert de forêts magiques. Berceau de Dy Son. Observe la Prophétie avec curiosité.",details:"Capitale : Sylvaris · Gouvernement : Conseil des Anciens · Races : Elfes, Ents"},
+  {id:5,nom:'Royaume saint de Zarûn',type:'Théocratie lacustre',icon:'💧',statut:'neutre',badge:'Neutre',desc:"Gardiens des eaux sacrées du Lac. Les prêtres de Zarûn veillent sur le sanctuaire et condamnent toute approche de l'Île.",details:"Capitale : Zarûnath · Gouvernement : Grand Prêtre · Doctrine : Neutralité sacrée"},
+  {id:6,nom:'Empire Lucèmien',type:'Empire cosmopolite',icon:'🏛',statut:'neutre',badge:'Neutre',desc:"Vaste empire commerçant qui préfère l'équilibre à la confrontation. Commerce et neutralité avant tout.",details:"Capitale : Lucèmia · Gouvernement : Empereur élu · Spécialité : Commerce, diplomatie"},
+  {id:7,nom:'Terre du cdt. Suba',type:'Régime militaire',icon:'⚔',statut:'neutre',badge:'Neutre',desc:"Territoire autoritaire sous la coupe d'un commandant militaire. Ses légions sont redoutées.",details:"Capitale : Fort-Suba · Gouvernement : Dictature militaire · Pratiques : Esclavage légal"},
+  {id:8,nom:'Royaume Démonique de Vermeil',type:'Aristocratie infernale',icon:'👿',statut:'hostile',badge:'Hostile',desc:"Aristocratie infernale régie par des pactes démoniques. Magie noire et cruauté. Convoite l'Île du Cœur.",details:"Capitale : Vermeilath · Gouvernement : Conseil des Seigneurs démons · Magie : Noire"},
+  {id:9,nom:'Autocratie Vyrrag',type:'État guerrier nordique',icon:'🏔',statut:'hostile',badge:'Hostile',desc:"Nation de guerriers endurcis des montagnes glaciales. S'oppose violemment à la Prophétie.",details:"Capitale : Vyrragheim · Gouvernement : Autocratie absolue · Armée : Guerriers d'élite"},
+  {id:10,nom:'Empire de Lutèce',type:'Empire expansionniste',icon:'🦅',statut:'hostile',badge:'Hostile',desc:"Vaste empire à la discipline militaire implacable. En expansion constante. Voit dans la Prophétie une menace.",details:"Capitale : Lutèce Magnus · Gouvernement : Conseil impérial · Ambition : Unification forcée"},
+  {id:11,nom:'Cité-État Mont RokDur',type:'Enclave draconienne et naine',icon:'🐉',statut:'hostile',badge:'Défavorable',desc:"Cité forteresse perchée dans les montagnes. Nains et draconiens sous une loi de fer. Hostilité durable envers les Téméraires.",details:"Capitale : RokDur · Gouvernement : Conseil des Forges · Races : Nains, Draconiens"}
+];
+
+window.selectRoyaume = function(idx, nodeEl) {
+  document.querySelectorAll('.royaume-node').forEach(function(n){ n.classList.remove('active'); });
+  if(nodeEl) nodeEl.classList.add('active');
+  var roy = window.ROYAUMES[idx];
+  if(!roy) return;
+  var card = document.getElementById('royaume-card');
+  if(!card) return;
+  var badgeClass = roy.statut==='hostile'?'hostile':roy.statut==='ally'?'ally':'';
+  var imgEl = document.getElementById('rimg-'+idx);
+  var imgHtml = (imgEl && imgEl.src && imgEl.src.length > 50)
+    ? '<img src="'+imgEl.src+'" alt="'+roy.nom+'" class="royaume-card-img">'
+    : '<div class="royaume-card-img-placeholder"><span style="font-size:48px;opacity:.4;">'+roy.icon+'</span></div>';
+  card.innerHTML = '<div class="royaume-card-anim">'+imgHtml
+    +'<div class="royaume-card-body">'
+    +'<div class="royaume-card-name">'+roy.nom+'</div>'
+    +'<div class="royaume-card-type">'+roy.type+'</div>'
+    +'<div class="royaume-card-desc">'+roy.desc+'</div>'
+    +'<div style="font-size:11px;color:#907860;border-top:1px solid rgba(212,168,67,.1);padding-top:10px;">'+roy.details+'</div>'
+    +'</div><div class="royaume-card-footer">'
+    +'<span style="font-size:11px;color:#604A28;font-family:Cinzel,serif;">RAPPORT AUX TÉMÉRAIRES</span>'
+    +'<span class="badge '+badgeClass+'">'+roy.badge+'</span>'
+    +'</div></div>';
+};
+
+// Délégation clic royaumes
+document.addEventListener('click', function(e) {
+  var node = e.target.closest ? e.target.closest('.royaume-node') : null;
+  if(node && node.dataset && node.dataset.idx !== undefined) {
+    window.selectRoyaume(parseInt(node.dataset.idx), node);
+  }
+});
+
 // Sync PV/Mana en temps réel
 ['azarius','dy','firm','mwassa','nindey'].forEach(name=>{
   onSnapshot(doc(db,'characters',name),snap=>{
@@ -2014,175 +2063,6 @@ const classes=[
 document.getElementById('races-container').innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+races.map((r,i)=>`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRace(${i})"><div><strong style="font-family:'Cinzel',serif;font-size:13px;color:#F2E6CC;">${r.n}</strong>${r.sub?' <span style="font-style:italic;color:#CFC09A;font-size:12px;">— '+r.sub+'</span>':''}</div><i class="ti ti-chevron-down" id="ric-${i}" style="color:var(--gold-d);transition:transform .2s;"></i></div><div id="rb-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--teal-pale);border:1px solid rgba(29,107,90,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:4px;">BONUS</div>${r.bon.map(b=>`<div style="font-size:12px;color:#CFC09A;margin-bottom:2px;">+ ${b}</div>`).join('')}</div><div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:4px;">MALUS</div>${r.mal.map(m=>`<div style="font-size:12px;color:#CFC09A;margin-bottom:2px;">− ${m}</div>`).join('')}</div></div></div></div>`).join('')+'</div>';
 document.getElementById('classes-container').innerHTML=classes.map(c=>`<div class="card"><div style="font-family:'Cinzel',serif;font-size:13px;color:#F2E6CC;margin-bottom:2px;">${c.n}</div><div style="font-size:11px;color:#CFC09A;font-style:italic;margin-bottom:8px;">${c.sub}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>${c.caps.map(cap=>`<div style="font-size:12px;color:#CFC09A;padding-left:8px;border-left:2px solid var(--gold);margin-bottom:4px;">${cap}</div>`).join('')}</div>`).join('');
 // ===== 12 ROYAUMES =====
-const ROYAUMES = [
-  {
-    id:0, nom:'République de Franxx', type:'République démocratique',
-    icon:'⚜', statut:'ally', badge:'Favorable',
-    desc:'Berceau des Téméraires. Démocratie, diversité et esprit progressiste. Nation la plus ouverte aux nouvelles idées, premier soutien de la Prophétie des Douze Voies.',
-    details:'Capitale : Tolosa · Gouvernement : Conseil élu · Armée : Milice citoyenne',
-    img:null
-  },
-  {
-    id:1, nom:'Royaume Auregia', type:'Monarchie fertile',
-    icon:'🌾', statut:'ally', badge:'Favorable',
-    desc:'Terres riches et fertiles, grenier des nations. Berceau malheureusement aussi de la Rose Noire, née dans ses bas-fonds corrompus.',
-    details:'Capitale : Aurelys · Gouvernement : Monarchie héréditaire · Ressources : Agriculture, vin',
-    img:null
-  },
-  {
-    id:2, nom:'Royaume Brumelonde', type:'Royaume sylvestre',
-    icon:'🌲', statut:'ally', badge:'Favorable',
-    desc:'Royaume des grandes forêts anciennes, gouverné par un conseil de druides. Protecteurs farouches de la nature et des équilibres magiques.',
-    details:'Capitale : Brumeclair · Gouvernement : Conseil druidique · Particularité : Forêts sacrées',
-    img:null
-  },
-  {
-    id:3, nom:"République d'Ozélis", type:'République maritime',
-    icon:'⚓', statut:'secret', badge:'Allié secret',
-    desc:'Nation maritime tournée vers le large. Soutient discrètement les Téméraires via des réseaux de contrebandiers et de capitaines loyaux.',
-    details:"Capitale : Port-Ozélis · Gouvernement : Sénat marchand · Flotte : La plus puissante des 12",
-    img:null
-  },
-  {
-    id:4, nom:"Royaume d'Akassya", type:'Royaume elfique et sylvain',
-    icon:'🧝', statut:'neutre', badge:'Neutre',
-    desc:"Royaume des Elfes et des Ents, couvert de forêts magiques millénaires. Berceau de Dy Son. Observe la Prophétie avec curiosité mais sans s'engager.",
-    details:"Capitale : Sylvaris · Gouvernement : Conseil des Anciens · Races : Elfes, Ents",
-    img:null
-  },
-  {
-    id:5, nom:'Royaume saint de Zarûn', type:'Théocratie lacustre',
-    icon:'💧', statut:'neutre', badge:'Neutre',
-    desc:"Gardiens des eaux sacrées du Lac. Les prêtres de Zarûn veillent jalousement sur le sanctuaire et condamnent toute tentative d'approcher l'Île du Cœur.",
-    details:"Capitale : Zarûnath · Gouvernement : Grand Prêtre · Doctrine : Neutralité sacrée",
-    img:null
-  },
-  {
-    id:6, nom:'Empire Lucèmien', type:'Empire cosmopolite',
-    icon:'🏛', statut:'neutre', badge:'Neutre',
-    desc:"Vaste empire commerçant qui préfère l'équilibre à la confrontation. Ses diplomates sont présents dans tous les royaumes. Commerce et neutralité avant tout.",
-    details:"Capitale : Lucèmia · Gouvernement : Empereur élu · Spécialité : Commerce, diplomatie",
-    img:null
-  },
-  {
-    id:7, nom:'Terre du cdt. Suba', type:'Régime militaire',
-    icon:'⚔', statut:'neutre', badge:'Neutre',
-    desc:"Territoire autoritaire sous la coupe d'un commandant militaire. Pratique l'esclavage. Ses légions sont redoutées mais ne cherchent pas l'expansion pour l'instant.",
-    details:"Capitale : Fort-Suba · Gouvernement : Dictature militaire · Pratiques : Esclavage légal",
-    img:null
-  },
-  {
-    id:8, nom:'Royaume Démonique de Vermeil', type:'Aristocratie infernale',
-    icon:'👿', statut:'hostile', badge:'Hostile',
-    desc:"Aristocratie infernale régie par des pactes démoniques. Magie noire, cruauté et intrigues. Convoite l'Île du Cœur pour y libérer une entité ancienne.",
-    details:"Capitale : Vermeilath · Gouvernement : Conseil des Seigneurs démons · Magie : Noire et rituelle",
-    img:null
-  },
-  {
-    id:9, nom:'Autocratie Vyrrag', type:'État guerrier nordique',
-    icon:'🏔', statut:'hostile', badge:'Hostile',
-    desc:"Nation de guerriers endurcis des montagnes glaciales. L'Autocrate Vyrrag rêve de conquête. S'oppose violemment à la Prophétie qu'il considère comme une menace à son pouvoir.",
-    details:"Capitale : Vyrragheim · Gouvernement : Autocratie absolue · Armée : Guerriers d'élite",
-    img:null
-  },
-  {
-    id:10, nom:'Empire de Lutèce', type:'Empire expansionniste',
-    icon:'🦅', statut:'hostile', badge:'Hostile',
-    desc:"Vaste empire à la discipline militaire implacable. En expansion constante. Voit dans la Prophétie une concurrence à son projet d'unification du continent par la force.",
-    details:"Capitale : Lutèce Magnus · Gouvernement : Conseil impérial · Ambition : Unification forcée",
-    img:null
-  },
-  {
-    id:11, nom:'Cité-État Mont RokDur', type:'Enclave draconienne et naine',
-    icon:'🐉', statut:'hostile', badge:'Défavorable',
-    desc:"Cité forteresse perchée dans les montagnes. Nains et draconiens y cohabitent sous une loi de fer. Des mauvaises expériences passées avec les Téméraires ont créé une hostilité durable.",
-    details:"Capitale : RokDur · Gouvernement : Conseil des Forges · Races : Nains, Draconiens",
-    img:null
-  }
-];
-
-function buildRoyaumes(){
-  const container = document.getElementById('cercle-container');
-  if(!container) return;
-
-  const cx = 160, cy = 160, r = 126;
-
-  // SVG pour les lignes
-  const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
-  svg.classList.add('cercle-svg');
-  svg.setAttribute('viewBox','0 0 320 320');
-  container.appendChild(svg);
-
-  ROYAUMES.forEach((roy, i) => {
-    const angle = (i * 360/12 - 90) * Math.PI/180;
-    const x = cx + r * Math.cos(angle);
-    const y = cy + r * Math.sin(angle);
-
-    // Ligne vers le centre
-    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
-    line.setAttribute('x1', cx); line.setAttribute('y1', cy);
-    line.setAttribute('x2', x); line.setAttribute('y2', y);
-    line.setAttribute('stroke', roy.statut==='hostile' ? 'rgba(192,57,43,.15)' :
-                                 roy.statut==='ally'    ? 'rgba(74,122,40,.15)' :
-                                 roy.statut==='secret'  ? 'rgba(106,74,186,.15)' :
-                                                          'rgba(212,168,67,.08)');
-    line.setAttribute('stroke-width','1');
-    svg.appendChild(line);
-
-    // Nœud
-    const node = document.createElement('div');
-    node.className = 'royaume-node ' + (roy.statut === 'neutre' ? '' : roy.statut);
-    node.style.left = x + 'px';
-    node.style.top  = y + 'px';
-    node.title = roy.nom;
-    node.innerHTML = `<div class="node-icon">${roy.icon}</div><div class="node-label">${roy.nom.split(' ').slice(-1)[0]}</div>`;
-    node.onclick = () => selectRoyaume(i, node);
-    container.appendChild(node);
-  });
-}
-window.buildRoyaumes = buildRoyaumes;
-
-function selectRoyaume(idx, nodeEl){
-  document.querySelectorAll('.royaume-node').forEach(function(n){ n.classList.remove('active'); });
-  if(nodeEl) nodeEl.classList.add('active');
-
-  var roy = ROYAUMES[idx];
-  if(!roy){ return; }
-  var card = document.getElementById('royaume-card');
-  if(!card){ return; }
-
-  var badgeClass = roy.statut==='hostile' ? 'hostile' : roy.statut==='ally' ? 'ally' : '';
-  var imgEl = document.getElementById('rimg-' + idx);
-  var imgHtml = imgEl && imgEl.src
-    ? '<img src="' + imgEl.src + '" alt="' + roy.nom + '" class="royaume-card-img">'
-    : '<div class="royaume-card-img-placeholder"><span style="font-size:48px;opacity:.4;">' + roy.icon + '</span></div>';
-
-  var html = '<div class="royaume-card-anim">';
-  html += imgHtml;
-  html += '<div class="royaume-card-body">';
-  html += '<div class="royaume-card-name">' + roy.nom + '</div>';
-  html += '<div class="royaume-card-type">' + roy.type + '</div>';
-  html += '<div class="royaume-card-desc">' + roy.desc + '</div>';
-  html += '<div style="font-size:11px;color:#907860;font-style:italic;border-top:1px solid rgba(212,168,67,.1);padding-top:10px;">' + roy.details + '</div>';
-  html += '</div>';
-  html += '<div class="royaume-card-footer">';
-  html += '<span style="font-size:11px;color:#604A28;font-family:Cinzel,serif;letter-spacing:.06em;">RAPPORT AUX TÉMÉRAIRES</span>';
-  html += '<span class="badge ' + badgeClass + '">' + roy.badge + '</span>';
-  html += '</div></div>';
-
-  card.innerHTML = html;
-}
-window.selectRoyaume = selectRoyaume;
-
-// Délégation de clic pour les royaumes
-document.addEventListener('click', function(e) {
-  var node = e.target.closest('.royaume-node');
-  if(node && node.dataset.idx !== undefined) {
-    var idx = parseInt(node.dataset.idx);
-    selectRoyaume(idx, node);
-  }
-});
-
 
 
 
@@ -2195,7 +2075,6 @@ function openFiche(idx, tabEl){
 }
 window.openFiche = openFiche;
 
-// Cercle des royaumes : nœuds statiques dans le HTML
   const b=document.getElementById('rb-'+i),ic=document.getElementById('ric-'+i);
   const open=b.style.display==='block';
   b.style.display=open?'none':'block';ic.style.transform=open?'':'rotate(180deg)';
