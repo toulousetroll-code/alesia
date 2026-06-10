@@ -306,6 +306,117 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 
 @keyframes rollA{0%{transform:scale(.5) rotate(-10deg);opacity:0}60%{transform:scale(1.15) rotate(2deg)}100%{transform:scale(1) rotate(0);opacity:1}}
 .roll-anim{animation:rollA .4s ease-out;}
+
+/* ===== CLASSEUR ===== */
+.classeur-wrap{
+  background:linear-gradient(160deg,rgba(30,22,12,.98),rgba(20,14,8,.99));
+  border:1px solid rgba(212,168,67,.22);
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:0 8px 40px rgba(0,0,0,.5),inset 0 1px 0 rgba(212,168,67,.06);
+}
+/* Rangée d'intercalaires */
+.classeur-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:3px;
+  padding:10px 10px 0;
+  background:rgba(0,0,0,.25);
+  border-bottom:2px solid rgba(212,168,67,.2);
+  position:relative;
+}
+.classeur-tab{
+  display:flex;align-items:center;gap:6px;
+  padding:8px 14px;
+  border-radius:8px 8px 0 0;
+  cursor:pointer;
+  font-family:'Cinzel',serif;font-size:10px;letter-spacing:.06em;
+  color:#907860;
+  background:rgba(30,22,10,.6);
+  border:1px solid rgba(212,168,67,.15);
+  border-bottom:none;
+  transition:all .2s;
+  position:relative;
+  bottom:-2px;
+  white-space:nowrap;
+}
+.classeur-tab:hover{
+  background:rgba(50,36,14,.8);
+  color:#CFC09A;
+  border-color:rgba(212,168,67,.3);
+  transform:translateY(-2px);
+}
+.classeur-tab.active{
+  background:linear-gradient(160deg,rgba(50,36,14,.98),rgba(38,28,10,.99));
+  color:var(--gold);
+  border-color:rgba(212,168,67,.4);
+  border-bottom:2px solid rgba(50,36,14,.98);
+  z-index:2;
+  transform:translateY(0);
+}
+.classeur-tab.active::before{
+  content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;
+  background:linear-gradient(160deg,rgba(50,36,14,.98),rgba(38,28,10,.99));
+}
+.tab-icon{font-size:13px;}
+.tab-label{font-size:10px;}
+
+/* Corps du classeur (fiches) */
+.classeur-body{padding:0;min-height:320px;position:relative;}
+
+/* Fiche individuelle */
+.fiche{
+  display:none;
+  padding:24px 28px;
+  animation:ficheIn .25s ease-out;
+}
+.fiche.active{display:block;}
+@keyframes ficheIn{
+  from{opacity:0;transform:translateY(6px);}
+  to{opacity:1;transform:translateY(0);}
+}
+
+/* En-tête de fiche */
+.fiche-header{
+  display:flex;align-items:center;gap:16px;margin-bottom:16px;
+}
+.fiche-stamp{
+  width:50px;height:50px;border-radius:50%;
+  border:2px solid rgba(212,168,67,.35);
+  background:rgba(212,168,67,.08);
+  display:flex;align-items:center;justify-content:center;
+  font-size:22px;flex-shrink:0;
+}
+.fiche-title{
+  font-family:'Cinzel',serif;font-size:18px;color:#F2E6CC;
+  letter-spacing:.04em;
+}
+.fiche-sub{font-size:12px;color:#907860;font-style:italic;margin-top:3px;}
+.fiche-divider{
+  height:1px;
+  background:linear-gradient(90deg,rgba(212,168,67,.4),transparent);
+  margin-bottom:16px;
+}
+.fiche-text{
+  font-size:14px;color:#CFC09A;line-height:1.8;
+  margin-bottom:18px;
+  font-style:italic;
+  border-left:2px solid rgba(212,168,67,.2);
+  padding-left:14px;
+}
+.fiche-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;
+}
+.fiche-cell{
+  background:rgba(45,32,14,.6);
+  border:1px solid rgba(212,168,67,.12);
+  border-radius:7px;padding:10px 14px;
+}
+.fiche-cell-label{
+  font-family:'Cinzel',serif;font-size:8px;letter-spacing:.12em;
+  color:var(--gold-d);text-transform:uppercase;margin-bottom:5px;opacity:.9;
+}
+.fiche-cell-val{font-size:13px;color:#CFC09A;line-height:1.5;}
 </style>
 </head>
 <body>
@@ -473,36 +584,193 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
       <!-- CASTES (livret) -->
       <div id="s-castes" class="section">
         <div class="page-title"><i class="ti ti-crown"></i> Castes & Factions du monde</div>
-        <div style="display:flex;flex-direction:column;gap:12px;">
-          <div class="card">
-            <div class="sdiv">⚔ Les Téméraires</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;margin-bottom:8px;">Issus des 12 royaumes ou élus par des forces mystiques, les Téméraires forment un cercle occulte dédié à la réalisation de la Grande Prophétie. Refusant la passivité religieuse ou politique, leur foi s'incarne dans l'action.</p>
-            <div style="color:#CFC09A;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
-              <div style="background:rgba(212,168,67,.08);border-radius:7px;padding:8px;"><strong style="color:#C09030;">Structure</strong><br><span style="color:#CFC09A;">12 Maîtres actifs, un par royaume.</span></div>
-              <div style="background:rgba(212,168,67,.08);border-radius:7px;padding:8px;"><strong style="color:#C09030;">Objectif</strong><br><span style="color:#CFC09A;">Lever la barrière, pénétrer dans l'Île du Cœur.</span></div>
-              <div style="background:rgba(212,168,67,.08);border-radius:7px;padding:8px;"><strong style="color:#C09030;">Statut</strong><br><span style="color:#CFC09A;">Ambigu : messies, hérétiques ou terroristes selon les régions.</span></div>
+
+        <!-- CLASSEUR -->
+        <div class="classeur-wrap">
+
+          <!-- INTERCALAIRES (onglets) -->
+          <div class="classeur-tabs">
+            <div class="classeur-tab active" onclick="openFiche(0,this)" data-color="#8B6914">
+              <span class="tab-icon">⚔</span><span class="tab-label">Téméraires</span>
+            </div>
+            <div class="classeur-tab" onclick="openFiche(1,this)" data-color="#6B1A1A">
+              <span class="tab-icon">🌹</span><span class="tab-label">Rose Noire</span>
+            </div>
+            <div class="classeur-tab" onclick="openFiche(2,this)" data-color="#1A3A5A">
+              <span class="tab-icon">📚</span><span class="tab-label">Ordre du Savoir</span>
+            </div>
+            <div class="classeur-tab" onclick="openFiche(3,this)" data-color="#2A4A1A">
+              <span class="tab-icon">🌾</span><span class="tab-label">Paysans</span>
+            </div>
+            <div class="classeur-tab" onclick="openFiche(4,this)" data-color="#3A2A6A">
+              <span class="tab-icon">🏰</span><span class="tab-label">Nobles</span>
+            </div>
+            <div class="classeur-tab" onclick="openFiche(5,this)" data-color="#4A3010">
+              <span class="tab-icon">💰</span><span class="tab-label">Marchands</span>
+            </div>
+            <div class="classeur-tab" onclick="openFiche(6,this)" data-color="#1A4A3A">
+              <span class="tab-icon">📜</span><span class="tab-label">Fonctionnaires</span>
+            </div>
+            <div class="classeur-tab" onclick="openFiche(7,this)" data-color="#4A1A3A">
+              <span class="tab-icon">🙏</span><span class="tab-label">Religieux</span>
             </div>
           </div>
-          <div class="card">
-            <div class="sdiv">🌹 La Rose Noire</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Secte criminelle d'envergure internationale, née en Auregia. Ses membres traquent artefacts légendaires et reliques prophétiques pour les revendre au marché noir. Emploient mercenaires, espions, monstres et mages renégats. Menace persistante pour les nations d'Alésia.</p>
-            <span class="badge hostile" style="margin-top:6px;display:inline-block;">Hostile aux Téméraires</span>
-          </div>
-          <div class="card">
-            <div class="sdiv">📚 L'Ordre du Savoir</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Institution érudite ancestrale, née parmi les premiers gardiens de la mémoire druidique. Dévoués à la préservation des secrets du monde. Ses archivistes, mages-scribes et veilleurs parcourent les terres pour contrer les trafiquants et sectes. Discret mais jamais passif.</p>
-            <span class="badge" style="margin-top:6px;display:inline-block;">Neutre / Ambigu</span>
-          </div>
-          <div class="card">
-            <div class="sdiv">🌾 Paysans · 🏰 Nobles · 💰 Marchands · 📜 Fonctionnaires · 🙏 Religieux</div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;color:#CFC09A;">
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Paysans</strong><br>Base du monde. Agriculteurs, pêcheurs, herboristes. Souvent sous domination noble, parfois alliés aux Téméraires.</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Nobles</strong><br>Détenteurs des terres et armées. Divisés entre Traditionalistes (statu quo) et Réformateurs (briser la barrière).</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Marchands</strong><br>Guildes puissantes. Certains financent les Téméraires, d'autres vendent des contrefaçons de reliques.</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Fonctionnaires</strong><br>Scribes, diplomates, archivistes. Certains dissimulent textes anciens et versions interdites de la Prophétie.</div>
+
+          <!-- CORPS DU CLASSEUR -->
+          <div class="classeur-body">
+
+            <!-- Fiche 0 : Téméraires -->
+            <div class="fiche active" id="fiche-0" style="--fiche-accent:#D4A843;">
+              <div class="fiche-header">
+                <div class="fiche-stamp">⚔</div>
+                <div>
+                  <div class="fiche-title">Les Téméraires</div>
+                  <div class="fiche-sub">Cercle occulte · Prophétie des Douze Voies</div>
+                </div>
+                <span class="badge" style="margin-left:auto;">Alliance active</span>
+              </div>
+              <div class="fiche-divider"></div>
+              <p class="fiche-text">Issus des 12 royaumes ou élus par des forces mystiques, les Téméraires forment un cercle occulte dédié à la réalisation de la Grande Prophétie. Refusant la passivité religieuse ou politique, leur foi s'incarne dans l'action.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Structure</div><div class="fiche-cell-val">12 Maîtres actifs, un par royaume</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Objectif</div><div class="fiche-cell-val">Lever la barrière · Pénétrer l'Île du Cœur</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Statut</div><div class="fiche-cell-val">Messies ou hérétiques selon les régions</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Base</div><div class="fiche-cell-val">République de Franxx · Réseau secret</div></div>
+              </div>
             </div>
-          </div>
-        </div>
+
+            <!-- Fiche 1 : Rose Noire -->
+            <div class="fiche" id="fiche-1" style="--fiche-accent:#C0392B;">
+              <div class="fiche-header">
+                <div class="fiche-stamp" style="background:rgba(192,57,43,.15);border-color:rgba(192,57,43,.4);color:#E07070;">🌹</div>
+                <div>
+                  <div class="fiche-title">La Rose Noire</div>
+                  <div class="fiche-sub">Secte criminelle · Née en Auregia</div>
+                </div>
+                <span class="badge hostile" style="margin-left:auto;">Hostile</span>
+              </div>
+              <div class="fiche-divider" style="background:linear-gradient(90deg,rgba(192,57,43,.5),transparent);"></div>
+              <p class="fiche-text">Secte criminelle d'envergure internationale. Ses membres traquent artefacts légendaires et reliques prophétiques pour les revendre au marché noir. Emploient mercenaires, espions, monstres et mages renégats.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Type</div><div class="fiche-cell-val">Secte criminelle internationale</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Origine</div><div class="fiche-cell-val">Auregia</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Objectif</div><div class="fiche-cell-val">Artefacts légendaires · Reliques prophétiques</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Menace</div><div class="fiche-cell-val">Persistante · Toutes les nations</div></div>
+              </div>
+            </div>
+
+            <!-- Fiche 2 : Ordre du Savoir -->
+            <div class="fiche" id="fiche-2" style="--fiche-accent:#2A5FA8;">
+              <div class="fiche-header">
+                <div class="fiche-stamp" style="background:rgba(42,95,168,.15);border-color:rgba(42,95,168,.4);color:#6A9FD8;">📚</div>
+                <div>
+                  <div class="fiche-title">L'Ordre du Savoir</div>
+                  <div class="fiche-sub">Institution érudite ancestrale</div>
+                </div>
+                <span class="badge" style="margin-left:auto;">Neutre / Ambigu</span>
+              </div>
+              <div class="fiche-divider" style="background:linear-gradient(90deg,rgba(42,95,168,.5),transparent);"></div>
+              <p class="fiche-text">Née parmi les premiers gardiens de la mémoire druidique. Dévoués à la préservation des secrets du monde. Ses archivistes, mages-scribes et veilleurs parcourent les terres pour contrer trafiquants et sectes. Discret mais jamais passif.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Rôle</div><div class="fiche-cell-val">Gardiens des savoirs interdits</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Membres</div><div class="fiche-cell-val">Archivistes · Mages-scribes · Veilleurs</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Stance</div><div class="fiche-cell-val">Intervient si les équilibres sont menacés</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Rapport</div><div class="fiche-cell-val">Ambigu avec les Téméraires</div></div>
+              </div>
+            </div>
+
+            <!-- Fiche 3 : Paysans -->
+            <div class="fiche" id="fiche-3" style="--fiche-accent:#4A7A28;">
+              <div class="fiche-header">
+                <div class="fiche-stamp" style="background:rgba(74,122,40,.15);border-color:rgba(74,122,40,.4);color:#80C050;">🌾</div>
+                <div>
+                  <div class="fiche-title">Les Paysans</div>
+                  <div class="fiche-sub">Base de la société · Caste populaire</div>
+                </div>
+                <span class="badge elem" style="margin-left:auto;">Caste basse</span>
+              </div>
+              <div class="fiche-divider" style="background:linear-gradient(90deg,rgba(74,122,40,.5),transparent);"></div>
+              <p class="fiche-text">Agriculteurs, pêcheurs, herboristes — le socle du monde. Souvent sous domination noble, ils subissent les guerres et les taxes. Certains rejoignent les Téméraires par désespoir ou conviction, espérant un monde plus juste après l'ouverture de l'Île du Cœur.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Rôle</div><div class="fiche-cell-val">Production alimentaire · Artisanat</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Rapport aux Téméraires</div><div class="fiche-cell-val">Potentiels alliés · Parfois recrutés</div></div>
+              </div>
+            </div>
+
+            <!-- Fiche 4 : Nobles -->
+            <div class="fiche" id="fiche-4" style="--fiche-accent:#6A4ABA;">
+              <div class="fiche-header">
+                <div class="fiche-stamp" style="background:rgba(106,74,186,.15);border-color:rgba(106,74,186,.4);color:#A080E0;">🏰</div>
+                <div>
+                  <div class="fiche-title">Les Nobles</div>
+                  <div class="fiche-sub">Caste dirigeante · Terres et armées</div>
+                </div>
+                <span class="badge" style="margin-left:auto;">Divisés</span>
+              </div>
+              <div class="fiche-divider" style="background:linear-gradient(90deg,rgba(106,74,186,.5),transparent);"></div>
+              <p class="fiche-text">Détenteurs des terres et des armées, les nobles sont profondément divisés face à la Prophétie. Les Traditionalistes veulent maintenir le statu quo et leur pouvoir. Les Réformateurs soutiennent les Téméraires, voyant dans l'Île du Cœur une opportunité d'expansion ou de légitimité divine.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Faction A</div><div class="fiche-cell-val">Traditionalistes — statu quo</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Faction B</div><div class="fiche-cell-val">Réformateurs — soutiennent les Téméraires</div></div>
+              </div>
+            </div>
+
+            <!-- Fiche 5 : Marchands -->
+            <div class="fiche" id="fiche-5" style="--fiche-accent:#A07020;">
+              <div class="fiche-header">
+                <div class="fiche-stamp" style="background:rgba(160,112,32,.15);border-color:rgba(160,112,32,.4);color:#D4A843;">💰</div>
+                <div>
+                  <div class="fiche-title">Les Marchands</div>
+                  <div class="fiche-sub">Guildes commerciales · Réseau mondial</div>
+                </div>
+                <span class="badge" style="margin-left:auto;">Opportunistes</span>
+              </div>
+              <div class="fiche-divider" style="background:linear-gradient(90deg,rgba(160,112,32,.5),transparent);"></div>
+              <p class="fiche-text">Les guildes marchandes traversent toutes les frontières. Certains financent secrètement les Téméraires, espérant des routes commerciales vers l'Île du Cœur. D'autres revendent des contrefaçons de reliques prophétiques aux crédules. Leur loyauté est avant tout au profit.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Structure</div><div class="fiche-cell-val">Guildes par spécialité et région</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Rapport</div><div class="fiche-cell-val">Ambivalent · Profit avant tout</div></div>
+              </div>
+            </div>
+
+            <!-- Fiche 6 : Fonctionnaires -->
+            <div class="fiche" id="fiche-6" style="--fiche-accent:#1A6A5A;">
+              <div class="fiche-header">
+                <div class="fiche-stamp" style="background:rgba(26,106,90,.15);border-color:rgba(26,106,90,.4);color:#40C0A0;">📜</div>
+                <div>
+                  <div class="fiche-title">Les Fonctionnaires</div>
+                  <div class="fiche-sub">Scribes · Diplomates · Archivistes</div>
+                </div>
+                <span class="badge elem" style="margin-left:auto;">Caste administrative</span>
+              </div>
+              <div class="fiche-divider" style="background:linear-gradient(90deg,rgba(26,106,90,.5),transparent);"></div>
+              <p class="fiche-text">Piliers invisibles des royaumes. Scribes, diplomates et archivistes tiennent les rouages du pouvoir. Certains dissimulent textes anciens et versions interdites de la Prophétie dans des archives secrètes, attendant le moment opportun pour les révéler.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Rôle</div><div class="fiche-cell-val">Administration · Diplomatie · Archives</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Secret</div><div class="fiche-cell-val">Certains cachent des textes prophétiques</div></div>
+              </div>
+            </div>
+
+            <!-- Fiche 7 : Religieux -->
+            <div class="fiche" id="fiche-7" style="--fiche-accent:#7A1A5A;">
+              <div class="fiche-header">
+                <div class="fiche-stamp" style="background:rgba(122,26,90,.15);border-color:rgba(122,26,90,.4);color:#D070A0;">🙏</div>
+                <div>
+                  <div class="fiche-title">Les Religieux</div>
+                  <div class="fiche-sub">Prêtres · Moines · Prophètes</div>
+                </div>
+                <span class="badge" style="margin-left:auto;">Influents</span>
+              </div>
+              <div class="fiche-divider" style="background:linear-gradient(90deg,rgba(122,26,90,.5),transparent);"></div>
+              <p class="fiche-text">Les religions périphériques entretiennent leurs propres versions de la Prophétie. Les prêtres de Zarûn gardent les eaux sacrées et condamnent toute tentative d'approcher l'Île. D'autres cultes voient dans les Téméraires des élus divins. Leur influence sur les masses est considérable.</p>
+              <div class="fiche-grid">
+                <div class="fiche-cell"><div class="fiche-cell-label">Principales factions</div><div class="fiche-cell-val">Gardiens de Zarûn · Cultes de la Prophétie</div></div>
+                <div class="fiche-cell"><div class="fiche-cell-label">Rapport</div><div class="fiche-cell-val">De vénération à condamnation</div></div>
+              </div>
+            </div>
+
+          </div><!-- fin classeur-body -->
+        </div><!-- fin classeur-wrap -->
       </div>
 
       <!-- COSMOLOGIE (livret) -->
@@ -1583,6 +1851,15 @@ const classes=[
 ];
 document.getElementById('races-container').innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+races.map((r,i)=>`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRace(${i})"><div><strong style="font-family:'Cinzel',serif;font-size:13px;color:#F2E6CC;">${r.n}</strong>${r.sub?' <span style="font-style:italic;color:#CFC09A;font-size:12px;">— '+r.sub+'</span>':''}</div><i class="ti ti-chevron-down" id="ric-${i}" style="color:var(--gold-d);transition:transform .2s;"></i></div><div id="rb-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--teal-pale);border:1px solid rgba(29,107,90,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:4px;">BONUS</div>${r.bon.map(b=>`<div style="font-size:12px;color:#CFC09A;margin-bottom:2px;">+ ${b}</div>`).join('')}</div><div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:4px;">MALUS</div>${r.mal.map(m=>`<div style="font-size:12px;color:#CFC09A;margin-bottom:2px;">− ${m}</div>`).join('')}</div></div></div></div>`).join('')+'</div>';
 document.getElementById('classes-container').innerHTML=classes.map(c=>`<div class="card"><div style="font-family:'Cinzel',serif;font-size:13px;color:#F2E6CC;margin-bottom:2px;">${c.n}</div><div style="font-size:11px;color:#CFC09A;font-style:italic;margin-bottom:8px;">${c.sub}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>${c.caps.map(cap=>`<div style="font-size:12px;color:#CFC09A;padding-left:8px;border-left:2px solid var(--gold);margin-bottom:4px;">${cap}</div>`).join('')}</div>`).join('');
+function openFiche(idx, tabEl){
+  document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
+  document.querySelectorAll('.classeur-tab').forEach(t => t.classList.remove('active'));
+  const fiche = document.getElementById('fiche-' + idx);
+  if(fiche) fiche.classList.add('active');
+  if(tabEl) tabEl.classList.add('active');
+}
+window.openFiche = openFiche;
+
 function toggleRace(i){
   const b=document.getElementById('rb-'+i),ic=document.getElementById('ric-'+i);
   const open=b.style.display==='block';
