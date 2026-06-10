@@ -1651,7 +1651,14 @@ function renderNav(){
       div.className = 'ni' + (firstItem ? ' active' : '');
       div.id = 'nav-item-' + entry.id;
       div.innerHTML = `<i class="ti ${entry.icon || 'ti-file'}"></i> ${entry.label}`;
-      div.onclick = () => showSec(entry.id, div);
+      div.onclick = () => {
+        showSec(entry.id, div);
+        if(entry.id === 'royaumes'){
+          setTimeout(() => {
+            if(window.buildRoyaumes && !document.querySelector('.royaume-node')) window.buildRoyaumes();
+          }, 150);
+        }
+      };
       scroll.appendChild(div);
       if(firstItem){ firstItem = false; setTimeout(() => showSec(entry.id, div), 0); }
     }
@@ -1666,17 +1673,7 @@ function showSec(id, el){
   else { ensureCustomSection(id); const cs = document.getElementById('cs-' + id); if(cs) cs.classList.add('active'); }
   if(el) el.classList.add('active');
 }
-window.showSec = function(id, el){
-  showSec(id, el);
-  if(id === 'royaumes'){
-    setTimeout(() => {
-      const container = document.getElementById('cercle-container');
-      if(container && !container.querySelector('.royaume-node') && window.buildRoyaumes){
-        window.buildRoyaumes();
-      }
-    }, 120);
-  }
-};
+window.showSec = showSec;
 
 // ===== CUSTOM PAGES =====
 async function loadCustomPages(){
@@ -2161,15 +2158,7 @@ function selectRoyaume(idx, nodeEl){
 }
 window.selectRoyaume = selectRoyaume;
 
-// Builder au chargement si la section royaumes est active (navigation directe)
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const sec = document.getElementById('s-royaumes');
-    if(sec && sec.classList.contains('active') && window.buildRoyaumes){
-      window.buildRoyaumes();
-    }
-  }, 600);
-});
+
 
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
@@ -2180,7 +2169,23 @@ function openFiche(idx, tabEl){
 }
 window.openFiche = openFiche;
 
-function toggleRace(i){
+// Surveille l'activation de la section royaumes
+(function(){
+  const observer = new MutationObserver(() => {
+    const sec = document.getElementById('s-royaumes');
+    if(sec && sec.classList.contains('active')){
+      const container = document.getElementById('cercle-container');
+      if(container && !container.querySelector('.royaume-node') && window.buildRoyaumes){
+        window.buildRoyaumes();
+      }
+    }
+  });
+  // Observer les changements de classe sur toutes les sections
+  document.addEventListener('DOMContentLoaded', () => {
+    const main = document.getElementById('main-content');
+    if(main) observer.observe(main, {subtree:true, attributes:true, attributeFilter:['class']});
+  });
+})();
   const b=document.getElementById('rb-'+i),ic=document.getElementById('ric-'+i);
   const open=b.style.display==='block';
   b.style.display=open?'none':'block';ic.style.transform=open?'':'rotate(180deg)';
