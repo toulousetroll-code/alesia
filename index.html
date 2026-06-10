@@ -1910,14 +1910,7 @@ async function loadAllChars(){
 async function saveChar(name){
   await setDoc(doc(db,'characters',name),charData[name],{merge:true});toast('Sauvegardé ✓');
 }
-let currentChar='azarius';
-window.showChar=(name,el)=>{
-  document.querySelectorAll('.char-sec').forEach(s=>s.classList.remove('active'));
-  document.querySelectorAll('.char-tab').forEach(t=>t.classList.remove('active'));
-  currentChar=name;renderChar(name);
-  document.getElementById('char-'+name)?.classList.add('active');el.classList.add('active');
-};
-function renderCurrentChar(){renderChar(currentChar);}
+// showChar -> remplacé par showCharVitruve
 // ===== VITRUVE PERSONNAGES =====
 let vitruveChar = 'azarius';
 let vitruveZone = null;
