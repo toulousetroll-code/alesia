@@ -1666,7 +1666,17 @@ function showSec(id, el){
   else { ensureCustomSection(id); const cs = document.getElementById('cs-' + id); if(cs) cs.classList.add('active'); }
   if(el) el.classList.add('active');
 }
-window.showSec = showSec;
+window.showSec = function(id, el){
+  showSec(id, el);
+  if(id === 'royaumes'){
+    setTimeout(() => {
+      const container = document.getElementById('cercle-container');
+      if(container && !container.querySelector('.royaume-node') && typeof buildRoyaumes === 'function'){
+        buildRoyaumes();
+      }
+    }, 100);
+  }
+};
 
 // ===== CUSTOM PAGES =====
 async function loadCustomPages(){
@@ -2150,16 +2160,15 @@ function selectRoyaume(idx, nodeEl){
 }
 window.selectRoyaume = selectRoyaume;
 
-// Init quand la section devient visible
-const _origShowSec = window.showSec;
-window.showSec = function(id, el){
-  _origShowSec(id, el);
-  if(id === 'royaumes'){
-    setTimeout(() => {
-      if(!document.querySelector('.royaume-node')) buildRoyaumes();
-    }, 50);
-  }
-};
+// Builder au chargement si la section royaumes est active (navigation directe)
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    const sec = document.getElementById('s-royaumes');
+    if(sec && sec.classList.contains('active')){
+      if(typeof buildRoyaumes === 'function') buildRoyaumes();
+    }
+  }, 600);
+});
 
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
