@@ -1671,10 +1671,10 @@ window.showSec = function(id, el){
   if(id === 'royaumes'){
     setTimeout(() => {
       const container = document.getElementById('cercle-container');
-      if(container && !container.querySelector('.royaume-node') && typeof buildRoyaumes === 'function'){
-        buildRoyaumes();
+      if(container && !container.querySelector('.royaume-node') && window.buildRoyaumes){
+        window.buildRoyaumes();
       }
-    }, 100);
+    }, 120);
   }
 };
 
@@ -2129,6 +2129,7 @@ function buildRoyaumes(){
     container.appendChild(node);
   });
 }
+window.buildRoyaumes = buildRoyaumes;
 
 function selectRoyaume(idx, nodeEl){
   // Highlight node
@@ -2164,8 +2165,8 @@ window.selectRoyaume = selectRoyaume;
 window.addEventListener('load', () => {
   setTimeout(() => {
     const sec = document.getElementById('s-royaumes');
-    if(sec && sec.classList.contains('active')){
-      if(typeof buildRoyaumes === 'function') buildRoyaumes();
+    if(sec && sec.classList.contains('active') && window.buildRoyaumes){
+      window.buildRoyaumes();
     }
   }, 600);
 });
