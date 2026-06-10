@@ -622,11 +622,24 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
         <p style="font-size:13px;color:#907860;font-style:italic;margin-bottom:20px;text-align:center;">Cliquez sur un royaume pour découvrir sa fiche — douze nations autour du Lac sacré et de l'Île du Cœur.</p>
 
         <div class="royaumes-layout">
-
-          <!-- CERCLE INTERACTIF -->
           <div class="cercle-wrap">
             <div class="cercle-container" id="cercle-container">
-              <!-- Île du Cœur au centre -->
+              <!-- SVG lignes -->
+              <svg class="cercle-svg" viewBox="0 0 320 320">
+                <line x1="160" y1="160" x2="160.0" y2="34.0" stroke="rgba(74,122,40,.2)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="223.0" y2="50.9" stroke="rgba(74,122,40,.2)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="269.1" y2="97.0" stroke="rgba(74,122,40,.2)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="286.0" y2="160.0" stroke="rgba(106,74,186,.2)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="269.1" y2="223.0" stroke="rgba(212,168,67,.1)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="223.0" y2="269.1" stroke="rgba(212,168,67,.1)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="160.0" y2="286.0" stroke="rgba(212,168,67,.1)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="97.0" y2="269.1" stroke="rgba(212,168,67,.1)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="50.9" y2="223.0" stroke="rgba(192,57,43,.2)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="34.0" y2="160.0" stroke="rgba(192,57,43,.2)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="50.9" y2="97.0" stroke="rgba(192,57,43,.2)" stroke-width="1"/>
+                <line x1="160" y1="160" x2="97.0" y2="50.9" stroke="rgba(192,57,43,.2)" stroke-width="1"/>
+              </svg>
+              <!-- Île du Cœur -->
               <div class="ile-coeur">
                 <div class="ile-inner">
                   <div style="font-size:20px;">🏝</div>
@@ -634,11 +647,21 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                   <div style="font-family:'Cinzel',serif;font-size:8px;letter-spacing:.08em;color:var(--gold);">CŒUR</div>
                 </div>
               </div>
-              <!-- Les 12 royaumes positionnés en cercle via JS -->
+              <!-- 12 nœuds statiques -->
+              <div class="royaume-node ally" style="left:160.0px;top:34.0px;" onclick="selectRoyaume(0,this)" title="République de Franxx"><div class="node-icon">⚜</div><div class="node-label">Franxx</div></div>
+              <div class="royaume-node ally" style="left:223.0px;top:50.9px;" onclick="selectRoyaume(1,this)" title="Royaume Auregia"><div class="node-icon">🌾</div><div class="node-label">Auregia</div></div>
+              <div class="royaume-node ally" style="left:269.1px;top:97.0px;" onclick="selectRoyaume(2,this)" title="Royaume Brumelonde"><div class="node-icon">🌲</div><div class="node-label">Brumelonde</div></div>
+              <div class="royaume-node secret" style="left:286.0px;top:160.0px;" onclick="selectRoyaume(3,this)" title="République d'Ozélis"><div class="node-icon">⚓</div><div class="node-label">Ozélis</div></div>
+              <div class="royaume-node" style="left:269.1px;top:223.0px;" onclick="selectRoyaume(4,this)" title="Royaume d'Akassya"><div class="node-icon">🧝</div><div class="node-label">Akassya</div></div>
+              <div class="royaume-node" style="left:223.0px;top:269.1px;" onclick="selectRoyaume(5,this)" title="Royaume de Zarûn"><div class="node-icon">💧</div><div class="node-label">Zarûn</div></div>
+              <div class="royaume-node" style="left:160.0px;top:286.0px;" onclick="selectRoyaume(6,this)" title="Empire Lucèmien"><div class="node-icon">🏛</div><div class="node-label">Lucèmien</div></div>
+              <div class="royaume-node" style="left:97.0px;top:269.1px;" onclick="selectRoyaume(7,this)" title="Terre de Suba"><div class="node-icon">⚔</div><div class="node-label">Suba</div></div>
+              <div class="royaume-node hostile" style="left:50.9px;top:223.0px;" onclick="selectRoyaume(8,this)" title="Royaume de Vermeil"><div class="node-icon">👿</div><div class="node-label">Vermeil</div></div>
+              <div class="royaume-node hostile" style="left:34.0px;top:160.0px;" onclick="selectRoyaume(9,this)" title="Autocratie Vyrrag"><div class="node-icon">🏔</div><div class="node-label">Vyrrag</div></div>
+              <div class="royaume-node hostile" style="left:50.9px;top:97.0px;" onclick="selectRoyaume(10,this)" title="Empire de Lutèce"><div class="node-icon">🦅</div><div class="node-label">Lutèce</div></div>
+              <div class="royaume-node hostile" style="left:97.0px;top:50.9px;" onclick="selectRoyaume(11,this)" title="Mont RokDur"><div class="node-icon">🐉</div><div class="node-label">RokDur</div></div>
             </div>
           </div>
-
-          <!-- CARTE DU ROYAUME SÉLECTIONNÉ -->
           <div class="royaume-card-wrap">
             <div class="royaume-card" id="royaume-card">
               <div class="royaume-card-empty">
@@ -647,10 +670,8 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
       <div id="s-races" class="section">
         <div class="page-title"><i class="ti ti-dna"></i> Races jouables</div>
         <div id="races-container"></div>
@@ -2162,16 +2183,7 @@ function openFiche(idx, tabEl){
 }
 window.openFiche = openFiche;
 
-// Auto-build royaumes dès que la section est visible
-(function checkAndBuild(){
-  const sec = document.getElementById('s-royaumes');
-  const container = document.getElementById('cercle-container');
-  if(sec && sec.classList.contains('active') && container && !container.querySelector('.royaume-node')){
-    buildRoyaumes();
-  }
-  // Repoll toutes les 300ms
-  setTimeout(checkAndBuild, 300);
-})();
+// Cercle des royaumes : nœuds statiques dans le HTML
   const b=document.getElementById('rb-'+i),ic=document.getElementById('ric-'+i);
   const open=b.style.display==='block';
   b.style.display=open?'none':'block';ic.style.transform=open?'':'rotate(180deg)';
