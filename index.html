@@ -2111,19 +2111,15 @@ function getPanelsForChar(name){
   const c = charData[name];
   return {
     identite:{icon:'👤',title:'Identité',items:[
-      {l:'Race',v:c.race},{l:'Genre',v:c.genre},{l:'Valeurs',v:(c.valeurs||'').replace(/
-/g,' · ')},
+      {l:'Race',v:c.race},{l:'Genre',v:c.genre},{l:'Valeurs',v:(c.valeurs||'').replace(/\n/g,' · ')},
       {l:'Langues',v:c.langues},{l:'Histoire',v:c.notes||'—'}
     ]},
     dons:{icon:'✨',title:'Dons & Capacités',items:
-      (c.dons||'').split('
-').filter(d=>d.trim()).map(d=>({v:d}))
+      (c.dons||'').split('\n').filter(d=>d.trim()).map(d=>({v:d}))
     },
     armes:{icon:'⚔',title:'Armement & Armures',items:[
-      {l:'Armes',v:(c.armes||'—').replace(/
-/g,' · ')},
-      {l:'Armures',v:(c.armures||'—').replace(/
-/g,' · ')}
+      {l:'Armes',v:(c.armes||'—').replace(/\n/g,' · ')},
+      {l:'Armures',v:(c.armures||'—').replace(/\n/g,' · ')}
     ]},
     equip:{icon:'🎒',title:'Équipement',items:
       (c.equip||'—').split(',').map(e=>({v:e.trim()})).filter(e=>e.v)
@@ -2133,8 +2129,7 @@ function getPanelsForChar(name){
       {l:'PV',v:c.pv+' / '+c.pv_max},{l:'Mana',v:c.mana+' / '+c.mana_max},{l:'Niveau',v:c.niveau}
     ]},
     histoire:{icon:'📜',title:'Bonus & Malus de Race',items:
-      (c.race_bonus||'').split('
-').filter(r=>r.trim()).map(r=>({v:r}))
+      (c.race_bonus||'').split('\n').filter(r=>r.trim()).map(r=>({v:r}))
     }
   };
 }
@@ -2171,47 +2166,6 @@ function renderCurrentChar(){ vitruveRender(vitruveChar); }
 function renderChar(name){ vitruveRender(name); }
 
 
-function renderChar(name){
-  const c=charData[name];
-  const container=document.getElementById('chars-container');
-  let sec=document.getElementById('char-'+name);
-  if(!sec){sec=document.createElement('div');sec.id='char-'+name;sec.className='char-sec';container.appendChild(sec);}
-  if(name===currentChar) sec.classList.add('active');
-  const compsHtml=(c.competences||[]).map((comp,i)=>{
-    const dots=Array.from({length:6},(_,d)=>`<div class="dot${d<comp.v?' on':''}" onclick="toggleDot('${name}',${i},${d})"></div>`).join('');
-    return `<div class="comp-row"><span class="comp-name ef" onclick="editField('${name}','competences_name_${i}')">${comp.n}</span><div class="dots">${dots}</div></div>`;
-  }).join('');
-  sec.innerHTML=`<div class="grid2">
-    <div class="card"><div class="hero-head"><div class="avatar" style="background:${c.color}">${c.init}</div><div>
-      <div class="hero-name"><span class="ef" onclick="editField('${name}','name')">${c.name}</span></div>
-      <div class="hero-sub"><span class="ef" onclick="editField('${name}','race')">${c.race}</span> · <span class="ef" onclick="editField('${name}','genre')">${c.genre}</span> · <span class="ef" onclick="editField('${name}','classe')">${c.classe}</span></div>
-      <div class="hero-badges"><span class="badge elem"><span class="ef" onclick="editField('${name}','element')">${c.element}</span></span><span class="badge">Niv. <span class="ef" onclick="editField('${name}','niveau')">${c.niveau}</span></span></div>
-    </div></div>
-    <div class="pv-grid">
-      <div class="pv-box"><div class="pv-big pv" id="${name}-pv">${c.pv}</div><div class="pv-lbl" style="color:#A09070;">PV / <span class="ef" onclick="editField('${name}','pv_max')">${c.pv_max}</span></div><div class="pv-controls"><button class="pv-btn" onclick="adj('${name}','pv',-1)">−</button><button class="pv-btn" onclick="adj('${name}','pv',1)">+</button></div></div>
-      <div class="pv-box"><div class="pv-big mana" id="${name}-mana">${c.mana}</div><div class="pv-lbl" style="color:#A09070;">Mana / <span class="ef" onclick="editField('${name}','mana_max')">${c.mana_max}</span></div><div class="pv-controls"><button class="pv-btn" onclick="adj('${name}','mana',-1)">−</button><button class="pv-btn" onclick="adj('${name}','mana',1)">+</button></div></div>
-    </div>
-    <div class="stat-row" style="color:#CFC09A;"><div class="stat-head"><span class="stat-name">Physique</span><span class="stat-val"><span class="ef" onclick="editField('${name}','phys')">${c.phys}</span> %</span></div><div class="bar"><div class="bar-fill" style="width:${c.phys}%"></div></div></div>
-    <div class="stat-row" style="color:#CFC09A;"><div class="stat-head"><span class="stat-name">Social</span><span class="stat-val"><span class="ef" onclick="editField('${name}','social')">${c.social}</span> %</span></div><div class="bar"><div class="bar-fill" style="width:${c.social}%"></div></div></div>
-    <div class="stat-row" style="color:#CFC09A;"><div class="stat-head"><span class="stat-name">Mental</span><span class="stat-val"><span class="ef" onclick="editField('${name}','mental')">${c.mental}</span> %</span></div><div class="bar"><div class="bar-fill" style="width:${c.mental}%"></div></div></div>
-    </div>
-    <div class="card">
-      <div class="sdiv">Valeurs RP</div><div style="margin-bottom:12px">${(c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>`<div style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;font-size:13px;color:#CFC09A;">${v}</div>`).join('')}<span class="ef" style="font-size:11px;color:#907860;display:inline-block;margin-top:4px;" onclick="editFieldArea('${name}','valeurs')">✏ Modifier</span></div>
-      <div class="sdiv">Langues</div><div style="margin-bottom:12px;font-size:13px;color:#CFC09A;"><span class="ef" onclick="editField('${name}','langues')">${c.langues}</span></div>
-      <div class="sdiv">Compétences</div><div class="comp-list" style="color:#CFC09A;">${compsHtml}</div>
-    </div>
-    <div class="card">
-      <div class="sdiv">Armement</div><div style="font-size:13px;color:#CFC09A;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armes')">${(c.armes||'—').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Armures</div><div style="font-size:13px;color:#CFC09A;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','armures')">${(c.armures||'—').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Dons & Capacités</div><div style="font-size:13px;color:#CFC09A;"><span class="ef" onclick="editFieldArea('${name}','dons')">${(c.dons||'—').replace(/\n/g,'<br>')}</span></div>
-    </div>
-    <div class="card">
-      <div class="sdiv">Équipement</div><div style="font-size:13px;color:#CFC09A;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','equip')">${(c.equip||'—').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Bonus de race</div><div style="font-size:11px;color:#A09070;line-height:1.6;margin-bottom:10px;"><span class="ef" onclick="editFieldArea('${name}','race_bonus')">${(c.race_bonus||'').replace(/\n/g,'<br>')}</span></div>
-      <div class="sdiv">Notes personnelles</div><div style="font-size:13px;color:#CFC09A;font-style:italic;min-height:24px;"><span class="ef" onclick="editFieldArea('${name}','notes')">${c.notes||'Cliquer pour ajouter...'}</span></div>
-    </div>
-  </div>`;
-}
 window.editField=(charName,field)=>{
   const allEf=document.querySelectorAll(`#char-${charName} .ef`);
   let targetEl=null;
@@ -2348,11 +2302,11 @@ function vitruveShowPanel(name, zone){
   if(isMJ){
     const fieldMap = {identite:'name',dons:'dons',armes:'armes',equip:'equip',stats:'phys',histoire:'notes'};
     const field = fieldMap[zone];
-    if(field) html += '<button class="vpanel-edit" onclick="editFieldArea(''+name+'',''+field+'')"><i class="ti ti-pencil"></i> Modifier</button>';
+    if(field) html += '<button class="vpanel-edit" onclick="editFieldArea(\''+name+'\',\''+field+'\')"><i class="ti ti-pencil"></i> Modifier</button>';
   }
   // Bouton Furmiaou pour Firm
   if(name==='firm'){
-    html += '<div onclick="showFurmiaou()" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(20,40,14,.9),rgba(10,22,8,.95));border:1px solid rgba(74,160,80,.3);border-radius:6px;padding:10px 12px;cursor:pointer;margin-top:14px;" onmouseover="this.style.borderColor='rgba(74,160,80,.6)'" onmouseout="this.style.borderColor='rgba(74,160,80,.3)'">'
+    html += '<div onclick="showFurmiaou()" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(20,40,14,.9),rgba(10,22,8,.95));border:1px solid rgba(74,160,80,.3);border-radius:6px;padding:10px 12px;cursor:pointer;margin-top:14px;" onmouseover=\"this.style.borderColor=\'rgba(74,160,80,.6)\'\" onmouseout=\"this.style.borderColor=\'rgba(74,160,80,.3)\'\">'
       +'<div style="font-size:22px;">🐾</div><div style="flex:1;"><div style="font-family:Cinzel,serif;font-size:11px;color:#C8F0C0;letter-spacing:.06em;">Furmiaou</div><div style="font-size:10px;color:#4A7040;font-style:italic;margin-top:2px;">Forme bestiale · Transmutation</div></div><div style="font-size:15px;color:rgba(74,160,80,.5);">→</div></div>';
   }
   pc.innerHTML = html;
