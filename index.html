@@ -543,6 +543,49 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
   color:var(--gold-d);text-transform:uppercase;margin-bottom:5px;opacity:.9;
 }
 .fiche-cell-val{font-size:13px;color:#CFC09A;line-height:1.5;}
+
+/* ===== VITRUVE JDR STYLE ===== */
+.vitruve-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
+.vitruve-sheet{background:linear-gradient(165deg,#1C1408 0%,#120E06 60%,#1A1208 100%);border:1px solid rgba(212,168,67,.28);border-radius:6px;padding:14px;box-shadow:0 8px 40px rgba(0,0,0,.6);}
+.vit-header{text-align:center;padding-bottom:10px;margin-bottom:10px;border-bottom:1px solid rgba(212,168,67,.18);}
+.vit-name{font-family:'Cinzel',serif;font-size:15px;color:#F0E4C8;letter-spacing:.06em;}
+.vit-sub{font-size:11px;color:#907060;font-style:italic;margin-top:3px;}
+.vitals-strip{display:flex;gap:8px;margin-bottom:10px;}
+.vpill{flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(212,168,67,.18);border-radius:5px;padding:6px 8px;text-align:center;}
+.vbig{font-family:'Cinzel',serif;font-size:22px;font-weight:700;line-height:1;}
+.vbig.pv{color:#E05050;}
+.vbig.mana{color:#5090E0;}
+.vlbl{font-size:9px;color:#706050;margin-top:1px;font-family:'Cinzel',serif;letter-spacing:.05em;}
+.vbtns{display:flex;gap:3px;justify-content:center;margin-top:3px;}
+.vbtn{background:none;border:1px solid rgba(212,168,67,.18);color:#706050;border-radius:3px;padding:1px 7px;cursor:pointer;font-size:12px;font-weight:600;}
+.vbtn:hover{border-color:#D4A843;color:#D4A843;}
+.vitruve-illo{position:relative;width:100%;aspect-ratio:260/380;background:rgba(0,0,0,.2);border:1px solid rgba(212,168,67,.12);border-radius:4px;overflow:hidden;margin-bottom:10px;}
+.vitruve-illo svg{width:100%;height:100%;}
+/* Zones cliquables dans le SVG */
+.vzone{cursor:pointer;transition:opacity .15s;}
+.vzone:hover{opacity:.7;}
+.vzone.active ellipse,.vzone.active rect,.vzone.active path{fill:rgba(212,168,67,.2) !important;stroke:rgba(212,168,67,.8) !important;}
+.vstat-bars{display:flex;flex-direction:column;gap:5px;}
+.vstat-line{display:flex;align-items:center;gap:8px;}
+.vstat-name{color:#907060;width:55px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.05em;text-transform:uppercase;}
+.vstat-bar{flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;}
+.vstat-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,#8B6914,#D4A843);}
+.vstat-val{color:#D4A843;font-family:'Cinzel',serif;font-size:9px;min-width:28px;text-align:right;}
+.btn-edit-raw{display:flex;align-items:center;gap:6px;background:none;border:1px solid rgba(212,168,67,.2);color:#906840;border-radius:5px;padding:5px 10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.06em;cursor:pointer;text-transform:uppercase;}
+.btn-edit-raw:hover{border-color:rgba(212,168,67,.5);color:#D4A843;}
+/* Panneau info */
+.vpanel{background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(22,16,8,.99));border:1px solid rgba(212,168,67,.18);border-radius:8px;padding:18px;min-height:420px;display:flex;flex-direction:column;}
+.vpanel-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#604A28;}
+.vpanel-content{flex:1;}
+.vpanel-head{font-family:'Cinzel',serif;font-size:13px;color:#D4A843;letter-spacing:.05em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(212,168,67,.15);display:flex;align-items:center;gap:7px;}
+.vpanel-item{margin-bottom:7px;padding:7px 11px;background:rgba(45,30,10,.6);border-radius:5px;border-left:2px solid rgba(160,120,32,.5);}
+.vpanel-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.1em;color:#A07820;text-transform:uppercase;margin-bottom:3px;}
+.vpanel-val{font-size:12px;color:#CFC09A;line-height:1.55;}
+.vpanel-edit{margin-top:12px;display:inline-flex;align-items:center;gap:5px;background:none;border:1px solid rgba(212,168,67,.2);color:#906840;border-radius:5px;padding:5px 10px;font-family:'Cinzel',serif;font-size:9px;cursor:pointer;text-transform:uppercase;}
+.vpanel-edit:hover{border-color:rgba(212,168,67,.5);color:#D4A843;}
+/* Furmiaou */
+.furm-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
+
 </style>
 </head>
 <body>
@@ -583,14 +626,75 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
           <span style="font-size:11px;color:#907860;font-family:'Crimson Pro',serif;font-weight:400;margin-left:8px;font-style:italic;">— Cliquez sur n'importe quel texte pour le modifier</span>
         </div>
         <div id="mj-banner" class="mj-banner" style="display:none"><i class="ti ti-crown"></i> Mode MJ — Toutes les fiches sont éditables</div>
-        <div class="char-tabs">
-          <div class="char-tab active" onclick="showChar('azarius',this)">Azarius</div>
-          <div class="char-tab" onclick="showChar('dy',this)">Dy</div>
-          <div class="char-tab" onclick="showChar('firm',this)">Firm</div>
-          <div class="char-tab" onclick="showChar('mwassa',this)">Mwassa</div>
-          <div class="char-tab" onclick="showChar('nindey',this)">Nindey</div>
+        <div id="char-tabs-bar" class="char-tabs">
+          <div class="char-tab active" onclick="showCharVitruve('azarius',this)">Azarius</div>
+          <div class="char-tab" onclick="showCharVitruve('dy',this)">Dy</div>
+          <div class="char-tab" onclick="showCharVitruve('firm',this)">Firm</div>
+          <div class="char-tab" onclick="showCharVitruve('mwassa',this)">Mwassa</div>
+          <div class="char-tab" onclick="showCharVitruve('nindey',this)">Nindey</div>
         </div>
-        <div id="chars-container"></div>
+        <!-- Layout vitruve JDR -->
+        <div class="vitruve-layout" id="vitruve-main">
+          <!-- Colonne gauche: fiche JDR -->
+          <div class="vitruve-sheet" id="vitruve-sheet">
+            <div class="vit-header">
+              <div class="vit-name" id="vit-name">Azarius Desbois</div>
+              <div class="vit-sub" id="vit-sub">Kitsune · Cogneur · Niv.1 · 🔥 Feu</div>
+            </div>
+            <div class="vitals-strip">
+              <div class="vpill pv-pill">
+                <div class="vbig pv" id="vit-pv">14</div>
+                <div class="vlbl">PV / <span id="vit-pvmax">14</span></div>
+                <div class="vbtns">
+                  <button class="vbtn" onclick="vitAdj('pv',-1)">−</button>
+                  <button class="vbtn" onclick="vitAdj('pv',1)">+</button>
+                </div>
+              </div>
+              <div class="vpill mana-pill">
+                <div class="vbig mana" id="vit-mana">9</div>
+                <div class="vlbl">Mana / <span id="vit-manamax">9</span></div>
+                <div class="vbtns">
+                  <button class="vbtn" onclick="vitAdj('mana',-1)">−</button>
+                  <button class="vbtn" onclick="vitAdj('mana',1)">+</button>
+                </div>
+              </div>
+            </div>
+            <!-- Illustration SVG du personnage -->
+            <div class="vitruve-illo" id="vitruve-illo-wrap">
+              <svg id="vitruve-svg" viewBox="0 0 260 380" xmlns="http://www.w3.org/2000/svg"></svg>
+            </div>
+            <!-- Stats sous l'illustration -->
+            <div class="vstat-bars">
+              <div class="vstat-line">
+                <span class="vstat-name">Physique</span>
+                <div class="vstat-bar"><div class="vstat-fill" id="vbar-phys" style="width:85%"></div></div>
+                <span class="vstat-val" id="vval-phys">85%</span>
+              </div>
+              <div class="vstat-line">
+                <span class="vstat-name">Social</span>
+                <div class="vstat-bar"><div class="vstat-fill" id="vbar-soc" style="width:45%"></div></div>
+                <span class="vstat-val" id="vval-soc">45%</span>
+              </div>
+              <div class="vstat-line">
+                <span class="vstat-name">Mental</span>
+                <div class="vstat-bar"><div class="vstat-fill" id="vbar-men" style="width:40%"></div></div>
+                <span class="vstat-val" id="vval-men">40%</span>
+              </div>
+            </div>
+            <!-- Bouton MJ éditer -->
+            <div id="vitruve-edit-zone" style="display:none;margin-top:10px;">
+              <button class="btn-edit-raw" onclick="editRawChar()"><i class="ti ti-pencil"></i> Éditer les données brutes</button>
+            </div>
+          </div>
+          <!-- Colonne droite: panneau info -->
+          <div class="vpanel" id="vpanel">
+            <div class="vpanel-empty" id="vpanel-empty">
+              <i class="ti ti-hand-click" style="font-size:32px;opacity:.25;"></i>
+              <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;opacity:.35;text-transform:uppercase;margin-top:8px;">Cliquez sur une zone</div>
+            </div>
+            <div class="vpanel-content" id="vpanel-content" style="display:none;"></div>
+          </div>
+        </div>
       </div>
 
       <div id="s-journal" class="section">
@@ -1344,6 +1448,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 
 <div id="toast"></div>
 
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
@@ -1843,13 +1948,229 @@ async function saveChar(name){
   await setDoc(doc(db,'characters',name),charData[name],{merge:true});toast('Sauvegardé ✓');
 }
 let currentChar='azarius';
-window.showChar=(name,el)=>{
+window.showChar=window.showCharVitruve=(name,el)=>{
   document.querySelectorAll('.char-sec').forEach(s=>s.classList.remove('active'));
   document.querySelectorAll('.char-tab').forEach(t=>t.classList.remove('active'));
-  currentChar=name;renderChar(name);
+  vitruveChar=name;vitruveZone=null;vitruveRender(name);document.getElementById('vpanel-empty').style.display='flex';document.getElementById('vpanel-content').style.display='none';
   document.getElementById('char-'+name)?.classList.add('active');el.classList.add('active');
 };
-function renderCurrentChar(){renderChar(currentChar);}
+let vitruveChar = 'azarius';
+let vitruveZone = null;
+
+function getSilhouetteSVG(classe, activeZone){
+  const G = (o) => `rgba(212,168,67,${o})`;
+  const hl = (z) => z === activeZone
+    ? `fill="${G(.12)}" stroke="${G(.7)}" stroke-width="2.5" style="cursor:pointer;" data-zone="${z}"`
+    : `fill="${G(0)}" stroke="${G(.25)}" stroke-width="1.5" style="cursor:pointer;" data-zone="${z}"`;
+
+  const silhouettes = {
+    'Cogneur': `
+      <rect x="0" y="0" width="260" height="380" fill="#0A0604"/>
+      <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(192,57,43,.04)"/>
+      <ellipse cx="130" cy="365" rx="60" ry="9" fill="rgba(0,0,0,.4)"/>
+      <rect x="90" y="265" width="28" height="90" rx="5" fill="#1A1208" stroke="${G(.25)}" stroke-width="1"/>
+      <rect x="140" y="265" width="28" height="90" rx="5" fill="#1A1208" stroke="${G(.25)}" stroke-width="1"/>
+      <rect x="84" y="340" width="38" height="22" rx="4" fill="#0E0C06" stroke="${G(.3)}" stroke-width="1"/>
+      <rect x="136" y="340" width="38" height="22" rx="4" fill="#0E0C06" stroke="${G(.3)}" stroke-width="1"/>
+      <path d="M78 270 L90 310 L168 310 L180 270 Z" fill="#16120A" stroke="${G(.2)}" stroke-width="1"/>
+      <path d="M72 128 L68 270 L192 270 L188 128 L164 116 L130 122 L96 116 Z" fill="#1C1610" stroke="${G(.28)}" stroke-width="1.2"/>
+      <line x1="100" y1="148" x2="100" y2="268" stroke="${G(.12)}" stroke-width="0.8"/>
+      <line x1="160" y1="148" x2="160" y2="268" stroke="${G(.12)}" stroke-width="0.8"/>
+      <line x1="80" y1="185" x2="180" y2="185" stroke="${G(.1)}" stroke-width="0.8"/>
+      <line x1="78" y1="225" x2="182" y2="225" stroke="${G(.1)}" stroke-width="0.8"/>
+      <line x1="130" y1="132" x2="130" y2="210" stroke="${G(.42)}" stroke-width="2"/>
+      <line x1="100" y1="162" x2="160" y2="162" stroke="${G(.42)}" stroke-width="2"/>
+      <circle cx="130" cy="162" r="7" fill="rgba(192,57,43,.12)" stroke="${G(.38)}" stroke-width="1"/>
+      <ellipse cx="72" cy="134" rx="22" ry="13" fill="#1C1610" stroke="${G(.3)}" stroke-width="1.2"/>
+      <ellipse cx="188" cy="134" rx="22" ry="13" fill="#1C1610" stroke="${G(.3)}" stroke-width="1.2"/>
+      <path d="M50 142 L22 175 L15 248" stroke="#1A1408" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <path d="M15 248 L10 295 L22 298 L28 252" fill="#1A1408" stroke="${G(.22)}" stroke-width="1"/>
+      <ellipse cx="18" cy="305" rx="12" ry="14" fill="#1A1408" stroke="${G(.22)}" stroke-width="1"/>
+      <path d="M4 196 Q0 168 16 160 L36 163 L38 258 Q18 270 4 262 Z" fill="rgba(30,20,8,.8)" stroke="${G(.42)}" stroke-width="1.5"/>
+      <path d="M210 142 L238 175 L245 248" stroke="#1A1408" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <path d="M245 248 L250 295 L238 298 L232 252" fill="#1A1408" stroke="${G(.22)}" stroke-width="1"/>
+      <ellipse cx="242" cy="305" rx="12" ry="14" fill="#1A1408" stroke="${G(.22)}" stroke-width="1"/>
+      <line x1="242" y1="319" x2="256" y2="375" stroke="${G(.52)}" stroke-width="2.5"/>
+      <path d="M241 335 Q264 320 268 348 Q264 368 241 358 Z" fill="${G(.08)}" stroke="${G(.5)}" stroke-width="1.5"/>
+      <rect x="70" y="260" width="118" height="16" rx="2" fill="#120E08" stroke="${G(.28)}" stroke-width="1"/>
+      <rect x="118" y="263" width="22" height="10" rx="2" fill="${G(.08)}" stroke="${G(.35)}" stroke-width="1"/>
+      <path d="M94 38 Q130 14 166 38 L170 80 Q130 98 90 80 Z" fill="#1C1610" stroke="${G(.28)}" stroke-width="1.2"/>
+      <ellipse cx="130" cy="68" rx="28" ry="32" fill="#201810" stroke="${G(.18)}" stroke-width="1"/>
+      <path d="M99 72 L161 72 L165 85 L95 85 Z" fill="#14100A" stroke="${G(.22)}" stroke-width="1"/>
+      <line x1="114" y1="74" x2="114" y2="84" stroke="${G(.18)}" stroke-width="0.7"/>
+      <line x1="130" y1="74" x2="130" y2="84" stroke="${G(.18)}" stroke-width="0.7"/>
+      <line x1="146" y1="74" x2="146" y2="84" stroke="${G(.18)}" stroke-width="0.7"/>
+      <ellipse cx="114" cy="62" rx="6" ry="4" fill="rgba(192,57,43,.18)"/>
+      <ellipse cx="146" cy="62" rx="6" ry="4" fill="rgba(192,57,43,.18)"/>
+      <path d="M140 16 Q155 4 158 24" stroke="${G(.45)}" stroke-width="1.5" fill="none"/>
+      <path d="M148 12 Q166 2 163 26" stroke="${G(.35)}" stroke-width="1.2" fill="none"/>
+      <!-- Zones cliquables -->
+      <g class="vzone" ${hl('identite')}>
+        <ellipse cx="130" cy="62" rx="40" ry="44" opacity=".01"/>
+        <text x="170" y="48" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">IDENTITÉ</text>
+        <line x1="165" y1="52" x2="152" y2="58" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('dons')}>
+        <ellipse cx="130" cy="195" rx="70" ry="75" opacity=".01"/>
+        <text x="170" y="165" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">DONS</text>
+        <line x1="165" y1="168" x2="158" y2="180" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('armes')}>
+        <ellipse cx="30" cy="220" rx="32" ry="55" opacity=".01"/>
+        <text x="2" y="148" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ARMES</text>
+        <line x1="22" y1="152" x2="26" y2="175" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('equip')}>
+        <ellipse cx="230" cy="220" rx="32" ry="55" opacity=".01"/>
+        <text x="185" y="148" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ÉQUIP.</text>
+        <line x1="214" y1="152" x2="230" y2="175" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('stats')}>
+        <ellipse cx="130" cy="290" rx="75" ry="45" opacity=".01"/>
+        <text x="170" y="285" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">STATS</text>
+        <line x1="165" y1="288" x2="155" y2="290" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('histoire')}>
+        <ellipse cx="130" cy="340" rx="55" ry="30" opacity=".01"/>
+        <text x="170" y="330" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">HISTOIRE</text>
+        <line x1="165" y1="333" x2="152" y2="340" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+    `,
+    'Arcaniste': `
+      <rect x="0" y="0" width="260" height="380" fill="#060810"/>
+      <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(42,95,168,.04)"/>
+      <ellipse cx="130" cy="365" rx="50" ry="8" fill="rgba(42,95,168,.12)"/>
+      <circle cx="28" cy="72" r="2.5" fill="rgba(80,144,224,.4)"/>
+      <circle cx="235" cy="95" r="2" fill="rgba(80,144,224,.35)"/>
+      <circle cx="22" cy="260" r="2" fill="rgba(80,144,224,.25)"/>
+      <circle cx="240" cy="230" r="2.5" fill="rgba(80,144,224,.3)"/>
+      <path d="M80 118 L60 365 L200 365 L180 118 L158 108 L130 114 L102 108 Z" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1.2"/>
+      <path d="M102 120 L88 365 M158 120 L172 365" stroke="${G(.08)}" stroke-width="0.8" fill="none"/>
+      <path d="M100 162 Q130 148 160 162 Q160 198 130 207 Q100 198 100 162 Z" fill="rgba(42,95,168,.06)" stroke="rgba(80,144,224,.22)" stroke-width="0.8"/>
+      <circle cx="130" cy="180" r="9" fill="rgba(80,144,224,.08)" stroke="rgba(80,144,224,.38)" stroke-width="1"/>
+      <line x1="121" y1="180" x2="139" y2="180" stroke="rgba(80,144,224,.55)" stroke-width="1"/>
+      <line x1="130" y1="171" x2="130" y2="189" stroke="rgba(80,144,224,.55)" stroke-width="1"/>
+      <text x="130" y="245" text-anchor="middle" font-size="10" fill="rgba(80,144,224,.22)" font-family="serif">ᚱ ᚢ ᚾ ᛖ</text>
+      <text x="130" y="275" text-anchor="middle" font-size="9" fill="rgba(80,144,224,.15)" font-family="serif">ᛗ ᚨ ᚷ ᛁ ᚲ</text>
+      <ellipse cx="80" cy="122" rx="18" ry="11" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1"/>
+      <ellipse cx="180" cy="122" rx="18" ry="11" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1"/>
+      <path d="M62 128 L32 160 L22 248" stroke="#0A0C18" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <path d="M22 248 L14 305 L26 308 L35 254" fill="#0A0C18" stroke="${G(.18)}" stroke-width="1"/>
+      <ellipse cx="20" cy="315" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
+      <line x1="19" y1="328" x2="8" y2="380" stroke="${G(.42)}" stroke-width="1.8"/>
+      <circle cx="7" cy="383" r="6" fill="rgba(80,144,224,.12)" stroke="rgba(80,144,224,.65)" stroke-width="1.2"/>
+      <circle cx="7" cy="383" r="12" fill="none" stroke="rgba(80,144,224,.18)" stroke-width="0.8"/>
+      <path d="M198 128 L228 160 L238 248" stroke="#0A0C18" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <path d="M238 248 L246 305 L234 308 L225 254" fill="#0A0C18" stroke="${G(.18)}" stroke-width="1"/>
+      <ellipse cx="240" cy="315" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
+      <rect x="232" y="328" width="26" height="34" rx="2" fill="rgba(42,95,168,.1)" stroke="${G(.35)}" stroke-width="1.2"/>
+      <line x1="236" y1="336" x2="253" y2="336" stroke="${G(.22)}" stroke-width="0.7"/>
+      <line x1="235" y1="343" x2="253" y2="343" stroke="${G(.22)}" stroke-width="0.7"/>
+      <line x1="235" y1="350" x2="252" y2="350" stroke="${G(.22)}" stroke-width="0.7"/>
+      <path d="M90 78 Q130 32 170 78 L172 110 L130 128 L88 110 Z" fill="#0C0E1A" stroke="${G(.25)}" stroke-width="1.2"/>
+      <ellipse cx="130" cy="95" rx="18" ry="20" fill="#100E1A" stroke="${G(.18)}" stroke-width="1"/>
+      <ellipse cx="114" cy="90" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
+      <ellipse cx="146" cy="90" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
+      <circle cx="114" cy="90" r="2" fill="rgba(80,144,224,.75)"/>
+      <circle cx="146" cy="90" r="2" fill="rgba(80,144,224,.75)"/>
+      <path d="M107 116 Q130 128 153 116" stroke="${G(.38)}" stroke-width="1.5" fill="none"/>
+      <circle cx="130" cy="129" r="5" fill="rgba(80,144,224,.12)" stroke="${G(.38)}" stroke-width="1"/>
+      <!-- Zones -->
+      <g class="vzone" ${hl('identite')}><ellipse cx="130" cy="86" rx="38" ry="42" opacity=".01"/>
+        <text x="170" y="58" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">IDENTITÉ</text>
+        <line x1="165" y1="62" x2="152" y2="74" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('dons')}><ellipse cx="130" cy="195" rx="68" ry="78" opacity=".01"/>
+        <text x="170" y="165" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">DONS</text>
+        <line x1="165" y1="168" x2="155" y2="182" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('armes')}><ellipse cx="28" cy="225" rx="30" ry="52" opacity=".01"/>
+        <text x="2" y="148" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ARMES</text>
+        <line x1="22" y1="152" x2="24" y2="178" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('equip')}><ellipse cx="238" cy="280" rx="28" ry="40" opacity=".01"/>
+        <text x="188" y="295" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ÉQUIP.</text>
+        <line x1="217" y1="294" x2="232" y2="285" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('stats')}><ellipse cx="130" cy="315" rx="72" ry="42" opacity=".01"/>
+        <text x="170" y="308" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">STATS</text>
+        <line x1="165" y1="311" x2="152" y2="315" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+      <g class="vzone" ${hl('histoire')}><ellipse cx="130" cy="355" rx="48" ry="22" opacity=".01"/>
+        <text x="168" y="352" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">HISTOIRE</text>
+        <line x1="164" y1="355" x2="152" y2="356" stroke="${G(.3)}" stroke-width="0.8"/>
+      </g>
+    `
+  };
+
+  const defaultSvg = silhouettes[classe] || silhouettes['Cogneur'];
+  return defaultSvg;
+}
+
+function getPanelsForChar(name){
+  const c = charData[name];
+  return {
+    identite:{icon:'👤',title:'Identité',items:[
+      {l:'Race',v:c.race},{l:'Genre',v:c.genre},{l:'Valeurs',v:(c.valeurs||'').replace(/
+/g,' · ')},
+      {l:'Langues',v:c.langues},{l:'Histoire',v:c.notes||'—'}
+    ]},
+    dons:{icon:'✨',title:'Dons & Capacités',items:
+      (c.dons||'').split('
+').filter(d=>d.trim()).map(d=>({v:d}))
+    },
+    armes:{icon:'⚔',title:'Armement & Armures',items:[
+      {l:'Armes',v:(c.armes||'—').replace(/
+/g:' · ')},
+      {l:'Armures',v:(c.armures||'—').replace(/
+/g:' · ')}
+    ]},
+    equip:{icon:'🎒',title:'Équipement',items:
+      (c.equip||'—').split(',').map(e=>({v:e.trim()})).filter(e=>e.v)
+    },
+    stats:{icon:'📊',title:'Statistiques',items:[
+      {l:'Physique',v:c.phys+'%'},{l:'Social',v:c.social+'%'},{l:'Mental',v:c.mental+'%'},
+      {l:'PV',v:c.pv+' / '+c.pv_max},{l:'Mana',v:c.mana+' / '+c.mana_max},{l:'Niveau',v:c.niveau}
+    ]},
+    histoire:{icon:'📜',title:'Bonus & Malus de Race',items:
+      (c.race_bonus||'').split('
+').filter(r=>r.trim()).map(r=>({v:r}))
+    }
+  };
+}
+
+function vitruveRender(name){
+  const c = charData[name];
+  document.getElementById('vit-name').textContent = c.name;
+  document.getElementById('vit-sub').textContent = c.race+' · '+c.classe+' · Niv.'+c.niveau+' · '+c.element;
+  document.getElementById('vit-pv').textContent = c.pv;
+  document.getElementById('vit-pvmax').textContent = c.pv_max;
+  document.getElementById('vit-mana').textContent = c.mana;
+  document.getElementById('vit-manamax').textContent = c.mana_max;
+  document.getElementById('vbar-phys').style.width = c.phys+'%';
+  document.getElementById('vbar-soc').style.width = c.social+'%';
+  document.getElementById('vbar-men').style.width = c.mental+'%';
+  document.getElementById('vval-phys').textContent = c.phys+'%';
+  document.getElementById('vval-soc').textContent = c.social+'%';
+  document.getElementById('vval-men').textContent = c.mental+'%';
+  if(isMJ) document.getElementById('vitruve-edit-zone').style.display='block';
+  // SVG
+  const svg = document.getElementById('vitruve-svg');
+  svg.innerHTML = getSilhouetteSVG(c.classe, vitruveZone);
+  svg.querySelectorAll('.vzone').forEach(g=>{
+    g.addEventListener('click',()=>{
+      vitruveZone = g.querySelector('[data-zone]')?.getAttribute('data-zone') || g.dataset.zone;
+      vitruveRender(name);
+      vitruveShowPanel(name, vitruveZone);
+    });
+  });
+}
+window.vitruveRender = vitruveRender;
+
+function renderCurrentChar(){ vitruveRender(vitruveChar); }
+function renderChar(name){ vitruveRender(name); }
+
+
 function renderChar(name){
   const c=charData[name];
   const container=document.getElementById('chars-container');
@@ -2009,6 +2330,233 @@ document.addEventListener('click', function(e) {
 });
 
 // Sync PV/Mana en temps réel
+
+// ===== VITRUVE PANEL =====
+function vitruveShowPanel(name, zone){
+  const panels = getPanelsForChar(name);
+  const data = panels[zone];
+  if(!data) return;
+  document.getElementById('vpanel-empty').style.display='none';
+  const pc = document.getElementById('vpanel-content');
+  pc.style.display='block';
+  let html = '<div class="vpanel-head">'+data.icon+' '+data.title+'</div>';
+  data.items.forEach(it=>{
+    html += '<div class="vpanel-item">';
+    if(it.l) html += '<div class="vpanel-lbl">'+it.l+'</div>';
+    html += '<div class="vpanel-val">'+it.v+'</div></div>';
+  });
+  if(isMJ){
+    const fieldMap = {identite:'name',dons:'dons',armes:'armes',equip:'equip',stats:'phys',histoire:'notes'};
+    const field = fieldMap[zone];
+    if(field) html += '<button class="vpanel-edit" onclick="editFieldArea(''+name+'',''+field+'')"><i class="ti ti-pencil"></i> Modifier</button>';
+  }
+  // Bouton Furmiaou pour Firm
+  if(name==='firm'){
+    html += '<div onclick="showFurmiaou()" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(20,40,14,.9),rgba(10,22,8,.95));border:1px solid rgba(74,160,80,.3);border-radius:6px;padding:10px 12px;cursor:pointer;margin-top:14px;" onmouseover="this.style.borderColor='rgba(74,160,80,.6)'" onmouseout="this.style.borderColor='rgba(74,160,80,.3)'">'
+      +'<div style="font-size:22px;">🐾</div><div style="flex:1;"><div style="font-family:Cinzel,serif;font-size:11px;color:#C8F0C0;letter-spacing:.06em;">Furmiaou</div><div style="font-size:10px;color:#4A7040;font-style:italic;margin-top:2px;">Forme bestiale · Transmutation</div></div><div style="font-size:15px;color:rgba(74,160,80,.5);">→</div></div>';
+  }
+  pc.innerHTML = html;
+}
+window.showCharVitruve = function(name, el){
+  document.querySelectorAll('.char-tab').forEach(t=>t.classList.remove('active'));
+  if(el) el.classList.add('active');
+  vitruveChar = name;
+  vitruveZone = null;
+  document.getElementById('vpanel-empty').style.display='flex';
+  document.getElementById('vpanel-content').style.display='none';
+  vitruveRender(name);
+};
+window.vitAdj = async function(stat, delta){
+  const name = vitruveChar;
+  const cur = isNaN(parseInt(charData[name][stat]))?0:parseInt(charData[name][stat]);
+  const newVal = Math.max(0, cur+delta);
+  charData[name][stat] = String(newVal);
+  document.getElementById('vit-'+stat).textContent = newVal;
+  await setDoc(doc(db,'characters',name),{[stat]:String(newVal)},{merge:true});
+  toast(name+' '+stat.toUpperCase()+' : '+newVal);
+};
+window.editRawChar = function(){
+  const name = vitruveChar;
+  const area = document.createElement('textarea');
+  area.className='ef-area';
+  area.style.cssText='width:100%;min-height:200px;font-size:11px;';
+  area.value = JSON.stringify(charData[name], null, 2);
+  document.getElementById('vpanel-content').innerHTML='';
+  document.getElementById('vpanel-content').appendChild(area);
+  document.getElementById('vpanel-empty').style.display='none';
+  area.onblur = async()=>{
+    try{
+      const parsed = JSON.parse(area.value);
+      charData[name] = {...charData[name],...parsed};
+      await saveChar(name);
+      vitruveRender(name);
+      toast('Données mises à jour ✓');
+    }catch(e){ toast('JSON invalide'); }
+  };
+};
+
+// ===== FURMIAOU =====
+let _furmPV = 48;
+window.showFurmiaou = function(){
+  let fl = document.getElementById('furmiaou-layout');
+  if(!fl){
+    fl = document.createElement('div');
+    fl.id = 'furmiaou-layout';
+    document.getElementById('s-personnages').appendChild(fl);
+    fl.innerHTML = `
+<div style="margin-bottom:14px;display:flex;align-items:center;gap:10px;">
+  <button onclick="hideFurmiaou()" style="background:none;border:1px solid rgba(74,160,80,.3);color:#4A9050;border-radius:6px;padding:6px 12px;font-family:'Cinzel',serif;font-size:10px;cursor:pointer;">← Revenir à Firm</button>
+  <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:rgba(74,160,80,.6);text-transform:uppercase;">⚠ Forme Transformée</span>
+</div>
+<div style="display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;">
+  <div style="background:linear-gradient(165deg,#0E1A0A,#0A1206);border:1px solid rgba(74,160,80,.35);border-radius:8px;padding:14px;">
+    <div style="text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(74,160,80,.2);">
+      <div style="font-family:'Cinzel',serif;font-size:15px;color:#C8F0C0;">Furmiaou</div>
+      <div style="font-size:11px;color:#6A9060;font-style:italic;margin-top:2px;">Forme Bestiale · Transmutation</div>
+      <div style="display:flex;gap:5px;justify-content:center;margin-top:6px;">
+        <span style="font-family:'Cinzel',serif;font-size:8px;padding:2px 8px;border:1px solid rgba(160,80,200,.4);color:#9050C0;border-radius:2px;">🌿 Nature</span>
+        <span style="font-family:'Cinzel',serif;font-size:8px;padding:2px 8px;border:1px solid rgba(160,80,200,.4);color:#9050C0;border-radius:2px;">Transmutation active</span>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:12px;">
+      <div style="flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(74,160,80,.2);border-radius:6px;padding:7px;text-align:center;">
+        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#50C050;" id="furm-pv-disp">48</div>
+        <div style="font-size:9px;color:#4A7040;font-family:'Cinzel',serif;">PV / 48</div>
+        <div style="display:flex;gap:3px;justify-content:center;margin-top:4px;">
+          <button onclick="furmAdj(-1)" style="background:none;border:1px solid rgba(74,160,80,.2);color:#4A7040;border-radius:3px;padding:1px 7px;cursor:pointer;font-size:13px;">−</button>
+          <button onclick="furmAdj(1)" style="background:none;border:1px solid rgba(74,160,80,.2);color:#4A7040;border-radius:3px;padding:1px 7px;cursor:pointer;font-size:13px;">+</button>
+        </div>
+      </div>
+      <div style="flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(74,160,80,.2);border-radius:6px;padding:7px;text-align:center;">
+        <div style="font-family:'Cinzel',serif;font-size:22px;font-weight:700;color:#9050C0;">0</div>
+        <div style="font-size:9px;color:#4A7040;font-family:'Cinzel',serif;">Mana / 0</div>
+      </div>
+    </div>
+    <svg viewBox="0 0 200 220" style="width:100%;background:#040E04;border-radius:6px;margin-bottom:12px;">
+      <ellipse cx="100" cy="210" rx="50" ry="7" fill="rgba(0,0,0,.5)"/>
+      <path d="M125 175 Q158 165 168 148 Q175 133 163 123 Q152 115 144 128 Q150 138 144 146 Q133 160 118 170 Z" fill="#0E1A0A" stroke="rgba(74,160,80,.3)" stroke-width="1"/>
+      <path d="M60 155 L48 198 L63 202 L73 168 Z" fill="#0E1A0A" stroke="rgba(74,160,80,.28)" stroke-width="1"/>
+      <path d="M48 196 L38 213 L58 217 L62 200 Z" fill="#0A1408" stroke="rgba(74,160,80,.3)" stroke-width="1"/>
+      <line x1="40" y1="215" x2="35" y2="222" stroke="rgba(74,160,80,.55)" stroke-width="1.4"/>
+      <line x1="47" y1="216" x2="44" y2="223" stroke="rgba(74,160,80,.55)" stroke-width="1.4"/>
+      <line x1="54" y1="217" x2="52" y2="224" stroke="rgba(74,160,80,.55)" stroke-width="1.4"/>
+      <path d="M115 155 L127 198 L112 202 L102 168 Z" fill="#0E1A0A" stroke="rgba(74,160,80,.28)" stroke-width="1"/>
+      <path d="M127 196 L137 213 L117 217 L113 200 Z" fill="#0A1408" stroke="rgba(74,160,80,.3)" stroke-width="1"/>
+      <line x1="135" y1="215" x2="140" y2="222" stroke="rgba(74,160,80,.55)" stroke-width="1.4"/>
+      <line x1="128" y1="216" x2="132" y2="223" stroke="rgba(74,160,80,.55)" stroke-width="1.4"/>
+      <line x1="121" y1="217" x2="123" y2="224" stroke="rgba(74,160,80,.55)" stroke-width="1.4"/>
+      <path d="M50 96 L44 160 L143 160 L137 96 L118 86 L100 90 L82 86 Z" fill="#0E1A0A" stroke="rgba(74,160,80,.3)" stroke-width="1.2"/>
+      <ellipse cx="98" cy="128" rx="24" ry="30" fill="rgba(74,160,80,.04)"/>
+      <path d="M50 100 L24 120 L17 162 L31 165 L38 130 L56 107 Z" fill="#0E1A0A" stroke="rgba(74,160,80,.25)" stroke-width="1"/>
+      <path d="M17 160 L8 192 L24 196 L34 163 Z" fill="#0A1408" stroke="rgba(74,160,80,.28)" stroke-width="1"/>
+      <line x1="10" y1="194" x2="5" y2="202" stroke="rgba(74,160,80,.6)" stroke-width="1.5"/>
+      <line x1="16" y1="195" x2="13" y2="203" stroke="rgba(74,160,80,.6)" stroke-width="1.5"/>
+      <line x1="22" y1="196" x2="20" y2="204" stroke="rgba(74,160,80,.6)" stroke-width="1.5"/>
+      <path d="M150 100 L176 120 L183 162 L169 165 L162 130 L144 107 Z" fill="#0E1A0A" stroke="rgba(74,160,80,.25)" stroke-width="1"/>
+      <path d="M183 160 L192 192 L176 196 L166 163 Z" fill="#0A1408" stroke="rgba(74,160,80,.28)" stroke-width="1"/>
+      <line x1="190" y1="194" x2="195" y2="202" stroke="rgba(74,160,80,.6)" stroke-width="1.5"/>
+      <line x1="184" y1="195" x2="187" y2="203" stroke="rgba(74,160,80,.6)" stroke-width="1.5"/>
+      <line x1="178" y1="196" x2="180" y2="204" stroke="rgba(74,160,80,.6)" stroke-width="1.5"/>
+      <rect x="87" y="73" width="26" height="18" rx="4" fill="#0E1A0A" stroke="rgba(74,160,80,.25)" stroke-width="1"/>
+      <path d="M76 44 Q100 20 124 44 L127 65 Q110 78 100 80 Q90 78 73 65 Z" fill="#0E1A0A" stroke="rgba(74,160,80,.32)" stroke-width="1.3"/>
+      <path d="M80 47 L67 20 L100 42 Z" fill="#0C1808" stroke="rgba(74,160,80,.38)" stroke-width="1"/>
+      <path d="M120 47 L133 20 L100 42 Z" fill="#0C1808" stroke="rgba(74,160,80,.38)" stroke-width="1"/>
+      <ellipse cx="100" cy="62" rx="18" ry="13" fill="#0C1608"/>
+      <path d="M93 57 L100 53 L107 57 L100 61 Z" fill="rgba(74,160,80,.28)" stroke="rgba(74,160,80,.45)" stroke-width="0.8"/>
+      <line x1="80" y1="59" x2="92" y2="61" stroke="rgba(212,168,67,.35)" stroke-width="0.9"/>
+      <line x1="80" y1="64" x2="92" y2="64" stroke="rgba(212,168,67,.35)" stroke-width="0.9"/>
+      <line x1="120" y1="59" x2="108" y2="61" stroke="rgba(212,168,67,.35)" stroke-width="0.9"/>
+      <line x1="120" y1="64" x2="108" y2="64" stroke="rgba(212,168,67,.35)" stroke-width="0.9"/>
+      <ellipse cx="88" cy="50" rx="8" ry="6" fill="rgba(10,24,10,.8)" stroke="rgba(74,160,80,.42)" stroke-width="1"/>
+      <ellipse cx="112" cy="50" rx="8" ry="6" fill="rgba(10,24,10,.8)" stroke="rgba(74,160,80,.42)" stroke-width="1"/>
+      <ellipse cx="88" cy="50" rx="2" ry="5.5" fill="rgba(160,220,80,.75)"/>
+      <ellipse cx="112" cy="50" rx="2" ry="5.5" fill="rgba(160,220,80,.75)"/>
+    </svg>
+    <div style="display:flex;flex-direction:column;gap:4px;">
+      <div style="display:flex;align-items:center;gap:8px;"><span style="color:#6A9060;width:55px;font-family:'Cinzel',serif;font-size:9px;text-transform:uppercase;">Physique</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;"><div style="height:100%;width:65%;border-radius:3px;background:linear-gradient(90deg,#2A6030,#4A9050);"></div></div><span style="color:#4A9050;font-family:'Cinzel',serif;font-size:9px;min-width:28px;text-align:right;">65%</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="color:#6A9060;width:55px;font-family:'Cinzel',serif;font-size:9px;text-transform:uppercase;">Social</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;"><div style="height:100%;width:50%;border-radius:3px;background:linear-gradient(90deg,#2A6030,#4A9050);"></div></div><span style="color:#4A9050;font-family:'Cinzel',serif;font-size:9px;min-width:28px;text-align:right;">50%</span></div>
+      <div style="display:flex;align-items:center;gap:8px;"><span style="color:#6A9060;width:55px;font-family:'Cinzel',serif;font-size:9px;text-transform:uppercase;">Mental</span><div style="flex:1;height:5px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;"><div style="height:100%;width:55%;border-radius:3px;background:linear-gradient(90deg,#2A6030,#4A9050);"></div></div><span style="color:#4A9050;font-family:'Cinzel',serif;font-size:9px;min-width:28px;text-align:right;">55%</span></div>
+    </div>
+    <div style="display:flex;gap:6px;margin-top:12px;flex-wrap:wrap;">
+      <button onclick="showFurmCap('capacites')" style="flex:1;background:rgba(10,20,8,.9);border:1px solid rgba(74,160,80,.3);color:#4A9050;border-radius:6px;padding:7px;font-family:'Cinzel',serif;font-size:9px;cursor:pointer;text-transform:uppercase;">⚡ Capacités</button>
+      <button onclick="showFurmCap('griffes')" style="flex:1;background:rgba(10,20,8,.9);border:1px solid rgba(74,160,80,.3);color:#4A9050;border-radius:6px;padding:7px;font-family:'Cinzel',serif;font-size:9px;cursor:pointer;text-transform:uppercase;">🐾 Griffes</button>
+      <button onclick="showFurmCap('corps')" style="flex:1;background:rgba(10,20,8,.9);border:1px solid rgba(74,160,80,.3);color:#4A9050;border-radius:6px;padding:7px;font-family:'Cinzel',serif;font-size:9px;cursor:pointer;text-transform:uppercase;">💚 Corps</button>
+      <button onclick="showFurmCap('instincts')" style="flex:1;background:rgba(10,20,8,.9);border:1px solid rgba(74,160,80,.3);color:#4A9050;border-radius:6px;padding:7px;font-family:'Cinzel',serif;font-size:9px;cursor:pointer;text-transform:uppercase;">🌿 Instincts</button>
+    </div>
+  </div>
+  <div id="furm-panel" style="background:linear-gradient(160deg,rgba(10,20,8,.98),rgba(6,14,4,.99));border:1px solid rgba(74,160,80,.2);border-radius:8px;padding:18px;min-height:400px;display:flex;flex-direction:column;">
+    <div id="furm-empty" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:#2A5028;">
+      <div style="font-size:28px;opacity:.3;">🐾</div>
+      <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;opacity:.4;text-transform:uppercase;">Sélectionnez une capacité</div>
+    </div>
+    <div id="furm-content" style="display:none;"></div>
+  </div>
+</div>`;
+  }
+  document.querySelector('.vitruve-layout').style.display='none';
+  document.getElementById('char-tabs-bar').style.display='none';
+  fl.style.display='block';
+  _furmPV = 48;
+  const d = document.getElementById('furm-pv-disp'); if(d) d.textContent=48;
+};
+window.hideFurmiaou = function(){
+  document.getElementById('furmiaou-layout').style.display='none';
+  document.querySelector('.vitruve-layout').style.display='grid';
+  document.getElementById('char-tabs-bar').style.display='flex';
+};
+window.furmAdj = function(delta){
+  _furmPV = Math.max(0,_furmPV+delta);
+  const el = document.getElementById('furm-pv-disp'); if(el) el.textContent=_furmPV;
+};
+
+const FURM_PANELS = {
+  capacites:{icon:'⚡',title:'Capacités de Furmiaou',items:[
+    {l:'Morsure',v:'D8+3 — Attaque principale, ignore 1 RD'},
+    {l:'Griffes tranchantes',v:'D6+2 × 2 attaques simultanées'},
+    {l:'Bond félin',v:'4 mana — Saut 8m + attaque en atterrissant'},
+    {l:'Rugissement Primaire',v:'3 mana — Terreur, −20% ennemis proches'},
+    {l:'Sens affûtés',v:'Passif — +30% perception, détecte embuscades'},
+    {l:'Régénération naturelle',v:'1 PV/tour en milieu naturel'}
+  ]},
+  griffes:{icon:'🐾',title:'Griffes & Attaques',items:[
+    {l:'Griffes avant',v:'D6+2 — Tranchant, accroche armure'},
+    {l:'Griffes arrière',v:'D4+1 — Coup de patte retourné'},
+    {l:'Attaque combinée',v:'5 mana — Griffes + morsure en un tour'},
+    {l:'Lacération',v:'Saignement : −1 PV/tour pendant 3 tours'},
+    {l:'Résistance naturelle',v:'RD2 (fourrure épaisse)'}
+  ]},
+  corps:{icon:'💚',title:'Corps & Résistances',items:[
+    {l:'PV forme bête',v:'48 (transmutation : PV doublés)'},
+    {l:'Mana',v:'0 — aucune magie en forme bestiale'},
+    {l:'Armure naturelle',v:'RD2 fourrure — RD4 vs projectiles'},
+    {l:'Faiblesse Feu',v:'Dégâts Feu ×1.5'},
+    {l:'Taille',v:'Quadrupède — 1.2m au garrot, 2.4m de long'},
+    {l:'Vitesse',v:'50m/tour au sprint (vs 30m humain)'}
+  ]},
+  instincts:{icon:'🌿',title:'Instincts & Nature',items:[
+    {l:'Communication',v:'Impossible — grognements uniquement'},
+    {l:'Odorat',v:'Détecte ennemis à 15m'},
+    {l:'Prédateur',v:'+15% attaque vs cibles en fuite'},
+    {l:'Mémoire',v:'Firm conserve souvenirs mais pas compétences sociales'},
+    {l:'Durée',v:"1h max (4 mana) ou jusqu'à KO"},
+    {l:'Retour humain',v:"Action complète — récupère à mi-PV de Furmiaou"}
+  ]}
+};
+window.showFurmCap = function(zone){
+  const data = FURM_PANELS[zone];
+  if(!data) return;
+  document.getElementById('furm-empty').style.display='none';
+  const pc = document.getElementById('furm-content');
+  pc.style.display='block';
+  let h = '<div style="font-family:Cinzel,serif;font-size:13px;color:#4A9050;letter-spacing:.05em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(74,160,80,.15);">'+data.icon+' '+data.title+'</div>';
+  data.items.forEach(it=>{
+    h += '<div style="margin-bottom:7px;padding:7px 11px;background:rgba(20,40,14,.6);border-radius:5px;border-left:2px solid rgba(60,110,50,.6);">';
+    if(it.l) h += '<div style="font-family:Cinzel,serif;font-size:8px;letter-spacing:.1em;color:#3C6A32;text-transform:uppercase;margin-bottom:3px;">'+it.l+'</div>';
+    h += '<div style="font-size:12px;color:#A8C8A0;line-height:1.55;">'+it.v+'</div></div>';
+  });
+  pc.innerHTML = h;
+};
+
 ['azarius','dy','firm','mwassa','nindey'].forEach(name=>{
   onSnapshot(doc(db,'characters',name),snap=>{
     if(!snap.exists())return;
@@ -2017,8 +2565,9 @@ document.addEventListener('click', function(e) {
     if(data.mana!==undefined){charData[name].mana=data.mana;const el=document.getElementById(`${name}-mana`);if(el)el.textContent=data.mana;}
   });
 });
-</script>
 
+
+</script>
 <script>
 // DÉS
 let dh=[];
