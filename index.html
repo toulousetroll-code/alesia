@@ -657,6 +657,18 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .tuto-title{font-family:'Cinzel',serif;font-size:17px;color:var(--gold);margin-bottom:12px;}
 .tuto-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px;}
 @media (max-width:640px){.tuto-wrap{flex-direction:column;align-items:center;}.tuto-bubble::before,.tuto-bubble::after{display:none;}}
+.adv-vessel{display:flex;align-items:stretch;height:90px;border-radius:14px;overflow:hidden;border:2px solid var(--gold-d);box-shadow:0 8px 28px rgba(0,0,0,.4);margin:24px 0;}
+.adv-side{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:flex-grow .4s ease;min-width:0;}
+.adv-side.aventure{background:linear-gradient(135deg,#2E7D32,#1B5E20);}
+.adv-side.mesaventure{background:linear-gradient(135deg,#C0392B,#7B241C);}
+.adv-side .adv-num{font-family:'Cinzel',serif;font-size:36px;color:#fff;line-height:1;}
+.adv-side .adv-lbl{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:rgba(255,255,255,.85);text-transform:uppercase;margin-top:4px;}
+.adv-divider{width:3px;background:var(--gold);}
+.adv-dice-row{display:flex;justify-content:center;gap:10px;margin-top:18px;}
+.adv-die{width:38px;height:38px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:16px;border:2px solid;transition:all .3s;}
+.adv-die.on-aventure{background:rgba(46,125,50,.18);border-color:#2E7D32;color:#9CDC9C;}
+.adv-die.on-mesaventure{background:rgba(192,57,43,.18);border-color:#C0392B;color:#F0B0A6;}
+.adv-controls{display:flex;justify-content:center;gap:12px;margin-top:18px;}
 /* Furmiaou */
 .furm-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
 
@@ -883,6 +895,30 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
         </div>
         <div style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:var(--gold-d);margin-bottom:8px;">HISTORIQUE</div>
         <div id="dice-hist"></div>
+      </div>
+
+      <div id="s-adventdes" class="section">
+        <div class="page-title"><i class="ti ti-arrows-shuffle"></i> Dés d'Aventure</div>
+        <div class="card">
+          <p style="font-size:13px;color:#CFC09A;line-height:1.7;margin-bottom:6px;">Le groupe dispose de <strong style="color:#F2E6CC">4 dés</strong>, répartis entre <strong style="color:#5FAE5A;">Aventure</strong> et <strong style="color:#D47A6A;">Mésaventure</strong>. Vase communicant : chaque dé déplacé d'un côté est retiré de l'autre.</p>
+          <div class="adv-vessel">
+            <div class="adv-side aventure">
+              <div class="adv-num" id="adv-aventure">4</div>
+              <div class="adv-lbl">Aventure</div>
+            </div>
+            <div class="adv-divider"></div>
+            <div class="adv-side mesaventure">
+              <div class="adv-num" id="adv-mesaventure">0</div>
+              <div class="adv-lbl">Mésaventure</div>
+            </div>
+          </div>
+          <div class="adv-dice-row" id="adv-dice-row"></div>
+          <div class="adv-controls">
+            <button class="vpanel-edit" onclick="advShift(1)"><i class="ti ti-arrow-right"></i> Vers Mésaventure</button>
+            <button class="vpanel-edit" onclick="advShift(-1)"><i class="ti ti-arrow-left"></i> Vers Aventure</button>
+            <button class="vpanel-edit" onclick="advReset()"><i class="ti ti-refresh"></i> Réinitialiser (4/0)</button>
+          </div>
+        </div>
       </div>
 
       <div id="s-notes" class="section">
@@ -1512,7 +1548,8 @@ const DEFAULT_NAV = [
   {type:'item',id:'negociation',label:'Négociation',icon:'ti-scale',builtin:true,visible:true},
   {type:'sep'},
   {type:'group',label:'Outils'},
-  {type:'item',id:'des',label:'Lanceur de dés',icon:'ti-dice',builtin:true,visible:true}
+  {type:'item',id:'des',label:'Lanceur de dés',icon:'ti-dice',builtin:true,visible:true},
+  {type:'item',id:'adventdes',label:"Dés d'Aventure",icon:'ti-arrows-shuffle',builtin:true,visible:true}
 ];
 
 const AVAILABLE_ICONS = [
@@ -1579,6 +1616,7 @@ async function loadAll(){
   listenJournal();
   await loadCustomPages();
   listenNegotiation();
+  listenAdvDice();
 }
 
 // ===== DESIGN =====
@@ -2991,6 +3029,51 @@ function renderRulesTuto(){
 window.rulesNav=(d)=>{ rulesStep=Math.max(0,Math.min(RULES_STEPS.length-1,rulesStep+d)); renderRulesTuto(); };
 window.rulesGoTo=(i)=>{ rulesStep=i; renderRulesTuto(); };
 renderRulesTuto();
+
+// ===== DÉS D'AVENTURE / MÉSAVENTURE =====
+let advState = { mesaventure: 0 };
+let advRemote = false;
+function renderAdv(){
+  const meso = advState.mesaventure ?? 0;
+  const aven = 4 - meso;
+  const a=document.getElementById('adv-aventure'), m=document.getElementById('adv-mesaventure');
+  if(!a) return;
+  a.textContent = aven;
+  m.textContent = meso;
+  a.parentElement.style.flexGrow = aven;
+  m.parentElement.style.flexGrow = meso || 0.0001;
+  document.getElementById('adv-dice-row').innerHTML = Array.from({length:4},(_,i)=>
+    `<div class="adv-die ${i<aven?'on-aventure':'on-mesaventure'}"><i class="ti ti-dice-${i+1<=6?(i+1):6}"></i></div>`
+  ).join('');
+}
+window.advShift=(dir)=>{
+  let m = advState.mesaventure ?? 0;
+  m = Math.max(0, Math.min(4, m+dir));
+  advState.mesaventure = m;
+  renderAdv();
+  advSave();
+};
+window.advReset=()=>{
+  advState.mesaventure = 0;
+  renderAdv();
+  advSave();
+};
+function advSave(){
+  advRemote = true;
+  setDoc(doc(db,'characters','_advdice'), advState)
+    .catch(e=>{ console.error('advSave error', e); toast('Erreur de sync dés ✗'); })
+    .finally(()=>{ advRemote=false; });
+}
+function listenAdvDice(){
+  onSnapshot(doc(db,'characters','_advdice'), snap=>{
+    if(snap.exists() && !advRemote){
+      advState = snap.data();
+      renderAdv();
+    } else if(!snap.exists()){
+      renderAdv();
+    }
+  }, e=>{ console.error('advListen error', e); });
+}
 
 // ===== NÉGOCIATION =====
 const NEG_MANCHE = [0.1,0.2,0.3];
