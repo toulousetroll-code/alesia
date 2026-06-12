@@ -584,6 +584,33 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .vpanel-val{font-size:12px;color:#CFC09A;line-height:1.55;}
 .vpanel-edit{margin-top:12px;display:inline-flex;align-items:center;gap:5px;background:none;border:1px solid rgba(212,168,67,.2);color:#906840;border-radius:5px;padding:5px 10px;font-family:'Cinzel',serif;font-size:9px;cursor:pointer;text-transform:uppercase;}
 .vpanel-edit:hover{border-color:rgba(212,168,67,.5);color:#D4A843;}
+.vsubhead{font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;color:#A07820;text-transform:uppercase;margin:14px 0 8px;}
+.vsubhead:first-child{margin-top:0;}
+.vcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(118px,1fr));gap:10px;margin-bottom:6px;}
+.vcard{background:rgba(45,30,10,.6);border:1px solid rgba(212,168,67,.15);border-radius:8px;padding:11px 12px;}
+.vcard.center{text-align:center;}
+.vcard-icon{font-size:21px;margin-bottom:6px;color:#A07820;}
+.vcard.center .vcard-icon{display:block;}
+.vcard-lbl{font-family:'Cinzel',serif;font-size:8px;letter-spacing:.1em;color:#A07820;text-transform:uppercase;margin-bottom:3px;}
+.vcard-val{font-size:12px;color:#F2E6CC;line-height:1.4;}
+.vcard-sub{font-size:11px;color:#A07820;margin-top:4px;}
+.vcard-row{display:flex;align-items:center;gap:8px;margin-bottom:4px;}
+.vcard-row .ti{font-size:17px;color:#D4A843;flex-shrink:0;}
+.vpills{display:flex;gap:6px;flex-wrap:wrap;}
+.vpill{background:rgba(212,168,67,.1);border:1px solid rgba(212,168,67,.25);border-radius:14px;padding:3px 10px;font-size:12px;color:#F2E6CC;}
+.vbar-row{margin-bottom:10px;}
+.vbar-top{display:flex;justify-content:space-between;font-size:11px;color:#CFC09A;margin-bottom:3px;}
+.vbar-top span:last-child{color:#D4A843;}
+.vbar-track{height:6px;background:rgba(212,168,67,.1);border-radius:3px;overflow:hidden;}
+.vbar-fill{height:100%;background:#D4A843;}
+.vbm{border-radius:8px;padding:10px 12px;display:flex;align-items:center;gap:8px;}
+.vbm.bonus{background:rgba(74,160,80,.08);border:1px solid rgba(74,160,80,.25);}
+.vbm.malus{background:rgba(160,60,50,.08);border:1px solid rgba(160,60,50,.25);}
+.vbm .ti{font-size:16px;flex-shrink:0;}
+.vbm.bonus .ti,.vbm.bonus .vbm-val{color:#5FAE5A;}
+.vbm.malus .ti,.vbm.malus .vbm-val{color:#D47A6A;}
+.vbm-lbl{font-size:12px;color:#E0E0D8;}
+.vbm-val{font-size:11px;}
 /* Furmiaou */
 .furm-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
 
@@ -2040,52 +2067,42 @@ function getSilhouetteSVG(classe, activeZone){
     'Arcaniste': `
       <rect x="0" y="0" width="260" height="380" fill="#060810"/>
       <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(42,95,168,.04)"/>
-      <ellipse cx="130" cy="365" rx="55" ry="8" fill="rgba(42,95,168,.12)"/>
+      <ellipse cx="130" cy="365" rx="50" ry="8" fill="rgba(42,95,168,.12)"/>
       <circle cx="28" cy="72" r="2.5" fill="rgba(80,144,224,.4)"/>
       <circle cx="235" cy="95" r="2" fill="rgba(80,144,224,.35)"/>
       <circle cx="22" cy="260" r="2" fill="rgba(80,144,224,.25)"/>
       <circle cx="240" cy="230" r="2.5" fill="rgba(80,144,224,.3)"/>
-      <!-- Robe -->
-      <path d="M82 150 L60 360 L200 360 L178 150 Q130 168 82 150 Z" fill="#0C0E1A" stroke="${G(.22)}" stroke-width="1.2"/>
-      <path d="M105 158 L92 360 M155 158 L168 360" stroke="${G(.08)}" stroke-width="0.8" fill="none"/>
-      <!-- Symbole runique sur la robe -->
-      <circle cx="130" cy="245" r="22" fill="rgba(42,95,168,.06)" stroke="rgba(80,144,224,.25)" stroke-width="0.9"/>
-      <path d="M130 228 L130 262 M114 245 L146 245" stroke="rgba(80,144,224,.45)" stroke-width="1"/>
-      <circle cx="130" cy="245" r="6" fill="rgba(80,144,224,.1)" stroke="rgba(80,144,224,.4)" stroke-width="0.8"/>
-      <!-- Bras gauche tenant un bâton -->
-      <path d="M88 165 Q60 178 50 215 L42 340" stroke="#0C0E1A" stroke-width="20" stroke-linecap="round" fill="none"/>
-      <path d="M88 165 Q60 178 50 215 L42 340" stroke="${G(.18)}" stroke-width="1" fill="none"/>
-      <ellipse cx="50" cy="218" rx="13" ry="16" fill="#0C0E1A" stroke="${G(.22)}" stroke-width="1"/>
-      <!-- Bâton -->
-      <line x1="38" y1="345" x2="22" y2="42" stroke="#705028" stroke-width="4" stroke-linecap="round"/>
-      <circle cx="20" cy="36" r="13" fill="rgba(80,144,224,.18)" stroke="rgba(80,144,224,.7)" stroke-width="1.5"/>
-      <circle cx="20" cy="36" r="22" fill="none" stroke="rgba(80,144,224,.2)" stroke-width="0.8"/>
-      <circle cx="20" cy="36" r="6" fill="rgba(160,200,255,.5)"/>
-      <!-- Bras droit tenant un grimoire -->
-      <path d="M172 165 Q204 180 214 220 L218 280" stroke="#0C0E1A" stroke-width="20" stroke-linecap="round" fill="none"/>
-      <path d="M172 165 Q204 180 214 220 L218 280" stroke="${G(.18)}" stroke-width="1" fill="none"/>
-      <ellipse cx="218" cy="284" rx="13" ry="16" fill="#0C0E1A" stroke="${G(.22)}" stroke-width="1"/>
-      <rect x="196" y="290" width="46" height="58" rx="3" fill="rgba(42,95,168,.1)" stroke="${G(.38)}" stroke-width="1.2"/>
-      <line x1="200" y1="300" x2="238" y2="300" stroke="${G(.22)}" stroke-width="0.7"/>
-      <line x1="199" y1="310" x2="239" y2="310" stroke="${G(.22)}" stroke-width="0.7"/>
-      <line x1="199" y1="320" x2="238" y2="320" stroke="${G(.22)}" stroke-width="0.7"/>
-      <line x1="200" y1="330" x2="236" y2="330" stroke="${G(.22)}" stroke-width="0.7"/>
-      <circle cx="219" cy="318" r="8" fill="rgba(80,144,224,.15)" stroke="rgba(80,144,224,.5)" stroke-width="1"/>
-      <!-- Tête -->
-      <circle cx="130" cy="100" r="26" fill="#100E1A" stroke="${G(.2)}" stroke-width="1"/>
-      <ellipse cx="118" cy="98" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
-      <ellipse cx="142" cy="98" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
-      <circle cx="118" cy="98" r="2" fill="rgba(80,144,224,.8)"/>
-      <circle cx="142" cy="98" r="2" fill="rgba(80,144,224,.8)"/>
-      <path d="M120 116 Q130 122 140 116" stroke="${G(.35)}" stroke-width="1.3" fill="none"/>
-      <!-- Chapeau pointu de mage -->
-      <path d="M86 78 L130 6 L174 78 Q130 92 86 78 Z" fill="#0C0E1A" stroke="${G(.3)}" stroke-width="1.3"/>
-      <ellipse cx="130" cy="80" rx="48" ry="9" fill="#0C0E1A" stroke="${G(.28)}" stroke-width="1"/>
-      <circle cx="130" cy="40" r="6" fill="rgba(80,144,224,.2)" stroke="rgba(80,144,224,.55)" stroke-width="1"/>
-      <path d="M110 60 Q130 50 150 60" stroke="rgba(80,144,224,.3)" stroke-width="0.9" fill="none"/>
-      <!-- Col -->
-      <path d="M105 124 Q130 136 155 124 L150 150 Q130 160 110 150 Z" fill="#0C0E1A" stroke="${G(.22)}" stroke-width="1"/>
-
+      <path d="M80 118 L60 365 L200 365 L180 118 L158 108 L130 114 L102 108 Z" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1.2"/>
+      <path d="M102 120 L88 365 M158 120 L172 365" stroke="${G(.08)}" stroke-width="0.8" fill="none"/>
+      <path d="M100 162 Q130 148 160 162 Q160 198 130 207 Q100 198 100 162 Z" fill="rgba(42,95,168,.06)" stroke="rgba(80,144,224,.22)" stroke-width="0.8"/>
+      <circle cx="130" cy="180" r="9" fill="rgba(80,144,224,.08)" stroke="rgba(80,144,224,.38)" stroke-width="1"/>
+      <line x1="121" y1="180" x2="139" y2="180" stroke="rgba(80,144,224,.55)" stroke-width="1"/>
+      <line x1="130" y1="171" x2="130" y2="189" stroke="rgba(80,144,224,.55)" stroke-width="1"/>
+      <text x="130" y="245" text-anchor="middle" font-size="10" fill="rgba(80,144,224,.22)" font-family="serif">ᚱ ᚢ ᚾ ᛖ</text>
+      <text x="130" y="275" text-anchor="middle" font-size="9" fill="rgba(80,144,224,.15)" font-family="serif">ᛗ ᚨ ᚷ ᛁ ᚲ</text>
+      <ellipse cx="80" cy="122" rx="18" ry="11" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1"/>
+      <ellipse cx="180" cy="122" rx="18" ry="11" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1"/>
+      <path d="M62 128 L32 160 L22 248" stroke="#0A0C18" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <path d="M22 248 L14 305 L26 308 L35 254" fill="#0A0C18" stroke="${G(.18)}" stroke-width="1"/>
+      <ellipse cx="20" cy="315" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
+      <line x1="19" y1="328" x2="8" y2="380" stroke="${G(.42)}" stroke-width="1.8"/>
+      <circle cx="7" cy="383" r="6" fill="rgba(80,144,224,.12)" stroke="rgba(80,144,224,.65)" stroke-width="1.2"/>
+      <circle cx="7" cy="383" r="12" fill="none" stroke="rgba(80,144,224,.18)" stroke-width="0.8"/>
+      <path d="M198 128 L228 160 L238 248" stroke="#0A0C18" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <path d="M238 248 L246 305 L234 308 L225 254" fill="#0A0C18" stroke="${G(.18)}" stroke-width="1"/>
+      <ellipse cx="240" cy="315" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
+      <rect x="232" y="328" width="26" height="34" rx="2" fill="rgba(42,95,168,.1)" stroke="${G(.35)}" stroke-width="1.2"/>
+      <line x1="236" y1="336" x2="253" y2="336" stroke="${G(.22)}" stroke-width="0.7"/>
+      <line x1="235" y1="343" x2="253" y2="343" stroke="${G(.22)}" stroke-width="0.7"/>
+      <line x1="235" y1="350" x2="252" y2="350" stroke="${G(.22)}" stroke-width="0.7"/>
+      <path d="M90 78 Q130 32 170 78 L172 110 L130 128 L88 110 Z" fill="#0C0E1A" stroke="${G(.25)}" stroke-width="1.2"/>
+      <ellipse cx="130" cy="95" rx="18" ry="20" fill="#100E1A" stroke="${G(.18)}" stroke-width="1"/>
+      <ellipse cx="114" cy="90" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
+      <ellipse cx="146" cy="90" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
+      <circle cx="114" cy="90" r="2" fill="rgba(80,144,224,.75)"/>
+      <circle cx="146" cy="90" r="2" fill="rgba(80,144,224,.75)"/>
+      <path d="M107 116 Q130 128 153 116" stroke="${G(.38)}" stroke-width="1.5" fill="none"/>
+      <circle cx="130" cy="129" r="5" fill="rgba(80,144,224,.12)" stroke="${G(.38)}" stroke-width="1"/>
       <!-- Zones -->
       <g class="vzone" ${hl('identite')}><ellipse cx="130" cy="86" rx="38" ry="42" opacity=".01"/>
         <text x="170" y="58" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">IDENTITÉ</text>
@@ -2111,87 +2128,10 @@ function getSilhouetteSVG(classe, activeZone){
         <text x="168" y="352" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">HISTOIRE</text>
         <line x1="164" y1="355" x2="152" y2="356" stroke="${G(.3)}" stroke-width="0.8"/>
       </g>
-    `,
-    'Oracle': `
-      <rect x="0" y="0" width="260" height="380" fill="#0A0810"/>
-      <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(120,160,224,.05)"/>
-      <ellipse cx="130" cy="365" rx="55" ry="8" fill="rgba(120,160,224,.12)"/>
-      <!-- Halo lumineux -->
-      <circle cx="130" cy="92" r="58" fill="none" stroke="rgba(160,200,255,.12)" stroke-width="1"/>
-      <circle cx="130" cy="92" r="68" fill="none" stroke="rgba(160,200,255,.06)" stroke-width="0.8"/>
-      <circle cx="62" cy="55" r="2" fill="rgba(160,200,255,.4)"/>
-      <circle cx="200" cy="60" r="2.5" fill="rgba(160,200,255,.35)"/>
-      <!-- Robe longue fluide -->
-      <path d="M90 145 Q70 250 58 360 L202 360 Q190 250 170 145 Q130 162 90 145 Z" fill="#100E1C" stroke="${G(.22)}" stroke-width="1.2"/>
-      <path d="M108 152 L96 360 M152 152 L164 360" stroke="${G(.08)}" stroke-width="0.8" fill="none"/>
-      <!-- Voile/étole -->
-      <path d="M95 150 Q70 220 78 330 L98 330 Q92 230 112 158 Z" fill="rgba(120,160,224,.06)" stroke="rgba(160,200,255,.22)" stroke-width="0.8"/>
-      <path d="M165 150 Q190 220 182 330 L162 330 Q168 230 148 158 Z" fill="rgba(120,160,224,.06)" stroke="rgba(160,200,255,.22)" stroke-width="0.8"/>
-      <!-- Symbole sacré sur le buste -->
-      <circle cx="130" cy="220" r="20" fill="rgba(120,160,224,.07)" stroke="rgba(160,200,255,.3)" stroke-width="1"/>
-      <path d="M130 204 L130 236 M118 220 L142 220" stroke="rgba(160,200,255,.5)" stroke-width="1"/>
-      <path d="M119 209 Q130 198 141 209" stroke="rgba(160,200,255,.35)" stroke-width="0.9" fill="none"/>
-      <!-- Bras gauche tenant une coupe -->
-      <path d="M88 165 Q62 185 56 230 L52 280" stroke="#100E1C" stroke-width="20" stroke-linecap="round" fill="none"/>
-      <path d="M88 165 Q62 185 56 230 L52 280" stroke="${G(.18)}" stroke-width="1" fill="none"/>
-      <ellipse cx="52" cy="284" rx="13" ry="16" fill="#100E1C" stroke="${G(.22)}" stroke-width="1"/>
-      <!-- Coupe sacrée -->
-      <path d="M34 296 L70 296 L64 320 Q52 328 40 320 Z" fill="rgba(120,160,224,.1)" stroke="rgba(160,200,255,.5)" stroke-width="1.2"/>
-      <ellipse cx="52" cy="296" rx="18" ry="5" fill="rgba(160,200,255,.18)" stroke="rgba(160,200,255,.5)" stroke-width="1"/>
-      <path d="M52 328 L52 340" stroke="rgba(160,200,255,.4)" stroke-width="1.2"/>
-      <!-- Goutte d'eau au-dessus -->
-      <path d="M52 270 Q60 285 52 292 Q44 285 52 270 Z" fill="rgba(120,180,255,.35)" stroke="rgba(160,200,255,.6)" stroke-width="0.8"/>
-      <!-- Bras droit levé en bénédiction -->
-      <path d="M172 165 Q200 175 210 138 L218 96" stroke="#100E1C" stroke-width="20" stroke-linecap="round" fill="none"/>
-      <path d="M172 165 Q200 175 210 138 L218 96" stroke="${G(.18)}" stroke-width="1" fill="none"/>
-      <ellipse cx="219" cy="92" rx="13" ry="16" fill="#100E1C" stroke="${G(.22)}" stroke-width="1"/>
-      <circle cx="219" cy="68" r="10" fill="rgba(160,200,255,.15)" stroke="rgba(160,200,255,.55)" stroke-width="1.2"/>
-      <circle cx="219" cy="68" r="18" fill="none" stroke="rgba(160,200,255,.18)" stroke-width="0.8"/>
-      <!-- Tête -->
-      <circle cx="130" cy="92" r="26" fill="#140F22" stroke="${G(.2)}" stroke-width="1"/>
-      <ellipse cx="118" cy="90" rx="5" ry="4" fill="rgba(160,200,255,.18)"/>
-      <ellipse cx="142" cy="90" rx="5" ry="4" fill="rgba(160,200,255,.18)"/>
-      <circle cx="118" cy="90" r="2" fill="rgba(160,200,255,.8)"/>
-      <circle cx="142" cy="90" r="2" fill="rgba(160,200,255,.8)"/>
-      <path d="M120 108 Q130 113 140 108" stroke="${G(.35)}" stroke-width="1.3" fill="none"/>
-      <!-- Diadème / coiffe -->
-      <path d="M104 72 Q130 58 156 72" stroke="${G(.5)}" stroke-width="2.5" fill="none"/>
-      <circle cx="130" cy="64" r="6" fill="rgba(160,200,255,.25)" stroke="rgba(160,200,255,.7)" stroke-width="1.2"/>
-      <path d="M100 78 Q72 100 70 145" stroke="#140F22" stroke-width="14" stroke-linecap="round" fill="none"/>
-      <path d="M100 78 Q72 100 70 145" stroke="${G(.18)}" stroke-width="0.8" fill="none"/>
-      <path d="M160 78 Q188 100 190 145" stroke="#140F22" stroke-width="14" stroke-linecap="round" fill="none"/>
-      <path d="M160 78 Q188 100 190 145" stroke="${G(.18)}" stroke-width="0.8" fill="none"/>
-      <!-- Col -->
-      <path d="M105 116 Q130 128 155 116 L150 142 Q130 152 110 142 Z" fill="#140F22" stroke="${G(.22)}" stroke-width="1"/>
+    `
+  };
 
-      <!-- Zones -->
-      <g class="vzone" ${hl('identite')}><ellipse cx="130" cy="86" rx="38" ry="42" opacity=".01"/>
-        <text x="170" y="58" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">IDENTITÉ</text>
-        <line x1="165" y1="62" x2="152" y2="74" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('dons')}><ellipse cx="130" cy="195" rx="68" ry="78" opacity=".01"/>
-        <text x="170" y="165" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">DONS</text>
-        <line x1="165" y1="168" x2="155" y2="182" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('armes')}><ellipse cx="28" cy="225" rx="30" ry="52" opacity=".01"/>
-        <text x="2" y="148" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ARMES</text>
-        <line x1="22" y1="152" x2="24" y2="178" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('equip')}><ellipse cx="238" cy="280" rx="28" ry="40" opacity=".01"/>
-        <text x="188" y="295" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ÉQUIP.</text>
-        <line x1="217" y1="294" x2="232" y2="285" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('stats')}><ellipse cx="130" cy="315" rx="72" ry="42" opacity=".01"/>
-        <text x="170" y="308" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">STATS</text>
-        <line x1="165" y1="311" x2="152" y2="315" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('histoire')}><ellipse cx="130" cy="355" rx="48" ry="22" opacity=".01"/>
-        <text x="168" y="352" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">HISTOIRE</text>
-        <line x1="164" y1="355" x2="152" y2="356" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-    `  };
-
-  const CLASS_MAP = {Gardien:'Cogneur', "Lames Noires":'Cogneur', "Rôdeur":'Cogneur', Troubadour:'Arcaniste'};
+  const CLASS_MAP = {Gardien:'Cogneur', Oracle:'Arcaniste', "Lames Noires":'Cogneur', "Rôdeur":'Cogneur', Troubadour:'Arcaniste'};
   const mapped = silhouettes[classe] || silhouettes[CLASS_MAP[classe]] || silhouettes['Cogneur'];
   const defaultSvg = mapped;
   return defaultSvg;
@@ -2376,23 +2316,155 @@ document.addEventListener('click', function(e) {
 // Sync PV/Mana en temps réel
 
 // ===== VITRUVE PANEL =====
-function vitruveShowPanel(name, zone){
-  const panels = getPanelsForChar(name);
-  const data = panels[zone];
-  if(!data) return;
+const EMOJI_ICON = {
+  '🔥':'ti-flame','🌬':'ti-wind','💨':'ti-wind','🔮':'ti-eye','🌑':'ti-moon','✨':'ti-sparkles',
+  '📚':'ti-book','⚔':'ti-swords','💥':'ti-bolt','🌿':'ti-leaf','💪':'ti-barbell','🌸':'ti-flower',
+  '👁':'ti-eye','🛡':'ti-shield','🥁':'ti-music','💧':'ti-droplet','🤝':'ti-handshake','🔨':'ti-hammer',
+  '⚡':'ti-bolt','🌊':'ti-droplet'
+};
+function stripLeadingEmoji(str){
+  return str.replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}\uFE0F]+\s*/u,'').trim();
+}
+function iconForText(str){
+  const s=(str||'').toLowerCase();
+  for(const key in EMOJI_ICON){ if(str && str.indexOf(key)===0) return EMOJI_ICON[key]; }
+  if(/ration/.test(s)) return 'ti-bread';
+  if(/sac|besace|sacoche/.test(s)) return 'ti-briefcase';
+  if(/kit médical|bandage|potion|soin/.test(s)) return 'ti-first-aid-kit';
+  if(/boussole/.test(s)) return 'ti-compass';
+  if(/parchemin|livre|grimoire|tome/.test(s)) return 'ti-book';
+  if(/corde/.test(s)) return 'ti-circle-dot';
+  if(/lanterne|torche/.test(s)) return 'ti-bulb';
+  if(/balle|munition|silex|pistolet|fusil|arc\b/.test(s)) return 'ti-target';
+  if(/anneau|bague/.test(s)) return 'ti-circle-dot';
+  if(/rune/.test(s)) return 'ti-stars';
+  if(/crochetage|crochet/.test(s)) return 'ti-key';
+  if(/tambourin|castagnette|musique/.test(s)) return 'ti-music';
+  if(/épée|epee|dague|hache|lame|marteau|pioche|bâton|baton|wok|lance\b|arme/.test(s)) return 'ti-sword';
+  if(/robe|armure|bouclier|cuirasse/.test(s)) return 'ti-shield';
+  return 'ti-package';
+}
+function parseQty(str){
+  const m=str.match(/^(.*?)\s*[x×]\s*(\d+)\s*$/i);
+  if(m) return {name:m[1].trim(),qty:m[2]};
+  return {name:str.trim(),qty:null};
+}
+function parseStat(str){
+  const m=str.match(/^(.*?)\s*\(([^)]*)\)\s*$/);
+  if(m) return {name:m[1].trim(),stat:m[2].trim()};
+  return {name:str.trim(),stat:null};
+}
+function vcard(icon,label,value,sub){
+  return '<div class="vcard center"><div class="vcard-icon"><i class="ti '+icon+'" aria-hidden="true"></i></div>'
+    +(label?'<div class="vcard-lbl">'+label+'</div>':'')
+    +'<div class="vcard-val">'+value+'</div>'
+    +(sub?'<div class="vcard-sub">'+sub+'</div>':'')+'</div>';
+}
+function vcardRow(icon,label,value,sub){
+  return '<div class="vcard"><div class="vcard-row"><i class="ti '+icon+'" aria-hidden="true"></i><span class="vcard-val">'+label+'</span></div>'
+    +(value?'<div class="vcard-sub">'+value+(sub?(' · '+sub):'')+'</div>':'')+'</div>';
+}
+
+window.vitruveEditField=(name,zone,field)=>{
+  const pc=document.getElementById('vpanel-content');
+  const cur=charData[name][field]??'';
+  const ta=document.createElement('textarea');ta.className='ef-area';ta.value=cur;ta.rows=6;
+  pc.innerHTML='';pc.appendChild(ta);ta.focus();
+  ta.onblur=async()=>{
+    charData[name][field]=ta.value.trim();
+    await saveChar(name);
+    vitruveShowPanel(name,zone);
+  };
+};
+
+  const c = charData[name];
+  if(!c) return;
   document.getElementById('vpanel-empty').style.display='none';
   const pc = document.getElementById('vpanel-content');
   pc.style.display='block';
-  let html = '<div class="vpanel-head">'+data.icon+' '+data.title+'</div>';
-  data.items.forEach(it=>{
-    html += '<div class="vpanel-item">';
-    if(it.l) html += '<div class="vpanel-lbl">'+it.l+'</div>';
-    html += '<div class="vpanel-val">'+it.v+'</div></div>';
-  });
+  let head='', body='';
+
+  if(zone==='identite'){
+    head='👤 Identité';
+    body += '<div class="vcard-grid">'
+      + vcard('ti-paw','Race',c.race||'—')
+      + vcard('ti-gender-'+((c.genre||'').toLowerCase()==='femme'?'female':'male'),'Genre',c.genre||'—')
+      + vcard('ti-language','Langues',c.langues||'—')
+      + '</div>';
+    body += '<div class="vcard"><div class="vcard-lbl"><i class="ti ti-compass" aria-hidden="true"></i> Valeurs</div><div class="vpills" style="margin-top:8px;">'
+      + (c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>'<span class="vpill">'+v.trim()+'</span>').join('')
+      + '</div></div>';
+    body += '<div class="vcard" style="margin-top:10px;border-left:2px solid rgba(160,120,32,.5);"><div class="vcard-lbl">Histoire</div><div class="vcard-val">'+(c.notes||'—')+'</div></div>';
+  }
+  else if(zone==='dons'){
+    head='✨ Dons & capacités';
+    const dons=(c.dons||'').split('\n').filter(d=>d.trim());
+    body += '<div class="vcard-grid">' + dons.map(d=>{
+      const icon=iconForText(d);
+      const clean=stripLeadingEmoji(d);
+      let sep=clean.indexOf(' — ')>=0?' — ':(clean.indexOf(' : ')>=0?' : ':null);
+      let nom=clean, eff='';
+      if(sep){ const parts=clean.split(sep); nom=parts[0].trim(); eff=parts.slice(1).join(sep).trim(); }
+      return vcard(icon,null,nom,eff||null);
+    }).join('') + '</div>';
+  }
+  else if(zone==='armes'){
+    head='⚔ Armement & armures';
+    const armes=(c.armes||'').split('\n').filter(a=>a.trim());
+    const armures=(c.armures||'').split('\n').filter(a=>a.trim());
+    if(armes.length){
+      body += '<div class="vsubhead">Armes</div><div class="vcard-grid">' + armes.map(a=>{
+        const p=parseStat(a); return vcard(iconForText(p.name),null,p.name,p.stat);
+      }).join('') + '</div>';
+    }
+    if(armures.length){
+      body += '<div class="vsubhead">Armures & protections</div><div class="vcard-grid">' + armures.map(a=>{
+        const p=parseStat(a); return vcard(iconForText(p.name)==='ti-package'?'ti-shield':iconForText(p.name),null,p.name,p.stat);
+      }).join('') + '</div>';
+    }
+    if(!armes.length && !armures.length) body += '<div class="vcard-val">—</div>';
+  }
+  else if(zone==='equip'){
+    head='🎒 Équipement';
+    const items=(c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
+    body += '<div class="vcard-grid">' + items.map(it=>{
+      const p=parseQty(it); return vcard(iconForText(p.name),p.name,p.qty?('×'+p.qty):'');
+    }).join('') + '</div>';
+    if(!items.length) body += '<div class="vcard-val">—</div>';
+  }
+  else if(zone==='stats'){
+    head='📊 Statistiques';
+    body += '<div class="vcard-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px;">'
+      + vcard('ti-heart','PV / '+c.pv_max, c.pv)
+      + vcard('ti-droplet','Mana / '+c.mana_max, c.mana)
+      + vcard('ti-star','Niveau', c.niveau)
+      + '</div>';
+    [['Physique',c.phys],['Social',c.social],['Mental',c.mental]].forEach(([lbl,val])=>{
+      const v=parseInt(val)||0;
+      body += '<div class="vbar-row"><div class="vbar-top"><span>'+lbl+'</span><span>'+val+'%</span></div>'
+        + '<div class="vbar-track"><div class="vbar-fill" style="width:'+v+'%;"></div></div></div>';
+    });
+  }
+  else if(zone==='histoire'){
+    head='📜 Bonus & malus de race';
+    const lines=(c.race_bonus||'').split('\n').filter(r=>r.trim());
+    body += '<div class="vcard-grid">' + lines.map(l=>{
+      const isBonus=l.indexOf('🟢')===0 || /\+\d/.test(l);
+      const clean=stripLeadingEmoji(l);
+      const m=clean.match(/^(.*?)\s*([+−-]\s*\d+%?)\s*$/);
+      const lbl=m?m[1].trim():clean, val=m?m[2].trim():'';
+      return '<div class="vbm '+(isBonus?'bonus':'malus')+'"><i class="ti '+(isBonus?'ti-arrow-up':'ti-arrow-down')+'" aria-hidden="true"></i>'
+        + '<div><div class="vbm-lbl">'+lbl+'</div><div class="vbm-val">'+val+'</div></div></div>';
+    }).join('') + '</div>';
+  }
+  else { return; }
+
+  let html = '<div class="vpanel-head">'+head+'</div>'+body;
+
   if(isMJ){
-    const fieldMap = {identite:'name',dons:'dons',armes:'armes',equip:'equip',stats:'phys',histoire:'notes'};
+    const fieldMap = {identite:'notes',dons:'dons',armes:'armes',equip:'equip',histoire:'race_bonus'};
     const field = fieldMap[zone];
-    if(field) html += '<button class="vpanel-edit" onclick="editFieldArea(\''+name+'\',\''+field+'\')"><i class="ti ti-pencil"></i> Modifier</button>';
+    if(field) html += '<button class="vpanel-edit" onclick="vitruveEditField(\''+name+'\',\''+zone+'\',\''+field+'\')"><i class="ti ti-pencil"></i> Modifier</button>';
   }
   // Bouton Furmiaou pour Firm
   if(name==='firm'){
