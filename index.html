@@ -1991,6 +1991,39 @@ function getSilhouetteSVG(classe, activeZone){
     ? `fill="${G(.12)}" stroke="${G(.7)}" stroke-width="2.5" style="cursor:pointer;" data-zone="${z}"`
     : `fill="${G(0)}" stroke="${G(.25)}" stroke-width="1.5" style="cursor:pointer;" data-zone="${z}"`;
 
+  const zonesBlock = `
+    <g class="vzone" ${hl('identite')}>
+      <ellipse cx="130" cy="62" rx="40" ry="44" opacity=".01"/>
+      <text x="170" y="48" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">IDENTITÉ</text>
+      <line x1="165" y1="52" x2="152" y2="58" stroke="${G(.3)}" stroke-width="0.8"/>
+    </g>
+    <g class="vzone" ${hl('dons')}>
+      <ellipse cx="130" cy="195" rx="70" ry="75" opacity=".01"/>
+      <text x="170" y="165" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">DONS</text>
+      <line x1="165" y1="168" x2="158" y2="180" stroke="${G(.3)}" stroke-width="0.8"/>
+    </g>
+    <g class="vzone" ${hl('armes')}>
+      <ellipse cx="30" cy="220" rx="32" ry="55" opacity=".01"/>
+      <text x="2" y="148" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ARMES</text>
+      <line x1="22" y1="152" x2="26" y2="175" stroke="${G(.3)}" stroke-width="0.8"/>
+    </g>
+    <g class="vzone" ${hl('equip')}>
+      <ellipse cx="230" cy="220" rx="32" ry="55" opacity=".01"/>
+      <text x="185" y="148" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ÉQUIP.</text>
+      <line x1="214" y1="152" x2="230" y2="175" stroke="${G(.3)}" stroke-width="0.8"/>
+    </g>
+    <g class="vzone" ${hl('stats')}>
+      <ellipse cx="130" cy="290" rx="75" ry="45" opacity=".01"/>
+      <text x="170" y="285" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">STATS</text>
+      <line x1="165" y1="288" x2="155" y2="290" stroke="${G(.3)}" stroke-width="0.8"/>
+    </g>
+    <g class="vzone" ${hl('histoire')}>
+      <ellipse cx="130" cy="340" rx="55" ry="30" opacity=".01"/>
+      <text x="170" y="330" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">HISTOIRE</text>
+      <line x1="165" y1="333" x2="152" y2="340" stroke="${G(.3)}" stroke-width="0.8"/>
+    </g>
+  `;
+
   const silhouettes = {
     'Cogneur': `
       <rect x="0" y="0" width="260" height="380" fill="#0A0604"/>
@@ -2065,73 +2098,97 @@ function getSilhouetteSVG(classe, activeZone){
       </g>
     `,
     'Arcaniste': `
-      <rect x="0" y="0" width="260" height="380" fill="#060810"/>
-      <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(42,95,168,.04)"/>
+      <rect x="0" y="0" width="260" height="380" fill="#06080F"/>
+      <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(80,144,224,.05)"/>
       <ellipse cx="130" cy="365" rx="50" ry="8" fill="rgba(42,95,168,.12)"/>
-      <circle cx="28" cy="72" r="2.5" fill="rgba(80,144,224,.4)"/>
-      <circle cx="235" cy="95" r="2" fill="rgba(80,144,224,.35)"/>
-      <circle cx="22" cy="260" r="2" fill="rgba(80,144,224,.25)"/>
-      <circle cx="240" cy="230" r="2.5" fill="rgba(80,144,224,.3)"/>
-      <path d="M80 118 L60 365 L200 365 L180 118 L158 108 L130 114 L102 108 Z" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1.2"/>
-      <path d="M102 120 L88 365 M158 120 L172 365" stroke="${G(.08)}" stroke-width="0.8" fill="none"/>
-      <path d="M100 162 Q130 148 160 162 Q160 198 130 207 Q100 198 100 162 Z" fill="rgba(42,95,168,.06)" stroke="rgba(80,144,224,.22)" stroke-width="0.8"/>
-      <circle cx="130" cy="180" r="9" fill="rgba(80,144,224,.08)" stroke="rgba(80,144,224,.38)" stroke-width="1"/>
-      <line x1="121" y1="180" x2="139" y2="180" stroke="rgba(80,144,224,.55)" stroke-width="1"/>
-      <line x1="130" y1="171" x2="130" y2="189" stroke="rgba(80,144,224,.55)" stroke-width="1"/>
-      <text x="130" y="245" text-anchor="middle" font-size="10" fill="rgba(80,144,224,.22)" font-family="serif">ᚱ ᚢ ᚾ ᛖ</text>
-      <text x="130" y="275" text-anchor="middle" font-size="9" fill="rgba(80,144,224,.15)" font-family="serif">ᛗ ᚨ ᚷ ᛁ ᚲ</text>
-      <ellipse cx="80" cy="122" rx="18" ry="11" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1"/>
-      <ellipse cx="180" cy="122" rx="18" ry="11" fill="#0C0E1A" stroke="${G(.2)}" stroke-width="1"/>
-      <path d="M62 128 L32 160 L22 248" stroke="#0A0C18" stroke-width="22" stroke-linecap="round" fill="none"/>
-      <path d="M22 248 L14 305 L26 308 L35 254" fill="#0A0C18" stroke="${G(.18)}" stroke-width="1"/>
-      <ellipse cx="20" cy="315" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
-      <line x1="19" y1="328" x2="8" y2="380" stroke="${G(.42)}" stroke-width="1.8"/>
-      <circle cx="7" cy="383" r="6" fill="rgba(80,144,224,.12)" stroke="rgba(80,144,224,.65)" stroke-width="1.2"/>
-      <circle cx="7" cy="383" r="12" fill="none" stroke="rgba(80,144,224,.18)" stroke-width="0.8"/>
-      <path d="M198 128 L228 160 L238 248" stroke="#0A0C18" stroke-width="22" stroke-linecap="round" fill="none"/>
-      <path d="M238 248 L246 305 L234 308 L225 254" fill="#0A0C18" stroke="${G(.18)}" stroke-width="1"/>
-      <ellipse cx="240" cy="315" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
-      <rect x="232" y="328" width="26" height="34" rx="2" fill="rgba(42,95,168,.1)" stroke="${G(.35)}" stroke-width="1.2"/>
-      <line x1="236" y1="336" x2="253" y2="336" stroke="${G(.22)}" stroke-width="0.7"/>
-      <line x1="235" y1="343" x2="253" y2="343" stroke="${G(.22)}" stroke-width="0.7"/>
-      <line x1="235" y1="350" x2="252" y2="350" stroke="${G(.22)}" stroke-width="0.7"/>
-      <path d="M90 78 Q130 32 170 78 L172 110 L130 128 L88 110 Z" fill="#0C0E1A" stroke="${G(.25)}" stroke-width="1.2"/>
-      <ellipse cx="130" cy="95" rx="18" ry="20" fill="#100E1A" stroke="${G(.18)}" stroke-width="1"/>
-      <ellipse cx="114" cy="90" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
-      <ellipse cx="146" cy="90" rx="5" ry="4" fill="rgba(80,144,224,.18)"/>
-      <circle cx="114" cy="90" r="2" fill="rgba(80,144,224,.75)"/>
-      <circle cx="146" cy="90" r="2" fill="rgba(80,144,224,.75)"/>
-      <path d="M107 116 Q130 128 153 116" stroke="${G(.38)}" stroke-width="1.5" fill="none"/>
-      <circle cx="130" cy="129" r="5" fill="rgba(80,144,224,.12)" stroke="${G(.38)}" stroke-width="1"/>
-      <!-- Zones -->
-      <g class="vzone" ${hl('identite')}><ellipse cx="130" cy="86" rx="38" ry="42" opacity=".01"/>
-        <text x="170" y="58" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">IDENTITÉ</text>
-        <line x1="165" y1="62" x2="152" y2="74" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('dons')}><ellipse cx="130" cy="195" rx="68" ry="78" opacity=".01"/>
-        <text x="170" y="165" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">DONS</text>
-        <line x1="165" y1="168" x2="155" y2="182" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('armes')}><ellipse cx="28" cy="225" rx="30" ry="52" opacity=".01"/>
-        <text x="2" y="148" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ARMES</text>
-        <line x1="22" y1="152" x2="24" y2="178" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('equip')}><ellipse cx="238" cy="280" rx="28" ry="40" opacity=".01"/>
-        <text x="188" y="295" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">ÉQUIP.</text>
-        <line x1="217" y1="294" x2="232" y2="285" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('stats')}><ellipse cx="130" cy="315" rx="72" ry="42" opacity=".01"/>
-        <text x="170" y="308" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">STATS</text>
-        <line x1="165" y1="311" x2="152" y2="315" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
-      <g class="vzone" ${hl('histoire')}><ellipse cx="130" cy="355" rx="48" ry="22" opacity=".01"/>
-        <text x="168" y="352" font-size="9" fill="${G(.5)}" font-family="'Cinzel',serif" letter-spacing=".06em">HISTOIRE</text>
-        <line x1="164" y1="355" x2="152" y2="356" stroke="${G(.3)}" stroke-width="0.8"/>
-      </g>
+      <circle cx="28" cy="70" r="2" fill="rgba(80,144,224,.4)"/>
+      <circle cx="232" cy="100" r="2" fill="rgba(80,144,224,.3)"/>
+      <circle cx="20" cy="260" r="2" fill="rgba(80,144,224,.25)"/>
+      <circle cx="240" cy="240" r="2.5" fill="rgba(80,144,224,.3)"/>
+      <path d="M90 110 L60 360 L200 360 L170 110 L150 100 L110 100 Z" fill="#0C0E1C" stroke="${G(.22)}" stroke-width="1.2"/>
+      <path d="M104 112 L92 360 M156 112 L168 360" stroke="${G(.08)}" stroke-width="0.8" fill="none"/>
+      <path d="M92 218 L168 218 L172 234 L88 234 Z" fill="${G(.05)}" stroke="${G(.25)}" stroke-width="1"/>
+      <circle cx="130" cy="170" r="22" fill="rgba(80,144,224,.05)" stroke="rgba(80,144,224,.4)" stroke-width="1"/>
+      <circle cx="130" cy="170" r="12" fill="none" stroke="rgba(80,144,224,.3)" stroke-width="0.8"/>
+      <line x1="108" y1="170" x2="152" y2="170" stroke="rgba(80,144,224,.45)" stroke-width="0.8"/>
+      <line x1="130" y1="148" x2="130" y2="192" stroke="rgba(80,144,224,.45)" stroke-width="0.8"/>
+      <path d="M92 118 L55 158 L48 270" stroke="#0A0C18" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <ellipse cx="46" cy="282" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
+      <line x1="40" y1="58" x2="28" y2="330" stroke="${G(.4)}" stroke-width="2.5"/>
+      <circle cx="30" cy="52" r="10" fill="rgba(80,144,224,.12)" stroke="rgba(80,144,224,.7)" stroke-width="1.4"/>
+      <circle cx="30" cy="52" r="17" fill="none" stroke="rgba(80,144,224,.2)" stroke-width="0.8"/>
+      <path d="M168 118 L208 158 L218 262" stroke="#0A0C18" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <ellipse cx="220" cy="274" rx="11" ry="13" fill="#0A0C18" stroke="${G(.2)}" stroke-width="1"/>
+      <rect x="206" y="284" width="30" height="24" rx="2" fill="rgba(80,144,224,.08)" stroke="${G(.3)}" stroke-width="1"/>
+      <line x1="221" y1="290" x2="221" y2="304" stroke="${G(.2)}" stroke-width="0.8"/>
+      <path d="M92 80 Q130 28 168 80 L172 105 L130 122 L88 105 Z" fill="#0C0E1C" stroke="${G(.25)}" stroke-width="1.2"/>
+      <ellipse cx="130" cy="92" rx="19" ry="21" fill="#10101E" stroke="${G(.18)}" stroke-width="1"/>
+      <circle cx="123" cy="90" r="2" fill="rgba(80,144,224,.8)"/>
+      <circle cx="137" cy="90" r="2" fill="rgba(80,144,224,.8)"/>
+      <path d="M100 78 L130 18 L160 78 Z" fill="#0C0E1C" stroke="${G(.25)}" stroke-width="1.2"/>
+      <circle cx="130" cy="22" r="4" fill="rgba(80,144,224,.5)" stroke="rgba(80,144,224,.8)" stroke-width="0.8"/>
+      ${zonesBlock}
+    `,
+    'Oracle': `
+      <rect x="0" y="0" width="260" height="380" fill="#0F0A04"/>
+      <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(230,190,110,.05)"/>
+      <ellipse cx="130" cy="365" rx="50" ry="8" fill="rgba(230,190,110,.1)"/>
+      <ellipse cx="130" cy="58" rx="48" ry="13" fill="none" stroke="rgba(230,190,110,.35)" stroke-width="1.5"/>
+      <ellipse cx="130" cy="58" rx="48" ry="13" fill="none" stroke="rgba(230,190,110,.15)" stroke-width="4"/>
+      <path d="M90 112 L65 360 L195 360 L170 112 L148 102 L112 102 Z" fill="#1C150C" stroke="${G(.25)}" stroke-width="1.2"/>
+      <path d="M104 114 L94 360 M156 114 L166 360" stroke="${G(.1)}" stroke-width="0.8" fill="none"/>
+      <path d="M112 104 L102 360" stroke="rgba(230,190,110,.25)" stroke-width="6" fill="none"/>
+      <circle cx="130" cy="178" r="20" fill="rgba(230,190,110,.06)" stroke="rgba(230,190,110,.45)" stroke-width="1"/>
+      <line x1="130" y1="161" x2="130" y2="195" stroke="rgba(230,190,110,.5)" stroke-width="2"/>
+      <line x1="115" y1="178" x2="145" y2="178" stroke="rgba(230,190,110,.5)" stroke-width="2"/>
+      <path d="M92 120 L58 158 L50 280" stroke="#1A130A" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <ellipse cx="48" cy="292" rx="11" ry="13" fill="#1A130A" stroke="${G(.2)}" stroke-width="1"/>
+      <line x1="38" y1="56" x2="28" y2="330" stroke="${G(.42)}" stroke-width="2.5"/>
+      <circle cx="30" cy="50" r="11" fill="rgba(230,190,110,.12)" stroke="rgba(230,190,110,.75)" stroke-width="1.4"/>
+      <circle cx="30" cy="50" r="18" fill="none" stroke="rgba(230,190,110,.18)" stroke-width="0.8"/>
+      <path d="M168 120 L205 155 L218 248" stroke="#1A130A" stroke-width="20" stroke-linecap="round" fill="none"/>
+      <ellipse cx="222" cy="262" rx="14" ry="14" fill="rgba(230,190,110,.06)" stroke="rgba(230,190,110,.4)" stroke-width="1"/>
+      <circle cx="222" cy="262" r="5" fill="rgba(230,190,110,.4)"/>
+      <path d="M94 78 Q130 30 166 78 L168 108 L130 124 L92 108 Z" fill="#1C150C" stroke="${G(.25)}" stroke-width="1.2"/>
+      <ellipse cx="130" cy="94" rx="18" ry="20" fill="#221A0E" stroke="${G(.18)}" stroke-width="1"/>
+      <circle cx="123" cy="92" r="2" fill="rgba(230,190,110,.8)"/>
+      <circle cx="137" cy="92" r="2" fill="rgba(230,190,110,.8)"/>
+      <path d="M96 76 Q130 50 164 76" stroke="${G(.35)}" stroke-width="1.2" fill="none"/>
+      ${zonesBlock}
+    `,
+    'Gardien': `
+      <rect x="0" y="0" width="260" height="380" fill="#070C07"/>
+      <ellipse cx="130" cy="190" rx="118" ry="160" fill="rgba(90,180,110,.05)"/>
+      <ellipse cx="130" cy="365" rx="60" ry="9" fill="rgba(0,0,0,.4)"/>
+      <rect x="92" y="265" width="30" height="92" rx="4" fill="#101A10" stroke="${G(.25)}" stroke-width="1"/>
+      <rect x="138" y="265" width="30" height="92" rx="4" fill="#101A10" stroke="${G(.25)}" stroke-width="1"/>
+      <rect x="86" y="340" width="42" height="24" rx="4" fill="#0C140C" stroke="${G(.3)}" stroke-width="1"/>
+      <rect x="132" y="340" width="42" height="24" rx="4" fill="#0C140C" stroke="${G(.3)}" stroke-width="1"/>
+      <path d="M76 122 L70 268 L190 268 L184 122 L160 110 L130 116 L100 110 Z" fill="#162016" stroke="${G(.28)}" stroke-width="1.2"/>
+      <path d="M100 112 L94 268 M160 112 L166 268" stroke="${G(.1)}" stroke-width="0.8" fill="none"/>
+      <path d="M130 150 Q150 165 130 198 Q110 165 130 150 Z" fill="rgba(90,180,110,.1)" stroke="rgba(90,180,110,.5)" stroke-width="1.2"/>
+      <line x1="130" y1="150" x2="130" y2="198" stroke="rgba(90,180,110,.4)" stroke-width="0.8"/>
+      <rect x="74" y="255" width="114" height="14" rx="2" fill="#0E160E" stroke="${G(.3)}" stroke-width="1"/>
+      <ellipse cx="74" cy="128" rx="24" ry="15" fill="#1A241A" stroke="${G(.32)}" stroke-width="1.2"/>
+      <ellipse cx="186" cy="128" rx="24" ry="15" fill="#1A241A" stroke="${G(.32)}" stroke-width="1.2"/>
+      <path d="M52 140 L24 175 L18 250" stroke="#101A10" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <ellipse cx="20" cy="262" rx="12" ry="14" fill="#101A10" stroke="${G(.22)}" stroke-width="1"/>
+      <path d="M-6 195 Q-10 165 8 156 L34 160 L36 262 Q12 276 -6 266 Z" fill="rgba(20,30,20,.85)" stroke="${G(.45)}" stroke-width="1.5"/>
+      <line x1="14" y1="170" x2="14" y2="255" stroke="rgba(90,180,110,.3)" stroke-width="1"/>
+      <path d="M208 140 L236 175 L242 250" stroke="#101A10" stroke-width="22" stroke-linecap="round" fill="none"/>
+      <ellipse cx="240" cy="262" rx="12" ry="14" fill="#101A10" stroke="${G(.22)}" stroke-width="1"/>
+      <line x1="240" y1="276" x2="252" y2="370" stroke="${G(.5)}" stroke-width="2.5"/>
+      <path d="M239 290 Q262 278 266 305 Q262 322 239 312 Z" fill="${G(.08)}" stroke="${G(.5)}" stroke-width="1.5"/>
+      <path d="M96 40 Q130 14 164 40 L168 80 Q130 96 92 80 Z" fill="#1A241A" stroke="${G(.28)}" stroke-width="1.2"/>
+      <ellipse cx="130" cy="66" rx="26" ry="30" fill="#202C20" stroke="${G(.18)}" stroke-width="1"/>
+      <path d="M100 70 L160 70 L164 84 L96 84 Z" fill="#121A12" stroke="${G(.22)}" stroke-width="1"/>
+      <path d="M92 38 Q78 14 70 36" stroke="${G(.45)}" stroke-width="2" fill="none"/>
+      <path d="M168 38 Q182 14 190 36" stroke="${G(.45)}" stroke-width="2" fill="none"/>
+      ${zonesBlock}
     `
   };
 
-  const CLASS_MAP = {Gardien:'Cogneur', Oracle:'Arcaniste', "Lames Noires":'Cogneur', "Rôdeur":'Cogneur', Troubadour:'Arcaniste'};
+  const CLASS_MAP = {"Lames Noires":'Cogneur', "Rôdeur":'Cogneur', Troubadour:'Arcaniste'};
   const mapped = silhouettes[classe] || silhouettes[CLASS_MAP[classe]] || silhouettes['Cogneur'];
   const defaultSvg = mapped;
   return defaultSvg;
