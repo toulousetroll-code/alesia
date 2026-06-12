@@ -648,6 +648,15 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .book-nav .race-arrow{position:static;}
 .book-close{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;text-align:center;margin-top:14px;cursor:pointer;}
 .book-close:hover{color:var(--gold);}
+.tuto-wrap{display:flex;gap:24px;align-items:flex-start;}
+.tuto-mascot{flex-shrink:0;width:150px;}
+.tuto-bubble{flex:1;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(20,14,7,.99));border:1px solid var(--bord);border-radius:8px;padding:22px 26px;position:relative;min-height:160px;animation:pageIn .35s ease;}
+.tuto-bubble::before{content:'';position:absolute;left:-14px;top:38px;border:10px solid transparent;border-right-color:var(--bord);}
+.tuto-bubble::after{content:'';position:absolute;left:-12px;top:38px;border:10px solid transparent;border-right-color:#241608;}
+.tuto-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;margin-bottom:6px;}
+.tuto-title{font-family:'Cinzel',serif;font-size:17px;color:var(--gold);margin-bottom:12px;}
+.tuto-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px;}
+@media (max-width:640px){.tuto-wrap{flex-direction:column;align-items:center;}.tuto-bubble::before,.tuto-bubble::after{display:none;}}
 /* Furmiaou */
 .furm-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
 
@@ -1192,57 +1201,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
             <!-- CRÉATION PERSONNAGE (livret) -->
       <div id="s-creation" class="section">
         <div class="page-title"><i class="ti ti-user-plus"></i> Création de personnage</div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div class="card" style="border-color:var(--teal);background:var(--teal-pale);">
-            <p style="font-size:13px;color:var(--teal);line-height:1.7;"><i class="ti ti-info-circle" style="margin-right:6px;color:#3AAA85;"></i><span style="color:#3AAA85;">La fiche de personnage vierge se trouve sur le Discord dans le salon <strong style="color:#F2E6CC">« Fiche de personnage »</strong>. Utilise ce guide pour la remplir étape par étape.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 1 — Identité</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Choisis ta <strong style="color:#F2E6CC">Race</strong>, ta <strong style="color:#F2E6CC">Classe</strong> et ton <strong style="color:#F2E6CC">Genre</strong>. Trouve une photo d'identité et un nom. Choisis ensuite <strong style="color:#F2E6CC">3 valeurs</strong> qui représentent la façon d'être de ton personnage et la manière dont tu devras l'interpréter en RP.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 2 — PV & Mana</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Au niveau 1, répartis <strong style="color:#F2E6CC">15 points</strong> entre les PV et le Mana comme tu le souhaites. Attention : selon la race et/ou la classe jouée, des points bonus peuvent être attribués.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 3 — Élément & Langues</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Tous les Téméraires sont affiliés à un <strong style="color:#F2E6CC">élément</strong> — choisis celui qui te fait plaisir, mais attention : tes dons seront liés à celui-ci. Pour les langues, tu as droit à un maximum de <strong style="color:#F2E6CC">3 langues connues</strong> (Commun compris) pour commencer.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 4 — Caractéristiques (D100)</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;margin-bottom:10px;">Le système est basé sur le <strong style="color:#F2E6CC">D100</strong>. Tu as 3 grands axes :</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px;">
-              <div style="background:rgba(192,57,43,.12);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:#CFC09A;"><strong style="color:var(--red);">Physique</strong><br><span style="color:#CFC09A;">Force, endurance, agilité</span></div>
-              <div style="background:rgba(26,138,106,.1);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:#CFC09A;"><strong style="color:var(--teal);">Social</strong><br><span style="color:#CFC09A;">Charisme, persuasion, présence</span></div>
-              <div style="background:rgba(42,95,168,.1);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:#CFC09A;"><strong style="color:var(--blue);">Mental</strong><br><span style="color:#CFC09A;">Intelligence, sagesse, volonté</span></div>
-            </div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Tu disposes de <strong style="color:#F2E6CC">170% à répartir</strong> (attention : selon ta classe, cette répartition peut être contrainte). Chaque axe se subdivise en sous-stats : Physique → Puissance/Finesse · Social → Aura/Relation · Mental → Instinct/Savoir.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 5 — Compétences</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Tu disposes de <strong style="color:#F2E6CC">60% à répartir</strong> librement entre tes compétences. <strong style="color:#F2E6CC">4 compétences maximum.</strong> Tu peux choisir dans la liste ou créer tes propres compétences (à valider avec le MJ). Les sous-compétences hors combat se lancent avec des dés D4 à D20 selon la difficulté.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 6 — Postures de base</div>
-            <div style="color:#CFC09A;display:flex;flex-direction:column;gap:8px;font-size:13px;">
-              <div style="background:var(--red-pale);border-radius:7px;padding:10px;border-left:3px solid var(--red);"><strong style="color:var(--red);">⚔ Offensive</strong> — Dégâts maximum automatiques, pas d'esquive/parade possible. Zone critique élargie de 5%.</div>
-              <div style="background:var(--gold-pale);border-radius:7px;padding:10px;border-left:3px solid var(--gold-d);"><strong style="color:#C09030;">✨ Focus</strong> — Dégâts normaux (lance le dé), +5% sur les jets, coût Mana réduit de 1. Pas d'esquive possible.</div>
-              <div style="background:var(--teal-pale);border-radius:7px;padding:10px;border-left:3px solid var(--teal);"><strong style="color:var(--teal);">🛡 Défensive</strong> — Dégâts normaux, droit à 1 esquive ou 1 parade par tour.</div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 7 — Armes & Armures</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Choisis une arme principale (+ éventuellement secondaire/supplémentaire). Aucune liste imposée — sois inventif ! Les dés de dégâts vont de D4 à D12 avec bonus/malus. Même logique pour les armures (Réduction de Dégâts). Attention : certaines classes ne peuvent pas porter d'armure.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 8 — Dons</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Ton personnage commence avec <strong style="color:#F2E6CC">3 à 5 dons</strong>. Toutes les classes y ont droit ! Pas de liste imposée — sois inventif. Seule règle : respecte ta classe et l'élément choisi. Si ton élément est le Feu, oublie les sorts d'Eau. Détermine le nom, la description, le coût en Mana et les effets avec le MJ.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Étape 9 — Background</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Construis l'histoire de ton personnage ! Utilise le livret pour te situer dans les pays et le contexte d'Alésia. N'oublie pas de préciser <strong style="color:#F2E6CC">pourquoi il est devenu un Téméraire</strong> et quel est son lien avec la Prophétie. Les bonus/malus de race et classe s'appliquent ici, ainsi que les particularités liées au background.</p>
-          </div>
-        </div>
+        <div id="tuto-wrap"></div>
       </div>
 
       <!-- RÈGLES (livret) -->
@@ -2977,6 +2936,73 @@ window.bookClose=()=>{ histPage=-1; renderBook(); };
 window.bookNav=(d)=>{ histPage=(histPage+d+HISTOIRE_PAGES.length)%HISTOIRE_PAGES.length; renderBook(); };
 window.bookGoTo=(i)=>{ histPage=i; renderBook(); };
 renderBook();
+
+// ===== TUTORIEL CRÉATION DE PERSO =====
+const TUTO_DRAGON = `<svg viewBox="0 0 160 180" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="80" cy="100" rx="58" ry="62" fill="#16261A"/>
+  <path d="M30 70 Q50 30 80 28 Q110 30 130 70 Q140 110 110 142 Q80 162 50 142 Q20 110 30 70 Z" fill="#1E3A26" stroke="rgba(95,174,90,.4)" stroke-width="1.5"/>
+  <path d="M58 26 L68 6 L74 28 Z" fill="#1E3A26" stroke="rgba(95,174,90,.4)" stroke-width="1.5"/>
+  <path d="M102 26 L92 6 L86 28 Z" fill="#1E3A26" stroke="rgba(95,174,90,.4)" stroke-width="1.5"/>
+  <path d="M44 96 Q80 116 116 96" stroke="rgba(95,174,90,.25)" stroke-width="1" fill="none"/>
+  <ellipse cx="80" cy="128" rx="22" ry="14" fill="#142A1A"/>
+  <path d="M62 124 Q80 138 98 124" stroke="rgba(212,168,67,.5)" stroke-width="1.5" fill="none"/>
+  <ellipse cx="80" cy="138" rx="3" ry="2" fill="rgba(212,168,67,.6)"/>
+  <rect x="36" y="74" width="32" height="24" rx="6" fill="none" stroke="var(--gold)" stroke-width="3"/>
+  <rect x="92" y="74" width="32" height="24" rx="6" fill="none" stroke="var(--gold)" stroke-width="3"/>
+  <line x1="68" y1="84" x2="92" y2="84" stroke="var(--gold)" stroke-width="3"/>
+  <line x1="36" y1="82" x2="22" y2="78" stroke="var(--gold)" stroke-width="3"/>
+  <line x1="124" y1="82" x2="138" y2="78" stroke="var(--gold)" stroke-width="3"/>
+  <ellipse cx="52" cy="86" rx="6" ry="7" fill="#0A140C"/>
+  <ellipse cx="108" cy="86" rx="6" ry="7" fill="#0A140C"/>
+  <circle cx="54" cy="84" r="2" fill="rgba(95,174,90,.7)"/>
+  <circle cx="110" cy="84" r="2" fill="rgba(95,174,90,.7)"/>
+</svg>`;
+
+const TUTO_STEPS = [
+  {t:"Bienvenue, Téméraire !", html:"La fiche de personnage vierge se trouve sur le Discord, dans le salon <strong style=\"color:#F2E6CC\">« Fiche de personnage »</strong>. Suis ce petit guide étape par étape, je t'accompagne tout du long !"},
+  {t:"Étape 1 — Identité", html:"Choisis ta <strong style=\"color:#F2E6CC\">Race</strong>, ta <strong style=\"color:#F2E6CC\">Classe</strong> et ton <strong style=\"color:#F2E6CC\">Genre</strong>. Trouve une photo d'identité et un nom. Choisis ensuite <strong style=\"color:#F2E6CC\">3 valeurs</strong> qui représentent la façon d'être de ton personnage et la manière dont tu devras l'interpréter en RP."},
+  {t:"Étape 2 — PV & Mana", html:"Au niveau 1, répartis <strong style=\"color:#F2E6CC\">15 points</strong> entre les PV et le Mana comme tu le souhaites. Attention : selon la race et/ou la classe jouée, des points bonus peuvent être attribués."},
+  {t:"Étape 3 — Élément & Langues", html:"Tous les Téméraires sont affiliés à un <strong style=\"color:#F2E6CC\">élément</strong> — choisis celui qui te fait plaisir, mais attention : tes dons seront liés à celui-ci. Pour les langues, tu as droit à un maximum de <strong style=\"color:#F2E6CC\">3 langues connues</strong> (Commun compris) pour commencer."},
+  {t:"Étape 4 — Caractéristiques (D100)", html:`Le système est basé sur le <strong style="color:#F2E6CC">D100</strong>. Tu as 3 grands axes :
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:10px 0;">
+      <div style="background:rgba(192,57,43,.12);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:#CFC09A;"><strong style="color:var(--red);">Physique</strong><br><span style="color:#CFC09A;">Force, endurance, agilité</span></div>
+      <div style="background:rgba(26,138,106,.1);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:#CFC09A;"><strong style="color:var(--teal);">Social</strong><br><span style="color:#CFC09A;">Charisme, persuasion, présence</span></div>
+      <div style="background:rgba(42,95,168,.1);border-radius:7px;padding:8px;text-align:center;font-size:12px;color:#CFC09A;"><strong style="color:var(--blue);">Mental</strong><br><span style="color:#CFC09A;">Intelligence, sagesse, volonté</span></div>
+    </div>
+    Tu disposes de <strong style="color:#F2E6CC">170% à répartir</strong> (attention : selon ta classe, cette répartition peut être contrainte). Chaque axe se subdivise en sous-stats : Physique → Puissance/Finesse · Social → Aura/Relation · Mental → Instinct/Savoir.`},
+  {t:"Étape 5 — Compétences", html:"Tu disposes de <strong style=\"color:#F2E6CC\">60% à répartir</strong> librement entre tes compétences. <strong style=\"color:#F2E6CC\">4 compétences maximum.</strong> Tu peux choisir dans la liste ou créer tes propres compétences (à valider avec le MJ). Les sous-compétences hors combat se lancent avec des dés D4 à D20 selon la difficulté."},
+  {t:"Étape 6 — Postures de base", html:`<div style="color:#CFC09A;display:flex;flex-direction:column;gap:8px;font-size:13px;">
+      <div style="background:var(--red-pale);border-radius:7px;padding:10px;border-left:3px solid var(--red);"><strong style="color:var(--red);">⚔ Offensive</strong> — Dégâts maximum automatiques, pas d'esquive/parade possible. Zone critique élargie de 5%.</div>
+      <div style="background:var(--gold-pale);border-radius:7px;padding:10px;border-left:3px solid var(--gold-d);"><strong style="color:#C09030;">✨ Focus</strong> — Dégâts normaux (lance le dé), +5% sur les jets, coût Mana réduit de 1. Pas d'esquive possible.</div>
+      <div style="background:var(--teal-pale);border-radius:7px;padding:10px;border-left:3px solid var(--teal);"><strong style="color:var(--teal);">🛡 Défensive</strong> — Dégâts normaux, droit à 1 esquive ou 1 parade par tour.</div>
+    </div>`},
+  {t:"Étape 7 — Armes & Armures", html:"Choisis une arme principale (+ éventuellement secondaire/supplémentaire). Aucune liste imposée — sois inventif ! Les dés de dégâts vont de D4 à D12 avec bonus/malus. Même logique pour les armures (Réduction de Dégâts). Attention : certaines classes ne peuvent pas porter d'armure."},
+  {t:"Étape 8 — Dons", html:"Ton personnage commence avec <strong style=\"color:#F2E6CC\">3 à 5 dons</strong>. Toutes les classes y ont droit ! Pas de liste imposée — sois inventif. Seule règle : respecte ta classe et l'élément choisi. Si ton élément est le Feu, oublie les sorts d'Eau. Détermine le nom, la description, le coût en Mana et les effets avec le MJ."},
+  {t:"Étape 9 — Background", html:"Construis l'histoire de ton personnage ! Utilise le livret pour te situer dans les pays et le contexte d'Alésia. N'oublie pas de préciser <strong style=\"color:#F2E6CC\">pourquoi il est devenu un Téméraire</strong> et quel est son lien avec la Prophétie. Les bonus/malus de race et classe s'appliquent ici, ainsi que les particularités liées au background."},
+  {t:"Et voilà !", html:"Ton Téméraire est prêt à fouler les terres d'Alésia. N'hésite pas à demander de l'aide au MJ à n'importe quelle étape. Bonne aventure !"},
+];
+let tutoStep = 0;
+function renderTuto(){
+  const w = document.getElementById('tuto-wrap');
+  if(!w) return;
+  const s = TUTO_STEPS[tutoStep];
+  w.innerHTML = `<div class="tuto-wrap">
+    <div class="tuto-mascot">${TUTO_DRAGON}</div>
+    <div class="tuto-bubble">
+      <div class="tuto-num">${tutoStep===0?'Introduction':(tutoStep===TUTO_STEPS.length-1?'Conclusion':`Étape ${tutoStep} / ${TUTO_STEPS.length-2}`)}</div>
+      <div class="tuto-title">${s.t}</div>
+      <div style="font-size:13px;color:#CFC09A;line-height:1.7;">${s.html}</div>
+    </div>
+  </div>
+  <div class="tuto-nav">
+    <button class="race-arrow" onclick="tutoNav(-1)" ${tutoStep===0?'style="visibility:hidden;"':''} aria-label="Précédent"><i class="ti ti-chevron-left"></i></button>
+    <div class="race-dots" style="margin:0;">${TUTO_STEPS.map((_,i)=>`<div class="race-dot ${i===tutoStep?'active':''}" onclick="tutoGoTo(${i})"></div>`).join('')}</div>
+    <button class="race-arrow" onclick="tutoNav(1)" ${tutoStep===TUTO_STEPS.length-1?'style="visibility:hidden;"':''} aria-label="Suivant"><i class="ti ti-chevron-right"></i></button>
+  </div>`;
+}
+window.tutoNav=(d)=>{ tutoStep=Math.max(0,Math.min(TUTO_STEPS.length-1,tutoStep+d)); renderTuto(); };
+window.tutoGoTo=(i)=>{ tutoStep=i; renderTuto(); };
+renderTuto();
 
 // ===== NÉGOCIATION =====
 const NEG_MANCHE = [0.1,0.2,0.3];
