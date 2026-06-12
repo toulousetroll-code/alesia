@@ -1318,7 +1318,30 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
         </div>
       </div>
 
-      <!-- ÉCONOMIE (livret) -->
+      <!-- NÉGOCIATION -->
+      <div id="s-negociation" class="section">
+        <div class="page-title"><i class="ti ti-scale"></i> Négociation</div>
+        <div class="grid2" style="align-items:start;">
+          <div class="card">
+            <div class="sdiv">⚖️ Mise en place</div>
+            <div style="display:flex;flex-direction:column;gap:10px;">
+              <div>
+                <div style="font-size:11px;color:var(--gold-d);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Prix de base</div>
+                <input type="number" id="neg-base" value="5000" style="width:100%;background:rgba(0,0,0,.3);border:1px solid var(--bord);border-radius:6px;color:#F2E6CC;padding:8px 10px;font-family:'Cinzel',serif;font-size:14px;">
+              </div>
+              <button class="vpanel-edit" style="justify-content:center;" onclick="negStart()"><i class="ti ti-refresh"></i> Nouvelle négociation</button>
+              <div id="neg-rounds" style="display:flex;flex-direction:column;gap:10px;margin-top:6px;"></div>
+            </div>
+          </div>
+          <div class="card" style="text-align:center;">
+            <div class="sdiv" style="justify-content:center;">💰 Résultat</div>
+            <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--gold-d);text-transform:uppercase;margin-bottom:6px;">Prix actuel</div>
+            <div id="neg-price" style="font-family:'Cinzel',serif;font-size:42px;color:var(--gold);margin-bottom:14px;">5000 <span style="font-size:18px;">PO</span></div>
+            <div id="neg-log" style="display:flex;flex-direction:column;gap:5px;text-align:left;"></div>
+            <div id="neg-final" style="margin-top:14px;"></div>
+          </div>
+        </div>
+      </div>
       <div id="s-economie" class="section">
         <div class="page-title"><i class="ti ti-coins"></i> Économie du monde</div>
         <div class="grid2">
@@ -1556,6 +1579,7 @@ const DEFAULT_NAV = [
   {type:'item',id:'creation',label:'Créer un perso',icon:'ti-user-plus',builtin:true,visible:true},
   {type:'item',id:'regles',label:'Règles',icon:'ti-book-2',builtin:true,visible:true},
   {type:'item',id:'economie',label:'Économie',icon:'ti-coins',builtin:true,visible:true},
+  {type:'item',id:'negociation',label:'Négociation',icon:'ti-scale',builtin:true,visible:true},
   {type:'sep'},
   {type:'group',label:'Outils'},
   {type:'item',id:'des',label:'Lanceur de dés',icon:'ti-dice',builtin:true,visible:true}
@@ -2878,6 +2902,84 @@ function renderClassCarousel(){
 window.classNav=(dir)=>{ classIdx=(classIdx+dir+classes.length)%classes.length; renderClassCarousel(); };
 window.classGoTo=(i)=>{ classIdx=i; renderClassCarousel(); };
 renderClassCarousel();
+
+// ===== NÉGOCIATION =====
+const NEG_MANCHE = [0.1,0.2,0.3];
+const NEG_MOD = { critM_succes:1, critM_echec:-0.5, critJ_succes:-0.5, critJ_echec:2, egalite:-0.8 };
+let negState = { base:5000, price:5000, log:[], ended:false };
+
+const NEG_OPTIONS = [
+  {v:'',label:'— Choisir le résultat —'},
+  {v:'J',label:'Victoire Joueur'},
+  {v:'M',label:'Victoire Marchand'},
+  {v:'EGAL',label:'Égalité'},
+  {v:'critJ_succes',label:'Critique — Succès Joueur'},
+  {v:'critJ_echec',label:'Critique — Échec Joueur'},
+  {v:'critM_succes',label:'Critique — Succès Marchand'},
+  {v:'critM_echec',label:'Critique — Échec Marchand'},
+];
+
+function negStart(){
+  const base = parseFloat(document.getElementById('neg-base').value) || 5000;
+  negState = { base, price: base, log: [], ended:false };
+  for(let i=0;i<3;i++) negState[`r${i}`] = '';
+  negRenderRounds();
+  negUpdateDisplay();
+}
+function negRenderRounds(){
+  const c = document.getElementById('neg-rounds');
+  c.innerHTML = '';
+  for(let i=0;i<3;i++){
+    const disabled = negState.ended || (i>0 && !negState[`r${i-1}`]);
+    const wrap = document.createElement('div');
+    wrap.innerHTML = `<div style="font-size:11px;color:var(--gold-d);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Manche ${i+1} <span style="color:#CFC09A;text-transform:none;letter-spacing:0;">(${NEG_MANCHE[i]*100}%)</span></div>`;
+    const sel = document.createElement('select');
+    sel.style="width:100%;background:rgba(0,0,0,.3);border:1px solid var(--bord);border-radius:6px;color:#F2E6CC;padding:8px 10px;font-size:13px;";
+    sel.disabled = disabled;
+    NEG_OPTIONS.forEach(o=>{ const opt=document.createElement('option'); opt.value=o.v; opt.textContent=o.label; if(o.v===negState[`r${i}`]) opt.selected=true; sel.appendChild(opt); });
+    sel.onchange = ()=> negApplyRound(i, sel.value);
+    wrap.appendChild(sel);
+    c.appendChild(wrap);
+  }
+}
+function negApplyRound(i, val){
+  negState[`r${i}`] = val;
+  for(let j=i+1;j<3;j++) negState[`r${j}`]='';
+  negState.price = negState.base;
+  negState.log = [];
+  negState.ended = false;
+  for(let j=0;j<3;j++){
+    const r = negState[`r${j}`];
+    if(!r) break;
+    if(r==='J'){ const before=negState.price; negState.price -= negState.price*NEG_MANCHE[j]; negState.log.push(`Manche ${j+1} — Victoire Joueur : ${Math.round(before)} → ${Math.round(negState.price)} PO (−${NEG_MANCHE[j]*100}%)`); }
+    else if(r==='M'){ const before=negState.price; negState.price += negState.price*NEG_MANCHE[j]; negState.log.push(`Manche ${j+1} — Victoire Marchand : ${Math.round(before)} → ${Math.round(negState.price)} PO (+${NEG_MANCHE[j]*100}%)`); }
+    else if(r==='EGAL'){ negState.price = negState.base*(1+NEG_MOD.egalite); negState.log.push(`Manche ${j+1} — Égalité : prix ramené à ${Math.round(negState.price)} PO (${NEG_MOD.egalite*100}% du prix de base)`); negState.ended=true; break; }
+    else {
+      const mod = NEG_MOD[r];
+      negState.price = negState.base*(1+mod);
+      const lbl = {critJ_succes:'Critique — Succès Joueur',critJ_echec:'Critique — Échec Joueur',critM_succes:'Critique — Succès Marchand',critM_echec:'Critique — Échec Marchand'}[r];
+      negState.log.push(`Manche ${j+1} — ${lbl} : prix fixé à ${Math.round(negState.price)} PO (${mod>0?'+':''}${mod*100}% du prix de base)`);
+      negState.ended=true; break;
+    }
+    if(j===2) negState.ended=true;
+  }
+  negRenderRounds();
+  negUpdateDisplay();
+}
+function negUpdateDisplay(){
+  document.getElementById('neg-price').innerHTML = Math.round(negState.price) + ' <span style="font-size:18px;">PO</span>';
+  document.getElementById('neg-log').innerHTML = negState.log.map(l=>`<div style="font-size:12px;color:#CFC09A;padding:6px 10px;background:rgba(212,168,67,.05);border-left:2px solid var(--gold-d);border-radius:4px;">${l}</div>`).join('');
+  const finalEl = document.getElementById('neg-final');
+  if(negState.ended){
+    const diff = negState.price - negState.base;
+    const pct = Math.round((diff/negState.base)*100);
+    const color = diff<0 ? 'var(--teal)' : (diff>0 ? 'var(--red)' : 'var(--gold)');
+    finalEl.innerHTML = `<div style="border-top:1px solid var(--bord);padding-top:12px;"><div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--gold-d);text-transform:uppercase;margin-bottom:6px;">Prix final négocié</div><div style="font-family:'Cinzel',serif;font-size:28px;color:${color};">${Math.round(negState.price)} PO</div><div style="font-size:12px;color:#CFC09A;margin-top:4px;">${diff<0?'Économie':'Surcoût'} de ${Math.abs(Math.round(diff))} PO (${pct>0?'+':''}${pct}% du prix de base)</div></div>`;
+  } else {
+    finalEl.innerHTML = '';
+  }
+}
+negStart();
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
   document.querySelectorAll('.classeur-tab').forEach(t => t.classList.remove('active'));
