@@ -1686,6 +1686,7 @@ async function loadAll(){
   loadNotes();
   listenJournal();
   await loadCustomPages();
+  listenNegotiation();
 }
 
 // ===== DESIGN =====
@@ -3024,16 +3025,18 @@ function negUpdateDisplay(){
     finalEl.innerHTML = '';
   }
 }
-onSnapshot(doc(db,'shared','negociation'), snap=>{
-  if(snap.exists() && !negRemote){
-    negState = snap.data();
-    document.getElementById('neg-base').value = negState.base;
-    negRenderRounds();
-    negUpdateDisplay();
-  } else if(!snap.exists()){
-    negStart();
-  }
-});
+function listenNegotiation(){
+  onSnapshot(doc(db,'shared','negociation'), snap=>{
+    if(snap.exists() && !negRemote){
+      negState = snap.data();
+      document.getElementById('neg-base').value = negState.base;
+      negRenderRounds();
+      negUpdateDisplay();
+    } else if(!snap.exists()){
+      negStart();
+    }
+  });
+}
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
   document.querySelectorAll('.classeur-tab').forEach(t => t.classList.remove('active'));
