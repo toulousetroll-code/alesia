@@ -630,6 +630,24 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .race-dots{display:flex;justify-content:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
 .race-dot{width:8px;height:8px;border-radius:50%;background:rgba(212,168,67,.18);border:1px solid rgba(212,168,67,.3);cursor:pointer;transition:background .2s;}
 .race-dot.active{background:var(--gold);}
+.book-wrap{display:flex;align-items:center;justify-content:center;min-height:480px;perspective:1600px;}
+.book-cover{width:340px;height:460px;background:linear-gradient(160deg,#2A1A0A,#1A0F06);border:3px solid var(--gold-d);border-radius:6px 14px 14px 6px;box-shadow:0 12px 40px rgba(0,0,0,.6),inset 0 0 30px rgba(212,168,67,.08);display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;transition:transform .3s;position:relative;}
+.book-cover:hover{transform:translateY(-6px) scale(1.01);}
+.book-cover::before{content:'';position:absolute;inset:14px;border:1px solid rgba(212,168,67,.35);border-radius:4px 10px 10px 4px;}
+.book-cover .bc-title{font-family:'Cinzel',serif;font-size:34px;letter-spacing:.12em;color:var(--gold);text-shadow:0 0 14px rgba(212,168,67,.4);}
+.book-cover .bc-sub{font-family:'Cinzel',serif;font-size:11px;letter-spacing:.2em;color:var(--gold-d);text-transform:uppercase;margin-top:10px;}
+.book-cover .bc-emblem{font-size:46px;color:var(--gold-d);margin-bottom:18px;opacity:.8;}
+.book-cover .bc-hint{position:absolute;bottom:24px;font-size:11px;color:#8A6F40;font-style:italic;}
+.book-page{width:100%;max-width:780px;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(20,14,7,.99));border:1px solid var(--bord);border-radius:8px;padding:34px 44px;box-shadow:0 10px 36px rgba(0,0,0,.5);animation:pageIn .35s ease;}
+@keyframes pageIn{from{opacity:0;transform:rotateY(-8deg);}to{opacity:1;transform:rotateY(0);}}
+.book-page .bp-num{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;text-align:center;margin-bottom:6px;}
+.book-page .bp-title{font-family:'Cinzel',serif;font-size:18px;color:var(--gold);text-align:center;margin-bottom:18px;letter-spacing:.04em;}
+.book-page .bp-text{font-size:13px;color:#CFC09A;line-height:1.85;}
+.book-page .bp-text.prophecy{font-size:14px;color:#F2E6CC;font-style:italic;text-align:center;line-height:2;}
+.book-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px;}
+.book-nav .race-arrow{position:static;}
+.book-close{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;text-align:center;margin-top:14px;cursor:pointer;}
+.book-close:hover{color:var(--gold);}
 /* Furmiaou */
 .furm-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
 
@@ -874,33 +892,8 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 
       <!-- HISTOIRE (livret) -->
       <div id="s-histoire" class="section">
-        <div class="page-title"><i class="ti ti-scroll"></i> Histoire d'Alésia</div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div class="card">
-            <div class="sdiv">Avant la Convergence</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.75;">Il y a plusieurs millénaires, le continent était habité par diverses peuplades sans frontières fixes. Un cataclysme cosmique — la collision d'énergies magiques ancestrales — donna naissance à un lac intérieur sacré, renfermant un pouvoir ancien au cœur de la terre. Au centre de ce lac, <strong style="color:#F2E6CC">l'Île du Cœur</strong> émergea, sanctuaire de savoirs perdus et foyer des mages primordiaux. Autour du lac, douze nations se formèrent en un cercle concentrique, chacune regardant vers l'île comme source de vie et de puissance.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">L'Ère des Douze Royaumes</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.75;">Durant des siècles, ces nations prospérèrent, chacune suivant ses traditions et ses forces propres. Leurs frontières naturelles — montagnes, rivières, forêts — offraient protection et démarquaient leurs identités culturelles. Mais à la veille de l'Ère de la Barrière, le désir de dominer l'Île du Cœur créa des rivalités et des tensions croissantes.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">L'Ère de la Barrière</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.75;">Pour éviter la guerre, un conclave rassembla souverains et mages des douze pays. Les huit archimages du Cœur édifièrent une barrière magique autour de l'île, empêchant toute intrusion. Cette barrière apparut comme une aurore tourbillonnante, visible de loin. Depuis, aucune expédition sur l'île n'est jamais revenue. Depuis environ <strong style="color:#F2E6CC">5000 ans Avant l'Éveil</strong>, l'Île du Cœur est une zone interdite, mystérieuse et redoutée.</p>
-          </div>
-          <div class="card" style="border-color:var(--gold);background:rgba(212,168,67,.05);">
-            <div class="sdiv">La Prophétie des Douze Voies</div>
-            <p style="font-size:14px;color:#F2E6CC;font-style:italic;line-height:1.9;text-align:center;padding:10px 0;">« Quand les Douze se répondront en un même souffle,<br>Un trésor au-delà de toute mesure émergera.<br>La Voie s'ouvrira alors,<br>Et tous franchiront le seuil du Royaume du Cœur. »</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">L'Ère actuelle — Les Téméraires</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.75;">Une ancienne stèle magique prédit qu'une alliance d'êtres courageux ouvrira la voie vers l'Île du Cœur. Les <strong style="color:#F2E6CC">Téméraires</strong> incarnent cette prophétie. Leur serment : réunir les nations, briser la barrière, et franchir ensemble l'Île du Cœur. Selon les royaumes, ils sont tour à tour vus comme des hérétiques dangereux ou des sauveurs espérés.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Mythes et Réalités</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.75;">Chaque peuple entretient ses légendes — certains y voient un lieu sacré de renaissance divine, d'autres un refuge pour un ordre oublié. Les religions périphériques évoquent la Prophétie des Douze Âmes, annonçant un élu capable de lever la barrière. Certains disent que les courants du lac attirent les navires vers l'île, mais sans jamais leur permettre de s'en échapper.</p>
-          </div>
-        </div>
+        <div class="page-title"><i class="ti ti-book-2"></i> Histoire d'Alésia</div>
+        <div class="book-wrap" id="book-wrap"></div>
       </div>
 
       <!-- CASTES (livret) -->
@@ -1607,7 +1600,7 @@ const DEFAULT_NAV = [
   {type:'sep'},
   {type:'group',label:'Univers'},
   {type:'item',id:'royaumes',label:'12 Royaumes',icon:'ti-world',builtin:true,visible:true},
-  {type:'item',id:'histoire',label:'Histoire',icon:'ti-scroll',builtin:true,visible:true},
+  {type:'item',id:'histoire',label:'Histoire',icon:'ti-book-2',builtin:true,visible:true},
   {type:'item',id:'castes',label:'Castes & Factions',icon:'ti-crown',builtin:true,visible:true},
   {type:'item',id:'cosmologie',label:'Cosmologie',icon:'ti-star',builtin:true,visible:true},
   {type:'sep'},
@@ -2941,6 +2934,49 @@ function renderClassCarousel(){
 window.classNav=(dir)=>{ classIdx=(classIdx+dir+classes.length)%classes.length; renderClassCarousel(); };
 window.classGoTo=(i)=>{ classIdx=i; renderClassCarousel(); };
 renderClassCarousel();
+
+// ===== LIVRE D'HISTOIRE =====
+const HISTOIRE_PAGES = [
+  {t:"Avant la Convergence", html:"Il y a plusieurs millénaires, le continent était habité par diverses peuplades sans frontières fixes. Un cataclysme cosmique — la collision d'énergies magiques ancestrales — donna naissance à un lac intérieur sacré, renfermant un pouvoir ancien au cœur de la terre. Au centre de ce lac, <strong style=\"color:#F2E6CC\">l'Île du Cœur</strong> émergea, sanctuaire de savoirs perdus et foyer des mages primordiaux. Autour du lac, douze nations se formèrent en un cercle concentrique, chacune regardant vers l'île comme source de vie et de puissance."},
+  {t:"L'Ère des Douze Royaumes", html:"Durant des siècles, ces nations prospérèrent, chacune suivant ses traditions et ses forces propres. Leurs frontières naturelles — montagnes, rivières, forêts — offraient protection et démarquaient leurs identités culturelles. Mais à la veille de l'Ère de la Barrière, le désir de dominer l'Île du Cœur créa des rivalités et des tensions croissantes."},
+  {t:"L'Ère de la Barrière", html:"Pour éviter la guerre, un conclave rassembla souverains et mages des douze pays. Les huit archimages du Cœur édifièrent une barrière magique autour de l'île, empêchant toute intrusion. Cette barrière apparut comme une aurore tourbillonnante, visible de loin. Depuis, aucune expédition sur l'île n'est jamais revenue. Depuis environ <strong style=\"color:#F2E6CC\">5000 ans Avant l'Éveil</strong>, l'Île du Cœur est une zone interdite, mystérieuse et redoutée."},
+  {t:"La Prophétie des Douze Voies", prophecy:true, html:"« Quand les Douze se répondront en un même souffle,<br>Un trésor au-delà de toute mesure émergera.<br>La Voie s'ouvrira alors,<br>Et tous franchiront le seuil du Royaume du Cœur. »"},
+  {t:"L'Ère actuelle — Les Téméraires", html:"Une ancienne stèle magique prédit qu'une alliance d'êtres courageux ouvrira la voie vers l'Île du Cœur. Les <strong style=\"color:#F2E6CC\">Téméraires</strong> incarnent cette prophétie. Leur serment : réunir les nations, briser la barrière, et franchir ensemble l'Île du Cœur. Selon les royaumes, ils sont tour à tour vus comme des hérétiques dangereux ou des sauveurs espérés."},
+  {t:"Mythes et Réalités", html:"Chaque peuple entretient ses légendes — certains y voient un lieu sacré de renaissance divine, d'autres un refuge pour un ordre oublié. Les religions périphériques évoquent la Prophétie des Douze Âmes, annonçant un élu capable de lever la barrière. Certains disent que les courants du lac attirent les navires vers l'île, mais sans jamais leur permettre de s'en échapper."},
+];
+let histPage = -1; // -1 = couverture fermée
+function renderBook(){
+  const w = document.getElementById('book-wrap');
+  if(!w) return;
+  if(histPage === -1){
+    w.innerHTML = `<div class="book-cover" onclick="bookOpen()">
+      <div class="bc-emblem"><i class="ti ti-sparkles"></i></div>
+      <div class="bc-title">Alésia</div>
+      <div class="bc-sub">Histoire du monde</div>
+      <div class="bc-hint">Cliquez pour ouvrir</div>
+    </div>`;
+    return;
+  }
+  const p = HISTOIRE_PAGES[histPage];
+  w.innerHTML = `<div>
+    <div class="book-page">
+      <div class="bp-num">Page ${histPage+1} / ${HISTOIRE_PAGES.length}</div>
+      <div class="bp-title">${p.t}</div>
+      <div class="bp-text ${p.prophecy?'prophecy':''}">${p.html}</div>
+    </div>
+    <div class="book-nav">
+      <button class="race-arrow" onclick="bookNav(-1)" aria-label="Page précédente"><i class="ti ti-chevron-left"></i></button>
+      <div class="race-dots" style="margin:0;">${HISTOIRE_PAGES.map((_,i)=>`<div class="race-dot ${i===histPage?'active':''}" onclick="bookGoTo(${i})"></div>`).join('')}</div>
+      <button class="race-arrow" onclick="bookNav(1)" aria-label="Page suivante"><i class="ti ti-chevron-right"></i></button>
+    </div>
+    <div class="book-close" onclick="bookClose()"><i class="ti ti-bookmark"></i> Fermer le livre</div>
+  </div>`;
+}
+window.bookOpen=()=>{ histPage=0; renderBook(); };
+window.bookClose=()=>{ histPage=-1; renderBook(); };
+window.bookNav=(d)=>{ histPage=(histPage+d+HISTOIRE_PAGES.length)%HISTOIRE_PAGES.length; renderBook(); };
+window.bookGoTo=(i)=>{ histPage=i; renderBook(); };
+renderBook();
 
 // ===== NÉGOCIATION =====
 const NEG_MANCHE = [0.1,0.2,0.3];
