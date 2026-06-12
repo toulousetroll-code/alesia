@@ -611,6 +611,23 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .vbm.malus .ti,.vbm.malus .vbm-val{color:#D47A6A;}
 .vbm-lbl{font-size:12px;color:#E0E0D8;}
 .vbm-val{font-size:11px;}
+.race-wheel{position:relative;height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden;perspective:1200px;margin-bottom:16px;}
+.race-track{position:relative;width:100%;height:100%;}
+.race-card{position:absolute;top:50%;left:50%;width:240px;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(22,16,8,.99));border:1px solid rgba(212,168,67,.22);border-radius:12px;padding:18px;transition:transform .4s ease,opacity .4s ease;cursor:pointer;}
+.race-card .rn{font-family:'Cinzel',serif;font-size:17px;color:#F2E6CC;text-align:center;letter-spacing:.04em;}
+.race-card .rs{font-size:11px;font-style:italic;color:#CFC09A;text-align:center;margin:2px 0 12px;}
+.race-card .rgrp{font-size:9px;font-weight:600;margin-bottom:5px;text-transform:uppercase;letter-spacing:.1em;}
+.race-card .ritem{font-size:12px;color:#CFC09A;margin-bottom:3px;line-height:1.4;}
+.race-card .rbox{border-radius:8px;padding:8px 10px;margin-bottom:8px;}
+.race-card .rbox.bon{background:var(--teal-pale);border:1px solid rgba(29,107,90,.25);}
+.race-card .rbox.mal{background:var(--red-pale);border:1px solid rgba(139,32,32,.25);}
+.race-card .rbox.bon .rgrp{color:var(--teal);}
+.race-card .rbox.mal .rgrp{color:var(--red);}
+.race-arrow{background:rgba(45,30,10,.7);border:1px solid rgba(212,168,67,.25);color:var(--gold);width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;z-index:10;flex-shrink:0;}
+.race-arrow:hover{border-color:var(--gold);background:rgba(212,168,67,.1);}
+.race-dots{display:flex;justify-content:center;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.race-dot{width:8px;height:8px;border-radius:50%;background:rgba(212,168,67,.18);border:1px solid rgba(212,168,67,.3);cursor:pointer;transition:background .2s;}
+.race-dot.active{background:var(--gold);}
 /* Furmiaou */
 .furm-layout{display:grid;grid-template-columns:300px 1fr;gap:20px;align-items:start;}
 
@@ -806,7 +823,12 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
       </div>
       <div id="s-races" class="section">
         <div class="page-title"><i class="ti ti-dna"></i> Races jouables</div>
-        <div id="races-container"></div>
+        <div class="race-wheel">
+          <button class="race-arrow" onclick="raceNav(-1)" aria-label="Précédent"><i class="ti ti-chevron-left"></i></button>
+          <div class="race-track" id="race-track"></div>
+          <button class="race-arrow" onclick="raceNav(1)" aria-label="Suivant"><i class="ti ti-chevron-right"></i></button>
+        </div>
+        <div class="race-dots" id="race-dots"></div>
       </div>
 
       <div id="s-classes" class="section">
@@ -2796,7 +2818,32 @@ const classes=[
   {n:'Cogneur',sub:'Guerrier',pv:'+0',mana:'−1',arm:'+2 dégâts',caps:['Maîtrise des Armes : relance 1×/combat','Baroud d\'honneur : <30% PV → +2 dégâts']},
   {n:'Troubadour',sub:'Barde',pv:'+0',mana:'+0',arm:'+0',caps:['Ruse Scénique : relance social 1×/combat','Improvisation : +30% social avec instrument']}
 ];
-document.getElementById('races-container').innerHTML='<div style="display:flex;flex-direction:column;gap:10px;">'+races.map((r,i)=>`<div class="card"><div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;" onclick="toggleRace(${i})"><div><strong style="font-family:'Cinzel',serif;font-size:13px;color:#F2E6CC;">${r.n}</strong>${r.sub?' <span style="font-style:italic;color:#CFC09A;font-size:12px;">— '+r.sub+'</span>':''}</div><i class="ti ti-chevron-down" id="ric-${i}" style="color:var(--gold-d);transition:transform .2s;"></i></div><div id="rb-${i}" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--bord);"><div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;"><div style="background:var(--teal-pale);border:1px solid rgba(29,107,90,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--teal);font-weight:600;margin-bottom:4px;">BONUS</div>${r.bon.map(b=>`<div style="font-size:12px;color:#CFC09A;margin-bottom:2px;">+ ${b}</div>`).join('')}</div><div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:8px;padding:8px;"><div style="font-size:10px;color:var(--red);font-weight:600;margin-bottom:4px;">MALUS</div>${r.mal.map(m=>`<div style="font-size:12px;color:#CFC09A;margin-bottom:2px;">− ${m}</div>`).join('')}</div></div></div></div>`).join('')+'</div>';
+let raceIdx=0;
+function renderRaceCarousel(){
+  const n=races.length;
+  const track=document.getElementById('race-track');
+  if(!track)return;
+  track.innerHTML=races.map((r,i)=>{
+    let d=i-raceIdx;
+    if(d>n/2) d-=n;
+    if(d<-n/2) d+=n;
+    let transform,opacity,z,pe='auto';
+    if(d===0){ transform='translate(-50%,-50%) translateX(0) scale(1)'; opacity=1; z=5; }
+    else if(Math.abs(d)===1){ transform=`translate(-50%,-50%) translateX(${d*220}px) rotateY(${-d*22}deg) scale(.8)`; opacity=.55; z=4; }
+    else if(Math.abs(d)===2){ transform=`translate(-50%,-50%) translateX(${d*210}px) rotateY(${-d*28}deg) scale(.6)`; opacity=.22; z=3; }
+    else { transform=`translate(-50%,-50%) translateX(${d*200}px) scale(.5)`; opacity=0; z=1; pe='none'; }
+    return `<div class="race-card" style="transform:${transform};opacity:${opacity};z-index:${z};pointer-events:${pe};" onclick="raceGoTo(${i})">
+      <div class="rn">${r.n}</div>
+      <div class="rs">${r.sub||'&nbsp;'}</div>
+      <div class="rbox bon"><div class="rgrp">Bonus</div>${r.bon.map(b=>`<div class="ritem">+ ${b}</div>`).join('')}</div>
+      <div class="rbox mal"><div class="rgrp">Malus</div>${r.mal.map(m=>`<div class="ritem">− ${m}</div>`).join('')}</div>
+    </div>`;
+  }).join('');
+  document.getElementById('race-dots').innerHTML=races.map((r,i)=>`<div class="race-dot ${i===raceIdx?'active':''}" onclick="raceGoTo(${i})" title="${r.n}"></div>`).join('');
+}
+window.raceNav=(dir)=>{ raceIdx=(raceIdx+dir+races.length)%races.length; renderRaceCarousel(); };
+window.raceGoTo=(i)=>{ raceIdx=i; renderRaceCarousel(); };
+renderRaceCarousel();
 document.getElementById('classes-container').innerHTML=classes.map(c=>`<div class="card"><div style="font-family:'Cinzel',serif;font-size:13px;color:#F2E6CC;margin-bottom:2px;">${c.n}</div><div style="font-size:11px;color:#CFC09A;font-style:italic;margin-bottom:8px;">${c.sub}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>${c.caps.map(cap=>`<div style="font-size:12px;color:#CFC09A;padding-left:8px;border-left:2px solid var(--gold);margin-bottom:4px;">${cap}</div>`).join('')}</div>`).join('');
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
