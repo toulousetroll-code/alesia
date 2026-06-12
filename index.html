@@ -1207,67 +1207,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
       <!-- RÈGLES (livret) -->
       <div id="s-regles" class="section">
         <div class="page-title"><i class="ti ti-book-2"></i> Règles du jeu</div>
-        <div style="display:flex;flex-direction:column;gap:14px;">
-          <div class="card">
-            <div class="sdiv">Mécanique de base — D100</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;margin-bottom:10px;">Pour tenter une action, lance 1D100. <strong style="color:#F2E6CC">Succès</strong> si le résultat est ≤ à ta caractéristique + compétence. <strong style="color:#F2E6CC">Échec</strong> dans le cas contraire.</p>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-              <div style="color:#CFC09A;background:rgba(26,138,106,.1);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--teal);">✅ Réussite critique (1–5)</strong><br><span style="color:#CFC09A;">Effet bonus défini par le MJ ou le joueur.</span></div>
-              <div style="color:#CFC09A;background:rgba(192,57,43,.1);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--red);">❌ Échec critique (95–100)</strong><br><span style="color:#CFC09A;">Conséquence négative majeure.</span></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="sdiv">Combat & Armure</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;">Les dégâts reçus sont réduits par les points d'armure de ton équipement (Réduction de Dégâts = RD). Une fois par combat, le groupe peut prendre une <strong style="color:#F2E6CC">phase de planification stratégique</strong> en utilisant un "Point Strat" pour organiser sa tactique.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Jet de Survie</div>
-            <p style="font-size:13px;color:#CFC09A;line-height:1.7;margin-bottom:10px;">Intervient quand un personnage risque de mourir (blessure mortelle, accident, magie dangereuse). Le MJ fixe un seuil sur D100 selon la dangerosité et les PV perdus.</p>
-            <div style="color:#CFC09A;display:flex;flex-direction:column;gap:6px;font-size:12px;">
-              <div style="padding:7px 10px;background:rgba(45,32,14,.85);border-radius:7px;border-left:3px solid var(--gold-d);"><strong style="color:#F2E6CC">Essais :</strong> 2 essais par défaut. Les personnages avec la compétence <strong style="color:#F2E6CC">Chance</strong> ont un 3ème essai.</div>
-              <div style="padding:7px 10px;background:var(--teal-pale);border-radius:7px;border-left:3px solid var(--teal);"><strong style="color:#F2E6CC">Réussite :</strong> le personnage survit dans un état critique.</div>
-              <div style="padding:7px 10px;background:var(--red-pale);border-radius:7px;border-left:3px solid var(--red);"><strong style="color:#F2E6CC">Échec (tous les essais) :</strong> le personnage succombe.</div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="sdiv">Altérations d'état</div>
-            <div style="color:#CFC09A;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
-              <div style="background:rgba(255,200,0,.12);border:1px solid rgba(200,150,0,.3);border-radius:7px;padding:8px;"><strong style="color:#a07800;">🟡 Carton Jaune</strong><br><span style="color:#CFC09A;">−1 point sur la caractéristique, −10% aux jets.</span></div>
-              <div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:7px;padding:8px;"><strong style="color:var(--red);">🔴 Carton Rouge</strong><br><span style="color:#CFC09A;">Blocage total + malus calculé sur la sous-stat × 10%.</span></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="sdiv">Dés d'aventure / mésaventure</div>
-            <div style="color:#CFC09A;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:12px;text-align:center;">
-              <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong style="color:#F2E6CC">1–2</strong><br><span style="color:#CFC09A;">Mouvement</span></div>
-              <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong style="color:#F2E6CC">3–4</strong><br><span style="color:#CFC09A;">Posture</span></div>
-              <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong style="color:#F2E6CC">5–6</strong><br><span style="color:#CFC09A;">Bonus "In extremis" (+5%)</span></div>
-            </div>
-            <p style="font-size:12px;color:#A09070;margin-top:8px;font-style:italic;">Après usage, les dés blancs deviennent noirs, donnant au MJ la possibilité de retourner la situation.</p>
-          </div>
-          <div class="card">
-            <div class="sdiv">Progression de niveau</div>
-            <div style="color:#CFC09A;display:flex;flex-direction:column;gap:6px;font-size:12px;">
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 2</span><span style="color:#CFC09A;">+5 PV <em>ou</em> +5% à la caractéristique la plus basse <em>ou</em> +10% répartis sur les compétences.</span></div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 3</span><span style="color:#CFC09A;">+3 PV/Mana et un nouveau don dans sa branche.</span></div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 4</span><span style="color:#CFC09A;">+3 PV/Mana et remplacement d'une valeur par une Passion.</span></div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 5</span><span style="color:#CFC09A;">+3 PV/Mana, +5% à toutes les stats, acquisition d'une <strong style="color:#F2E6CC">posture élémentaire</strong>.</span></div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 6</span><span style="color:#CFC09A;">Amélioration d'un Don existant ou obtention d'un nouveau Don.</span></div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="sdiv">Règles spéciales par classe</div>
-            <div style="color:#CFC09A;display:flex;flex-direction:column;gap:8px;font-size:12px;">
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Cogneur</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. <strong style="color:#F2E6CC">150% à répartir</strong> (pas 170%).</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Rôdeur</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure.</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Gardien</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. Social fixé à 50% obligatoirement.</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Lames Noires</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure. <strong style="color:#F2E6CC">140% à répartir</strong>.</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Oracle</strong> — Mental obligatoirement majeur. Impossible d'avoir des dons infligeant des dégâts physiques. Doit incarner empathie et altruisme.</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Arcaniste</strong> — Mental obligatoirement majeur. Physique max 40%. Mana max doit être au moins le double du PV max.</div>
-              <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Troubadour</strong> — Social obligatoirement majeur. Physique max 35%.</div>
-            </div>
-          </div>
-        </div>
+        <div id="regles-tuto-wrap"></div>
       </div>
 
       <!-- NÉGOCIATION -->
@@ -2985,6 +2925,72 @@ function renderTuto(){
 window.tutoNav=(d)=>{ tutoStep=Math.max(0,Math.min(TUTO_STEPS.length-1,tutoStep+d)); renderTuto(); };
 window.tutoGoTo=(i)=>{ tutoStep=i; renderTuto(); };
 renderTuto();
+
+// ===== TUTORIEL RÈGLES DU JEU =====
+const RULES_STEPS = [
+  {t:"Le Maître des Règles", html:"Je vais te présenter les principales règles du jeu d'Alésia. Garde-moi sous le coude si tu as un doute en pleine partie !"},
+  {t:"Mécanique de base — D100", html:`Pour tenter une action, lance 1D100. <strong style="color:#F2E6CC">Succès</strong> si le résultat est ≤ à ta caractéristique + compétence. <strong style="color:#F2E6CC">Échec</strong> dans le cas contraire.
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;">
+      <div style="color:#CFC09A;background:rgba(26,138,106,.1);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--teal);">✅ Réussite critique (1–5)</strong><br><span style="color:#CFC09A;">Effet bonus défini par le MJ ou le joueur.</span></div>
+      <div style="color:#CFC09A;background:rgba(192,57,43,.1);border-radius:7px;padding:8px;font-size:12px;"><strong style="color:var(--red);">❌ Échec critique (95–100)</strong><br><span style="color:#CFC09A;">Conséquence négative majeure.</span></div>
+    </div>`},
+  {t:"Combat & Armure", html:"Les dégâts reçus sont réduits par les points d'armure de ton équipement (Réduction de Dégâts = RD). Une fois par combat, le groupe peut prendre une <strong style=\"color:#F2E6CC\">phase de planification stratégique</strong> en utilisant un \"Point Strat\" pour organiser sa tactique."},
+  {t:"Jet de Survie", html:`Intervient quand un personnage risque de mourir (blessure mortelle, accident, magie dangereuse). Le MJ fixe un seuil sur D100 selon la dangerosité et les PV perdus.
+    <div style="color:#CFC09A;display:flex;flex-direction:column;gap:6px;font-size:12px;margin-top:10px;">
+      <div style="padding:7px 10px;background:rgba(45,32,14,.85);border-radius:7px;border-left:3px solid var(--gold-d);"><strong style="color:#F2E6CC">Essais :</strong> 2 essais par défaut. Les personnages avec la compétence <strong style="color:#F2E6CC">Chance</strong> ont un 3ème essai.</div>
+      <div style="padding:7px 10px;background:var(--teal-pale);border-radius:7px;border-left:3px solid var(--teal);"><strong style="color:#F2E6CC">Réussite :</strong> le personnage survit dans un état critique.</div>
+      <div style="padding:7px 10px;background:var(--red-pale);border-radius:7px;border-left:3px solid var(--red);"><strong style="color:#F2E6CC">Échec (tous les essais) :</strong> le personnage succombe.</div>
+    </div>`},
+  {t:"Altérations d'état", html:`<div style="color:#CFC09A;display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;">
+      <div style="background:rgba(255,200,0,.12);border:1px solid rgba(200,150,0,.3);border-radius:7px;padding:8px;"><strong style="color:#a07800;">🟡 Carton Jaune</strong><br><span style="color:#CFC09A;">−1 point sur la caractéristique, −10% aux jets.</span></div>
+      <div style="background:var(--red-pale);border:1px solid rgba(139,32,32,.2);border-radius:7px;padding:8px;"><strong style="color:var(--red);">🔴 Carton Rouge</strong><br><span style="color:#CFC09A;">Blocage total + malus calculé sur la sous-stat × 10%.</span></div>
+    </div>`},
+  {t:"Dés d'aventure / mésaventure", html:`<div style="color:#CFC09A;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;font-size:12px;text-align:center;">
+      <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong style="color:#F2E6CC">1–2</strong><br><span style="color:#CFC09A;">Mouvement</span></div>
+      <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong style="color:#F2E6CC">3–4</strong><br><span style="color:#CFC09A;">Posture</span></div>
+      <div style="background:rgba(45,32,14,.85);border-radius:7px;padding:8px;"><strong style="color:#F2E6CC">5–6</strong><br><span style="color:#CFC09A;">Bonus "In extremis" (+5%)</span></div>
+    </div>
+    <p style="font-size:12px;color:#A09070;margin-top:8px;font-style:italic;">Après usage, les dés blancs deviennent noirs, donnant au MJ la possibilité de retourner la situation.</p>`},
+  {t:"Progression de niveau", html:`<div style="color:#CFC09A;display:flex;flex-direction:column;gap:6px;font-size:12px;">
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 2</span><span style="color:#CFC09A;">+5 PV <em>ou</em> +5% à la caractéristique la plus basse <em>ou</em> +10% répartis sur les compétences.</span></div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 3</span><span style="color:#CFC09A;">+3 PV/Mana et un nouveau don dans sa branche.</span></div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 4</span><span style="color:#CFC09A;">+3 PV/Mana et remplacement d'une valeur par une Passion.</span></div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 5</span><span style="color:#CFC09A;">+3 PV/Mana, +5% à toutes les stats, acquisition d'une <strong style="color:#F2E6CC">posture élémentaire</strong>.</span></div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;display:flex;gap:10px;align-items:flex-start;"><span style="font-family:'Cinzel',serif;color:#C09030;font-size:11px;min-width:60px;">Niveau 6</span><span style="color:#CFC09A;">Amélioration d'un Don existant ou obtention d'un nouveau Don.</span></div>
+    </div>`},
+  {t:"Règles spéciales par classe", html:`<div style="color:#CFC09A;display:flex;flex-direction:column;gap:8px;font-size:12px;">
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Cogneur</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. <strong style="color:#F2E6CC">150% à répartir</strong> (pas 170%).</div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Rôdeur</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure.</div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Gardien</strong> — Physique obligatoirement majeur. Puissance = sous-stat majeure. Social fixé à 50% obligatoirement.</div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Lames Noires</strong> — Physique obligatoirement majeur. Finesse = sous-stat majeure. <strong style="color:#F2E6CC">140% à répartir</strong>.</div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Oracle</strong> — Mental obligatoirement majeur. Impossible d'avoir des dons infligeant des dégâts physiques. Doit incarner empathie et altruisme.</div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Arcaniste</strong> — Mental obligatoirement majeur. Physique max 40%. Mana max doit être au moins le double du PV max.</div>
+      <div style="padding:8px;background:rgba(45,32,14,.85);border-radius:7px;"><strong style="color:#F2E6CC;">Troubadour</strong> — Social obligatoirement majeur. Physique max 35%.</div>
+    </div>`},
+  {t:"À toi de jouer !", html:"Tu connais maintenant les bases. N'hésite pas à revenir consulter cette page en cours de partie. Bon courage, Téméraire !"},
+];
+let rulesStep = 0;
+function renderRulesTuto(){
+  const w = document.getElementById('regles-tuto-wrap');
+  if(!w) return;
+  const s = RULES_STEPS[rulesStep];
+  w.innerHTML = `<div class="tuto-wrap">
+    <div class="tuto-mascot">${TUTO_DRAGON}</div>
+    <div class="tuto-bubble">
+      <div class="tuto-num">${rulesStep===0?'Introduction':(rulesStep===RULES_STEPS.length-1?'Conclusion':`Règle ${rulesStep} / ${RULES_STEPS.length-2}`)}</div>
+      <div class="tuto-title">${s.t}</div>
+      <div style="font-size:13px;color:#CFC09A;line-height:1.7;">${s.html}</div>
+    </div>
+  </div>
+  <div class="tuto-nav">
+    <button class="race-arrow" onclick="rulesNav(-1)" ${rulesStep===0?'style="visibility:hidden;"':''} aria-label="Précédent"><i class="ti ti-chevron-left"></i></button>
+    <div class="race-dots" style="margin:0;">${RULES_STEPS.map((_,i)=>`<div class="race-dot ${i===rulesStep?'active':''}" onclick="rulesGoTo(${i})"></div>`).join('')}</div>
+    <button class="race-arrow" onclick="rulesNav(1)" ${rulesStep===RULES_STEPS.length-1?'style="visibility:hidden;"':''} aria-label="Suivant"><i class="ti ti-chevron-right"></i></button>
+  </div>`;
+}
+window.rulesNav=(d)=>{ rulesStep=Math.max(0,Math.min(RULES_STEPS.length-1,rulesStep+d)); renderRulesTuto(); };
+window.rulesGoTo=(i)=>{ rulesStep=i; renderRulesTuto(); };
+renderRulesTuto();
 
 // ===== NÉGOCIATION =====
 const NEG_MANCHE = [0.1,0.2,0.3];
