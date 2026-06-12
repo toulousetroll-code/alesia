@@ -2945,6 +2945,7 @@ renderClassCarousel();
 const NEG_MANCHE = [0.1,0.2,0.3];
 const NEG_MOD = { critM_succes:1, critM_echec:-0.5, critJ_succes:-0.5, critJ_echec:2, egalite:-0.8 };
 let negState = { base:5000, price:5000, log:[], ended:false };
+let negRemote = false;
 
 const NEG_OPTIONS = [
   {v:'',label:'— Choisir le résultat —'},
@@ -2963,6 +2964,11 @@ function negStart(){
   for(let i=0;i<3;i++) negState[`r${i}`] = '';
   negRenderRounds();
   negUpdateDisplay();
+  negSave();
+}
+function negSave(){
+  negRemote = true;
+  setDoc(doc(db,'shared','negociation'), negState).finally(()=>{ negRemote=false; });
 }
 function negRenderRounds(){
   const c = document.getElementById('neg-rounds');
@@ -3003,6 +3009,7 @@ function negApplyRound(i, val){
   }
   negRenderRounds();
   negUpdateDisplay();
+  negSave();
 }
 function negUpdateDisplay(){
   document.getElementById('neg-price').innerHTML = Math.round(negState.price) + ' <span style="font-size:18px;">PO</span>';
@@ -3017,7 +3024,16 @@ function negUpdateDisplay(){
     finalEl.innerHTML = '';
   }
 }
-negStart();
+onSnapshot(doc(db,'shared','negociation'), snap=>{
+  if(snap.exists() && !negRemote){
+    negState = snap.data();
+    document.getElementById('neg-base').value = negState.base;
+    negRenderRounds();
+    negUpdateDisplay();
+  } else if(!snap.exists()){
+    negStart();
+  }
+});
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
   document.querySelectorAll('.classeur-tab').forEach(t => t.classList.remove('active'));
