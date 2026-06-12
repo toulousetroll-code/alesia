@@ -658,7 +658,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .tuto-nav{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px;}
 @media (max-width:640px){.tuto-wrap{flex-direction:column;align-items:center;}.tuto-bubble::before,.tuto-bubble::after{display:none;}}
 .adv-vessel{display:flex;align-items:stretch;height:90px;border-radius:14px;overflow:hidden;border:2px solid var(--gold-d);box-shadow:0 8px 28px rgba(0,0,0,.4);margin:24px 0;}
-.adv-side{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:flex-grow .4s ease;min-width:0;}
+.adv-side{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:flex-grow .4s ease;min-width:0;overflow:hidden;white-space:nowrap;}
 .adv-side.aventure{background:linear-gradient(135deg,#2E7D32,#1B5E20);}
 .adv-side.mesaventure{background:linear-gradient(135deg,#C0392B,#7B241C);}
 .adv-side .adv-num{font-family:'Cinzel',serif;font-size:36px;color:#fff;line-height:1;}
@@ -918,6 +918,16 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
             <button class="vpanel-edit" onclick="advShift(-1)"><i class="ti ti-arrow-left"></i> Vers Aventure</button>
             <button class="vpanel-edit" onclick="advReset()"><i class="ti ti-refresh"></i> Réinitialiser (4/0)</button>
           </div>
+        </div>
+        <div class="card" style="margin-top:14px;">
+          <div class="sdiv">📖 Rappel des règles</div>
+          <div style="font-size:12px;color:#CFC09A;line-height:1.6;margin-bottom:10px;">Le groupe commence avec <strong style="color:#F2E6CC;">4 dés blancs (Aventure)</strong>. Quand un joueur <strong style="color:#5FAE5A;">utilise un dé d'Aventure</strong>, il devient noir et passe du côté <strong style="color:#D47A6A;">Mésaventure</strong> — donnant au MJ la possibilité de retourner la situation en utilisant à son tour un dé de ce côté. C'est un vase communicant : le total reste toujours égal à 4.</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;margin-bottom:10px;">
+            <div style="background:rgba(95,174,90,.08);border:1px solid rgba(95,174,90,.2);border-radius:8px;padding:8px;"><strong style="color:#9CDC9C;font-family:'Cinzel',serif;font-size:14px;">1–2</strong><br><span style="font-size:12px;color:#CFC09A;">Mouvement</span></div>
+            <div style="background:rgba(95,174,90,.08);border:1px solid rgba(95,174,90,.2);border-radius:8px;padding:8px;"><strong style="color:#9CDC9C;font-family:'Cinzel',serif;font-size:14px;">3–4</strong><br><span style="font-size:12px;color:#CFC09A;">Posture</span></div>
+            <div style="background:rgba(95,174,90,.08);border:1px solid rgba(95,174,90,.2);border-radius:8px;padding:8px;"><strong style="color:#9CDC9C;font-family:'Cinzel',serif;font-size:14px;">5–6</strong><br><span style="font-size:12px;color:#CFC09A;">Bonus "In extremis" (+5%)</span></div>
+          </div>
+          <div style="font-size:12px;color:#CFC09A;line-height:1.6;">Un dé d'<strong style="color:#5FAE5A;">Aventure</strong> permet de changer librement l'un de ces 3 éléments en pleine action (mouvement, posture, ou +5% sur un jet). Un dé de <strong style="color:#D47A6A;">Mésaventure</strong> donne le même pouvoir au MJ, mais en sa faveur (complication, ennemi qui change de posture, malus imprévu...).</div>
         </div>
       </div>
 
