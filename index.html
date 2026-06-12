@@ -648,12 +648,15 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .book-nav .race-arrow{position:static;}
 .book-close{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;text-align:center;margin-top:14px;cursor:pointer;}
 .book-close:hover{color:var(--gold);}
-.book-stage{position:relative;width:100%;max-width:780px;min-height:480px;perspective:2200px;margin:0 auto;}
-.book-leaf{position:absolute;inset:0;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(20,14,7,.99));border:1px solid var(--bord);border-radius:8px;padding:34px 44px;box-shadow:0 10px 36px rgba(0,0,0,.5);backface-visibility:hidden;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.45,.05,.55,.95);will-change:transform;box-sizing:border-box;overflow-y:auto;}
-.book-leaf.leaf-in-right{transform:rotateY(170deg);}
-.book-leaf.leaf-in-left{transform:rotateY(-170deg);}
-.book-leaf.leaf-out-right{transform:rotateY(-170deg);}
-.book-leaf.leaf-out-left{transform:rotateY(170deg);}
+.book-spread{position:relative;display:flex;width:100%;max-width:920px;min-height:480px;margin:0 auto;perspective:2400px;}
+.book-half{flex:1;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(20,14,7,.99));border:1px solid var(--bord);box-sizing:border-box;padding:32px 38px;overflow:hidden;}
+.book-half.left{border-radius:8px 0 0 8px;border-right:none;}
+.book-half.right{border-radius:0 8px 8px 0;}
+.book-spine{width:14px;flex-shrink:0;background:linear-gradient(90deg,rgba(0,0,0,.45),rgba(0,0,0,0) 35%,rgba(0,0,0,0) 65%,rgba(0,0,0,.45));z-index:5;pointer-events:none;}
+.book-flip{position:absolute;top:0;width:calc(50% - 7px);height:100%;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(20,14,7,.99));border:1px solid var(--bord);box-sizing:border-box;padding:32px 38px;backface-visibility:hidden;transform-style:preserve-3d;z-index:10;transition:transform .7s cubic-bezier(.45,.05,.55,.95);box-shadow:0 0 40px rgba(0,0,0,.6);transform:rotateY(0deg);}
+.book-flip.right-flip{left:calc(50% + 7px);border-radius:0 8px 8px 0;transform-origin:left center;}
+.book-flip.left-flip{left:0;border-radius:8px 0 0 8px;transform-origin:right center;}
+@media (max-width:700px){.book-spread{flex-direction:column;min-height:auto;}.book-half{border-radius:8px;border:1px solid var(--bord);}.book-half.left{margin-bottom:8px;}.book-spine{display:none;}.book-flip{display:none;}}
 .tuto-wrap{display:flex;gap:24px;align-items:flex-start;}
 .tuto-mascot{flex-shrink:0;width:150px;}
 .tuto-bubble{flex:1;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(20,14,7,.99));border:1px solid var(--bord);border-radius:8px;padding:22px 26px;position:relative;min-height:160px;animation:pageIn .35s ease;}
@@ -2915,11 +2918,17 @@ const HISTOIRE_PAGES = [
   {t:"Mythes et Réalités", html:"Chaque peuple entretient ses légendes — certains y voient un lieu sacré de renaissance divine, d'autres un refuge pour un ordre oublié. Les religions périphériques évoquent la Prophétie des Douze Âmes, annonçant un élu capable de lever la barrière. Certains disent que les courants du lac attirent les navires vers l'île, mais sans jamais leur permettre de s'en échapper."},
 ];
 let histPage = -1; // -1 = couverture fermée
-function leafContent(i){
+function pageInner(i){
+  if(i<0 || i>=HISTOIRE_PAGES.length) return '';
   const p = HISTOIRE_PAGES[i];
   return `<div class="bp-num">Page ${i+1} / ${HISTOIRE_PAGES.length}</div>
     <div class="bp-title">${p.t}</div>
     <div class="bp-text ${p.prophecy?'prophecy':''}">${p.html}</div>`;
+}
+const BOOK_SPREADS = Math.ceil(HISTOIRE_PAGES.length/2);
+let bookSpread = 0;
+function dotsHtml(){
+  return Array.from({length:BOOK_SPREADS},(_,i)=>`<div class="race-dot ${i===bookSpread?'active':''}" onclick="bookGoTo(${i})"></div>`).join('');
 }
 function renderBook(){
   const w = document.getElementById('book-wrap');
@@ -2933,42 +2942,50 @@ function renderBook(){
     </div>`;
     return;
   }
+  const l = bookSpread*2, r = l+1;
   w.innerHTML = `<div style="width:100%;">
-    <div class="book-stage" id="book-stage">
-      <div class="book-leaf" id="book-leaf-0" style="z-index:2;">${leafContent(histPage)}</div>
+    <div class="book-spread" id="book-spread">
+      <div class="book-half left" id="book-half-left">${pageInner(l)}</div>
+      <div class="book-spine"></div>
+      <div class="book-half right" id="book-half-right">${pageInner(r)}</div>
     </div>
     <div class="book-nav">
       <button class="race-arrow" onclick="bookNav(-1)" aria-label="Page précédente"><i class="ti ti-chevron-left"></i></button>
-      <div class="race-dots" style="margin:0;" id="book-dots">${HISTOIRE_PAGES.map((_,i)=>`<div class="race-dot ${i===histPage?'active':''}" onclick="bookGoTo(${i})"></div>`).join('')}</div>
+      <div class="race-dots" style="margin:0;" id="book-dots">${dotsHtml()}</div>
       <button class="race-arrow" onclick="bookNav(1)" aria-label="Page suivante"><i class="ti ti-chevron-right"></i></button>
     </div>
     <div class="book-close" onclick="bookClose()"><i class="ti ti-bookmark"></i> Fermer le livre</div>
   </div>`;
 }
-function turnBook(newPage, dir){
-  const stage = document.getElementById('book-stage');
-  if(!stage){ histPage=newPage; renderBook(); return; }
-  const oldLeaf = stage.querySelector('.book-leaf');
-  const newLeaf = document.createElement('div');
-  newLeaf.className = 'book-leaf ' + (dir>0?'leaf-in-right':'leaf-in-left');
-  newLeaf.style.zIndex = '3';
-  newLeaf.innerHTML = leafContent(newPage);
-  stage.appendChild(newLeaf);
-  requestAnimationFrame(()=>{
-    requestAnimationFrame(()=>{
-      oldLeaf.classList.add(dir>0?'leaf-out-right':'leaf-out-left');
-      newLeaf.classList.remove('leaf-in-right','leaf-in-left');
-    });
-  });
-  setTimeout(()=>{ oldLeaf.remove(); }, 700);
-  histPage = newPage;
-  document.querySelectorAll('#book-dots .race-dot').forEach((d,i)=>d.classList.toggle('active', i===histPage));
+function turnBook(newSpread, dir){
+  const stage = document.getElementById('book-spread');
+  if(!stage){ bookSpread=newSpread; renderBook(); return; }
+  const flip = document.createElement('div');
+  if(dir>0){
+    flip.className = 'book-flip right-flip';
+    flip.innerHTML = pageInner(bookSpread*2+1);
+    flip.style.zIndex = '10';
+    stage.appendChild(flip);
+    document.getElementById('book-half-right').innerHTML = pageInner(newSpread*2+1);
+    document.getElementById('book-half-left').innerHTML = pageInner(newSpread*2);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ flip.style.transform = 'rotateY(-160deg)'; }));
+  } else {
+    flip.className = 'book-flip left-flip';
+    flip.innerHTML = pageInner(bookSpread*2);
+    flip.style.zIndex = '10';
+    stage.appendChild(flip);
+    document.getElementById('book-half-left').innerHTML = pageInner(newSpread*2);
+    document.getElementById('book-half-right').innerHTML = pageInner(newSpread*2+1);
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{ flip.style.transform = 'rotateY(160deg)'; }));
+  }
+  setTimeout(()=>{ flip.remove(); }, 750);
+  bookSpread = newSpread;
+  document.querySelectorAll('#book-dots .race-dot').forEach((d,i)=>d.classList.toggle('active', i===bookSpread));
 }
-window.bookOpen=()=>{ histPage=0; renderBook(); };
+window.bookOpen=()=>{ histPage=0; bookSpread=0; renderBook(); };
 window.bookClose=()=>{ histPage=-1; renderBook(); };
-window.bookNav=(d)=>{ turnBook((histPage+d+HISTOIRE_PAGES.length)%HISTOIRE_PAGES.length, d); };
-window.bookGoTo=(i)=>{ if(i===histPage) return; turnBook(i, i>histPage?1:-1); };
-renderBook();
+window.bookNav=(d)=>{ turnBook((bookSpread+d+BOOK_SPREADS)%BOOK_SPREADS, d); };
+window.bookGoTo=(i)=>{ if(i===bookSpread) return; turnBook(i, i>bookSpread?1:-1); };
 renderBook();
 
 // ===== TUTORIEL CRÉATION DE PERSO =====
