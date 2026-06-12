@@ -833,7 +833,12 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 
       <div id="s-classes" class="section">
         <div class="page-title"><i class="ti ti-sword"></i> Classes jouables</div>
-        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;" id="classes-container"></div>
+        <div class="race-wheel">
+          <button class="race-arrow" onclick="classNav(-1)" aria-label="Précédent"><i class="ti ti-chevron-left"></i></button>
+          <div class="race-track" id="class-track"></div>
+          <button class="race-arrow" onclick="classNav(1)" aria-label="Suivant"><i class="ti ti-chevron-right"></i></button>
+        </div>
+        <div class="race-dots" id="class-dots"></div>
       </div>
 
       <div id="s-des" class="section">
@@ -2844,7 +2849,32 @@ function renderRaceCarousel(){
 window.raceNav=(dir)=>{ raceIdx=(raceIdx+dir+races.length)%races.length; renderRaceCarousel(); };
 window.raceGoTo=(i)=>{ raceIdx=i; renderRaceCarousel(); };
 renderRaceCarousel();
-document.getElementById('classes-container').innerHTML=classes.map(c=>`<div class="card"><div style="font-family:'Cinzel',serif;font-size:13px;color:#F2E6CC;margin-bottom:2px;">${c.n}</div><div style="font-size:11px;color:#CFC09A;font-style:italic;margin-bottom:8px;">${c.sub}</div><div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>${c.caps.map(cap=>`<div style="font-size:12px;color:#CFC09A;padding-left:8px;border-left:2px solid var(--gold);margin-bottom:4px;">${cap}</div>`).join('')}</div>`).join('');
+let classIdx=0;
+function renderClassCarousel(){
+  const n=classes.length;
+  const track=document.getElementById('class-track');
+  if(!track)return;
+  track.innerHTML=classes.map((c,i)=>{
+    let d=i-classIdx;
+    if(d>n/2) d-=n;
+    if(d<-n/2) d+=n;
+    let transform,opacity,z,pe='auto';
+    if(d===0){ transform='translate(-50%,-50%) translateX(0) scale(1)'; opacity=1; z=5; }
+    else if(Math.abs(d)===1){ transform=`translate(-50%,-50%) translateX(${d*220}px) rotateY(${-d*22}deg) scale(.8)`; opacity=.55; z=4; }
+    else if(Math.abs(d)===2){ transform=`translate(-50%,-50%) translateX(${d*210}px) rotateY(${-d*28}deg) scale(.6)`; opacity=.22; z=3; }
+    else { transform=`translate(-50%,-50%) translateX(${d*200}px) scale(.5)`; opacity=0; z=1; pe='none'; }
+    return `<div class="race-card" style="transform:${transform};opacity:${opacity};z-index:${z};pointer-events:${pe};" onclick="classGoTo(${i})">
+      <div class="rn">${c.n}</div>
+      <div class="rs">${c.sub||'&nbsp;'}</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>
+      ${c.caps.map(cap=>`<div class="ritem" style="padding-left:8px;border-left:2px solid var(--gold);margin-bottom:5px;">${cap}</div>`).join('')}
+    </div>`;
+  }).join('');
+  document.getElementById('class-dots').innerHTML=classes.map((c,i)=>`<div class="race-dot ${i===classIdx?'active':''}" onclick="classGoTo(${i})" title="${c.n}"></div>`).join('');
+}
+window.classNav=(dir)=>{ classIdx=(classIdx+dir+classes.length)%classes.length; renderClassCarousel(); };
+window.classGoTo=(i)=>{ classIdx=i; renderClassCarousel(); };
+renderClassCarousel();
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
   document.querySelectorAll('.classeur-tab').forEach(t => t.classList.remove('active'));
