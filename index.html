@@ -2969,7 +2969,9 @@ function negStart(){
 }
 function negSave(){
   negRemote = true;
-  setDoc(doc(db,'shared','negociation'), negState).finally(()=>{ negRemote=false; });
+  setDoc(doc(db,'characters','_negociation'), negState)
+    .catch(e=>{ console.error('negSave error', e); toast('Erreur de sync négociation ✗'); })
+    .finally(()=>{ negRemote=false; });
 }
 function negRenderRounds(){
   const c = document.getElementById('neg-rounds');
@@ -3026,7 +3028,7 @@ function negUpdateDisplay(){
   }
 }
 function listenNegotiation(){
-  onSnapshot(doc(db,'shared','negociation'), snap=>{
+  onSnapshot(doc(db,'characters','_negociation'), snap=>{
     if(snap.exists() && !negRemote){
       negState = snap.data();
       document.getElementById('neg-base').value = negState.base;
@@ -3035,7 +3037,7 @@ function listenNegotiation(){
     } else if(!snap.exists()){
       negStart();
     }
-  });
+  }, e=>{ console.error('negListen error', e); toast('Erreur de lecture négociation ✗'); });
 }
 function openFiche(idx, tabEl){
   document.querySelectorAll('.fiche').forEach(f => f.classList.remove('active'));
