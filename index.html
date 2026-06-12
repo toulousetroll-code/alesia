@@ -648,7 +648,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .book-nav .race-arrow{position:static;}
 .book-close{font-family:'Cinzel',serif;font-size:10px;letter-spacing:.15em;color:var(--gold-d);text-transform:uppercase;text-align:center;margin-top:14px;cursor:pointer;}
 .book-close:hover{color:var(--gold);}
-.book-stage{position:relative;width:100%;max-width:780px;min-height:420px;perspective:2200px;margin:0 auto;}
+.book-stage{position:relative;width:100%;max-width:780px;min-height:480px;perspective:2200px;margin:0 auto;}
 .book-leaf{position:absolute;inset:0;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(20,14,7,.99));border:1px solid var(--bord);border-radius:8px;padding:34px 44px;box-shadow:0 10px 36px rgba(0,0,0,.5);backface-visibility:hidden;transform-style:preserve-3d;transition:transform .65s cubic-bezier(.45,.05,.55,.95);will-change:transform;box-sizing:border-box;overflow-y:auto;}
 .book-leaf.leaf-in-right{transform:rotateY(170deg);}
 .book-leaf.leaf-in-left{transform:rotateY(-170deg);}
@@ -2933,7 +2933,7 @@ function renderBook(){
     </div>`;
     return;
   }
-  w.innerHTML = `<div>
+  w.innerHTML = `<div style="width:100%;">
     <div class="book-stage" id="book-stage">
       <div class="book-leaf" id="book-leaf-0" style="z-index:2;">${leafContent(histPage)}</div>
     </div>
