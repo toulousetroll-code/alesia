@@ -1275,6 +1275,22 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
             <div class="sdiv" style="justify-content:center;">💰 Résultat</div>
             <div style="font-family:'Cinzel',serif;font-size:11px;letter-spacing:.1em;color:var(--gold-d);text-transform:uppercase;margin-bottom:6px;">Prix actuel</div>
             <div id="neg-price" style="font-family:'Cinzel',serif;font-size:42px;color:var(--gold);margin-bottom:14px;">5000 <span style="font-size:18px;">PO</span></div>
+            <div style="display:flex;justify-content:center;margin-bottom:14px;">
+              <svg viewBox="0 0 220 110" width="220" height="110" xmlns="http://www.w3.org/2000/svg">
+                <text x="36" y="14" text-anchor="middle" font-family="'Cinzel',serif" font-size="9" letter-spacing="0.1em" fill="var(--gold-d)">JOUEUR</text>
+                <text x="184" y="14" text-anchor="middle" font-family="'Cinzel',serif" font-size="9" letter-spacing="0.1em" fill="var(--gold-d)">MARCHAND</text>
+                <path d="M95 100 L125 100 L110 76 Z" fill="rgba(212,168,67,.15)" stroke="var(--gold-d)" stroke-width="1.5"/>
+                <line x1="110" y1="76" x2="110" y2="68" stroke="var(--gold-d)" stroke-width="2"/>
+                <g id="neg-balance-beam" style="transform-origin:110px 68px;transition:transform .6s cubic-bezier(.34,1.56,.64,1);">
+                  <line x1="20" y1="68" x2="200" y2="68" stroke="var(--gold)" stroke-width="3" stroke-linecap="round"/>
+                  <line x1="20" y1="68" x2="20" y2="92" stroke="var(--gold-d)" stroke-width="1.5"/>
+                  <line x1="200" y1="68" x2="200" y2="92" stroke="var(--gold-d)" stroke-width="1.5"/>
+                  <path d="M2 92 Q20 110 38 92 Z" fill="rgba(95,174,90,.18)" stroke="#5FAE5A" stroke-width="1.5"/>
+                  <path d="M182 92 Q200 110 218 92 Z" fill="rgba(212,90,80,.18)" stroke="#D47A6A" stroke-width="1.5"/>
+                </g>
+                <circle cx="110" cy="68" r="3" fill="var(--gold)"/>
+              </svg>
+            </div>
             <div id="neg-log" style="display:flex;flex-direction:column;gap:5px;text-align:left;"></div>
             <div id="neg-final" style="margin-top:14px;"></div>
           </div>
@@ -3159,6 +3175,13 @@ function negApplyRound(i, val){
 }
 function negUpdateDisplay(){
   document.getElementById('neg-price').innerHTML = Math.round(negState.price) + ' <span style="font-size:18px;">PO</span>';
+  const beam = document.getElementById('neg-balance-beam');
+  if(beam){
+    const ratio = (negState.price - negState.base) / negState.base; // <0 favorable Joueur, >0 favorable Marchand
+    const angle = Math.max(-20, Math.min(20, ratio * 25));
+    // ratio<0 (prix bas, bon pour Joueur) -> plateau Joueur (gauche) descend -> rotation négative
+    beam.style.transform = `rotate(${angle}deg)`;
+  }
   document.getElementById('neg-log').innerHTML = negState.log.map(l=>`<div style="font-size:12px;color:#CFC09A;padding:6px 10px;background:rgba(212,168,67,.05);border-left:2px solid var(--gold-d);border-radius:4px;">${l}</div>`).join('');
   const finalEl = document.getElementById('neg-final');
   if(negState.ended){
