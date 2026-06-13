@@ -2343,7 +2343,7 @@ function vitruveRender(name){
   document.getElementById('vit-manamax').textContent = c.mana_max;
   if(isMJ) document.getElementById('vitruve-edit-zone').style.display='block';
   const port = document.getElementById('vit-portrait');
-  if(port) port.innerHTML = '<i class="ti '+(CLASS_ICON[c.classe]||'ti-user')+'"></i>';
+  if(port) port.innerHTML = '<img src="img/'+name+'.jpg" alt="'+c.name+'" style="width:100%;height:100%;object-fit:cover;" onerror="this.outerHTML=\'<i class=&quot;ti '+(CLASS_ICON[c.classe]||'ti-user')+'&quot;></i>\'">';
   const furmBtn = document.getElementById('furm-tab-btn');
   if(furmBtn) furmBtn.style.display = (name==='firm') ? 'flex' : 'none';
   if(vitruveTab==='furm' && name!=='firm') vitruveTab='fiche';
