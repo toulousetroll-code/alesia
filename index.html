@@ -2567,9 +2567,8 @@ function vitruveShowPanel(name, tab){
       + vcard('ti-gender-'+((c.genre||'').toLowerCase()==='femme'?'female':'male'),'Genre',c.genre||'—')
       + vcard('ti-language','Langues',c.langues||'—')
       + '</div>';
-    html += '<div class="vcard"><div class="vcard-lbl"><i class="ti ti-compass" aria-hidden="true"></i> Valeurs</div><div class="vpills" style="margin-top:8px;">'
-      + (c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>'<span class="vpill">'+v.trim()+'</span>').join('')
-      + '</div></div>';
+    const valList = (c.valeurs||'').split('\n').filter(v=>v.trim());
+    if(valList.length) html += '<div class="vcard"><div class="vcard-lbl"><i class="ti ti-compass" aria-hidden="true"></i> Valeurs</div><div class="vpills" style="margin-top:8px;">' + valList.map(v=>'<span class="vpill">'+v.trim()+'</span>').join('') + '</div></div>';
     html += '<div class="vcard" style="margin-top:10px;border-left:2px solid rgba(160,120,32,.5);"><div class="vcard-lbl">Histoire</div><div class="vcard-val">'+(c.notes||'—')+'</div></div>';
     html += editBtn(name,'fiche','notes','Modifier l\'histoire');
   }
