@@ -2644,35 +2644,13 @@ function vitruveShowPanel(name, tab){
     html += buildCatBlock(social);
     html += '</div>';
 
-    // Compétences (bonus %)
+    // Compétences (bonus %) — seulement les compétences hors sous-carac principales
     const allComps = c.competences || [];
-    const PHYS_KEYS = ['puissance','finesse'];
-    const SOC_KEYS  = ['aura','relation'];
-    const MEN_KEYS  = ['instinct','savoir'];
-    const compGroups = [
-      { label:'Physique', color:'#C07830', keys: PHYS_KEYS },
-      { label:'Social',   color:'#30A070', keys: SOC_KEYS },
-      { label:'Mental',   color:'#4080C0', keys: MEN_KEYS }
-    ];
-    // Extra compétences (not in the 6 main ones)
-    const mainKeys = [...PHYS_KEYS,...SOC_KEYS,...MEN_KEYS];
+    const mainKeys = ['puissance','finesse','aura','relation','instinct','savoir'];
     const extras = allComps.filter(cp => !mainKeys.includes(cp.n.toLowerCase().split(' ')[0]));
 
     html += '<div class="vsubhead" style="margin-top:16px;">Compétences</div>';
-    compGroups.forEach(grp=>{
-      const comps = allComps.filter(cp => grp.keys.includes(cp.n.toLowerCase().split(' ')[0]));
-      if(!comps.length) return;
-      html += '<div style="font-family:\'Cinzel\',serif;font-size:14px;color:'+grp.color+';text-transform:uppercase;letter-spacing:.06em;margin:8px 0 4px;">'+grp.label+'</div>';
-      comps.forEach(cp=>{
-        const pct = cp.v * 10;
-        html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.18);border-radius:7px;margin-bottom:5px;">';
-        html += '<div style="flex:1;font-size:17px;color:#E0D8C8;">'+cp.n+'</div>';
-        html += '<div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:'+grp.color+';min-width:50px;text-align:right;">'+pct+'%</div>';
-        html += '</div>';
-      });
-    });
     if(extras.length){
-      html += '<div style="font-family:\'Cinzel\',serif;font-size:14px;color:#A09070;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 4px;">Spéciales</div>';
       extras.forEach(cp=>{
         const pct = cp.v * 10;
         html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.18);border-radius:7px;margin-bottom:5px;">';
@@ -2680,6 +2658,8 @@ function vitruveShowPanel(name, tab){
         html += '<div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:#A09070;min-width:50px;text-align:right;">'+pct+'%</div>';
         html += '</div>';
       });
+    } else {
+      html += '<div style="color:#A09070;font-style:italic;font-size:15px;padding:8px 0;">Aucune compétence spéciale.</div>';
     }
 
     const lines=(c.race_bonus||'').split('\n').filter(r=>r.trim());
