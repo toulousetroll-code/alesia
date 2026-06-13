@@ -785,14 +785,18 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
               <div style="font-size:12px;color:#A09070;margin-bottom:6px;">Base : <span id="jet-base-lbl" style="color:#D4A843;font-weight:bold;">—%</span></div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                 <span style="font-size:12px;color:#A09070;white-space:nowrap;">Bonus/Malus :</span>
-                <button onclick="adjustJetMod(-10)" style="background:rgba(192,48,48,.15);border:1px solid rgba(192,48,48,.3);color:#C03030;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:bold;">−</button>
+                <button onclick="adjustJetMod(-5)" style="background:rgba(192,48,48,.15);border:1px solid rgba(192,48,48,.3);color:#C03030;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:bold;">−</button>
                 <span id="jet-mod-lbl" style="font-family:'Cinzel',serif;font-size:16px;color:#F2E6CC;min-width:44px;text-align:center;">0%</span>
-                <button onclick="adjustJetMod(10)" style="background:rgba(48,160,112,.1);border:1px solid rgba(48,160,112,.3);color:#30A070;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:bold;">+</button>
+                <button onclick="adjustJetMod(5)" style="background:rgba(48,160,112,.1);border:1px solid rgba(48,160,112,.3);color:#30A070;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:bold;">+</button>
                 <button onclick="resetJetMod()" style="background:none;border:1px solid rgba(212,168,67,.2);color:#907050;border-radius:5px;padding:2px 7px;cursor:pointer;font-size:11px;margin-left:2px;">↺</button>
               </div>
               <div style="border-top:1px solid rgba(212,168,67,.15);padding-top:8px;display:flex;align-items:center;justify-content:space-between;">
                 <span style="font-size:12px;color:#A09070;">Total à atteindre :</span>
                 <span id="jet-total" style="font-family:'Cinzel',serif;font-size:26px;font-weight:700;color:#D4A843;">—%</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;margin-top:6px;">
+                <span style="font-size:11px;color:rgba(192,48,48,.7);font-style:italic;">Min. : 5%</span>
+                <span style="font-size:11px;color:rgba(48,160,112,.7);font-style:italic;">Max. : 95%</span>
               </div>
             </div>
           </div>
@@ -2797,7 +2801,7 @@ function updateJetDisplay(){
   const c = charData[vitruveChar];
   if(!c) return;
   const base = _jetCat==='physique' ? parseInt(c.phys)||0 : _jetCat==='social' ? parseInt(c.social)||0 : parseInt(c.mental)||0;
-  const total = Math.min(Math.max(base + _jetMod, 0), 100);
+  const total = Math.min(Math.max(base + _jetMod, 5), 95);
   const el = document.getElementById('jet-base-lbl');
   const tm = document.getElementById('jet-total');
   const ml = document.getElementById('jet-mod-lbl');
