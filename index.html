@@ -779,6 +779,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
             <div class="pchar-tabs" id="pchar-tabs">
               <div class="pchar-tab active" data-tab="fiche" onclick="showPersoTab('fiche',this)"><i class="ti ti-id-badge-2"></i> Fiche</div>
               <div class="pchar-tab" data-tab="carac" onclick="showPersoTab('carac',this)"><i class="ti ti-chart-bar"></i> Caractéristiques</div>
+              <div class="pchar-tab" data-tab="dons" onclick="showPersoTab('dons',this)"><i class="ti ti-sparkles"></i> Dons</div>
               <div class="pchar-tab" data-tab="inv" onclick="showPersoTab('inv',this)"><i class="ti ti-backpack"></i> Inventaire</div>
               <div class="pchar-tab furm-tab" data-tab="furm" id="furm-tab-btn" onclick="showPersoTab('furm',this)" style="display:none"><i class="ti ti-paw"></i> Furmiaou</div>
             </div>
@@ -2643,18 +2644,44 @@ function vitruveShowPanel(name, tab){
     html += buildCatBlock(social);
     html += '</div>';
 
-    const dons=(c.dons||'').split('\n').filter(d=>d.trim());
-    if(dons.length){
-      html += '<div class="vsubhead" style="margin-top:16px;">Dons & capacités</div><div class="vcard-grid">' + dons.map(d=>{
-        const icon=iconForText(d);
-        const clean=stripLeadingEmoji(d);
-        let sep=clean.indexOf(' — ')>=0?' — ':(clean.indexOf(' : ')>=0?' : ':null);
-        let nom=clean, eff='';
-        if(sep){ const parts=clean.split(sep); nom=parts[0].trim(); eff=parts.slice(1).join(sep).trim(); }
-        return vcard(icon,null,nom,eff||null);
-      }).join('') + '</div>';
+    // Compétences (bonus %)
+    const allComps = c.competences || [];
+    const PHYS_KEYS = ['puissance','finesse'];
+    const SOC_KEYS  = ['aura','relation'];
+    const MEN_KEYS  = ['instinct','savoir'];
+    const compGroups = [
+      { label:'Physique', color:'#C07830', keys: PHYS_KEYS },
+      { label:'Social',   color:'#30A070', keys: SOC_KEYS },
+      { label:'Mental',   color:'#4080C0', keys: MEN_KEYS }
+    ];
+    // Extra compétences (not in the 6 main ones)
+    const mainKeys = [...PHYS_KEYS,...SOC_KEYS,...MEN_KEYS];
+    const extras = allComps.filter(cp => !mainKeys.includes(cp.n.toLowerCase().split(' ')[0]));
+
+    html += '<div class="vsubhead" style="margin-top:16px;">Compétences</div>';
+    compGroups.forEach(grp=>{
+      const comps = allComps.filter(cp => grp.keys.includes(cp.n.toLowerCase().split(' ')[0]));
+      if(!comps.length) return;
+      html += '<div style="font-family:\'Cinzel\',serif;font-size:14px;color:'+grp.color+';text-transform:uppercase;letter-spacing:.06em;margin:8px 0 4px;">'+grp.label+'</div>';
+      comps.forEach(cp=>{
+        const pct = cp.v * 10;
+        html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.18);border-radius:7px;margin-bottom:5px;">';
+        html += '<div style="flex:1;font-size:17px;color:#E0D8C8;">'+cp.n+'</div>';
+        html += '<div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:'+grp.color+';min-width:50px;text-align:right;">'+pct+'%</div>';
+        html += '</div>';
+      });
+    });
+    if(extras.length){
+      html += '<div style="font-family:\'Cinzel\',serif;font-size:14px;color:#A09070;text-transform:uppercase;letter-spacing:.06em;margin:8px 0 4px;">Spéciales</div>';
+      extras.forEach(cp=>{
+        const pct = cp.v * 10;
+        html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.18);border-radius:7px;margin-bottom:5px;">';
+        html += '<div style="flex:1;font-size:17px;color:#E0D8C8;">'+cp.n+'</div>';
+        html += '<div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:#A09070;min-width:50px;text-align:right;">'+pct+'%</div>';
+        html += '</div>';
+      });
     }
-    html += editBtn(name,'carac','dons','Modifier les dons');
+
     const lines=(c.race_bonus||'').split('\n').filter(r=>r.trim());
     if(lines.length){
       html += '<div class="vsubhead" style="margin-top:14px;">Bonus & malus de race</div><div class="vcard-grid">' + lines.map(l=>{
@@ -2667,6 +2694,39 @@ function vitruveShowPanel(name, tab){
       }).join('') + '</div>';
     }
     html += editBtn(name,'carac','race_bonus','Modifier bonus/malus');
+  }
+
+  else if(tab==='dons'){
+    html += '<div class="vpanel-head"><i class="ti ti-sparkles"></i> Dons & Sorts</div>';
+    const dons=(c.dons||'').split('\n').filter(d=>d.trim());
+    if(dons.length){
+      html += '<div style="display:flex;flex-direction:column;gap:10px;">';
+      dons.forEach(d=>{
+        const icon = iconForText(d);
+        const clean = stripLeadingEmoji(d);
+        let sep = clean.indexOf(' — ')>=0?' — ':(clean.indexOf(' : ')>=0?' : ':null);
+        let nom=clean, eff='';
+        if(sep){ const parts=clean.split(sep); nom=parts[0].trim(); eff=parts.slice(1).join(sep).trim(); }
+        // Parse mana cost and dés from eff
+        const manaMatch = eff.match(/(\d+)\s*mana/i);
+        const desMatch  = eff.match(/(D\d+(?:\+D\d+)?(?:[+\-]\d+)?)/i);
+        const mana = manaMatch ? manaMatch[1] : null;
+        const des  = desMatch  ? desMatch[1]  : null;
+        html += '<div style="background:rgba(45,30,10,.6);border:1px solid rgba(212,168,67,.18);border-left:3px solid rgba(212,168,67,.5);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:14px;">';
+        html += '<i class="ti '+icon+'" style="font-size:28px;color:rgba(212,168,67,.6);flex-shrink:0;" aria-hidden="true"></i>';
+        html += '<div style="flex:1;">';
+        html += '<div style="font-family:\'Cinzel\',serif;font-size:19px;color:#F2E6CC;font-weight:600;">'+nom+'</div>';
+        if(eff) html += '<div style="font-size:16px;color:#A09070;margin-top:3px;font-style:italic;">'+eff+'</div>';
+        html += '</div>';
+        if(mana) html += '<div style="text-align:center;background:rgba(80,100,200,.12);border:1px solid rgba(80,100,200,.3);border-radius:6px;padding:4px 10px;"><div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:#8090E0;">'+mana+'</div><div style="font-size:12px;color:#5060A0;letter-spacing:.08em;">MANA</div></div>';
+        if(des)  html += '<div style="text-align:center;background:rgba(200,80,40,.1);border:1px solid rgba(200,80,40,.3);border-radius:6px;padding:4px 10px;"><div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:#D07050;">'+des+'</div><div style="font-size:12px;color:#904030;letter-spacing:.08em;">DÉS</div></div>';
+        html += '</div>';
+      });
+      html += '</div>';
+    } else {
+      html += '<div style="color:#A09070;font-style:italic;padding:20px 0;">Aucun don.</div>';
+    }
+    html += editBtn(name,'dons','dons','Modifier les dons');
   }
 
   else if(tab==='inv'){
