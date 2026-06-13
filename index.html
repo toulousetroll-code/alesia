@@ -2689,7 +2689,7 @@ function vitruveShowPanel(name, tab){
   }
 
   else if(tab==='furm'){
-    html += FURMIAOU_HTML;
+    html += buildFurmHTML();
   }
 
   pc.innerHTML = html;
@@ -2750,7 +2750,93 @@ window.editRawChar = function(){
 
 // ===== FURMIAOU =====
 let _furmPV = 48;
-const FURMIAOU_HTML = `
+function buildFurmHTML(){
+  const FURM_CATS = [
+    { key:'furm_physique', label:'Physique', pct: 65, color:'#4A9050', bg:'rgba(20,60,20,.2)',
+      subs:[
+        { label:'Puissance', val: 7 },
+        { label:'Finesse',   val: 5 }
+      ]
+    },
+    { key:'furm_social', label:'Social', pct: 50, color:'#30A070', bg:'rgba(20,80,50,.15)',
+      subs:[
+        { label:'Aura',     val: 2 },
+        { label:'Instinct', val: 6 }
+      ]
+    },
+    { key:'furm_mental', label:'Mental', pct: 55, color:'#5090A0', bg:'rgba(20,60,80,.15)',
+      subs:[
+        { label:'Sens',   val: 5 },
+        { label:'Savoir', val: 2 }
+      ]
+    }
+  ];
+
+  let html = '<div class="vpanel-head" style="color:#7FBF7A;"><i class="ti ti-paw"></i> Furmiaou — Forme Bestiale</div>';
+  html += '<div style="display:flex;gap:10px;margin-bottom:18px;align-items:center;">';
+  html += '<div style="flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(74,160,80,.3);border-radius:8px;padding:10px;text-align:center;">';
+  html += '<div style="font-family:\'Cinzel\',serif;font-size:26px;font-weight:700;color:#50C050;" id="furm-pv-disp">'+_furmPV+'</div>';
+  html += '<div style="font-size:14px;color:#4A7040;font-family:\'Cinzel\',serif;">PV / 48</div>';
+  html += '<div style="display:flex;gap:4px;justify-content:center;margin-top:6px;">';
+  html += '<button onclick="furmAdj(-1)" style="background:none;border:1px solid rgba(74,160,80,.25);color:#4A7040;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:17px;">−</button>';
+  html += '<button onclick="furmAdj(1)" style="background:none;border:1px solid rgba(74,160,80,.25);color:#4A7040;border-radius:4px;padding:2px 10px;cursor:pointer;font-size:17px;">+</button>';
+  html += '</div></div>';
+  html += '<div style="flex:1;background:rgba(0,0,0,.3);border:1px solid rgba(160,80,200,.25);border-radius:8px;padding:10px;text-align:center;">';
+  html += '<div style="font-family:\'Cinzel\',serif;font-size:26px;font-weight:700;color:#9050C0;">0</div>';
+  html += '<div style="font-size:14px;color:#6040A0;font-family:\'Cinzel\',serif;">Mana / 0</div>';
+  html += '<div style="font-size:12px;color:#4A3060;margin-top:4px;font-style:italic;">Aucune magie</div>';
+  html += '</div>';
+  html += '<div style="display:flex;gap:5px;flex-direction:column;">';
+  html += '<span style="font-family:\'Cinzel\',serif;font-size:13px;padding:4px 10px;border:1px solid rgba(160,80,200,.35);color:#9050C0;border-radius:4px;">🌿 Nature</span>';
+  html += '<span style="font-family:\'Cinzel\',serif;font-size:13px;padding:4px 10px;border:1px solid rgba(74,160,80,.35);color:#4A9050;border-radius:4px;">Transmutation</span>';
+  html += '</div></div>';
+
+  FURM_CATS.forEach(cat=>{
+    html += '<div class="carac-bloc" style="background:'+cat.bg+';border:1px solid rgba(74,160,80,.2);border-radius:10px;padding:14px 16px;margin-bottom:12px;">';
+    html += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
+    html += '<div style="font-family:\'Cinzel\',serif;font-size:21px;font-weight:700;color:'+cat.color+';text-transform:uppercase;letter-spacing:.06em;min-width:110px;">'+cat.label+'</div>';
+    html += '<div style="flex:1;"><div style="height:8px;background:rgba(255,255,255,.06);border-radius:4px;"><div style="height:100%;width:'+cat.pct+'%;background:'+cat.color+';border-radius:4px;opacity:.7;"></div></div></div>';
+    html += '<div style="font-family:\'Cinzel\',serif;font-size:18px;color:'+cat.color+';min-width:40px;text-align:right;">'+cat.pct+'%</div>';
+    html += '</div>';
+    html += '<div style="display:flex;flex-direction:column;gap:7px;">';
+    cat.subs.forEach((sub,si)=>{
+      const stateKey = 'furm_'+cat.key+'_'+si;
+      const state = (window._caracStates && window._caracStates[stateKey]) || 'none';
+      const sqColor = state==='jaune'?'#D4A843': state==='rouge'?'#C03030':'transparent';
+      const sqBorder = state==='none'?'rgba(74,160,80,.35)':sqColor;
+      html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.25);border-radius:6px;">';
+      html += '<div style="flex:1;font-size:17px;color:#C8E8C0;">'+sub.label+'</div>';
+      html += '<div style="font-family:\'Cinzel\',serif;font-size:19px;font-weight:700;color:'+cat.color+';min-width:24px;text-align:center;">'+sub.val+'</div>';
+      html += '<div class="carac-sq" data-key="'+stateKey+'" onclick="cycleCaracState(this)" title="Cliquer pour changer l\'état" style="width:22px;height:22px;border:2px solid '+sqBorder+';border-radius:4px;cursor:pointer;background:'+sqColor+';flex-shrink:0;transition:all .2s;"></div>';
+      html += '</div>';
+    });
+    html += '</div></div>';
+  });
+
+  // Capacités
+  html += '<div class="vsubhead" style="margin-top:16px;color:#7FBF7A;">Capacités de combat</div>';
+  const caps = [
+    ['Morsure','D8+3 — Attaque principale, ignore 1 RD'],
+    ['Griffes','D6+2 × 2 attaques simultanées'],
+    ['Bond félin','4 mana — Saut 8m + attaque en atterrissant'],
+    ['Rugissement','3 mana — Terreur, −20% ennemis proches'],
+    ['Sens affûtés','Passif — +30% perception, détecte embuscades'],
+    ['Régénération','1 PV/tour en milieu naturel'],
+    ['Armure naturelle','RD2 fourrure — RD4 vs projectiles'],
+    ['Lacération','Saignement : −1 PV/tour pendant 3 tours']
+  ];
+  html += '<div class="icard-grid">';
+  caps.forEach(([nom,eff])=>{
+    html += '<div class="icard"><i class="ti ti-paw" style="color:#4A9050;"></i><div class="icard-lbl">'+nom+'</div><div class="icard-sub">'+eff+'</div></div>';
+  });
+  html += '</div>';
+  return html;
+}
+const FURMIAOU_HTML = null; // replaced by buildFurmHTML()
+window.furmAdj = function(delta){
+  _furmPV = Math.max(0,_furmPV+delta);
+  const el = document.getElementById('furm-pv-disp'); if(el) el.textContent=_furmPV;
+};
 <div style="display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;min-width:0;">
   <div style="background:linear-gradient(165deg,#0E1A0A,#0A1206);border:1px solid rgba(74,160,80,.35);border-radius:8px;padding:14px;">
     <div style="text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(74,160,80,.2);">
@@ -2841,60 +2927,6 @@ const FURMIAOU_HTML = `
     </div>
     <div id="furm-content" style="display:none;"></div>
   </div>
-</div>
-`;
-window.furmAdj = function(delta){
-  _furmPV = Math.max(0,_furmPV+delta);
-  const el = document.getElementById('furm-pv-disp'); if(el) el.textContent=_furmPV;
-};
-
-const FURM_PANELS = {
-  capacites:{icon:'⚡',title:'Capacités de Furmiaou',items:[
-    {l:'Morsure',v:'D8+3 — Attaque principale, ignore 1 RD'},
-    {l:'Griffes tranchantes',v:'D6+2 × 2 attaques simultanées'},
-    {l:'Bond félin',v:'4 mana — Saut 8m + attaque en atterrissant'},
-    {l:'Rugissement Primaire',v:'3 mana — Terreur, −20% ennemis proches'},
-    {l:'Sens affûtés',v:'Passif — +30% perception, détecte embuscades'},
-    {l:'Régénération naturelle',v:'1 PV/tour en milieu naturel'}
-  ]},
-  griffes:{icon:'🐾',title:'Griffes & Attaques',items:[
-    {l:'Griffes avant',v:'D6+2 — Tranchant, accroche armure'},
-    {l:'Griffes arrière',v:'D4+1 — Coup de patte retourné'},
-    {l:'Attaque combinée',v:'5 mana — Griffes + morsure en un tour'},
-    {l:'Lacération',v:'Saignement : −1 PV/tour pendant 3 tours'},
-    {l:'Résistance naturelle',v:'RD2 (fourrure épaisse)'}
-  ]},
-  corps:{icon:'💚',title:'Corps & Résistances',items:[
-    {l:'PV forme bête',v:'48 (transmutation : PV doublés)'},
-    {l:'Mana',v:'0 — aucune magie en forme bestiale'},
-    {l:'Armure naturelle',v:'RD2 fourrure — RD4 vs projectiles'},
-    {l:'Faiblesse Feu',v:'Dégâts Feu ×1.5'},
-    {l:'Taille',v:'Quadrupède — 1.2m au garrot, 2.4m de long'},
-    {l:'Vitesse',v:'50m/tour au sprint (vs 30m humain)'}
-  ]},
-  instincts:{icon:'🌿',title:'Instincts & Nature',items:[
-    {l:'Communication',v:'Impossible — grognements uniquement'},
-    {l:'Odorat',v:'Détecte ennemis à 15m'},
-    {l:'Prédateur',v:'+15% attaque vs cibles en fuite'},
-    {l:'Mémoire',v:'Firm conserve souvenirs mais pas compétences sociales'},
-    {l:'Durée',v:"1h max (4 mana) ou jusqu'à KO"},
-    {l:'Retour humain',v:"Action complète — récupère à mi-PV de Furmiaou"}
-  ]}
-};
-window.showFurmCap = function(zone){
-  const data = FURM_PANELS[zone];
-  if(!data) return;
-  document.getElementById('furm-empty').style.display='none';
-  const pc = document.getElementById('furm-content');
-  pc.style.display='block';
-  let h = '<div style="font-family:Cinzel,serif;font-size:13px;color:#4A9050;letter-spacing:.05em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(74,160,80,.15);">'+data.icon+' '+data.title+'</div>';
-  data.items.forEach(it=>{
-    h += '<div style="margin-bottom:7px;padding:7px 11px;background:rgba(20,40,14,.6);border-radius:5px;border-left:2px solid rgba(60,110,50,.6);">';
-    if(it.l) h += '<div style="font-family:Cinzel,serif;font-size:8px;letter-spacing:.1em;color:#3C6A32;text-transform:uppercase;margin-bottom:3px;">'+it.l+'</div>';
-    h += '<div style="font-size:12px;color:#A8C8A0;line-height:1.55;">'+it.v+'</div></div>';
-  });
-  pc.innerHTML = h;
-};
 
 ['azarius','dy','firm','mwassa','nindey'].forEach(name=>{
   onSnapshot(doc(db,'characters',name),snap=>{
