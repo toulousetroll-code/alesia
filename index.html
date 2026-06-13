@@ -560,7 +560,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .vbtns{display:flex;gap:3px;justify-content:center;margin-top:3px;}
 .vbtn{background:none;border:1px solid rgba(212,168,67,.18);color:#706050;border-radius:3px;padding:1px 7px;cursor:pointer;font-size:12px;font-weight:600;}
 .vbtn:hover{border-color:#D4A843;color:#D4A843;}
-.vitruve-illo{position:relative;width:100%;aspect-ratio:260/380;background:rgba(0,0,0,.2);border:1px solid rgba(212,168,67,.12);border-radius:4px;overflow:hidden;margin-bottom:10px;}
+.vitruve-illo{position:relative;width:100%;aspect-ratio:1/1;background:rgba(0,0,0,.2);border:1px solid rgba(212,168,67,.12);border-radius:4px;overflow:hidden;margin-bottom:10px;}
 .vitruve-illo svg{width:100%;height:100%;}
 /* Zones cliquables dans le SVG */
 .vzone{cursor:pointer;transition:opacity .15s;}
@@ -575,6 +575,17 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .btn-edit-raw{display:flex;align-items:center;gap:6px;background:none;border:1px solid rgba(212,168,67,.2);color:#906840;border-radius:5px;padding:5px 10px;font-family:'Cinzel',serif;font-size:9px;letter-spacing:.06em;cursor:pointer;text-transform:uppercase;}
 .btn-edit-raw:hover{border-color:rgba(212,168,67,.5);color:#D4A843;}
 /* Panneau info */
+.vit-portrait{width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:rgba(212,168,67,.25);font-size:64px;}
+.pchar-tabs{display:flex;gap:4px;border-bottom:1px solid rgba(212,168,67,.18);margin-bottom:14px;flex-wrap:wrap;}
+.pchar-tab{padding:8px 14px;cursor:pointer;font-family:'Cinzel',serif;font-size:11px;letter-spacing:.06em;color:#A09070;border-bottom:2px solid transparent;display:flex;align-items:center;gap:6px;transition:all .15s;}
+.pchar-tab:hover{color:#F2E6CC;}
+.pchar-tab.active{color:var(--gold);border-bottom-color:var(--gold);}
+.pchar-tab.furm-tab.active{color:#7FBF7A;border-bottom-color:#7FBF7A;}
+.icard{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;background:rgba(45,30,10,.5);border:1px solid rgba(212,168,67,.15);border-radius:8px;padding:12px 8px;text-align:center;min-height:74px;}
+.icard i{font-size:20px;color:var(--gold);}
+.icard .icard-lbl{font-size:11px;color:#E0D8C8;line-height:1.3;}
+.icard .icard-sub{font-size:10px;color:#907860;}
+.icard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(100px,1fr));gap:8px;}
 .vpanel{background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(22,16,8,.99));border:1px solid rgba(212,168,67,.18);border-radius:8px;padding:18px;min-height:420px;display:flex;flex-direction:column;}
 .vpanel-empty{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#604A28;}
 .vpanel-content{flex:1;}
@@ -754,27 +765,9 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                 </div>
               </div>
             </div>
-            <!-- Illustration SVG du personnage -->
+            <!-- Portrait simple -->
             <div class="vitruve-illo" id="vitruve-illo-wrap">
-              <svg id="vitruve-svg" viewBox="-12 -5 284 390" xmlns="http://www.w3.org/2000/svg"></svg>
-            </div>
-            <!-- Stats sous l'illustration -->
-            <div class="vstat-bars">
-              <div class="vstat-line">
-                <span class="vstat-name">Physique</span>
-                <div class="vstat-bar"><div class="vstat-fill" id="vbar-phys" style="width:85%"></div></div>
-                <span class="vstat-val" id="vval-phys">85%</span>
-              </div>
-              <div class="vstat-line">
-                <span class="vstat-name">Social</span>
-                <div class="vstat-bar"><div class="vstat-fill" id="vbar-soc" style="width:45%"></div></div>
-                <span class="vstat-val" id="vval-soc">45%</span>
-              </div>
-              <div class="vstat-line">
-                <span class="vstat-name">Mental</span>
-                <div class="vstat-bar"><div class="vstat-fill" id="vbar-men" style="width:40%"></div></div>
-                <span class="vstat-val" id="vval-men">40%</span>
-              </div>
+              <div class="vit-portrait" id="vit-portrait"><i class="ti ti-user"></i></div>
             </div>
             <!-- Bouton MJ éditer -->
             <div id="vitruve-edit-zone" style="display:none;margin-top:10px;">
@@ -783,11 +776,13 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
           </div>
           <!-- Colonne droite: panneau info -->
           <div class="vpanel" id="vpanel">
-            <div class="vpanel-empty" id="vpanel-empty">
-              <i class="ti ti-hand-click" style="font-size:32px;opacity:.25;"></i>
-              <div style="font-family:'Cinzel',serif;font-size:9px;letter-spacing:.12em;opacity:.35;text-transform:uppercase;margin-top:8px;">Cliquez sur une zone</div>
+            <div class="pchar-tabs" id="pchar-tabs">
+              <div class="pchar-tab active" data-tab="fiche" onclick="showPersoTab('fiche',this)"><i class="ti ti-id-badge-2"></i> Fiche</div>
+              <div class="pchar-tab" data-tab="carac" onclick="showPersoTab('carac',this)"><i class="ti ti-chart-bar"></i> Caractéristiques</div>
+              <div class="pchar-tab" data-tab="inv" onclick="showPersoTab('inv',this)"><i class="ti ti-backpack"></i> Inventaire</div>
+              <div class="pchar-tab furm-tab" data-tab="furm" id="furm-tab-btn" onclick="showPersoTab('furm',this)" style="display:none"><i class="ti ti-paw"></i> Furmiaou</div>
             </div>
-            <div class="vpanel-content" id="vpanel-content" style="display:none;"></div>
+            <div class="vpanel-content" id="vpanel-content"></div>
           </div>
         </div>
       </div>
@@ -2336,6 +2331,8 @@ function getPanelsForChar(name){
   };
 }
 
+const CLASS_ICON = {'Cogneur':'ti-sword','Arcaniste':'ti-wand','Oracle':'ti-eye','Gardien':'ti-shield','Lames Noires':'ti-sword','Rôdeur':'ti-target','Troubadour':'ti-music'};
+let vitruveTab = 'fiche';
 function vitruveRender(name){
   const c = charData[name];
   document.getElementById('vit-name').textContent = c.name;
@@ -2344,25 +2341,21 @@ function vitruveRender(name){
   document.getElementById('vit-pvmax').textContent = c.pv_max;
   document.getElementById('vit-mana').textContent = c.mana;
   document.getElementById('vit-manamax').textContent = c.mana_max;
-  document.getElementById('vbar-phys').style.width = c.phys+'%';
-  document.getElementById('vbar-soc').style.width = c.social+'%';
-  document.getElementById('vbar-men').style.width = c.mental+'%';
-  document.getElementById('vval-phys').textContent = c.phys+'%';
-  document.getElementById('vval-soc').textContent = c.social+'%';
-  document.getElementById('vval-men').textContent = c.mental+'%';
   if(isMJ) document.getElementById('vitruve-edit-zone').style.display='block';
-  // SVG
-  const svg = document.getElementById('vitruve-svg');
-  svg.innerHTML = getSilhouetteSVG(c.classe, vitruveZone);
-  svg.querySelectorAll('.vzone').forEach(g=>{
-    g.addEventListener('click',()=>{
-      vitruveZone = g.querySelector('[data-zone]')?.getAttribute('data-zone') || g.dataset.zone;
-      vitruveRender(name);
-      vitruveShowPanel(name, vitruveZone);
-    });
-  });
+  const port = document.getElementById('vit-portrait');
+  if(port) port.innerHTML = '<i class="ti '+(CLASS_ICON[c.classe]||'ti-user')+'"></i>';
+  const furmBtn = document.getElementById('furm-tab-btn');
+  if(furmBtn) furmBtn.style.display = (name==='firm') ? 'flex' : 'none';
+  if(vitruveTab==='furm' && name!=='firm') vitruveTab='fiche';
+  document.querySelectorAll('.pchar-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===vitruveTab));
+  vitruveShowPanel(name, vitruveTab);
 }
 window.vitruveRender = vitruveRender;
+window.showPersoTab = function(tab, el){
+  vitruveTab = tab;
+  document.querySelectorAll('.pchar-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  vitruveShowPanel(vitruveChar, tab);
+};
 
 function renderCurrentChar(){ vitruveRender(vitruveChar); }
 function renderChar(name){ vitruveRender(name); }
@@ -2549,110 +2542,119 @@ window.vitruveEditField=(name,zone,field)=>{
   };
 };
 
-function vitruveShowPanel(name, zone){
+function editBtn(name,zone,field,label){
+  if(!isMJ) return '';
+  return '<button class="vpanel-edit" onclick="vitruveEditField(\''+name+'\',\''+zone+'\',\''+field+'\')"><i class="ti ti-pencil"></i> '+(label||'Modifier')+'</button>';
+}
+
+function vitruveShowPanel(name, tab){
   const c = charData[name];
   if(!c) return;
-  document.getElementById('vpanel-empty').style.display='none';
   const pc = document.getElementById('vpanel-content');
-  pc.style.display='block';
-  let head='', body='';
+  let html = '';
 
-  if(zone==='identite'){
-    head='👤 Identité';
-    body += '<div class="vcard-grid">'
+  if(tab==='fiche'){
+    html += '<div class="vpanel-head"><i class="ti ti-id-badge-2"></i> Fiche</div>';
+    html += '<div class="vcard-grid">'
       + vcard('ti-paw','Race',c.race||'—')
       + vcard('ti-gender-'+((c.genre||'').toLowerCase()==='femme'?'female':'male'),'Genre',c.genre||'—')
       + vcard('ti-language','Langues',c.langues||'—')
       + '</div>';
-    body += '<div class="vcard"><div class="vcard-lbl"><i class="ti ti-compass" aria-hidden="true"></i> Valeurs</div><div class="vpills" style="margin-top:8px;">'
+    html += '<div class="vcard"><div class="vcard-lbl"><i class="ti ti-compass" aria-hidden="true"></i> Valeurs</div><div class="vpills" style="margin-top:8px;">'
       + (c.valeurs||'').split('\n').filter(v=>v.trim()).map(v=>'<span class="vpill">'+v.trim()+'</span>').join('')
       + '</div></div>';
-    body += '<div class="vcard" style="margin-top:10px;border-left:2px solid rgba(160,120,32,.5);"><div class="vcard-lbl">Histoire</div><div class="vcard-val">'+(c.notes||'—')+'</div></div>';
+    html += '<div class="vcard" style="margin-top:10px;border-left:2px solid rgba(160,120,32,.5);"><div class="vcard-lbl">Histoire</div><div class="vcard-val">'+(c.notes||'—')+'</div></div>';
+    html += editBtn(name,'fiche','notes','Modifier l\'histoire');
   }
-  else if(zone==='dons'){
-    head='✨ Dons & capacités';
-    const dons=(c.dons||'').split('\n').filter(d=>d.trim());
-    body += '<div class="vcard-grid">' + dons.map(d=>{
-      const icon=iconForText(d);
-      const clean=stripLeadingEmoji(d);
-      let sep=clean.indexOf(' — ')>=0?' — ':(clean.indexOf(' : ')>=0?' : ':null);
-      let nom=clean, eff='';
-      if(sep){ const parts=clean.split(sep); nom=parts[0].trim(); eff=parts.slice(1).join(sep).trim(); }
-      return vcard(icon,null,nom,eff||null);
-    }).join('') + '</div>';
-  }
-  else if(zone==='armes'){
-    head='⚔ Armement & armures';
-    const armes=(c.armes||'').split('\n').filter(a=>a.trim());
-    const armures=(c.armures||'').split('\n').filter(a=>a.trim());
-    if(armes.length){
-      body += '<div class="vsubhead">Armes</div><div class="vcard-grid">' + armes.map(a=>{
-        const p=parseStat(a); return vcard(iconForText(p.name),null,p.name,p.stat);
-      }).join('') + '</div>';
-    }
-    if(armures.length){
-      body += '<div class="vsubhead">Armures & protections</div><div class="vcard-grid">' + armures.map(a=>{
-        const p=parseStat(a); return vcard(iconForText(p.name)==='ti-package'?'ti-shield':iconForText(p.name),null,p.name,p.stat);
-      }).join('') + '</div>';
-    }
-    if(!armes.length && !armures.length) body += '<div class="vcard-val">—</div>';
-  }
-  else if(zone==='equip'){
-    head='🎒 Équipement';
-    const items=(c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
-    body += '<div class="vcard-grid">' + items.map(it=>{
-      const p=parseQty(it); return vcard(iconForText(p.name),p.name,p.qty?('×'+p.qty):'');
-    }).join('') + '</div>';
-    if(!items.length) body += '<div class="vcard-val">—</div>';
-  }
-  else if(zone==='stats'){
-    head='📊 Statistiques';
-    body += '<div class="vcard-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px;">'
+
+  else if(tab==='carac'){
+    html += '<div class="vpanel-head"><i class="ti ti-chart-bar"></i> Caractéristiques</div>';
+    html += '<div class="vcard-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:14px;">'
       + vcard('ti-heart','PV / '+c.pv_max, c.pv)
       + vcard('ti-droplet','Mana / '+c.mana_max, c.mana)
       + vcard('ti-star','Niveau', c.niveau)
       + '</div>';
     [['Physique',c.phys],['Social',c.social],['Mental',c.mental]].forEach(([lbl,val])=>{
       const v=parseInt(val)||0;
-      body += '<div class="vbar-row"><div class="vbar-top"><span>'+lbl+'</span><span>'+val+'%</span></div>'
+      html += '<div class="vbar-row"><div class="vbar-top"><span>'+lbl+'</span><span>'+val+'%</span></div>'
         + '<div class="vbar-track"><div class="vbar-fill" style="width:'+v+'%;"></div></div></div>';
     });
-  }
-  else if(zone==='histoire'){
-    head='📜 Bonus & malus de race';
+    const dons=(c.dons||'').split('\n').filter(d=>d.trim());
+    if(dons.length){
+      html += '<div class="vsubhead" style="margin-top:14px;">Dons & capacités</div><div class="vcard-grid">' + dons.map(d=>{
+        const icon=iconForText(d);
+        const clean=stripLeadingEmoji(d);
+        let sep=clean.indexOf(' — ')>=0?' — ':(clean.indexOf(' : ')>=0?' : ':null);
+        let nom=clean, eff='';
+        if(sep){ const parts=clean.split(sep); nom=parts[0].trim(); eff=parts.slice(1).join(sep).trim(); }
+        return vcard(icon,null,nom,eff||null);
+      }).join('') + '</div>';
+    }
+    html += editBtn(name,'carac','dons','Modifier les dons');
     const lines=(c.race_bonus||'').split('\n').filter(r=>r.trim());
-    body += '<div class="vcard-grid">' + lines.map(l=>{
-      const isBonus=l.indexOf('🟢')===0 || /\+\d/.test(l);
-      const clean=stripLeadingEmoji(l);
-      const m=clean.match(/^(.*?)\s*([+−-]\s*\d+%?)\s*$/);
-      const lbl=m?m[1].trim():clean, val=m?m[2].trim():'';
-      return '<div class="vbm '+(isBonus?'bonus':'malus')+'"><i class="ti '+(isBonus?'ti-arrow-up':'ti-arrow-down')+'" aria-hidden="true"></i>'
-        + '<div><div class="vbm-lbl">'+lbl+'</div><div class="vbm-val">'+val+'</div></div></div>';
-    }).join('') + '</div>';
+    if(lines.length){
+      html += '<div class="vsubhead" style="margin-top:14px;">Bonus & malus de race</div><div class="vcard-grid">' + lines.map(l=>{
+        const isBonus=l.indexOf('🟢')===0 || /\+\d/.test(l);
+        const clean=stripLeadingEmoji(l);
+        const m=clean.match(/^(.*?)\s*([+−-]\s*\d+%?)\s*$/);
+        const lbl=m?m[1].trim():clean, val=m?m[2].trim():'';
+        return '<div class="vbm '+(isBonus?'bonus':'malus')+'"><i class="ti '+(isBonus?'ti-arrow-up':'ti-arrow-down')+'" aria-hidden="true"></i>'
+          + '<div><div class="vbm-lbl">'+lbl+'</div><div class="vbm-val">'+val+'</div></div></div>';
+      }).join('') + '</div>';
+    }
+    html += editBtn(name,'carac','race_bonus','Modifier bonus/malus');
   }
-  else { return; }
 
-  let html = '<div class="vpanel-head">'+head+'</div>'+body;
+  else if(tab==='inv'){
+    html += '<div class="vpanel-head"><i class="ti ti-backpack"></i> Inventaire</div>';
+    const armes=(c.armes||'').split('\n').filter(a=>a.trim());
+    const armures=(c.armures||'').split('\n').filter(a=>a.trim());
+    if(armes.length){
+      html += '<div class="vsubhead"><i class="ti ti-sword" aria-hidden="true"></i> Armes</div><div class="icard-grid">' + armes.map(a=>{
+        const p=parseStat(a);
+        return '<div class="icard"><i class="ti '+iconForText(p.name)+'"></i><div class="icard-lbl">'+p.name+'</div>'+(p.stat?'<div class="icard-sub">'+p.stat+'</div>':'')+'</div>';
+      }).join('') + '</div>';
+    }
+    html += editBtn(name,'inv','armes','Modifier les armes');
+    if(armures.length){
+      html += '<div class="vsubhead" style="margin-top:12px;"><i class="ti ti-shield" aria-hidden="true"></i> Armures & protections</div><div class="icard-grid">' + armures.map(a=>{
+        const p=parseStat(a);
+        const ic = iconForText(p.name)==='ti-package' ? 'ti-shield' : iconForText(p.name);
+        return '<div class="icard"><i class="ti '+ic+'"></i><div class="icard-lbl">'+p.name+'</div>'+(p.stat?'<div class="icard-sub">'+p.stat+'</div>':'')+'</div>';
+      }).join('') + '</div>';
+    }
+    html += editBtn(name,'inv','armures','Modifier les armures');
+    const items=(c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
+    html += '<div class="vsubhead" style="margin-top:12px;"><i class="ti ti-backpack" aria-hidden="true"></i> Sac à dos</div>';
+    if(items.length){
+      html += '<div class="icard-grid">' + items.map(it=>{
+        const p=parseQty(it);
+        return '<div class="icard"><i class="ti '+iconForText(p.name)+'"></i><div class="icard-lbl">'+p.name+(p.qty?(' ×'+p.qty):'')+'</div></div>';
+      }).join('') + '</div>';
+    } else {
+      html += '<div class="vcard-val">—</div>';
+    }
+    html += editBtn(name,'inv','equip','Modifier le sac à dos');
+    if(!armes.length && !armures.length && !items.length) html += '<div class="vcard-val">—</div>';
+  }
 
-  if(isMJ){
-    const fieldMap = {identite:'notes',dons:'dons',armes:'armes',equip:'equip',histoire:'race_bonus'};
-    const field = fieldMap[zone];
-    if(field) html += '<button class="vpanel-edit" onclick="vitruveEditField(\''+name+'\',\''+zone+'\',\''+field+'\')"><i class="ti ti-pencil"></i> Modifier</button>';
+  else if(tab==='furm'){
+    html += FURMIAOU_HTML;
   }
-  // Bouton Furmiaou pour Firm
-  if(name==='firm'){
-    html += '<div onclick="showFurmiaou()" style="display:flex;align-items:center;gap:10px;background:linear-gradient(135deg,rgba(20,40,14,.9),rgba(10,22,8,.95));border:1px solid rgba(74,160,80,.3);border-radius:6px;padding:10px 12px;cursor:pointer;margin-top:14px;" onmouseover=\"this.style.borderColor=\'rgba(74,160,80,.6)\'\" onmouseout=\"this.style.borderColor=\'rgba(74,160,80,.3)\'\">'
-      +'<div style="font-size:22px;">🐾</div><div style="flex:1;"><div style="font-family:Cinzel,serif;font-size:11px;color:#C8F0C0;letter-spacing:.06em;">Furmiaou</div><div style="font-size:10px;color:#4A7040;font-style:italic;margin-top:2px;">Forme bestiale · Transmutation</div></div><div style="font-size:15px;color:rgba(74,160,80,.5);">→</div></div>';
-  }
+
   pc.innerHTML = html;
+  if(tab==='furm'){
+    document.querySelectorAll('#vpanel-content .furm-cap-btn').forEach(b=>{
+      b.addEventListener('click',()=>showFurmCap(b.dataset.zone));
+    });
+  }
 }
+
 window.showCharVitruve = function(name, el){
   document.querySelectorAll('.char-tab').forEach(t=>t.classList.remove('active'));
   if(el) el.classList.add('active');
   vitruveChar = name;
-  vitruveZone = null;
-  document.getElementById('vpanel-empty').style.display='flex';
-  document.getElementById('vpanel-content').style.display='none';
+  vitruveTab = 'fiche';
   vitruveRender(name);
 };
 window.vitAdj = async function(stat, delta){
@@ -2672,7 +2674,6 @@ window.editRawChar = function(){
   area.value = JSON.stringify(charData[name], null, 2);
   document.getElementById('vpanel-content').innerHTML='';
   document.getElementById('vpanel-content').appendChild(area);
-  document.getElementById('vpanel-empty').style.display='none';
   area.onblur = async()=>{
     try{
       const parsed = JSON.parse(area.value);
@@ -2686,17 +2687,7 @@ window.editRawChar = function(){
 
 // ===== FURMIAOU =====
 let _furmPV = 48;
-window.showFurmiaou = function(){
-  let fl = document.getElementById('furmiaou-layout');
-  if(!fl){
-    fl = document.createElement('div');
-    fl.id = 'furmiaou-layout';
-    document.getElementById('s-personnages').appendChild(fl);
-    fl.innerHTML = `
-<div style="margin-bottom:14px;display:flex;align-items:center;gap:10px;">
-  <button onclick="hideFurmiaou()" style="background:none;border:1px solid rgba(74,160,80,.3);color:#4A9050;border-radius:6px;padding:6px 12px;font-family:'Cinzel',serif;font-size:10px;cursor:pointer;">← Revenir à Firm</button>
-  <span style="font-family:'Cinzel',serif;font-size:10px;letter-spacing:.1em;color:rgba(74,160,80,.6);text-transform:uppercase;">⚠ Forme Transformée</span>
-</div>
+const FURMIAOU_HTML = `
 <div style="display:grid;grid-template-columns:300px 1fr;gap:18px;align-items:start;min-width:0;">
   <div style="background:linear-gradient(165deg,#0E1A0A,#0A1206);border:1px solid rgba(74,160,80,.35);border-radius:8px;padding:14px;">
     <div style="text-align:center;margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid rgba(74,160,80,.2);">
@@ -2787,19 +2778,8 @@ window.showFurmiaou = function(){
     </div>
     <div id="furm-content" style="display:none;"></div>
   </div>
-</div>`;
-  }
-  document.querySelector('.vitruve-layout').style.display='none';
-  document.getElementById('char-tabs-bar').style.display='none';
-  fl.style.display='block';
-  _furmPV = 48;
-  const d = document.getElementById('furm-pv-disp'); if(d) d.textContent=48;
-};
-window.hideFurmiaou = function(){
-  document.getElementById('furmiaou-layout').style.display='none';
-  document.querySelector('.vitruve-layout').style.display='grid';
-  document.getElementById('char-tabs-bar').style.display='flex';
-};
+</div>
+`;
 window.furmAdj = function(delta){
   _furmPV = Math.max(0,_furmPV+delta);
   const el = document.getElementById('furm-pv-disp'); if(el) el.textContent=_furmPV;
