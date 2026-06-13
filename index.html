@@ -2608,27 +2608,40 @@ function vitruveShowPanel(name, tab){
       }
     ];
 
-    CATS.forEach(cat=>{
-      html += '<div class="carac-bloc" style="background:'+cat.bg+';border:1px solid rgba(212,168,67,.15);border-radius:10px;padding:14px 16px;margin-bottom:12px;">';
-      html += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
-      html += '<div style="font-family:\'Cinzel\',serif;font-size:21px;font-weight:700;color:'+cat.color+';text-transform:uppercase;letter-spacing:.06em;min-width:110px;">'+cat.label+'</div>';
-      html += '<div style="flex:1;"><div style="height:8px;background:rgba(212,168,67,.1);border-radius:4px;"><div style="height:100%;width:'+parseInt(cat.pct)+'%;background:'+cat.color+';border-radius:4px;opacity:.7;"></div></div></div>';
-      html += '<div style="font-family:\'Cinzel\',serif;font-size:18px;color:'+cat.color+';min-width:40px;text-align:right;">'+cat.pct+'%</div>';
-      html += '</div>';
-      html += '<div style="display:flex;flex-direction:column;gap:7px;">';
+    const buildCatBlock = (cat) => {
+      let b = '<div style="background:'+cat.bg+';border:1px solid rgba(212,168,67,.15);border-radius:12px;padding:14px 18px;flex:1;">';
+      b += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
+      b += '<div style="font-family:\'Cinzel\',serif;font-size:24px;font-weight:700;color:'+cat.color+';text-transform:uppercase;letter-spacing:.06em;min-width:100px;">'+cat.label+'</div>';
+      b += '<div style="flex:1;"><div style="height:8px;background:rgba(212,168,67,.08);border-radius:4px;"><div style="height:100%;width:'+parseInt(cat.pct)+'%;background:'+cat.color+';border-radius:4px;opacity:.7;"></div></div></div>';
+      b += '<div style="font-family:\'Cinzel\',serif;font-size:28px;font-weight:700;color:'+cat.color+';min-width:54px;text-align:right;">'+cat.pct+'%</div>';
+      b += '</div>';
+      b += '<div style="display:flex;flex-direction:column;gap:8px;">';
       cat.subs.forEach((sub,si)=>{
         const stateKey = name+'_'+cat.key+'_'+si;
         const state = (window._caracStates && window._caracStates[stateKey]) || 'none';
         const sqColor = state==='jaune'?'#D4A843': state==='rouge'?'#C03030':'transparent';
         const sqBorder = state==='none'?'rgba(212,168,67,.35)':sqColor;
-        html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.18);border-radius:6px;">';
-        html += '<div style="flex:1;font-size:17px;color:#E0D8C8;">'+sub.label+'</div>';
-        html += '<div style="font-family:\'Cinzel\',serif;font-size:19px;font-weight:700;color:'+cat.color+';min-width:24px;text-align:center;">'+sub.val+'</div>';
-        html += '<div class="carac-sq" data-key="'+stateKey+'" onclick="cycleCaracState(this)" title="Cliquer pour changer l\'état" style="width:22px;height:22px;border:2px solid '+sqBorder+';border-radius:4px;cursor:pointer;background:'+sqColor+';flex-shrink:0;transition:all .2s;"></div>';
-        html += '</div>';
+        b += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.22);border-radius:8px;">';
+        b += '<div style="flex:1;font-size:20px;color:#E0D8C8;">'+sub.label+'</div>';
+        b += '<div style="font-family:\'Cinzel\',serif;font-size:32px;font-weight:700;color:'+cat.color+';min-width:36px;text-align:center;">'+sub.val+'</div>';
+        b += '<div class="carac-sq" data-key="'+stateKey+'" onclick="cycleCaracState(this)" title="Cliquer pour changer l\'état" style="width:28px;height:28px;border:2px solid '+sqBorder+';border-radius:5px;cursor:pointer;background:'+sqColor+';flex-shrink:0;transition:all .2s;"></div>';
+        b += '</div>';
       });
-      html += '</div></div>';
-    });
+      b += '</div></div>';
+      return b;
+    };
+
+    // Triangle : Mental centré en haut, Physique + Social côte à côte en bas
+    const mental = CATS.find(c=>c.key==='mental');
+    const physique = CATS.find(c=>c.key==='physique');
+    const social = CATS.find(c=>c.key==='social');
+    html += '<div style="display:flex;justify-content:center;margin-bottom:12px;">';
+    html += buildCatBlock(mental);
+    html += '</div>';
+    html += '<div style="display:flex;gap:12px;margin-bottom:4px;">';
+    html += buildCatBlock(physique);
+    html += buildCatBlock(social);
+    html += '</div>';
 
     const dons=(c.dons||'').split('\n').filter(d=>d.trim());
     if(dons.length){
@@ -2797,27 +2810,39 @@ function buildFurmHTML(){
   html += '<span style="font-family:\'Cinzel\',serif;font-size:13px;padding:4px 10px;border:1px solid rgba(74,160,80,.35);color:#4A9050;border-radius:4px;">Transmutation</span>';
   html += '</div></div>';
 
-  FURM_CATS.forEach(cat=>{
-    html += '<div class="carac-bloc" style="background:'+cat.bg+';border:1px solid rgba(74,160,80,.2);border-radius:10px;padding:14px 16px;margin-bottom:12px;">';
-    html += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
-    html += '<div style="font-family:\'Cinzel\',serif;font-size:21px;font-weight:700;color:'+cat.color+';text-transform:uppercase;letter-spacing:.06em;min-width:110px;">'+cat.label+'</div>';
-    html += '<div style="flex:1;"><div style="height:8px;background:rgba(255,255,255,.06);border-radius:4px;"><div style="height:100%;width:'+cat.pct+'%;background:'+cat.color+';border-radius:4px;opacity:.7;"></div></div></div>';
-    html += '<div style="font-family:\'Cinzel\',serif;font-size:18px;color:'+cat.color+';min-width:40px;text-align:right;">'+cat.pct+'%</div>';
-    html += '</div>';
-    html += '<div style="display:flex;flex-direction:column;gap:7px;">';
+  const buildFurmCatBlock = (cat) => {
+    let b = '<div style="background:'+cat.bg+';border:1px solid rgba(74,160,80,.2);border-radius:12px;padding:14px 18px;flex:1;">';
+    b += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
+    b += '<div style="font-family:\'Cinzel\',serif;font-size:24px;font-weight:700;color:'+cat.color+';text-transform:uppercase;letter-spacing:.06em;min-width:100px;">'+cat.label+'</div>';
+    b += '<div style="flex:1;"><div style="height:8px;background:rgba(255,255,255,.06);border-radius:4px;"><div style="height:100%;width:'+cat.pct+'%;background:'+cat.color+';border-radius:4px;opacity:.7;"></div></div></div>';
+    b += '<div style="font-family:\'Cinzel\',serif;font-size:28px;font-weight:700;color:'+cat.color+';min-width:54px;text-align:right;">'+cat.pct+'%</div>';
+    b += '</div>';
+    b += '<div style="display:flex;flex-direction:column;gap:8px;">';
     cat.subs.forEach((sub,si)=>{
       const stateKey = 'furm_'+cat.key+'_'+si;
       const state = (window._caracStates && window._caracStates[stateKey]) || 'none';
       const sqColor = state==='jaune'?'#D4A843': state==='rouge'?'#C03030':'transparent';
       const sqBorder = state==='none'?'rgba(74,160,80,.35)':sqColor;
-      html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.25);border-radius:6px;">';
-      html += '<div style="flex:1;font-size:17px;color:#C8E8C0;">'+sub.label+'</div>';
-      html += '<div style="font-family:\'Cinzel\',serif;font-size:19px;font-weight:700;color:'+cat.color+';min-width:24px;text-align:center;">'+sub.val+'</div>';
-      html += '<div class="carac-sq" data-key="'+stateKey+'" onclick="cycleCaracState(this)" title="Cliquer pour changer l\'état" style="width:22px;height:22px;border:2px solid '+sqBorder+';border-radius:4px;cursor:pointer;background:'+sqColor+';flex-shrink:0;transition:all .2s;"></div>';
-      html += '</div>';
+      b += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.25);border-radius:8px;">';
+      b += '<div style="flex:1;font-size:20px;color:#C8E8C0;">'+sub.label+'</div>';
+      b += '<div style="font-family:\'Cinzel\',serif;font-size:32px;font-weight:700;color:'+cat.color+';min-width:36px;text-align:center;">'+sub.val+'</div>';
+      b += '<div class="carac-sq" data-key="'+stateKey+'" onclick="cycleCaracState(this)" title="Cliquer pour changer l\'état" style="width:28px;height:28px;border:2px solid '+sqBorder+';border-radius:5px;cursor:pointer;background:'+sqColor+';flex-shrink:0;transition:all .2s;"></div>';
+      b += '</div>';
     });
-    html += '</div></div>';
-  });
+    b += '</div></div>';
+    return b;
+  };
+
+  const furmMental  = FURM_CATS.find(c=>c.key==='furm_mental');
+  const furmPhys    = FURM_CATS.find(c=>c.key==='furm_physique');
+  const furmSocial  = FURM_CATS.find(c=>c.key==='furm_social');
+  html += '<div style="display:flex;justify-content:center;margin-bottom:12px;">';
+  html += buildFurmCatBlock(furmMental);
+  html += '</div>';
+  html += '<div style="display:flex;gap:12px;margin-bottom:4px;">';
+  html += buildFurmCatBlock(furmPhys);
+  html += buildFurmCatBlock(furmSocial);
+  html += '</div>';
 
   // Capacités
   html += '<div class="vsubhead" style="margin-top:16px;color:#7FBF7A;">Capacités de combat</div>';
