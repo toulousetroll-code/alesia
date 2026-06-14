@@ -2662,9 +2662,19 @@ function vitruveShowPanel(name, tab){
         const state = (window._caracStates && window._caracStates[stateKey]) || 'none';
         const sqColor = state==='jaune'?'#D4A843': state==='rouge'?'#C03030':'transparent';
         const sqBorder = state==='none'?'rgba(212,168,67,.35)':sqColor;
-        b += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.22);border-radius:8px;">';
-        b += '<div style="flex:1;font-size:20px;color:#E0D8C8;">'+sub.label+'</div>';
-        b += '<div style="font-family:\'Cinzel\',serif;font-size:32px;font-weight:700;color:'+cat.color+';min-width:36px;text-align:center;">'+sub.val+'</div>';
+        const isRouge = state==='rouge';
+        const isJaune = state==='jaune';
+        const dispVal = isJaune ? Math.max(0, parseInt(sub.val)-1) : sub.val;
+        const rowStyle = isRouge
+          ? 'display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.22);border-radius:8px;opacity:.4;'
+          : 'display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.22);border-radius:8px;';
+        const labelStyle = isRouge
+          ? 'flex:1;font-size:20px;color:#807060;text-decoration:line-through;'
+          : 'flex:1;font-size:20px;color:#E0D8C8;';
+        const valColor = isRouge ? '#605040' : isJaune ? '#D4A843' : cat.color;
+        b += '<div style="'+rowStyle+'">';
+        b += '<div style="'+labelStyle+'">'+sub.label+'</div>';
+        b += '<div style="font-family:\'Cinzel\',serif;font-size:32px;font-weight:700;color:'+valColor+';min-width:36px;text-align:center;">'+(isRouge?'—':dispVal)+'</div>';
         b += '<div class="carac-sq" data-key="'+stateKey+'" onclick="cycleCaracState(this)" title="Cliquer pour changer l\'état" style="width:28px;height:28px;border:2px solid '+sqBorder+';border-radius:5px;cursor:pointer;background:'+sqColor+';flex-shrink:0;transition:all .2s;"></div>';
         b += '</div>';
       });
@@ -3020,10 +3030,9 @@ window.cycleCaracState = function(el){
   const cur = window._caracStates[key] || 'none';
   const next = states[(states.indexOf(cur)+1)%states.length];
   window._caracStates[key] = next;
-  const sqColor = next==='jaune'?'#D4A843': next==='rouge'?'#C03030':'transparent';
-  const sqBorder = next==='none'?'rgba(212,168,67,.35)':sqColor;
-  el.style.background = sqColor;
-  el.style.borderColor = sqBorder;
+  // Refresh whole carac/furm panel to apply yellow-1 and red-barred rules
+  const tab = vitruveTab;
+  if(tab==='carac' || tab==='furm') vitruveShowPanel(vitruveChar, tab);
 };
 
 window.vitAdj = async function(stat, delta){
