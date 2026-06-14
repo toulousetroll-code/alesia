@@ -2650,11 +2650,26 @@ function vitruveShowPanel(name, tab){
     ];
 
     const buildCatBlock = (cat) => {
-      let b = '<div style="background:'+cat.bg+';border:1px solid rgba(212,168,67,.15);border-radius:12px;padding:14px 18px;flex:1;">';
+      // Calcul du % ajusté selon les états des sous-caractéristiques
+      const states = cat.subs.map((_,si)=>(window._caracStates && window._caracStates[name+'_'+cat.key+'_'+si])||'none');
+      const nbJaune = states.filter(s=>s==='jaune').length;
+      const nbRouge = states.filter(s=>s==='rouge').length;
+      const allRouge = states.length > 0 && states.every(s=>s==='rouge');
+      let adjPct, mainColor, blockBorder;
+      if(allRouge){
+        adjPct = 5;
+        mainColor = '#C03030';
+        blockBorder = 'border:2px solid #C03030;';
+      } else {
+        adjPct = Math.max(5, parseInt(cat.pct) - nbJaune*10 - nbRouge*10);
+        mainColor = cat.color;
+        blockBorder = 'border:1px solid rgba(212,168,67,.15);';
+      }
+      let b = '<div style="background:'+cat.bg+';'+blockBorder+'border-radius:12px;padding:14px 18px;flex:1;">';
       b += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
-      b += '<div style="font-family:\'Cinzel\',serif;font-size:24px;font-weight:700;color:'+cat.color+';text-transform:uppercase;letter-spacing:.06em;min-width:100px;">'+cat.label+'</div>';
-      b += '<div style="flex:1;"><div style="height:8px;background:rgba(212,168,67,.08);border-radius:4px;"><div style="height:100%;width:'+parseInt(cat.pct)+'%;background:'+cat.color+';border-radius:4px;opacity:.7;"></div></div></div>';
-      b += '<div style="font-family:\'Cinzel\',serif;font-size:28px;font-weight:700;color:'+cat.color+';min-width:54px;text-align:right;">'+cat.pct+'%</div>';
+      b += '<div style="font-family:\'Cinzel\',serif;font-size:24px;font-weight:700;color:'+mainColor+';text-transform:uppercase;letter-spacing:.06em;min-width:100px;">'+cat.label+'</div>';
+      b += '<div style="flex:1;"><div style="height:8px;background:rgba(212,168,67,.08);border-radius:4px;"><div style="height:100%;width:'+adjPct+'%;background:'+mainColor+';border-radius:4px;opacity:.7;"></div></div></div>';
+      b += '<div style="font-family:\'Cinzel\',serif;font-size:28px;font-weight:700;color:'+mainColor+';min-width:54px;text-align:right;">'+adjPct+'%</div>';
       b += '</div>';
       b += '<div style="display:flex;flex-direction:column;gap:8px;">';
       cat.subs.forEach((sub,si)=>{
@@ -3112,11 +3127,22 @@ function buildFurmHTML(){
   html += '</div></div>';
 
   const buildFurmCatBlock = (cat) => {
-    let b = '<div style="background:'+cat.bg+';border:1px solid rgba(74,160,80,.2);border-radius:12px;padding:14px 18px;flex:1;">';
+    const states = cat.subs.map((_,si)=>(window._caracStates && window._caracStates['furm_'+cat.key+'_'+si])||'none');
+    const nbJaune = states.filter(s=>s==='jaune').length;
+    const nbRouge = states.filter(s=>s==='rouge').length;
+    const allRouge = states.length > 0 && states.every(s=>s==='rouge');
+    let adjPct, mainColor, blockBorder;
+    if(allRouge){
+      adjPct = 5; mainColor = '#C03030'; blockBorder = 'border:2px solid #C03030;';
+    } else {
+      adjPct = Math.max(5, parseInt(cat.pct) - nbJaune*10 - nbRouge*10);
+      mainColor = cat.color; blockBorder = 'border:1px solid rgba(74,160,80,.2);';
+    }
+    let b = '<div style="background:'+cat.bg+';'+blockBorder+'border-radius:12px;padding:14px 18px;flex:1;">';
     b += '<div style="display:flex;align-items:center;gap:12px;margin-bottom:10px;">';
-    b += '<div style="font-family:\'Cinzel\',serif;font-size:24px;font-weight:700;color:'+cat.color+';text-transform:uppercase;letter-spacing:.06em;min-width:100px;">'+cat.label+'</div>';
-    b += '<div style="flex:1;"><div style="height:8px;background:rgba(255,255,255,.06);border-radius:4px;"><div style="height:100%;width:'+cat.pct+'%;background:'+cat.color+';border-radius:4px;opacity:.7;"></div></div></div>';
-    b += '<div style="font-family:\'Cinzel\',serif;font-size:28px;font-weight:700;color:'+cat.color+';min-width:54px;text-align:right;">'+cat.pct+'%</div>';
+    b += '<div style="font-family:\'Cinzel\',serif;font-size:24px;font-weight:700;color:'+mainColor+';text-transform:uppercase;letter-spacing:.06em;min-width:100px;">'+cat.label+'</div>';
+    b += '<div style="flex:1;"><div style="height:8px;background:rgba(255,255,255,.06);border-radius:4px;"><div style="height:100%;width:'+adjPct+'%;background:'+mainColor+';border-radius:4px;opacity:.7;"></div></div></div>';
+    b += '<div style="font-family:\'Cinzel\',serif;font-size:28px;font-weight:700;color:'+mainColor+';min-width:54px;text-align:right;">'+adjPct+'%</div>';
     b += '</div>';
     b += '<div style="display:flex;flex-direction:column;gap:8px;">';
     cat.subs.forEach((sub,si)=>{
@@ -3124,9 +3150,15 @@ function buildFurmHTML(){
       const state = (window._caracStates && window._caracStates[stateKey]) || 'none';
       const sqColor = state==='jaune'?'#D4A843': state==='rouge'?'#C03030':'transparent';
       const sqBorder = state==='none'?'rgba(74,160,80,.35)':sqColor;
-      b += '<div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.25);border-radius:8px;">';
-      b += '<div style="flex:1;font-size:20px;color:#C8E8C0;">'+sub.label+'</div>';
-      b += '<div style="font-family:\'Cinzel\',serif;font-size:32px;font-weight:700;color:'+cat.color+';min-width:36px;text-align:center;">'+sub.val+'</div>';
+      const isRouge = state==='rouge';
+      const isJaune = state==='jaune';
+      const dispVal = isJaune ? Math.max(0, parseInt(sub.val)-1) : sub.val;
+      const valColor = isRouge ? '#605040' : isJaune ? '#D4A843' : cat.color;
+      const rowStyle = isRouge ? 'display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.25);border-radius:8px;opacity:.4;' : 'display:flex;align-items:center;gap:10px;padding:8px 12px;background:rgba(0,0,0,.25);border-radius:8px;';
+      const labelStyle = isRouge ? 'flex:1;font-size:20px;color:#807060;text-decoration:line-through;' : 'flex:1;font-size:20px;color:#C8E8C0;';
+      b += '<div style="'+rowStyle+'">';
+      b += '<div style="'+labelStyle+'">'+sub.label+'</div>';
+      b += '<div style="font-family:\'Cinzel\',serif;font-size:32px;font-weight:700;color:'+valColor+';min-width:36px;text-align:center;">'+(isRouge?'—':dispVal)+'</div>';
       b += '<div class="carac-sq" data-key="'+stateKey+'" onclick="cycleCaracState(this)" title="Cliquer pour changer l\'état" style="width:28px;height:28px;border:2px solid '+sqBorder+';border-radius:5px;cursor:pointer;background:'+sqColor+';flex-shrink:0;transition:all .2s;"></div>';
       b += '</div>';
     });
