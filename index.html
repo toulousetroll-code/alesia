@@ -2624,7 +2624,11 @@ function vitruveShowPanel(name, tab){
     if(window._postures[name]===undefined) window._postures[name] = POSTURE_DEFAULT[name] || 'focus';
     const curPost = window._postures[name];
     const postLabels = {focus:'Focus',offensif:'Offensif',defensif:'Défensif'};
-    const POSTURE_FX = {
+    const postColors = {
+      focus:   {active:'rgba(80,140,200,.25)',border:'#5090D0',text:'#80C0F0'},
+      offensif:{active:'rgba(192,60,40,.25)', border:'#C04030',text:'#E07060'},
+      defensif:{active:'rgba(192,168,40,.2)', border:'#C0A830',text:'#D4A843'}
+    };
       focus:   { icon:'✨', lines:['Dégâts normaux (lance le dé)','Bonus +5% sur tous les jets','Coût Mana réduit de 1','Pas d\'esquive possible'] },
       offensif:{ icon:'⚔', lines:['Dégâts maximum automatiques','Zone critique élargie +5%','Aucune esquive / parade possible'] },
       defensif:{ icon:'🛡', lines:['Dégâts normaux','1 esquive ou 1 parade par tour','Pas de bonus offensif'] }
