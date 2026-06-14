@@ -2746,14 +2746,16 @@ function vitruveShowPanel(name, tab){
 
   else if(tab==='inv'){
     html += '<div class="vpanel-head"><i class="ti ti-backpack"></i> Inventaire</div>';
-    const slot = (icon, nom, sub, color, iconColor, h, charN, cat, idx) =>
-      '<div onclick="openInvSlot(\''+charN+'\',\''+cat+'\','+idx+')" style="background:rgba(40,28,10,.75);border:1px solid '+color+';border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px;text-align:center;gap:3px;min-height:'+h+';cursor:pointer;transition:border-color .15s;" onmouseover="this.style.borderColor=\'rgba(212,168,67,.45)\'" onmouseout="this.style.borderColor=\''+color+'\'">'
-      +'<i class="ti '+icon+'" style="font-size:17px;color:'+iconColor+';" aria-hidden="true"></i>'
-      +(nom?'<div style="font-size:12px;color:#E0D8C8;line-height:1.2;">'+nom+'</div>':'')
-      +(sub?'<div style="font-size:10px;color:#806840;font-style:italic;">'+sub+'</div>':'')
-      +'</div>';
-    const emptySlot = (icon, color, iconColor, h, charN, cat, idx) =>
-      '<div onclick="openInvSlot(\''+charN+'\',\''+cat+'\','+idx+')" style="background:rgba(40,28,10,.4);border:1px dashed '+color+';border-radius:7px;display:flex;align-items:center;justify-content:center;min-height:'+h+';opacity:.4;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity=\'0.7\'" onmouseout="this.style.opacity=\'0.4\'">'
+    const slot = (icon, nom, sub, color, iconColor, h, charN, cat, itemName) => {
+      const enc = encodeURIComponent(itemName||'');
+      return '<div onclick="openInvSlot(\''+charN+'\',\''+cat+'\',\''+enc+'\')" style="background:rgba(40,28,10,.75);border:1px solid '+color+';border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px;text-align:center;gap:3px;min-height:'+h+';cursor:pointer;transition:border-color .15s;" onmouseover="this.style.borderColor=\'rgba(212,168,67,.45)\'" onmouseout="this.style.borderColor=\''+color+'\'">'
+        +'<i class="ti '+icon+'" style="font-size:17px;color:'+iconColor+';" aria-hidden="true"></i>'
+        +(nom?'<div style="font-size:12px;color:#E0D8C8;line-height:1.2;">'+nom+'</div>':'')
+        +(sub?'<div style="font-size:10px;color:#806840;font-style:italic;">'+sub+'</div>':'')
+        +'</div>';
+    };
+    const emptySlot = (icon, color, iconColor, h, charN, cat) =>
+      '<div onclick="openInvSlot(\''+charN+'\',\''+cat+'\',\'\')" style="background:rgba(40,28,10,.4);border:1px dashed '+color+';border-radius:7px;display:flex;align-items:center;justify-content:center;min-height:'+h+';opacity:.4;cursor:pointer;transition:opacity .15s;" onmouseover="this.style.opacity=\'0.7\'" onmouseout="this.style.opacity=\'0.4\'">'
       +'<i class="ti '+icon+'" style="font-size:15px;color:'+iconColor+';" aria-hidden="true"></i></div>';
     const secTitle = t => '<div style="font-size:11px;letter-spacing:.13em;color:#8A6A30;text-transform:uppercase;margin-bottom:7px;font-family:\'Cinzel\',serif;">'+t+'</div>';
     const armes   = (c.armes||'').split('\n').filter(a=>a.trim());
@@ -2761,12 +2763,12 @@ function vitruveShowPanel(name, tab){
     // TOP: Armes / Armures
     html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">';
     html += '<div><div style="font-size:15px;font-weight:700;color:#D4A843;letter-spacing:.04em;margin-bottom:9px;display:flex;align-items:center;gap:7px;font-family:\'Cinzel\',serif;"><i class="ti ti-sword" aria-hidden="true"></i> Armes</div><div style="display:flex;flex-direction:column;gap:6px;">';
-    armes.forEach((a,ai)=>{ const p=parseStat(a); html+=slot(iconForText(p.name),p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px',name,'armes',ai); });
-    for(let i=armes.length;i<3;i++) html+=emptySlot('ti-sword','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armes',-1);
+    armes.forEach((a)=>{ const p=parseStat(a); html+=slot(iconForText(p.name),p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px',name,'armes',a); });
+    for(let i=armes.length;i<3;i++) html+=emptySlot('ti-sword','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armes');
     html+='</div>'+editBtn(name,'inv','armes','Modifier les armes')+'</div>';
     html += '<div><div style="font-size:15px;font-weight:700;color:#D4A843;letter-spacing:.04em;margin-bottom:9px;display:flex;align-items:center;gap:7px;font-family:\'Cinzel\',serif;"><i class="ti ti-shield" aria-hidden="true"></i> Armures & Protections</div><div style="display:flex;flex-direction:column;gap:6px;">';
-    armures.forEach((a,ai)=>{ const p=parseStat(a); const ic=iconForText(p.name)==='ti-package'?'ti-shield':iconForText(p.name); html+=slot(ic,p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px',name,'armures',ai); });
-    for(let i=armures.length;i<3;i++) html+=emptySlot('ti-shield','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armures',-1);
+    armures.forEach((a)=>{ const p=parseStat(a); const ic=iconForText(p.name)==='ti-package'?'ti-shield':iconForText(p.name); html+=slot(ic,p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px',name,'armures',a); });
+    for(let i=armures.length;i<3;i++) html+=emptySlot('ti-shield','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armures');
     html+='</div>'+editBtn(name,'inv','armures','Modifier les armures')+'</div>';
     html+='</div>';
     // SAC TITLE
@@ -2787,18 +2789,18 @@ function vitruveShowPanel(name, tab){
     const grid = (items, max, cols, icon, iconColor, borderColor, h, label, cat) => {
       let g = secTitle(label+' — '+max+' emplacements');
       g += '<div style="display:grid;grid-template-columns:repeat('+cols+',1fr);gap:6px;margin-bottom:14px;">';
-      items.forEach((it,ii)=>{ const p=parseQty(it); g+=slot(icon,p.name+(p.qty?' ×'+p.qty:''),null,borderColor,iconColor,h,name,cat,ii); });
-      for(let i=items.length;i<max;i++) g+=emptySlot(icon,borderColor,iconColor.replace(/[\d.]+\)$/,'0.2)'),h,name,cat,-1);
+      items.forEach((it)=>{ const p=parseQty(it); g+=slot(icon,p.name+(p.qty?' ×'+p.qty:''),null,borderColor,iconColor,h,name,cat,it); });
+      for(let i=items.length;i<max;i++) g+=emptySlot(icon,borderColor,iconColor.replace(/[\d.]+\)$/,'0.2)'),h,name,cat);
       return g+'</div>';
     };
     // Nourriture + Munitions
     html += '<div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:14px;">';
     html += '<div>'+secTitle('Nourriture — 1 emplacement');
-    if(nourriture.length){ const p=parseQty(nourriture[0]); html+='<div onclick="openInvSlot(\''+name+'\',\'nourriture\',0)" style="background:rgba(40,28,10,.75);border:1px solid rgba(212,168,67,.22);border-radius:7px;display:flex;align-items:center;gap:10px;padding:10px 14px;min-height:66px;cursor:pointer;"><i class="ti ti-bread" style="font-size:22px;color:rgba(212,168,67,.55);flex-shrink:0;" aria-hidden="true"></i><div><div style="font-size:13px;color:#E0D8C8;">'+p.name+(p.qty?' ×'+p.qty:'')+'</div><div style="font-size:10px;color:#806840;font-style:italic;">1 pers./jour · max ×12</div></div></div>'; }
-    else html+=emptySlot('ti-bread','rgba(212,168,67,.15)','rgba(212,168,67,.2)','66px',name,'nourriture',-1);
+    if(nourriture.length){ const p=parseQty(nourriture[0]); const nenc=encodeURIComponent(nourriture[0]); html+='<div onclick="openInvSlot(\''+name+'\',\'nourriture\',\''+nenc+'\')" style="background:rgba(40,28,10,.75);border:1px solid rgba(212,168,67,.22);border-radius:7px;display:flex;align-items:center;gap:10px;padding:10px 14px;min-height:66px;cursor:pointer;"><i class="ti ti-bread" style="font-size:22px;color:rgba(212,168,67,.55);flex-shrink:0;" aria-hidden="true"></i><div><div style="font-size:13px;color:#E0D8C8;">'+p.name+(p.qty?' ×'+p.qty:'')+'</div><div style="font-size:10px;color:#806840;font-style:italic;">1 pers./jour · max ×12</div></div></div>'; }
+    else html+=emptySlot('ti-bread','rgba(212,168,67,.15)','rgba(212,168,67,.2)','66px',name,'nourriture');
     html+='</div><div>'+secTitle('Munitions — 2 emplacements')+'<div style="display:flex;flex-direction:column;gap:6px;">';
-    munitions.forEach((it,mi)=>{ const p=parseQty(it); html+=slot('ti-circle-dot',p.name+(p.qty?' ×'+p.qty:''),null,'rgba(212,168,67,.2)','rgba(212,168,67,.45)','52px',name,'munitions',mi); });
-    for(let i=munitions.length;i<2;i++) html+=emptySlot('ti-circle-dot','rgba(212,168,67,.15)','rgba(212,168,67,.2)','52px',name,'munitions',-1);
+    munitions.forEach((it)=>{ const p=parseQty(it); html+=slot('ti-circle-dot',p.name+(p.qty?' ×'+p.qty:''),null,'rgba(212,168,67,.2)','rgba(212,168,67,.45)','52px',name,'munitions',it); });
+    for(let i=munitions.length;i<2;i++) html+=emptySlot('ti-circle-dot','rgba(212,168,67,.15)','rgba(212,168,67,.2)','52px',name,'munitions');
     html+='</div></div></div>';
     // Grids
     html += grid(bivouac, 15, 5, 'ti-tent',          'rgba(212,168,67,.5)',  'rgba(212,168,67,.18)', '58px', 'Matériel de bivouac & camp');
@@ -2934,38 +2936,14 @@ window.closeDonModal = function(){
 };
 
 // ===== INVENTAIRE SLOT EDITOR =====
-window.openInvSlot = function(charName, category, idx){
-  const c = charData[charName];
-  let existing = null;
-
-  if(category === 'armes' || category === 'armures'){
-    const items = (c[category]||'').split('\n').map(e=>e.trim()).filter(e=>e);
-    existing = (idx>=0 && idx<items.length) ? items[idx] : null;
-  } else {
-    const allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
-    const cm = (item,keys) => keys.some(k=>item.toLowerCase().includes(k));
-    const CAT_KEYS = {
-      nourriture:['ration','nourriture','pain','viande','poisson'],
-      munitions:['balle','flèche','carreau','munition'],
-      soins:['kit','soin','bandage','attelle'],
-      potions:['potion','poison','antidote','élixir'],
-      quete:['quête','clé','sceau','fragment','parchemin de'],
-      speciaux:['anneau','amulette','orbe','cristal','artefact','relique','pierre magique','maudit'],
-      docs:['livre','parchemin','carte','plan','lettre','titre','document','grimoire'],
-      gemmes:['gemme','rubis','saphir','diamant','émeraude','opale','perle','topaze'],
-      butin:['or','pièce','lingot','butin','trésor','vendre','revendre']
-    };
-    const isCat = category==='bivouac'
-      ? i => !Object.values(CAT_KEYS).flat().some(k=>i.toLowerCase().includes(k))
-      : i => cm(i, CAT_KEYS[category]||[]);
-    const catItems = allItems.filter(isCat);
-    existing = (idx>=0 && idx<catItems.length) ? catItems[idx] : null;
-  }
+window.openInvSlot = function(charName, category, encodedItem){
+  const itemName = decodeURIComponent(encodedItem||'');
+  const existing = itemName ? itemName : null;
 
   document.getElementById('inv-slot-char').value = charName;
   document.getElementById('inv-slot-cat').value = category;
-  document.getElementById('inv-slot-idx').value = idx;
-  document.getElementById('inv-slot-name').value = existing ? existing.replace(/\s*×\d+$/,'').replace(/\s*\(.*\)$/,'').trim() : '';
+  document.getElementById('inv-slot-idx').value = itemName; // store original item string
+  document.getElementById('inv-slot-name').value = existing ? existing.replace(/\s*×\d+$/,'').replace(/\s*\(.*?\)\s*$/, '').trim() : '';
   document.getElementById('inv-slot-qty').value = existing ? (existing.match(/×(\d+)$/)?.[1]||'') : '';
   document.getElementById('inv-slot-del').style.display = existing ? 'inline-flex' : 'none';
   document.getElementById('inv-slot-modal').style.display = 'flex';
@@ -2977,71 +2955,43 @@ window.closeInvSlot = function(){
 };
 
 window.saveInvSlot = async function(){
-  const charName = document.getElementById('inv-slot-char').value;
-  const category = document.getElementById('inv-slot-cat').value;
-  const idx      = parseInt(document.getElementById('inv-slot-idx').value);
-  const nom      = document.getElementById('inv-slot-name').value.trim();
-  const qty      = document.getElementById('inv-slot-qty').value.trim();
+  const charName    = document.getElementById('inv-slot-char').value;
+  const category    = document.getElementById('inv-slot-cat').value;
+  const originalItem= document.getElementById('inv-slot-idx').value;
+  const nom         = document.getElementById('inv-slot-name').value.trim();
+  const qty         = document.getElementById('inv-slot-qty').value.trim();
   if(!nom){ closeInvSlot(); return; }
   const newEntry = nom + (qty ? ' ×'+qty : '');
-  _updateInvSlot(charName, category, idx, newEntry);
+  _updateInvSlot(charName, category, originalItem, newEntry);
   closeInvSlot();
 };
 
 window.deleteInvSlot = async function(){
-  const charName = document.getElementById('inv-slot-char').value;
-  const category = document.getElementById('inv-slot-cat').value;
-  const idx      = parseInt(document.getElementById('inv-slot-idx').value);
-  _updateInvSlot(charName, category, idx, null);
+  const charName    = document.getElementById('inv-slot-char').value;
+  const category    = document.getElementById('inv-slot-cat').value;
+  const originalItem= document.getElementById('inv-slot-idx').value;
+  _updateInvSlot(charName, category, originalItem, null);
   closeInvSlot();
 };
 
-async function _updateInvSlot(charName, category, idx, newEntry){
+async function _updateInvSlot(charName, category, originalItem, newEntry){
   const c = charData[charName];
 
-  // Armes et armures sont dans leurs propres champs
   if(category === 'armes' || category === 'armures'){
-    const field = category;
-    const items = (c[field]||'').split('\n').map(e=>e.trim()).filter(e=>e);
-    if(newEntry===null){ if(idx>=0 && idx<items.length) items.splice(idx,1); }
-    else if(idx>=0 && idx<items.length){ items[idx]=newEntry; }
+    let items = (c[category]||'').split('\n').map(e=>e.trim()).filter(e=>e);
+    if(newEntry===null){ items = items.filter(i=>i!==originalItem); }
+    else if(originalItem){ items = items.map(i=>i===originalItem?newEntry:i); }
     else { items.push(newEntry); }
-    charData[charName][field] = items.join('\n');
+    charData[charName][category] = items.join('\n');
     await saveChar(charName);
     vitruveShowPanel(charName,'inv');
     return;
   }
 
-  // Tous les autres: dans c.equip (séparés par virgule)
-  const allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
-  const cm = (item,keys) => keys.some(k=>item.toLowerCase().includes(k));
-  const CAT_KEYS = {
-    nourriture:['ration','nourriture','pain','viande','poisson'],
-    munitions:['balle','flèche','carreau','munition'],
-    soins:['kit','soin','bandage','attelle'],
-    potions:['potion','poison','antidote','élixir'],
-    quete:['quête','clé','sceau','fragment','parchemin de'],
-    speciaux:['anneau','amulette','orbe','cristal','artefact','relique','pierre magique','maudit'],
-    docs:['livre','parchemin','carte','plan','lettre','titre','document','grimoire'],
-    gemmes:['gemme','rubis','saphir','diamant','émeraude','opale','perle','topaze'],
-    butin:['or','pièce','lingot','butin','trésor','vendre','revendre']
-  };
-  const isCat = category==='bivouac'
-    ? i => !Object.values(CAT_KEYS).flat().some(k=>i.toLowerCase().includes(k))
-    : i => cm(i, CAT_KEYS[category]||[]);
-  // Build list of real indices in allItems that belong to this category
-  const catIndices = [];
-  allItems.forEach((it,i)=>{ if(isCat(it)) catIndices.push(i); });
-  if(newEntry===null){
-    // Delete: idx is position within catItems
-    if(idx>=0 && idx<catIndices.length) allItems.splice(catIndices[idx],1);
-  } else if(idx>=0 && idx<catIndices.length){
-    // Update existing
-    allItems[catIndices[idx]] = newEntry;
-  } else {
-    // New item
-    allItems.push(newEntry);
-  }
+  let allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
+  if(newEntry===null){ allItems = allItems.filter(i=>i!==originalItem); }
+  else if(originalItem){ allItems = allItems.map(i=>i===originalItem?newEntry:i); }
+  else { allItems.push(newEntry); }
   charData[charName].equip = allItems.join(', ');
   await saveChar(charName);
   vitruveShowPanel(charName, 'inv');
