@@ -2746,35 +2746,73 @@ function vitruveShowPanel(name, tab){
 
   else if(tab==='inv'){
     html += '<div class="vpanel-head"><i class="ti ti-backpack"></i> Inventaire</div>';
-    const armes=(c.armes||'').split('\n').filter(a=>a.trim());
-    const armures=(c.armures||'').split('\n').filter(a=>a.trim());
-    if(armes.length){
-      html += '<div class="vsubhead"><i class="ti ti-sword" aria-hidden="true"></i> Armes</div><div class="icard-grid">' + armes.map(a=>{
-        const p=parseStat(a);
-        return '<div class="icard"><i class="ti '+iconForText(p.name)+'"></i><div class="icard-lbl">'+p.name+'</div>'+(p.stat?'<div class="icard-sub">'+p.stat+'</div>':'')+'</div>';
-      }).join('') + '</div>';
-    }
-    html += editBtn(name,'inv','armes','Modifier les armes');
-    if(armures.length){
-      html += '<div class="vsubhead" style="margin-top:12px;"><i class="ti ti-shield" aria-hidden="true"></i> Armures & protections</div><div class="icard-grid">' + armures.map(a=>{
-        const p=parseStat(a);
-        const ic = iconForText(p.name)==='ti-package' ? 'ti-shield' : iconForText(p.name);
-        return '<div class="icard"><i class="ti '+ic+'"></i><div class="icard-lbl">'+p.name+'</div>'+(p.stat?'<div class="icard-sub">'+p.stat+'</div>':'')+'</div>';
-      }).join('') + '</div>';
-    }
-    html += editBtn(name,'inv','armures','Modifier les armures');
-    const items=(c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
-    html += '<div class="vsubhead" style="margin-top:12px;"><i class="ti ti-backpack" aria-hidden="true"></i> Sac à dos</div>';
-    if(items.length){
-      html += '<div class="icard-grid">' + items.map(it=>{
-        const p=parseQty(it);
-        return '<div class="icard"><i class="ti '+iconForText(p.name)+'"></i><div class="icard-lbl">'+p.name+(p.qty?(' ×'+p.qty):'')+'</div></div>';
-      }).join('') + '</div>';
-    } else {
-      html += '<div class="vcard-val">—</div>';
-    }
+    const slot = (icon, nom, sub, color, iconColor, h) =>
+      '<div style="background:rgba(40,28,10,.75);border:1px solid '+color+';border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:6px 4px;text-align:center;gap:3px;min-height:'+h+';">'
+      +'<i class="ti '+icon+'" style="font-size:17px;color:'+iconColor+';" aria-hidden="true"></i>'
+      +(nom?'<div style="font-size:12px;color:#E0D8C8;line-height:1.2;">'+nom+'</div>':'')
+      +(sub?'<div style="font-size:10px;color:#806840;font-style:italic;">'+sub+'</div>':'')
+      +'</div>';
+    const emptySlot = (icon, color, iconColor, h) =>
+      '<div style="background:rgba(40,28,10,.4);border:1px dashed '+color+';border-radius:7px;display:flex;align-items:center;justify-content:center;min-height:'+h+';opacity:.35;">'
+      +'<i class="ti '+icon+'" style="font-size:15px;color:'+iconColor+';" aria-hidden="true"></i></div>';
+    const secTitle = t => '<div style="font-size:11px;letter-spacing:.13em;color:#8A6A30;text-transform:uppercase;margin-bottom:7px;font-family:\'Cinzel\',serif;">'+t+'</div>';
+    const armes   = (c.armes||'').split('\n').filter(a=>a.trim());
+    const armures = (c.armures||'').split('\n').filter(a=>a.trim());
+    // TOP: Armes / Armures
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">';
+    html += '<div><div style="font-size:15px;font-weight:700;color:#D4A843;letter-spacing:.04em;margin-bottom:9px;display:flex;align-items:center;gap:7px;font-family:\'Cinzel\',serif;"><i class="ti ti-sword" aria-hidden="true"></i> Armes</div><div style="display:flex;flex-direction:column;gap:6px;">';
+    armes.forEach(a=>{ const p=parseStat(a); html+=slot(iconForText(p.name),p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px'); });
+    for(let i=armes.length;i<3;i++) html+=emptySlot('ti-sword','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px');
+    html+='</div>'+editBtn(name,'inv','armes','Modifier les armes')+'</div>';
+    html += '<div><div style="font-size:15px;font-weight:700;color:#D4A843;letter-spacing:.04em;margin-bottom:9px;display:flex;align-items:center;gap:7px;font-family:\'Cinzel\',serif;"><i class="ti ti-shield" aria-hidden="true"></i> Armures & Protections</div><div style="display:flex;flex-direction:column;gap:6px;">';
+    armures.forEach(a=>{ const p=parseStat(a); const ic=iconForText(p.name)==='ti-package'?'ti-shield':iconForText(p.name); html+=slot(ic,p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px'); });
+    for(let i=armures.length;i<3;i++) html+=emptySlot('ti-shield','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px');
+    html+='</div>'+editBtn(name,'inv','armures','Modifier les armures')+'</div>';
+    html+='</div>';
+    // SAC TITLE
+    html += '<div style="font-size:15px;font-weight:700;color:#D4A843;letter-spacing:.04em;margin-bottom:12px;display:flex;align-items:center;gap:7px;font-family:\'Cinzel\',serif;"><i class="ti ti-backpack" aria-hidden="true"></i> Sac à dos</div>';
+    // Parse items by category
+    const allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
+    const cm = (item,keys) => keys.some(k=>item.toLowerCase().includes(k));
+    const nourriture= allItems.filter(i=>cm(i,['ration','nourriture','pain','viande','poisson']));
+    const munitions = allItems.filter(i=>cm(i,['balle','flèche','carreau','munition']));
+    const soins     = allItems.filter(i=>cm(i,['kit','soin','bandage','attelle']));
+    const potions   = allItems.filter(i=>cm(i,['potion','poison','antidote','élixir']));
+    const quete     = allItems.filter(i=>cm(i,['quête','clé','sceau','fragment','parchemin de']));
+    const speciaux  = allItems.filter(i=>cm(i,['anneau','amulette','orbe','cristal','artefact','relique','pierre magique','maudit']));
+    const docs      = allItems.filter(i=>cm(i,['livre','parchemin','carte','plan','lettre','titre','document','grimoire']));
+    const gemmes    = allItems.filter(i=>cm(i,['gemme','rubis','saphir','diamant','émeraude','opale','perle','topaze']));
+    const butin     = allItems.filter(i=>cm(i,['or','pièce','lingot','butin','trésor','vendre','revendre']));
+    const bivouac   = allItems.filter(i=>![...nourriture,...munitions,...soins,...potions,...quete,...speciaux,...docs,...gemmes,...butin].includes(i));
+    const grid = (items, max, cols, icon, iconColor, borderColor, h, label) => {
+      let g = secTitle(label+' — '+max+' emplacements');
+      g += '<div style="display:grid;grid-template-columns:repeat('+cols+',1fr);gap:6px;margin-bottom:14px;">';
+      items.forEach(it=>{ const p=parseQty(it); g+=slot(icon,p.name+(p.qty?' ×'+p.qty:''),null,borderColor,iconColor,h); });
+      for(let i=items.length;i<max;i++) g+=emptySlot(icon,borderColor,iconColor.replace(/[\d.]+\)$/,'0.2)'),h);
+      return g+'</div>';
+    };
+    // Nourriture + Munitions
+    html += '<div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:14px;">';
+    html += '<div>'+secTitle('Nourriture — 1 emplacement');
+    if(nourriture.length){ const p=parseQty(nourriture[0]); html+='<div style="background:rgba(40,28,10,.75);border:1px solid rgba(212,168,67,.22);border-radius:7px;display:flex;align-items:center;gap:10px;padding:10px 14px;min-height:66px;"><i class="ti ti-bread" style="font-size:22px;color:rgba(212,168,67,.55);flex-shrink:0;" aria-hidden="true"></i><div><div style="font-size:13px;color:#E0D8C8;">'+p.name+(p.qty?' ×'+p.qty:'')+'</div><div style="font-size:10px;color:#806840;font-style:italic;">1 pers./jour · max ×12</div></div></div>'; }
+    else html+=emptySlot('ti-bread','rgba(212,168,67,.15)','rgba(212,168,67,.2)','66px');
+    html+='</div><div>'+secTitle('Munitions — 2 emplacements')+'<div style="display:flex;flex-direction:column;gap:6px;">';
+    munitions.forEach(it=>{ const p=parseQty(it); html+=slot('ti-circle-dot',p.name+(p.qty?' ×'+p.qty:''),null,'rgba(212,168,67,.2)','rgba(212,168,67,.45)','52px'); });
+    for(let i=munitions.length;i<2;i++) html+=emptySlot('ti-circle-dot','rgba(212,168,67,.15)','rgba(212,168,67,.2)','52px');
+    html+='</div></div></div>';
+    // Grids
+    html += grid(bivouac, 15, 5, 'ti-tent',          'rgba(212,168,67,.5)',  'rgba(212,168,67,.18)', '58px', 'Matériel de bivouac & camp');
+    html += grid(soins,   15, 5, 'ti-first-aid-kit', 'rgba(100,200,120,.5)','rgba(100,200,120,.2)', '58px', 'Matériel de soins');
+    html += grid(potions, 15, 5, 'ti-flask',          'rgba(160,80,200,.5)', 'rgba(160,80,200,.2)',  '48px', 'Potions, Poisons, Antidotes');
+    html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">';
+    html += '<div>'+grid(quete,   7, 3,'ti-map-pin',  'rgba(212,168,67,.45)','rgba(212,168,67,.2)','52px','Objets de quête')+'</div>';
+    html += '<div>'+grid(speciaux,7, 3,'ti-sparkles', 'rgba(200,120,80,.5)', 'rgba(200,120,80,.2)','52px','Objets spéciaux & Reliques')+'</div>';
+    html += '</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">';
+    html += '<div>'+grid(docs,  9,3,'ti-book',    'rgba(212,168,67,.45)','rgba(212,168,67,.2)','58px','Documents, Livres, Titres')+'</div>';
+    html += '<div>'+grid(gemmes,9,3,'ti-diamond', 'rgba(80,200,220,.5)', 'rgba(80,200,220,.2)','58px','Gemmes & Pierres précieuses')+'</div>';
+    html += '</div>';
+    html += grid(butin, 16, 4, 'ti-coin', 'rgba(212,168,67,.5)', 'rgba(212,168,67,.2)', '58px', 'Butin à revendre (ou pas)');
     html += editBtn(name,'inv','equip','Modifier le sac à dos');
-    if(!armes.length && !armures.length && !items.length) html += '<div class="vcard-val">—</div>';
   }
 
   else if(tab==='furm'){
