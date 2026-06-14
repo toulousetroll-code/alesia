@@ -1256,23 +1256,27 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
           <div style="width:100%;max-width:100%;">
 
             <!-- Niveau 1 : Déïques -->
-            <div onclick="toggleCosmLevel(1)" style="cursor:pointer;margin-bottom:4px;margin:0 220px 4px;">
-              <div style="background:linear-gradient(135deg,#8B6914,#C9A84C,#8B6914);border-radius:10px 10px 0 0;padding:14px 20px;text-align:center;position:relative;box-shadow:0 4px 16px rgba(201,168,76,.3);border:1px solid rgba(201,168,76,.5);">
-                <div style="font-family:'Cinzel',serif;font-size:20.2px;letter-spacing:.1em;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);">① CRÉATURES DÉÏQUES PRIMORDIALES</div>
-                <div style="font-size:17.2px;color:rgba(255,255,255,.75);margin-top:2px;font-style:italic;">Sommet absolu — La Lumière & l'Obscurité</div>
-                <i class="ti ti-chevron-down" id="ico-1" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.7);font-size:21.9px;transition:transform .2s;"></i>
+            <div style="margin-bottom:4px;">
+              <div onclick="toggleCosmLevel(1)" style="cursor:pointer;margin:0 220px 0;">
+                <div style="background:linear-gradient(135deg,#8B6914,#C9A84C,#8B6914);border-radius:10px 10px 0 0;padding:14px 20px;text-align:center;position:relative;box-shadow:0 4px 16px rgba(201,168,76,.3);border:1px solid rgba(201,168,76,.5);">
+                  <div style="font-family:'Cinzel',serif;font-size:20.2px;letter-spacing:.1em;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.5);">① CRÉATURES DÉÏQUES PRIMORDIALES</div>
+                  <div style="font-size:17.2px;color:rgba(255,255,255,.75);margin-top:2px;font-style:italic;">Sommet absolu — La Lumière & l'Obscurité</div>
+                  <i class="ti ti-chevron-down" id="ico-1" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,.7);font-size:21.9px;transition:transform .2s;"></i>
+                </div>
               </div>
-              <div id="lvl-1" style="display:none;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,76,.25);border-top:none;border-radius:0;padding:14px 18px;">
+              <div id="lvl-1" style="display:none;background:rgba(201,168,76,.08);border:1px solid rgba(201,168,67,.25);border-top:none;border-radius:0;padding:14px 18px;">
                 <p style="font-size:20.2px;color:#CFC09A;line-height:1.75;">Deux entités incompréhensibles dont les noms véritables sont inconnus. L'une incarne la <strong style="color:#F2E6CC">Lumière</strong>, l'autre l'<strong style="color:#F2E6CC">Obscurité</strong>. À l'origine du cycle cosmique, elles n'interviennent presque jamais directement dans le monde. Leur trône peut être renversé : une créature légendaire qui les vainc devient à son tour une déité.</p>
               </div>
             </div>
 
             <!-- Niveau 2 : Bêtes Légendaires -->
-            <div onclick="toggleCosmLevel(2)" style="cursor:pointer;margin-bottom:4px;margin:0 165px 4px;">
-              <div style="background:linear-gradient(135deg,#4a2060,#7B3FA0,#4a2060);border-radius:0;padding:13px 20px;text-align:center;position:relative;box-shadow:0 3px 12px rgba(123,63,160,.25);border:1px solid rgba(150,80,200,.4);border-top:none;">
-                <div style="font-family:'Cinzel',serif;font-size:18.8px;letter-spacing:.08em;color:#e0c0ff;text-shadow:0 1px 3px rgba(0,0,0,.4);">② LES 12 BÊTES LÉGENDAIRES</div>
-                <div style="font-size:17.2px;color:rgba(220,180,255,.7);margin-top:2px;font-style:italic;">Vythranax · Vindrasil · et 10 autres…</div>
-                <i class="ti ti-chevron-down" id="ico-2" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(220,180,255,.7);font-size:21.9px;transition:transform .2s;"></i>
+            <div style="margin-bottom:4px;">
+              <div onclick="toggleCosmLevel(2)" style="cursor:pointer;margin:0 165px 0;">
+                <div style="background:linear-gradient(135deg,#4a2060,#7B3FA0,#4a2060);border-radius:0;padding:13px 20px;text-align:center;position:relative;box-shadow:0 3px 12px rgba(123,63,160,.25);border:1px solid rgba(150,80,200,.4);border-top:none;">
+                  <div style="font-family:'Cinzel',serif;font-size:18.8px;letter-spacing:.08em;color:#e0c0ff;text-shadow:0 1px 3px rgba(0,0,0,.4);">② LES 12 BÊTES LÉGENDAIRES</div>
+                  <div style="font-size:17.2px;color:rgba(220,180,255,.7);margin-top:2px;font-style:italic;">Vythranax · Vindrasil · et 10 autres…</div>
+                  <i class="ti ti-chevron-down" id="ico-2" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(220,180,255,.7);font-size:21.9px;transition:transform .2s;"></i>
+                </div>
               </div>
               <div id="lvl-2" style="display:none;background:rgba(123,63,160,.07);border:1px solid rgba(150,80,200,.2);border-top:none;padding:16px 18px;">
                 <p style="font-size:20.2px;color:#CFC09A;line-height:1.7;margin-bottom:14px;">Leur identité est inconnue du commun, mais leurs influences se ressentent (signes, catastrophes, miracles). Chacune règne sur un aspect fondamental du réel : magie, saisons, émotions, guerre, mémoire… Elles possèdent une pleine conscience et une volonté propre. <strong style="color:#F2E6CC">Seule façon d'en devenir une :</strong> tuer et prendre la place d'une des 12 actuelles.</p>
@@ -1293,14 +1297,17 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                   </div>
                 </div>
               </div>
-            </div>
+              </div><!-- end lvl-2 content -->
+            </div><!-- end niveau 2 wrapper -->
 
             <!-- Niveau 3 : Bêtes Effroyables -->
-            <div onclick="toggleCosmLevel(3)" style="cursor:pointer;margin-bottom:4px;margin:0 110px 4px;">
-              <div style="background:linear-gradient(135deg,#5c1a1a,#8B2020,#5c1a1a);border-radius:0;padding:12px 20px;text-align:center;position:relative;box-shadow:0 3px 10px rgba(139,32,32,.2);border:1px solid rgba(180,40,40,.35);border-top:none;">
-                <div style="font-family:'Cinzel',serif;font-size:18.8px;letter-spacing:.08em;color:#ffb0b0;text-shadow:0 1px 3px rgba(0,0,0,.4);">③ BÊTES EFFROYABLES</div>
-                <div style="font-size:17.2px;color:rgba(255,160,160,.65);margin-top:2px;font-style:italic;">Titans · Aberrations · Horreurs anciennes</div>
-                <i class="ti ti-chevron-down" id="ico-3" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(255,160,160,.7);font-size:21.9px;transition:transform .2s;"></i>
+            <div style="margin-bottom:4px;">
+              <div onclick="toggleCosmLevel(3)" style="cursor:pointer;margin:0 110px 0;">
+                <div style="background:linear-gradient(135deg,#5c1a1a,#8B2020,#5c1a1a);border-radius:0;padding:12px 20px;text-align:center;position:relative;box-shadow:0 3px 10px rgba(139,32,32,.2);border:1px solid rgba(180,40,40,.35);border-top:none;">
+                  <div style="font-family:'Cinzel',serif;font-size:18.8px;letter-spacing:.08em;color:#ffb0b0;text-shadow:0 1px 3px rgba(0,0,0,.4);">③ BÊTES EFFROYABLES</div>
+                  <div style="font-size:17.2px;color:rgba(255,160,160,.65);margin-top:2px;font-style:italic;">Titans · Aberrations · Horreurs anciennes</div>
+                  <i class="ti ti-chevron-down" id="ico-3" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(255,160,160,.7);font-size:21.9px;transition:transform .2s;"></i>
+                </div>
               </div>
               <div id="lvl-3" style="display:none;background:rgba(139,32,32,.06);border:1px solid rgba(180,40,40,.18);border-top:none;padding:14px 18px;">
                 <p style="font-size:20.2px;color:#CFC09A;line-height:1.7;margin-bottom:8px;">Nombre inconnu, change constamment. Purement chaotiques, sans conscience, guidées par l'instinct de destruction. Incarnent des catastrophes vivantes : titans, aberrations, horreurs anciennes.</p>
@@ -1320,16 +1327,18 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                       <div style="font-size:15.6px;color:rgba(255,200,200,.7);font-style:italic;">Ravageur de villages</div>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </div><!-- grid images lvl-3 -->
+              </div><!-- end lvl-3 content -->
+            </div><!-- end niveau 3 wrapper -->
 
             <!-- Niveau 4 : Bêtes Rares -->
-            <div onclick="toggleCosmLevel(4)" style="cursor:pointer;margin-bottom:4px;margin:0 55px 4px;">
-              <div style="background:linear-gradient(135deg,#1a4a30,#1D6B5A,#1a4a30);border-radius:0;padding:11px 20px;text-align:center;position:relative;border:1px solid rgba(29,107,90,.35);border-top:none;">
-                <div style="font-family:'Cinzel',serif;font-size:18.8px;letter-spacing:.08em;color:#80e0c0;text-shadow:0 1px 3px rgba(0,0,0,.3);">④ BÊTES RARES</div>
-                <div style="font-size:17.2px;color:rgba(120,210,180,.65);margin-top:2px;font-style:italic;">Dragons · Créatures conscientes & puissantes</div>
-                <i class="ti ti-chevron-down" id="ico-4" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(120,210,180,.7);font-size:21.9px;transition:transform .2s;"></i>
+            <div style="margin-bottom:4px;">
+              <div onclick="toggleCosmLevel(4)" style="cursor:pointer;margin:0 55px 0;">
+                <div style="background:linear-gradient(135deg,#1a4a30,#1D6B5A,#1a4a30);border-radius:0;padding:11px 20px;text-align:center;position:relative;border:1px solid rgba(29,107,90,.35);border-top:none;">
+                  <div style="font-family:'Cinzel',serif;font-size:18.8px;letter-spacing:.08em;color:#80e0c0;text-shadow:0 1px 3px rgba(0,0,0,.3);">④ BÊTES RARES</div>
+                  <div style="font-size:17.2px;color:rgba(120,210,180,.65);margin-top:2px;font-style:italic;">Dragons · Créatures conscientes & puissantes</div>
+                  <i class="ti ti-chevron-down" id="ico-4" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(120,210,180,.7);font-size:21.9px;transition:transform .2s;"></i>
+                </div>
               </div>
               <div id="lvl-4" style="display:none;background:rgba(29,107,90,.06);border:1px solid rgba(29,107,90,.18);border-top:none;padding:14px 18px;">
                 <p style="font-size:20.2px;color:#CFC09A;line-height:1.7;margin-bottom:8px;">Ont une conscience, contrairement aux Effroyables. Créatures puissantes, exotiques, souvent uniques ou très peu nombreuses.</p>
@@ -1343,12 +1352,13 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                   </div>
                 </div>
                 <div style="background:rgba(29,107,90,.08);border-left:3px solid var(--teal);border-radius:0 7px 7px 0;padding:8px 12px;font-size:18.8px;color:#CFC09A;">⬇ Elles peuvent basculer en Bêtes Effroyables uniquement par une <strong style="color:#F2E6CC">chute morale</strong> : massacres, actes atroces ou perte de conscience.</div>
-              </div>
-            </div>
+              </div><!-- end lvl-4 content -->
+            </div><!-- end niveau 4 wrapper -->
 
             <!-- Niveau 5 : Créatures Communes -->
-            <div onclick="toggleCosmLevel(5)" style="cursor:pointer;margin:0 0 0;">
-              <div style="background:linear-gradient(135deg,#2a2a3a,#3a3a5a,#2a2a3a);border-radius:0 0 10px 10px;padding:11px 20px;text-align:center;position:relative;border:1px solid rgba(100,100,150,.3);border-top:none;">
+            <div>
+              <div onclick="toggleCosmLevel(5)" style="cursor:pointer;margin:0 0 0;">
+                <div style="background:linear-gradient(135deg,#2a2a3a,#3a3a5a,#2a2a3a);border-radius:0 0 10px 10px;padding:11px 20px;text-align:center;position:relative;border:1px solid rgba(100,100,150,.3);border-top:none;">
                 <div style="font-family:'Cinzel',serif;font-size:18.8px;letter-spacing:.08em;color:#b0b0d0;">⑤ CRÉATURES COMMUNES</div>
                 <div style="font-size:17.2px;color:rgba(160,160,200,.6);margin-top:2px;font-style:italic;">Races d'Alésia · Monstres ordinaires · Esprits faibles</div>
                 <i class="ti ti-chevron-down" id="ico-5" style="position:absolute;right:16px;top:50%;transform:translateY(-50%);color:rgba(160,160,200,.7);font-size:21.9px;transition:transform .2s;"></i>
@@ -1386,8 +1396,9 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                   </div>
                 </div>
                 <div style="background:rgba(50,50,80,.08);border-left:3px solid #6060a0;border-radius:0 7px 7px 0;padding:8px 12px;font-size:18.8px;color:#CFC09A;">⬆ Certaines créatures communes peuvent devenir des Bêtes Rares par ascension, mutation ou quête épique.</div>
-              </div>
-            </div>
+              </div><!-- end lvl-5 content -->
+              </div><!-- end onclick niveau 5 -->
+            </div><!-- end niveau 5 wrapper -->
 
           </div>
         </div>
