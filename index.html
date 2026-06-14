@@ -783,6 +783,7 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                 <button class="jet-cat-btn" data-cat="mental" onclick="selectJetCat(this)" style="flex:1;padding:5px 4px;font-family:'Cinzel',serif;font-size:11px;border-radius:6px;cursor:pointer;border:1px solid rgba(64,128,192,.4);background:transparent;color:#4080C0;">Men.</button>
               </div>
               <div style="font-size:12px;color:#A09070;margin-bottom:6px;">Base : <span id="jet-base-lbl" style="color:#D4A843;font-weight:bold;">—%</span></div>
+              <div id="jet-check-row" style="font-size:12px;color:#A09070;margin-bottom:6px;display:none;">Compétences : <span id="jet-check-lbl" style="color:#6CC090;font-weight:bold;">+0%</span></div>
               <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
                 <span style="font-size:12px;color:#A09070;white-space:nowrap;">Bonus/Malus :</span>
                 <button onclick="adjustJetMod(-5)" style="background:rgba(192,48,48,.15);border:1px solid rgba(192,48,48,.3);color:#C03030;border-radius:5px;padding:2px 8px;cursor:pointer;font-size:14px;font-weight:bold;">−</button>
@@ -2818,9 +2819,12 @@ function vitruveShowPanel(name, tab){
     if(extras.length){
       extras.forEach(cp=>{
         const pct = cp.v * 10;
+        const ckKey = name + '__check__' + encodeURIComponent(cp.n) + '__' + pct;
+        const checked = window._checkStates[ckKey] ? 'checked' : '';
         html += '<div style="display:flex;align-items:center;gap:10px;padding:6px 10px;background:rgba(0,0,0,.18);border-radius:7px;margin-bottom:5px;">';
         html += '<div style="flex:1;font-size:17px;color:#E0D8C8;">'+cp.n+'</div>';
         html += '<div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:#A09070;min-width:50px;text-align:right;">'+pct+'%</div>';
+        html += '<input type="checkbox" '+checked+' onclick="toggleCheckState(\''+ckKey+'\',this)" title="Appliquer au calculateur" style="width:17px;height:17px;cursor:pointer;accent-color:#D4A843;flex-shrink:0;">';
         html += '</div>';
       });
     } else {
@@ -2834,8 +2838,19 @@ function vitruveShowPanel(name, tab){
         const clean=stripLeadingEmoji(l);
         const m=clean.match(/^(.*?)\s*([+−-]\s*\d+%?)\s*$/);
         const lbl=m?m[1].trim():clean, val=m?m[2].trim():'';
-        return '<div class="vbm '+(isBonus?'bonus':'malus')+'"><i class="ti '+(isBonus?'ti-arrow-up':'ti-arrow-down')+'" aria-hidden="true"></i>'
-          + '<div><div class="vbm-lbl">'+lbl+'</div><div class="vbm-val">'+val+'</div></div></div>';
+        // Parse numeric value (positive for bonus, negative for malus)
+        let numVal = 0;
+        if(val){
+          const raw = val.replace('−','-').replace('%','').replace(' ','');
+          numVal = parseInt(raw)||0;
+        }
+        const ckKey = name + '__check__' + encodeURIComponent(lbl) + '__' + numVal;
+        const checked = window._checkStates[ckKey] ? 'checked' : '';
+        return '<div class="vbm '+(isBonus?'bonus':'malus')+'" style="position:relative;padding-right:28px;">'
+          + '<i class="ti '+(isBonus?'ti-arrow-up':'ti-arrow-down')+'" aria-hidden="true"></i>'
+          + '<div><div class="vbm-lbl">'+lbl+'</div><div class="vbm-val">'+val+'</div></div>'
+          + '<input type="checkbox" '+checked+' onclick="toggleCheckState(\''+ckKey+'\',this)" title="Appliquer au calculateur" style="position:absolute;top:8px;right:8px;width:15px;height:15px;cursor:pointer;accent-color:#D4A843;">'
+          + '</div>';
       }).join('') + '</div>';
     }
     html += editBtn(name,'carac','race_bonus','Modifier bonus/malus');
@@ -2971,6 +2986,32 @@ window._caracStates = {};
 let _jetCat = 'physique';
 let _jetMod = 0;
 
+// Cases à cocher compétences & bonus/malus race pour le calculateur
+window._checkStates = window._checkStates || {};
+
+function getCheckedBonus(charName){
+  // Retourne la somme des % cochés (compétences + bonus/malus race)
+  const prefix = charName + '__check__';
+  let sum = 0;
+  Object.keys(window._checkStates).forEach(k => {
+    if(k.startsWith(prefix) && window._checkStates[k]){
+      // Extraire la valeur stockée dans la clé : prefix + encodedName + '__' + pct
+      const parts = k.slice(prefix.length).split('__');
+      if(parts.length >= 2){
+        const val = parseInt(parts[parts.length-1]);
+        if(!isNaN(val)) sum += val;
+      }
+    }
+  });
+  return sum;
+}
+
+window.toggleCheckState = function(key, el){
+  window._checkStates[key] = !window._checkStates[key];
+  el.checked = window._checkStates[key];
+  updateJetDisplay();
+};
+
 function getAdjustedPct(charName, catKey, basePct){
   const c = charData[charName];
   if(!c) return parseInt(basePct)||0;
@@ -3001,12 +3042,25 @@ function updateJetDisplay(){
     rawPct = catKey==='physique' ? parseInt(c.phys)||0 : catKey==='social' ? parseInt(c.social)||0 : parseInt(c.mental)||0;
   }
   const base = getAdjustedPct(vitruveChar, catKey, rawPct);
-  const total = Math.min(Math.max(base + _jetMod, 5), 95);
+  const checkedBonus = getCheckedBonus(vitruveChar);
+  const total = Math.min(Math.max(base + _jetMod + checkedBonus, 5), 95);
   const el = document.getElementById('jet-base-lbl');
   const tm = document.getElementById('jet-total');
   const ml = document.getElementById('jet-mod-lbl');
   if(el) el.textContent = base+'%';
   if(ml) ml.textContent = (_jetMod>=0?'+':'')+_jetMod+'%';
+  // Afficher la ligne compétences cochées si > 0
+  const ckRow = document.getElementById('jet-check-row');
+  const ckLbl = document.getElementById('jet-check-lbl');
+  if(ckRow && ckLbl){
+    if(checkedBonus !== 0){
+      ckRow.style.display = 'block';
+      ckLbl.textContent = (checkedBonus>=0?'+':'')+checkedBonus+'%';
+      ckLbl.style.color = checkedBonus > 0 ? '#6CC090' : '#D07060';
+    } else {
+      ckRow.style.display = 'none';
+    }
+  }
   if(tm){ tm.textContent = total+'%'; tm.style.color = total>=60?'#50C050':total>=35?'#D4A843':'#C03030'; }
 }
 window.selectJetCat = function(btn){
