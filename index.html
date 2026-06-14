@@ -2936,29 +2936,36 @@ window.closeDonModal = function(){
 // ===== INVENTAIRE SLOT EDITOR =====
 window.openInvSlot = function(charName, category, idx){
   const c = charData[charName];
-  const allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
-  const cm = (item,keys) => keys.some(k=>item.toLowerCase().includes(k));
-  const CAT_KEYS = {
-    nourriture:['ration','nourriture','pain','viande','poisson'],
-    munitions:['balle','flèche','carreau','munition'],
-    soins:['kit','soin','bandage','attelle'],
-    potions:['potion','poison','antidote','élixir'],
-    quete:['quête','clé','sceau','fragment','parchemin de'],
-    speciaux:['anneau','amulette','orbe','cristal','artefact','relique','pierre magique','maudit'],
-    docs:['livre','parchemin','carte','plan','lettre','titre','document','grimoire'],
-    gemmes:['gemme','rubis','saphir','diamant','émeraude','opale','perle','topaze'],
-    butin:['or','pièce','lingot','butin','trésor','vendre','revendre']
-  };
-  const catItems = category==='bivouac'
-    ? allItems.filter(i=>!Object.values(CAT_KEYS).flat().some(k=>i.toLowerCase().includes(k)))
-    : (CAT_KEYS[category]||[]).length ? allItems.filter(i=>cm(i,CAT_KEYS[category]||[])) : [];
-  // idx === -1 means empty slot (new item), otherwise existing
-  const existing = (idx >= 0 && idx < catItems.length) ? catItems[idx] : null;
+  let existing = null;
+
+  if(category === 'armes' || category === 'armures'){
+    const items = (c[category]||'').split('\n').map(e=>e.trim()).filter(e=>e);
+    existing = (idx>=0 && idx<items.length) ? items[idx] : null;
+  } else {
+    const allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
+    const cm = (item,keys) => keys.some(k=>item.toLowerCase().includes(k));
+    const CAT_KEYS = {
+      nourriture:['ration','nourriture','pain','viande','poisson'],
+      munitions:['balle','flèche','carreau','munition'],
+      soins:['kit','soin','bandage','attelle'],
+      potions:['potion','poison','antidote','élixir'],
+      quete:['quête','clé','sceau','fragment','parchemin de'],
+      speciaux:['anneau','amulette','orbe','cristal','artefact','relique','pierre magique','maudit'],
+      docs:['livre','parchemin','carte','plan','lettre','titre','document','grimoire'],
+      gemmes:['gemme','rubis','saphir','diamant','émeraude','opale','perle','topaze'],
+      butin:['or','pièce','lingot','butin','trésor','vendre','revendre']
+    };
+    const isCat = category==='bivouac'
+      ? i => !Object.values(CAT_KEYS).flat().some(k=>i.toLowerCase().includes(k))
+      : i => cm(i, CAT_KEYS[category]||[]);
+    const catItems = allItems.filter(isCat);
+    existing = (idx>=0 && idx<catItems.length) ? catItems[idx] : null;
+  }
 
   document.getElementById('inv-slot-char').value = charName;
   document.getElementById('inv-slot-cat').value = category;
   document.getElementById('inv-slot-idx').value = idx;
-  document.getElementById('inv-slot-name').value = existing ? existing.replace(/\s*×\d+$/,'') : '';
+  document.getElementById('inv-slot-name').value = existing ? existing.replace(/\s*×\d+$/,'').replace(/\s*\(.*\)$/,'').trim() : '';
   document.getElementById('inv-slot-qty').value = existing ? (existing.match(/×(\d+)$/)?.[1]||'') : '';
   document.getElementById('inv-slot-del').style.display = existing ? 'inline-flex' : 'none';
   document.getElementById('inv-slot-modal').style.display = 'flex';
@@ -2991,6 +2998,21 @@ window.deleteInvSlot = async function(){
 
 async function _updateInvSlot(charName, category, idx, newEntry){
   const c = charData[charName];
+
+  // Armes et armures sont dans leurs propres champs
+  if(category === 'armes' || category === 'armures'){
+    const field = category;
+    const items = (c[field]||'').split('\n').map(e=>e.trim()).filter(e=>e);
+    if(newEntry===null){ if(idx>=0 && idx<items.length) items.splice(idx,1); }
+    else if(idx>=0 && idx<items.length){ items[idx]=newEntry; }
+    else { items.push(newEntry); }
+    charData[charName][field] = items.join('\n');
+    await saveChar(charName);
+    vitruveShowPanel(charName,'inv');
+    return;
+  }
+
+  // Tous les autres: dans c.equip (séparés par virgule)
   const allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
   const cm = (item,keys) => keys.some(k=>item.toLowerCase().includes(k));
   const CAT_KEYS = {
@@ -3007,16 +3029,17 @@ async function _updateInvSlot(charName, category, idx, newEntry){
   const isCat = category==='bivouac'
     ? i => !Object.values(CAT_KEYS).flat().some(k=>i.toLowerCase().includes(k))
     : i => cm(i, CAT_KEYS[category]||[]);
+  // Build list of real indices in allItems that belong to this category
   const catIndices = [];
   allItems.forEach((it,i)=>{ if(isCat(it)) catIndices.push(i); });
   if(newEntry===null){
-    // Delete
-    if(catIndices[idx]!==undefined) allItems.splice(catIndices[idx],1);
-  } else if(catIndices[idx]!==undefined){
-    // Update
+    // Delete: idx is position within catItems
+    if(idx>=0 && idx<catIndices.length) allItems.splice(catIndices[idx],1);
+  } else if(idx>=0 && idx<catIndices.length){
+    // Update existing
     allItems[catIndices[idx]] = newEntry;
   } else {
-    // Insert new
+    // New item
     allItems.push(newEntry);
   }
   charData[charName].equip = allItems.join(', ');
