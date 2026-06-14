@@ -2661,7 +2661,7 @@ function vitruveShowPanel(name, tab){
         mainColor = '#C03030';
         blockBorder = 'border:2px solid #C03030;';
       } else {
-        adjPct = Math.max(5, parseInt(cat.pct) - nbJaune*10 - nbRouge*10);
+        adjPct = Math.max(5, parseInt(cat.pct) - nbJaune*10 - nbRouge*20);
         mainColor = cat.color;
         blockBorder = 'border:1px solid rgba(212,168,67,.15);';
       }
@@ -3135,7 +3135,7 @@ function buildFurmHTML(){
     if(allRouge){
       adjPct = 5; mainColor = '#C03030'; blockBorder = 'border:2px solid #C03030;';
     } else {
-      adjPct = Math.max(5, parseInt(cat.pct) - nbJaune*10 - nbRouge*10);
+      adjPct = Math.max(5, parseInt(cat.pct) - nbJaune*10 - nbRouge*20);
       mainColor = cat.color; blockBorder = 'border:1px solid rgba(74,160,80,.2);';
     }
     let b = '<div style="background:'+cat.bg+';'+blockBorder+'border-radius:12px;padding:14px 18px;flex:1;">';
