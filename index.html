@@ -2762,11 +2762,11 @@ function vitruveShowPanel(name, tab){
     html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">';
     html += '<div><div style="font-size:15px;font-weight:700;color:#D4A843;letter-spacing:.04em;margin-bottom:9px;display:flex;align-items:center;gap:7px;font-family:\'Cinzel\',serif;"><i class="ti ti-sword" aria-hidden="true"></i> Armes</div><div style="display:flex;flex-direction:column;gap:6px;">';
     armes.forEach((a,ai)=>{ const p=parseStat(a); html+=slot(iconForText(p.name),p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px',name,'armes',ai); });
-    for(let i=armes.length;i<3;i++) html+=emptySlot('ti-sword','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armes',armes.length+i);
+    for(let i=armes.length;i<3;i++) html+=emptySlot('ti-sword','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armes',-1);
     html+='</div>'+editBtn(name,'inv','armes','Modifier les armes')+'</div>';
     html += '<div><div style="font-size:15px;font-weight:700;color:#D4A843;letter-spacing:.04em;margin-bottom:9px;display:flex;align-items:center;gap:7px;font-family:\'Cinzel\',serif;"><i class="ti ti-shield" aria-hidden="true"></i> Armures & Protections</div><div style="display:flex;flex-direction:column;gap:6px;">';
     armures.forEach((a,ai)=>{ const p=parseStat(a); const ic=iconForText(p.name)==='ti-package'?'ti-shield':iconForText(p.name); html+=slot(ic,p.name,p.stat||'','rgba(212,168,67,.22)','rgba(212,168,67,.55)','66px',name,'armures',ai); });
-    for(let i=armures.length;i<3;i++) html+=emptySlot('ti-shield','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armures',armures.length+i);
+    for(let i=armures.length;i<3;i++) html+=emptySlot('ti-shield','rgba(212,168,67,.15)','rgba(212,168,67,.2)','56px',name,'armures',-1);
     html+='</div>'+editBtn(name,'inv','armures','Modifier les armures')+'</div>';
     html+='</div>';
     // SAC TITLE
@@ -2788,17 +2788,17 @@ function vitruveShowPanel(name, tab){
       let g = secTitle(label+' — '+max+' emplacements');
       g += '<div style="display:grid;grid-template-columns:repeat('+cols+',1fr);gap:6px;margin-bottom:14px;">';
       items.forEach((it,ii)=>{ const p=parseQty(it); g+=slot(icon,p.name+(p.qty?' ×'+p.qty:''),null,borderColor,iconColor,h,name,cat,ii); });
-      for(let i=items.length;i<max;i++) g+=emptySlot(icon,borderColor,iconColor.replace(/[\d.]+\)$/,'0.2)'),h,name,cat,items.length+i);
+      for(let i=items.length;i<max;i++) g+=emptySlot(icon,borderColor,iconColor.replace(/[\d.]+\)$/,'0.2)'),h,name,cat,-1);
       return g+'</div>';
     };
     // Nourriture + Munitions
     html += '<div style="display:grid;grid-template-columns:2fr 1fr;gap:10px;margin-bottom:14px;">';
     html += '<div>'+secTitle('Nourriture — 1 emplacement');
     if(nourriture.length){ const p=parseQty(nourriture[0]); html+='<div onclick="openInvSlot(\''+name+'\',\'nourriture\',0)" style="background:rgba(40,28,10,.75);border:1px solid rgba(212,168,67,.22);border-radius:7px;display:flex;align-items:center;gap:10px;padding:10px 14px;min-height:66px;cursor:pointer;"><i class="ti ti-bread" style="font-size:22px;color:rgba(212,168,67,.55);flex-shrink:0;" aria-hidden="true"></i><div><div style="font-size:13px;color:#E0D8C8;">'+p.name+(p.qty?' ×'+p.qty:'')+'</div><div style="font-size:10px;color:#806840;font-style:italic;">1 pers./jour · max ×12</div></div></div>'; }
-    else html+=emptySlot('ti-bread','rgba(212,168,67,.15)','rgba(212,168,67,.2)','66px',name,'nourriture',0);
+    else html+=emptySlot('ti-bread','rgba(212,168,67,.15)','rgba(212,168,67,.2)','66px',name,'nourriture',-1);
     html+='</div><div>'+secTitle('Munitions — 2 emplacements')+'<div style="display:flex;flex-direction:column;gap:6px;">';
     munitions.forEach((it,mi)=>{ const p=parseQty(it); html+=slot('ti-circle-dot',p.name+(p.qty?' ×'+p.qty:''),null,'rgba(212,168,67,.2)','rgba(212,168,67,.45)','52px',name,'munitions',mi); });
-    for(let i=munitions.length;i<2;i++) html+=emptySlot('ti-circle-dot','rgba(212,168,67,.15)','rgba(212,168,67,.2)','52px',name,'munitions',munitions.length+i);
+    for(let i=munitions.length;i<2;i++) html+=emptySlot('ti-circle-dot','rgba(212,168,67,.15)','rgba(212,168,67,.2)','52px',name,'munitions',-1);
     html+='</div></div></div>';
     // Grids
     html += grid(bivouac, 15, 5, 'ti-tent',          'rgba(212,168,67,.5)',  'rgba(212,168,67,.18)', '58px', 'Matériel de bivouac & camp');
@@ -2937,7 +2937,6 @@ window.closeDonModal = function(){
 window.openInvSlot = function(charName, category, idx){
   const c = charData[charName];
   const allItems = (c.equip||'').split(',').map(e=>e.trim()).filter(e=>e);
-  // Get items for this category
   const cm = (item,keys) => keys.some(k=>item.toLowerCase().includes(k));
   const CAT_KEYS = {
     nourriture:['ration','nourriture','pain','viande','poisson'],
@@ -2953,7 +2952,8 @@ window.openInvSlot = function(charName, category, idx){
   const catItems = category==='bivouac'
     ? allItems.filter(i=>!Object.values(CAT_KEYS).flat().some(k=>i.toLowerCase().includes(k)))
     : (CAT_KEYS[category]||[]).length ? allItems.filter(i=>cm(i,CAT_KEYS[category]||[])) : [];
-  const existing = catItems[idx] || null;
+  // idx === -1 means empty slot (new item), otherwise existing
+  const existing = (idx >= 0 && idx < catItems.length) ? catItems[idx] : null;
 
   document.getElementById('inv-slot-char').value = charName;
   document.getElementById('inv-slot-cat').value = category;
