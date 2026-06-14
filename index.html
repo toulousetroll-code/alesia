@@ -2617,10 +2617,37 @@ function vitruveShowPanel(name, tab){
 
   else if(tab==='carac'){
     html += '<div class="vpanel-head"><i class="ti ti-chart-bar"></i> Caractéristiques</div>';
-    html += '<div class="vcard-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:18px;">'
+
+    // Posture defaults per character
+    const POSTURE_DEFAULT = {azarius:'offensif',dy:'focus',firm:'defensif',mwassa:'focus',nindey:'offensif'};
+    if(!window._postures) window._postures = {};
+    if(window._postures[name]===undefined) window._postures[name] = POSTURE_DEFAULT[name] || 'focus';
+    const curPost = window._postures[name];
+    const postLabels = {focus:'Focus',offensif:'Offensif',defensif:'Défensif'};
+    const postColors = {
+      focus:   {active:'rgba(80,140,200,.25)',border:'#5090D0',text:'#80C0F0'},
+      offensif:{active:'rgba(192,60,40,.25)', border:'#C04030',text:'#E07060'},
+      defensif:{active:'rgba(192,168,40,.2)', border:'#C0A830',text:'#D4A843'}
+    };
+    let postHtml = '<div style="background:rgba(45,30,10,.7);border:1px solid rgba(212,168,67,.15);border-radius:8px;padding:10px;text-align:center;">';
+    postHtml += '<i class="ti ti-shield-half" style="font-size:20px;color:#D4A843;" aria-hidden="true"></i>';
+    postHtml += '<div style="font-size:11px;letter-spacing:.12em;color:#8A6A30;text-transform:uppercase;margin:6px 0 8px;">Posture</div>';
+    postHtml += '<div style="display:flex;gap:4px;">';
+    ['focus','offensif','defensif'].forEach(p=>{
+      const isActive = p===curPost;
+      const col = postColors[p];
+      const bg = isActive ? col.active : 'transparent';
+      const border = isActive ? col.border : 'rgba(212,168,67,.2)';
+      const color = isActive ? col.text : 'rgba(212,168,67,.3)';
+      postHtml += '<div onclick="setPosture(\''+name+'\',\''+p+'\')" style="flex:1;padding:5px 2px;border-radius:6px;cursor:pointer;font-family:\'Cinzel\',serif;font-size:12px;border:1px solid '+border+';background:'+bg+';color:'+color+';transition:all .15s;" id="pb-'+name+'-'+p+'">'+postLabels[p]+'</div>';
+    });
+    postHtml += '</div></div>';
+
+    html += '<div class="vcard-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px;">'
       + vcard('ti-heart','PV / '+c.pv_max, c.pv)
       + vcard('ti-droplet','Mana / '+c.mana_max, c.mana)
       + vcard('ti-star','Niveau', c.niveau)
+      + postHtml
       + '</div>';
 
     // Map compétences by name for quick lookup
@@ -3062,8 +3089,13 @@ async function _updateInvSlot(charName, category, originalItem, newEntry){
   vitruveShowPanel(charName, 'inv');
 }
 
-// ===== AVANTAGES & DÉSAVANTAGES =====
-// Simple checkboxes — no JS needed
+window._postures = {};
+window.setPosture = function(charName, posture){
+  if(!window._postures) window._postures = {};
+  window._postures[charName] = posture;
+  // Refresh carac tab to update buttons
+  if(vitruveChar===charName && vitruveTab==='carac') vitruveShowPanel(charName,'carac');
+};
 
 window.cycleCaracState = function(el){
   const key = el.dataset.key;
