@@ -2719,21 +2719,23 @@ function vitruveShowPanel(name, tab){
         let sep = clean.indexOf(' — ')>=0?' — ':(clean.indexOf(' : ')>=0?' : ':null);
         let nom=clean, eff='';
         if(sep){ const parts=clean.split(sep); nom=parts[0].trim(); eff=parts.slice(1).join(sep).trim(); }
-        // Parse mana cost and dés from eff
-        const manaMatch = eff.match(/(\d+)\s*mana/i);
-        const desMatch  = eff.match(/(D\d+(?:\+D\d+)?(?:[+\-]\d+)?)/i);
-        const mana = manaMatch ? manaMatch[1] : null;
-        const des  = desMatch  ? desMatch[1]  : null;
+        const donData = (DONS_DATA[name]||{})[nom] || {};
+        const mana = donData.mana!==undefined ? String(donData.mana) : null;
+        const des  = donData.des && donData.des!=='—' ? donData.des : null;
+        const bon  = donData.bonus && donData.bonus!==0 ? (donData.bonus>0?'+'+donData.bonus:String(donData.bonus)) : null;
         html += '<div onclick="openDonModal(\''+name+'\',\''+nom.replace(/'/g,"\\'")+'\')" style="background:rgba(45,30,10,.6);border:1px solid rgba(212,168,67,.18);border-left:3px solid rgba(212,168,67,.5);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:14px;cursor:pointer;transition:border-color .15s;" onmouseover="this.style.borderColor=\'rgba(212,168,67,.5)\'" onmouseout="this.style.borderColor=\'rgba(212,168,67,.18)\'">';
         html += '<i class="ti '+icon+'" style="font-size:28px;color:rgba(212,168,67,.6);flex-shrink:0;" aria-hidden="true"></i>';
         html += '<div style="flex:1;">';
         html += '<div style="font-family:\'Cinzel\',serif;font-size:19px;color:#F2E6CC;font-weight:600;">'+nom+'</div>';
-        if(eff) html += '<div style="font-size:16px;color:#A09070;margin-top:3px;font-style:italic;">'+eff+'</div>';
+        if(eff) html += '<div style="font-size:15px;color:#A09070;margin-top:3px;font-style:italic;">'+eff+'</div>';
         html += '</div>';
-        if(mana) html += '<div style="text-align:center;background:rgba(80,100,200,.12);border:1px solid rgba(80,100,200,.3);border-radius:6px;padding:4px 10px;"><div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:#8090E0;">'+mana+'</div><div style="font-size:12px;color:#5060A0;letter-spacing:.08em;">MANA</div></div>';
-        if(des)  html += '<div style="text-align:center;background:rgba(200,80,40,.1);border:1px solid rgba(200,80,40,.3);border-radius:6px;padding:4px 10px;"><div style="font-family:\'Cinzel\',serif;font-size:22px;font-weight:700;color:#D07050;">'+des+'</div><div style="font-size:12px;color:#904030;letter-spacing:.08em;">DÉS</div></div>';
+        if(mana || des){
+          html += '<div style="display:flex;border:1px solid rgba(212,168,67,.22);border-radius:10px;overflow:hidden;flex-shrink:0;">';
+          if(mana) html += '<div style="background:rgba(80,100,200,.18);padding:8px 14px;text-align:center;border-right:1px solid rgba(212,168,67,.15);"><div style="font-family:\'Cinzel\',serif;font-size:20px;font-weight:700;color:#8090E0;">'+mana+'</div><div style="font-size:10px;color:#5060A0;letter-spacing:.1em;margin-top:2px;">MANA</div></div>';
+          if(des){ const desStr = bon ? des+' <span style="color:#D4A843;">'+bon+'</span>' : des; html += '<div style="background:rgba(200,80,40,.12);padding:8px 14px;text-align:center;"><div style="font-family:\'Cinzel\',serif;font-size:20px;font-weight:700;color:#D07050;">'+desStr+'</div><div style="font-size:10px;color:#904030;letter-spacing:.1em;margin-top:2px;">DÉGÂTS</div></div>'; }
+          html += '</div>';
+        }
         html += '</div>';
-      });
       html += '</div>';
     } else {
       html += '<div style="color:#A09070;font-style:italic;padding:20px 0;">Aucun don.</div>';
