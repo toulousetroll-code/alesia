@@ -2624,12 +2624,22 @@ function vitruveShowPanel(name, tab){
     if(window._postures[name]===undefined) window._postures[name] = POSTURE_DEFAULT[name] || 'focus';
     const curPost = window._postures[name];
     const postLabels = {focus:'Focus',offensif:'Offensif',defensif:'Défensif'};
-    const postColors = {
-      focus:   {active:'rgba(80,140,200,.25)',border:'#5090D0',text:'#80C0F0'},
-      offensif:{active:'rgba(192,60,40,.25)', border:'#C04030',text:'#E07060'},
-      defensif:{active:'rgba(192,168,40,.2)', border:'#C0A830',text:'#D4A843'}
+    const POSTURE_FX = {
+      focus:   { icon:'✨', lines:['Dégâts normaux (lance le dé)','Bonus +5% sur tous les jets','Coût Mana réduit de 1','Pas d\'esquive possible'] },
+      offensif:{ icon:'⚔', lines:['Dégâts maximum automatiques','Zone critique élargie +5%','Aucune esquive / parade possible'] },
+      defensif:{ icon:'🛡', lines:['Dégâts normaux','1 esquive ou 1 parade par tour','Pas de bonus offensif'] }
     };
-    let postHtml = '<div style="background:rgba(45,30,10,.7);border:1px solid rgba(212,168,67,.15);border-radius:8px;padding:10px;text-align:center;">';
+    const fx = POSTURE_FX[curPost];
+    const fxCol = postColors[curPost];
+    const tooltipId = 'ptip-'+name;
+    const tipLines = fx.lines.map(l=>'<div style="display:flex;gap:6px;align-items:flex-start;margin-bottom:4px;"><span style="color:'+fxCol.border+';flex-shrink:0;">·</span><span style="color:#C8B888;font-size:14px;">'+l+'</span></div>').join('');
+    // Tooltip
+    let postHtml = '<div style="position:relative;" onmouseenter="document.getElementById(\''+tooltipId+'\').style.display=\'block\'" onmouseleave="document.getElementById(\''+tooltipId+'\').style.display=\'none\'">';
+    postHtml += '<div id="'+tooltipId+'" style="display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1A1208;border:1px solid '+fxCol.border+';border-radius:8px;padding:10px 14px;min-width:240px;z-index:500;pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.8);">';
+    postHtml += '<div style="font-family:\'Cinzel\',serif;font-size:14px;color:'+fxCol.text+';margin-bottom:8px;">'+fx.icon+' '+postLabels[curPost]+'</div>';
+    postHtml += tipLines+'</div>';
+    // Card
+    postHtml += '<div style="background:rgba(45,30,10,.7);border:1px solid rgba(212,168,67,.15);border-radius:8px;padding:10px;text-align:center;">';
     postHtml += '<i class="ti ti-shield-half" style="font-size:20px;color:#D4A843;" aria-hidden="true"></i>';
     postHtml += '<div style="font-size:11px;letter-spacing:.12em;color:#8A6A30;text-transform:uppercase;margin:6px 0 8px;">Posture</div>';
     postHtml += '<div style="display:flex;gap:4px;">';
@@ -2639,9 +2649,9 @@ function vitruveShowPanel(name, tab){
       const bg = isActive ? col.active : 'transparent';
       const border = isActive ? col.border : 'rgba(212,168,67,.2)';
       const color = isActive ? col.text : 'rgba(212,168,67,.3)';
-      postHtml += '<div onclick="setPosture(\''+name+'\',\''+p+'\')" style="flex:1;padding:5px 2px;border-radius:6px;cursor:pointer;font-family:\'Cinzel\',serif;font-size:12px;border:1px solid '+border+';background:'+bg+';color:'+color+';transition:all .15s;" id="pb-'+name+'-'+p+'">'+postLabels[p]+'</div>';
+      postHtml += '<div onclick="setPosture(\''+name+'\',\''+p+'\')" style="flex:1;padding:5px 2px;border-radius:6px;cursor:pointer;font-family:\'Cinzel\',serif;font-size:12px;border:1px solid '+border+';background:'+bg+';color:'+color+';transition:all .15s;">'+postLabels[p]+'</div>';
     });
-    postHtml += '</div></div>';
+    postHtml += '</div></div></div>';
 
     html += '<div class="vcard-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:18px;">'
       + vcard('ti-heart','PV / '+c.pv_max, c.pv)
@@ -2649,6 +2659,7 @@ function vitruveShowPanel(name, tab){
       + vcard('ti-star','Niveau', c.niveau)
       + postHtml
       + '</div>';
+
 
     // Map compétences by name for quick lookup
     const compMap = {};
