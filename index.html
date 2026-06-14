@@ -622,8 +622,8 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
 .vbm.malus .ti,.vbm.malus .vbm-val{color:#D47A6A;}
 .vbm-lbl{font-size:18.8px;color:#E0E0D8;}
 .vbm-val{font-size:17.2px;}
-.race-wheel{position:relative;height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden;perspective:1200px;margin-bottom:16px;}
-.race-wheel.tall{height:calc(100vh - 220px);min-height:520px;}
+.race-wheel{position:relative;height:320px;display:flex;align-items:center;justify-content:center;overflow:hidden;perspective:1400px;margin-bottom:16px;}
+.race-wheel.tall{height:calc(100vh - 180px);min-height:600px;}
 .race-track{position:relative;width:100%;height:100%;}
 .race-card{position:absolute;top:50%;left:50%;width:240px;background:linear-gradient(160deg,rgba(35,25,10,.98),rgba(22,16,8,.99));border:1px solid rgba(212,168,67,.22);border-radius:12px;padding:18px;transition:transform .4s ease,opacity .4s ease;cursor:pointer;}
 .race-card .rimg{width:100%;height:200px;object-fit:cover;border-radius:8px;margin-bottom:10px;border:1px solid rgba(212,168,67,.2);}
@@ -3333,17 +3333,28 @@ function renderRaceCarousel(){
   const n=races.length;
   const track=document.getElementById('race-track');
   if(!track)return;
+  const h = track.parentElement.offsetHeight || 700;
+  const cardW = Math.min(400, h * 0.52);
   track.innerHTML=races.map((r,i)=>{
     let d=i-raceIdx;
     if(d>n/2) d-=n;
     if(d<-n/2) d+=n;
     let transform,opacity,z,pe='auto';
-    if(d===0){ transform='translate(-50%,-50%) translateX(0) scale(1)'; opacity=1; z=5; }
-    else if(Math.abs(d)===1){ transform=`translate(-50%,-50%) translateX(${d*300}px) rotateY(${-d*22}deg) scale(.75)`; opacity=.55; z=4; }
-    else if(Math.abs(d)===2){ transform=`translate(-50%,-50%) translateX(${d*290}px) rotateY(${-d*28}deg) scale(.55)`; opacity=.22; z=3; }
-    else { transform=`translate(-50%,-50%) translateX(${d*280}px) scale(.4)`; opacity=0; z=1; pe='none'; }
-    return `<div class="race-card" style="width:300px;transform:${transform};opacity:${opacity};z-index:${z};pointer-events:${pe};" onclick="raceGoTo(${i})">
-      <img class="rimg" src="${r.img}" alt="${r.n}" style="height:260px;"/>
+    if(d===0){
+      transform=`translate(-50%,-50%) translateX(0) scale(1)`;
+      opacity=1; z=5;
+    } else if(Math.abs(d)===1){
+      transform=`translate(-50%,-50%) translateX(${d*420}px) rotateY(${-d*18}deg) scale(.58)`;
+      opacity=.65; z=4;
+    } else if(Math.abs(d)===2){
+      transform=`translate(-50%,-50%) translateX(${d*520}px) rotateY(${-d*24}deg) scale(.36)`;
+      opacity=.25; z=3;
+    } else {
+      transform=`translate(-50%,-50%) translateX(${d*560}px) scale(.25)`;
+      opacity=0; z=1; pe='none';
+    }
+    return `<div class="race-card" style="width:${cardW}px;transform:${transform};opacity:${opacity};z-index:${z};pointer-events:${pe};" onclick="raceGoTo(${i})">
+      <img class="rimg" src="${r.img}" alt="${r.n}" style="height:${cardW*0.85}px;"/>
       <div class="rn">${r.n}</div>
       <div class="rs">${r.sub||'&nbsp;'}</div>
       <div class="rbox bon"><div class="rgrp">Bonus</div>${r.bon.map(b=>`<div class="ritem">+ ${b}</div>`).join('')}</div>
@@ -3360,17 +3371,28 @@ function renderClassCarousel(){
   const n=classes.length;
   const track=document.getElementById('class-track');
   if(!track)return;
+  const h2 = track.parentElement.offsetHeight || 700;
+  const cardW2 = Math.min(400, h2 * 0.52);
   track.innerHTML=classes.map((c,i)=>{
     let d=i-classIdx;
     if(d>n/2) d-=n;
     if(d<-n/2) d+=n;
     let transform,opacity,z,pe='auto';
-    if(d===0){ transform='translate(-50%,-50%) translateX(0) scale(1)'; opacity=1; z=5; }
-    else if(Math.abs(d)===1){ transform=`translate(-50%,-50%) translateX(${d*300}px) rotateY(${-d*22}deg) scale(.75)`; opacity=.55; z=4; }
-    else if(Math.abs(d)===2){ transform=`translate(-50%,-50%) translateX(${d*290}px) rotateY(${-d*28}deg) scale(.55)`; opacity=.22; z=3; }
-    else { transform=`translate(-50%,-50%) translateX(${d*280}px) scale(.4)`; opacity=0; z=1; pe='none'; }
-    return `<div class="race-card" style="width:300px;transform:${transform};opacity:${opacity};z-index:${z};pointer-events:${pe};" onclick="classGoTo(${i})">
-      ${c.img?`<img class="rimg" src="${c.img}" alt="${c.n}" style="height:260px;"/>`:`<div class="rimg" style="height:260px;display:flex;align-items:center;justify-content:center;background:rgba(212,168,67,.04);"><i class="ti ti-sword" style="font-size:40px;color:rgba(212,168,67,.25);"></i></div>`}
+    if(d===0){
+      transform=`translate(-50%,-50%) translateX(0) scale(1)`;
+      opacity=1; z=5;
+    } else if(Math.abs(d)===1){
+      transform=`translate(-50%,-50%) translateX(${d*420}px) rotateY(${-d*18}deg) scale(.58)`;
+      opacity=.65; z=4;
+    } else if(Math.abs(d)===2){
+      transform=`translate(-50%,-50%) translateX(${d*520}px) rotateY(${-d*24}deg) scale(.36)`;
+      opacity=.25; z=3;
+    } else {
+      transform=`translate(-50%,-50%) translateX(${d*560}px) scale(.25)`;
+      opacity=0; z=1; pe='none';
+    }
+    return `<div class="race-card" style="width:${cardW2}px;transform:${transform};opacity:${opacity};z-index:${z};pointer-events:${pe};" onclick="classGoTo(${i})">
+      ${c.img?`<img class="rimg" src="${c.img}" alt="${c.n}" style="height:${cardW2*0.85}px;"/>`:`<div class="rimg" style="height:${cardW2*0.85}px;display:flex;align-items:center;justify-content:center;background:rgba(212,168,67,.04);"><i class="ti ti-sword" style="font-size:60px;color:rgba(212,168,67,.25);"></i></div>`}
       <div class="rn">${c.n}</div>
       <div class="rs">${c.sub||'&nbsp;'}</div>
       <div style="display:flex;gap:5px;flex-wrap:wrap;justify-content:center;margin-bottom:10px;"><span class="badge">PV ${c.pv}</span><span class="badge">Mana ${c.mana}</span><span class="badge">${c.arm}</span></div>
