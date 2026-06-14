@@ -2879,12 +2879,13 @@ let _jetMod = 0;
 function getAdjustedPct(charName, catKey, basePct){
   const c = charData[charName];
   if(!c) return parseInt(basePct)||0;
-  // Find the subs for this cat to know how many slots exist
-  const CATS_SUBS = { physique:2, social:2, mental:2 };
-  const nb = CATS_SUBS[catKey] || 2;
+  const nb = 2;
   let nbJaune=0, nbRouge=0;
+  // Pour Furmiaou les clés sont 'furm_furm_<catKey>_<si>'
+  const isFurm = vitruveTab === 'furm';
   for(let si=0; si<nb; si++){
-    const st = (window._caracStates && window._caracStates[charName+'_'+catKey+'_'+si]) || 'none';
+    const stKey = isFurm ? 'furm_furm_'+catKey+'_'+si : charName+'_'+catKey+'_'+si;
+    const st = (window._caracStates && window._caracStates[stKey]) || 'none';
     if(st==='jaune') nbJaune++;
     if(st==='rouge') nbRouge++;
   }
@@ -2896,8 +2897,14 @@ function getAdjustedPct(charName, catKey, basePct){
 function updateJetDisplay(){
   const c = charData[vitruveChar];
   if(!c) return;
+  const isFurm = vitruveTab === 'furm';
   const catKey = _jetCat; // 'physique','social','mental'
-  const rawPct = catKey==='physique' ? parseInt(c.phys)||0 : catKey==='social' ? parseInt(c.social)||0 : parseInt(c.mental)||0;
+  let rawPct;
+  if(isFurm){
+    rawPct = catKey==='physique' ? 65 : catKey==='social' ? 50 : 55;
+  } else {
+    rawPct = catKey==='physique' ? parseInt(c.phys)||0 : catKey==='social' ? parseInt(c.social)||0 : parseInt(c.mental)||0;
+  }
   const base = getAdjustedPct(vitruveChar, catKey, rawPct);
   const total = Math.min(Math.max(base + _jetMod, 5), 95);
   const el = document.getElementById('jet-base-lbl');
