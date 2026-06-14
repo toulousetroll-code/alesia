@@ -813,6 +813,16 @@ main{flex:1;overflow-y:auto;padding:24px 28px;background:#111008;color:#CFC09A;}
                 <input type="checkbox" id="cb-desavantage" style="width:22px;height:22px;cursor:pointer;accent-color:#D06050;">
               </div>
             </div>
+
+            <!-- Dés d'Aventure & Mésaventure — rappel visuel -->
+            <div style="margin-top:12px;background:rgba(30,20,8,.85);border:1px solid rgba(212,168,67,.2);border-radius:10px;padding:12px 14px;">
+              <div style="font-family:'Cinzel',serif;font-size:13px;color:#D4A843;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;"><i class="ti ti-dice" style="margin-right:6px;"></i>Dés d'Aventure</div>
+              <div id="adv-mini-row" style="display:flex;gap:6px;justify-content:center;flex-wrap:wrap;"></div>
+              <div style="display:flex;justify-content:space-between;margin-top:8px;">
+                <span style="font-size:11px;color:#50A070;font-style:italic;"><i class="ti ti-circle-filled" style="font-size:9px;color:#2E7D32;margin-right:3px;"></i>Aventure : <span id="adv-mini-aven" style="font-weight:700;color:#9CDC9C;">4</span></span>
+                <span style="font-size:11px;color:#A05040;font-style:italic;"><i class="ti ti-circle-filled" style="font-size:9px;color:#C0392B;margin-right:3px;"></i>Mésaventure : <span id="adv-mini-meso" style="font-weight:700;color:#F0B0A6;">0</span></span>
+              </div>
+            </div>
           </div>
           <!-- Colonne droite: panneau info -->
           <div class="vpanel" id="vpanel">
@@ -3691,14 +3701,26 @@ function renderAdv(){
   const meso = advState.mesaventure ?? 0;
   const aven = 4 - meso;
   const a=document.getElementById('adv-aventure'), m=document.getElementById('adv-mesaventure');
-  if(!a) return;
-  a.textContent = aven;
-  m.textContent = meso;
-  a.parentElement.style.flexGrow = aven;
-  m.parentElement.style.flexGrow = meso || 0.0001;
-  document.getElementById('adv-dice-row').innerHTML = Array.from({length:4},(_,i)=>
-    `<div class="adv-die ${i<aven?'on-aventure':'on-mesaventure'}"><i class="ti ti-dice-${i+1<=6?(i+1):6}"></i></div>`
-  ).join('');
+  if(a){
+    a.textContent = aven;
+    m.textContent = meso;
+    a.parentElement.style.flexGrow = aven;
+    m.parentElement.style.flexGrow = meso || 0.0001;
+    document.getElementById('adv-dice-row').innerHTML = Array.from({length:4},(_,i)=>
+      `<div class="adv-die ${i<aven?'on-aventure':'on-mesaventure'}"><i class="ti ti-dice-${i+1<=6?(i+1):6}"></i></div>`
+    ).join('');
+  }
+  // Mini rappel dans le panneau personnages
+  const miniRow = document.getElementById('adv-mini-row');
+  const miniAven = document.getElementById('adv-mini-aven');
+  const miniMeso = document.getElementById('adv-mini-meso');
+  if(miniRow){
+    miniRow.innerHTML = Array.from({length:4},(_,i)=>
+      `<div class="adv-die ${i<aven?'on-aventure':'on-mesaventure'}" style="width:30px;height:30px;font-size:18px;"><i class="ti ti-dice-${i+1<=6?(i+1):6}"></i></div>`
+    ).join('');
+  }
+  if(miniAven) miniAven.textContent = aven;
+  if(miniMeso) miniMeso.textContent = meso;
 }
 window.advShift=(dir)=>{
   let m = advState.mesaventure ?? 0;
